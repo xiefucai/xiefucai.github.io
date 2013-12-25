@@ -1,0 +1,7 @@
+﻿html,body{display:block;min-height:100%;}
+body{background:url(../images/svg/body.svg) #000 no-repeat;margin:0;padding:0;}
+header{height:55px;background-color:rgba(57, 57, 57,.5);border-width:0 0 1px;border-image: radial-gradient(rgba(255,255,255,0),rgba(57, 57, 57,1)) 40% repeat;}
+.header-inner{width:960px;margin:0 auto;position:relative;}
+.header-inner-right{position:absolute;top:0;right:0;height:55px;display:block;line-height:54px;}
+.header-inner-right-link{color:#fff;text-decoration:none;}
+.logo{display:inline-block;width:310px;height:55px;text-indent:320px;overflow:hidden;background:url(../images/logo.gif) 0 50% no-repeat;white-space:nowrap;}
