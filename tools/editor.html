@@ -6,17 +6,19 @@
 <meta name="Description" content="这里填写本网页的摘要内容" />
 <meta name="Keywords" content="seo关键词" />
 <style>
-body{max-width:960px;margin:0 auto;}
+body{max-width:95%;margin:0 auto;}
 h2{font-size:18px;border-bottom:1px solid #ccc;padding:10px 0;}
 a{color:#090;text-decoration:underline;margin:0 3px;}
 p{font-size:14px;line-height:1.75;text-indent:2em;}
+.main{height:500px;width:100%;}
+.frame{float:right;margin:11px -10px 0 0;border:1px solid #999;}
 .paratable{border-collapse:collapse;border:1px solid #eee;color:#333;font-size:12px;margin-bottom:15px;}
 .paratable th,.paratable td{border-color:#eee;}
 .paratable .s2{display:none;}
-.ace_editor{height:500px;border:1px solid #999;}
+.ace_editor{width:50%;height:100%;border:1px solid #999;margin-left:-10px;float:left;}
 .btn-runner{
 display:inline-block;width:100px;height:30px;line-height:30px;text-align:center;border-radius:3px;text-decoration:none;
-color:#fff;border:1px solid #81BA2F;
+color:#fff;border:1px solid #81BA2F;clear:both;
 background-image: -ms-linear-gradient(top, #C5E59D 0%, #90C14C 100%);
 background-image: -moz-linear-gradient(top, #C5E59D 0%, #90C14C 100%);
 background-image: -o-linear-gradient(top, #C5E59D 0%, #90C14C 100%);
@@ -24,12 +26,14 @@ background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, 
 background-image: -webkit-linear-gradient(top, #C5E59D 0%, #90C14C 100%);
 background-image: linear-gradient(to bottom, #C5E59D 0%, #90C14C 100%);
 }
+.ctrls{clear:both;margin-left:-10px;}
 .footer{margin:20px auto;font-size:12px;}
 </style>
 <script type="text/javascript" src="http://mat1.gtimg.com/app/vt/js/read/import.js" charset="utf-8"></script>
 </head>
 <body>
-<pre id="editor1">&lt;!doctype html&gt;
+<div class="main">
+	<pre id="editor1" class="editor">&lt;!doctype html&gt;
 &lt;html&gt;
 &lt;head&gt;
 	&lt;meta charset="UTF-8"/&gt;
@@ -40,7 +44,10 @@ background-image: linear-gradient(to bottom, #C5E59D 0%, #90C14C 100%);
 &lt;body&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-<div>
+	<iframe id="frame" name="frame" class="frame" frameborder="0" width="50%" height="100%"></iframe>
+</div>
+
+<div class="ctrls">
 	<a href="javascript:;" id="runner1" class="btn-runner">运行</a>
 </div>
 <script src="http://ajaxorg.github.io/ace/build/src-min-noconflict/ace.js"></script>
@@ -50,7 +57,7 @@ background-image: linear-gradient(to bottom, #C5E59D 0%, #90C14C 100%);
 	    var editor = ace.edit("editor1"),
 	    	setRunner = function(btn,elem){
 	    		btn.onclick = function(){
-	    			var  winname = window.open('', "_blank", '');
+	    			var  winname = document.getElementById('frame').contentWindow;
 				     winname.document.open('text/html', 'replace');
 				     winname.document.write(elem.getValue());
 				     winname.document.close();
@@ -61,15 +68,18 @@ background-image: linear-gradient(to bottom, #C5E59D 0%, #90C14C 100%);
 		    //editor.setTheme("ace/theme/monokai");
 		    editor.setTheme("ace/theme/chrome");
 		    editor.getSession().setMode("ace/mode/"+theme);
+		    /*
 		    editor.onBlur = function(){
 		    	if (window.localStorage){
 		    		localStorage.setItem('editorValue',editor.getValue());
 		    	}
-		    }
+		    }*/
 		    setRunner(document.getElementById('runner1'),editor);
 		    if (window.localStorage){
 		    	if (localStorage.getItem('editorValue')){
 		    		editor.setValue(localStorage.getItem('editorValue'));
+		    		console.log(editor);
+		    		document.getElementById('runner1').click();
 		    	}
 	    	}
 	})();
