@@ -69,6 +69,24 @@ $(function(){
 		}
 	});
 	
+	$('.logo').mouseover(function(){
+		var logo = this;
+		var s = '-webkit-gradient(radial, 17 17,%x, 17 17, %y, from(rgb(255, 255, 255)), color-stop(0.5, rgba(255,255,255,0.1)), to(rgb(255,255,255)))',
+			t = 0,
+			timer = 0,
+			qa = function(s,x,y){
+				return s.replace(/%x/g,x).replace(/%y/g,y);
+			};
+		timer = setInterval(function(){
+			logo.style.webkitMaskImage = qa(s,t*3,(t+10)*3);
+			t++;
+			if (t > 100){
+				clearInterval(timer);
+				$(logo).removeAttr('style');
+			}
+		},10);
+	});
+	
 	$(window).resize = common.resizeWin;
 	common.resizeWin();
 	slider.sliderTo(1,false);
