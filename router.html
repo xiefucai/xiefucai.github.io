@@ -14,21 +14,41 @@
 		<div class="header-inner">
 			<a href="/" class="logo" title="迅雷路由——你一直等待的下载机">迅雷路由——你一直等待的下载机</a>
 			<!--<img src="images/logo.gif" class="logo"/>-->
-			<nav class="header-inner-right">
-				<a href="http://g.xunlei.com/" target="_blank" class="header-inner-right-link" title="机友论坛">机友论坛</a>
-				<a href="http://vip.xunlei.com/" target="_blank" class="header-inner-right-link" title="开通会员">开通会员</a>
-				<a href="http://g.xunlei.com/" target="_blank" class="header-inner-right-link" title="网上商城">网上商城</a>
-			</nav>
+			<nav class="header-inner-right"></nav>
 		</div>
 	</header>
 	<div class="router-selector">
-		<a href="javascript:;" class="router-name"><label id="router-name">迅雷路由 - xiefucai</label> <span class="icon-down">ˇ</span></a>
+		<div href="javascript:;" class="router-name">
+			<a id="router-name" href="javascript:;" class="c-white">迅雷路由 - xiefucai</a> <span class="icon-down">ˇ</span>
+			<div class="router-options">
+				<a href="javascript:;" class="router-option">路由器一</a>
+				<a href="javascript:;" class="router-option">路由器二</a>
+				<a href="javascript:;" class="router-option">路由器三</a>
+				<a href="javascript:;" class="router-option">路由器四</a>
+			</div>
+		</div>
 	</div>
 	
 	<div class="main">
 		<div class="main-slider">
 			<div class="main-1">
-				
+				<div class="main-head-space"></div>
+				<div class="module module-down">
+					<div class="module-left">
+						<dl>
+							<dt>我的下载</dt>
+							<dd>正在下载</dd>
+							<dd>已完成</dd>
+							<dd>拉圾箱</dd>
+							<dt>功能推荐</dt>
+							<dd>离线空间</dd>
+							<dd>超清视频</dd>
+							<dd>资源搜索</dd>
+							<dd>硬盘管理</dd>
+						</dl>
+					</div>
+					<div class="module-right"></div>
+				</div>
 			</div>
 			<div class="main-2">
 				
@@ -37,10 +57,10 @@
 				
 			</div>
 		</div>
-	</main>
+	</div>
 	<div class="slider-ctrs">
-		<a href="javascript:;" class="slider-ctrs-left" data-action="sliderLeft" data-tip="下载管理">&lt;</a>
-		<a href="javascript:;" class="slider-ctrs-right" data-action="sliderRight" data-tip="设备管理">&gt;</a>
+		<a href="javascript:;" class="slider-ctrs-left disabled" data-action="sliderLeft">&lt;<label class="slider-ctrs-label"></label></a>
+		<a href="javascript:;" class="slider-ctrs-right disabled" data-action="sliderRight">&gt;<label class="slider-ctrs-label"></label></a>
 	</div>
 	<script>var common={};</script>
 	<!--BUILD:js/index.js-->
