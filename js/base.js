@@ -79,6 +79,7 @@ $(function(){
 			};
 		timer = setInterval(function(){
 			logo.style.webkitMaskImage = qa(s,t*3,(t+10)*3);
+			logo.style.mask = '-moz-gradient(radial, 17 17,%x, 17 17, %y, from(rgb(255, 255, 255)), color-stop(0.5, rgba(255,255,255,0.1)), to(rgb(255,255,255)))'
 			t++;
 			if (t > 100){
 				clearInterval(timer);
