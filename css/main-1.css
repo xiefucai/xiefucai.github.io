@@ -22,7 +22,7 @@ a:hover .dnl_desk,.cur .dnl_desk{background-position: -163px -24px }
 .download_control_box{border-bottom:1px solid #C8C8C8;position:relative;height:56px; }
 .dc_list{padding:17px 0 0 24px ;list-style:none;margin:0;}
 .dc_list li{float:left;padding:0 45px 0 0; }
-.dc_ico{width:23px;height:23px;display:inline-block;background-position: 0 -102px  }
+.dc_ico{width:23px;height:23px;display:inline-block;background-position: 0 -102px;}
 .cur .dc_ico,.dc_ico:hover{background-position:0 -135px}
 .di_del{background-position:-33px -102px}
 .cur .di_del,.di_del:hover{background-position:-33px -135px}

@@ -57,7 +57,7 @@
 .speed_wp .now_speed .f{left:8px;text-align:left} 
 .speed_wp .now_speed .f .t{color:#CF6C24} 
 
-.router_con_wp{width:868px;margin:0 0 0 -434px;position:absolute;bottom:152px;min-height: 554px;_height:554px;left:50%;}
+.router_con_wp{width:868px;margin:0 0 0 -434px;position:absolute;min-height: 554px;_height:554px;left:50%;}
 .router_box{position:relative; zoom:1;width:100%}
 .ft{position:absolute;z-index:3;height:152px;margin:0 auto;color:#5B5B5B;text-align:center;background:url('../images/ft_bg.png ') no-repeat top center;left:0;bottom:0;width:100%;}
 .ft span{text-align:center; padding:60px 10px 0;display:inline-block }
@@ -68,7 +68,7 @@
 .ra_right{right:10px;}
 .ra_right i{background-position: -141px 0;margin:0 0 0 20px;}
 
-.router_pic{text-align:center;bottom:0;left:0;z-index:1;position:absolute;width:100% }
+.router_pic{text-align:center;top:0;left:0;z-index:1;position:absolute;width:100% }
 .router_pic{
 -webkit-animation:fadeInUp 1s .4s ease both;
 -moz-animation:fadeInUp 1s .4s ease both;
