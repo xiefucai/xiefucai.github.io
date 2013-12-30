@@ -1,4 +1,13 @@
 ﻿$(function(){
+	var getParams = function(str){
+		var o = {};
+		str.replace(/([^&=]+)=([^&=]+)/g,function(){
+			o[arguments[1]] = arguments[2];
+		});
+		return o;	
+	},
+	hash = getParams(location.hash.slice(1));console.log(hash);
+	hash['slide'] = (hash['slide'] === undefined?1:+hash['slide']);
 	var elem = {
 		'main':$('.main'),
 		'mainBg':$('.main-bg'),
@@ -10,10 +19,14 @@
 	var slider = {
 		'index':0,
 		'count':2,
-		'sliderTo':function(i,f){
+		'sliderTo':function(i,f){console.log('slideTo',i);
 			var rect = common.getDocSize(),
 				w = rect.width,
 				callback = function(){
+					if (hash['slide'] !== i){
+						hash['slide'] = i;
+						location.hash = $.param(hash);
+					}
 					elem.sliderLeft.removeClass('disabled');
 					elem.sliderRight.removeClass('disabled');
 					if (slider.index === 0){
@@ -40,14 +53,16 @@
 		'getDocSize':function(){
 			return {'width':document.documentElement.clientWidth || document.body.clientWidth,'height':document.documentElement.clientHeight || document.body.clientHeight};	
 		},
-		'resizeWin':function(){
-			var rect = common.getDocSize();console.log(rect);
+		'resizeWin':function(event){
+			var rect = common.getDocSize();
 			$('.main-1,.main-2,.main-3').css({'width':rect.width,'minHeight':812});
 			$('.router_mian_wp').css({'minHeight':rect.height-156});
 			$('.main-1 .router_mian_wp').css({'minHeight':Math.max(rect.height-156,534)});
 			$('.router_con_wp').css({'top':Math.max((rect.height-554-152)/2,106)}); 
 			elem.mainSlider.width(rect.width*3);
-			slider.sliderTo(slider.index,false);
+			if (event){
+				slider.sliderTo(slider.index,false);
+			}
 		},
 		'changeSlideInfo':function(i){
 			var str,
@@ -58,15 +73,15 @@
 				][i];
 			if (i === 1){
 				str = [
-				'<a href="http://g.xunlei.com/" target="_blank" class="header-inner-right-link" title="无线">无线</a>',
-				'<a href="http://vip.xunlei.com/" target="_blank" class="header-inner-right-link" title="穿墙">穿墙</a>',
-				'<a href="http://g.xunlei.com/" target="_blank" class="header-inner-right-link" title="面板灯">面板灯</a>'
+				'<a href="javascript:;" class="c-white" title="无线" id="light-wifi"><span class="icon-wifi"></span>无线</a>',
+				'<a href="javascript:;" class="c-white" title="穿墙" id="light-enhance"><span class="icon-enhance"></span>穿墙</a>',
+				'<a href="javascript:;" class="c-white" title="面板灯" id="light-panel"><span class="icon-panel"></span>面板灯</a>'
 				].join(' ');
 			}else{
 				str = [
-				'<a href="http://g.xunlei.com/" target="_blank" class="header-inner-right-link" title="机友论坛">机友论坛</a>',
-				'<a href="http://vip.xunlei.com/" target="_blank" class="header-inner-right-link" title="开通会员">开通会员</a>',
-				'<a href="http://g.xunlei.com/" target="_blank" class="header-inner-right-link" title="网上商城">网上商城</a>'
+				'<a href="http://g.xunlei.com/" target="_blank" class="c-white" title="机友论坛">机友论坛</a>',
+				'<a href="http://vip.xunlei.com/" target="_blank" class="c-white" title="开通会员">开通会员</a>',
+				'<a href="http://g.xunlei.com/" target="_blank" class="c-white" title="网上商城">网上商城</a>'
 				].join(' ');
 			}
 			elem.sliderLeft.find('.slider-ctrs-label').html(tip[0]);
@@ -108,10 +123,9 @@
 		}
 	});
 	
-	$('.main-1,.main-2,.router_mian_wp').bind('mousewheel',function(e){
+	elem.mainSlider.bind('mousewheel',function(e){
 		var k = event.wheelDelta? event.wheelDelta:-event.detail*10;
-			this.scrollTop = this.scrollTop - k;
-			console.log([this.scrollHeight,this.clientHeight,this.scrollTop,k].join(','));
+			elem.mainSlider[0].scrollTop = this.scrollTop - k;
 			return false;
 	});
 	
@@ -139,5 +153,5 @@
 	
 	$(window).resize(common.resizeWin);
 	common.resizeWin();
-	slider.sliderTo(1,false);
+	slider.sliderTo(hash['slide'],false);
 });

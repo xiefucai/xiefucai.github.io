@@ -68,13 +68,14 @@
 .ra_right{right:10px;}
 .ra_right i{background-position: -141px 0;margin:0 0 0 20px;}
 
-.router_pic{text-align:center;top:0;left:0;z-index:1;position:absolute;width:100% }
+.router_pic{text-align:center;top:0;left:0;z-index:1;position:absolute;width:100%; }
 .router_pic{
 -webkit-animation:fadeInUp 1s .4s ease both;
 -moz-animation:fadeInUp 1s .4s ease both;
 -ms-animation:fadeInUp 1s .4s ease both;
 }
-.router_pic_img{background:url(../images/router-bg.jpg) no-repeat;width:418px;height:555px;margin:0 auto;}
+.router_pic_img{background:url(../images/product.png) no-repeat;width:123px;height:497px;margin:0 auto;overflow:hidden;box-shadow:0 -80px 250px rgba(255,255,255,.2);}
+.router_pic_icon{width:72px;height:73px;background:url(../images/light.png) no-repeat;margin:106px auto 0;}
 @-webkit-keyframes fadeInUp{
 0%{opacity:0;
 -webkit-transform:translateY(20px)}
