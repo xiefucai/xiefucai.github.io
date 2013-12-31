@@ -5,6 +5,7 @@ a{text-decoration:none;}
 a:focus{outline:none;}
 ul,ol,li,dl,dt,dd{margin:0;padding:0;list-style:none;}
 .c-white{color:#fff;}
+.unvisible{visibility:hidden;}
 .header-inner{width:960px;margin:0 auto;position:relative;background:url(../images/logo-bg.gif) 0 50% no-repeat;}
 .header-inner-right{position:absolute;top:0;right:0;height:55px;display:block;line-height:54px;word-spacing:1.5rem;}
 .logo{display:inline-block;width:310px;height:55px;text-indent:320px;overflow:hidden;background: /*#090*/url(../images/logo.png) 0 50% no-repeat;white-space:nowrap;vertical-align:bottom;}

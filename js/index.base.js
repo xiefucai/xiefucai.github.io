@@ -58,7 +58,8 @@
 			'routerList':null	
 		},
 		'getDocSize':function(){
-			return {'width':document.documentElement.clientWidth || document.body.clientWidth,'height':document.documentElement.clientHeight || document.body.clientHeight};	
+			//为了不显示滚动条，所以加上30
+			return {'width':(document.documentElement.clientWidth || document.body.clientWidth)+20,'height':document.documentElement.clientHeight || document.body.clientHeight};	
 		},
 		'resizeWin':function(event){
 			var rect = common.getDocSize();
@@ -104,6 +105,16 @@
 				setTimeout(function(){
 					$('.router-options').removeClass('none');
 				},500);
+			},
+			//页面滚动的时候，需要隐藏路由器信息
+			'toggleRouterVisible':function(scroller){
+				var scrollTop = scroller.scrollTop,
+					routerSelector = $('.router-selector');
+				if (scrollTop > 10){
+					routerSelector.addClass('unvisible');
+				}else{
+					routerSelector.removeClass('unvisible');
+				}
 			}
 		},
 		'action':{
@@ -144,6 +155,7 @@
 					}
 				}
 			}
+			
 		},
 		'init':function(){
 			//拉取路由器列表
@@ -175,6 +187,10 @@
 		if (action && common.action[action]){
 			common.action[action](event,jtarget);
 		}
+	});
+	
+	$('.main-1,.main-2,.main-3').bind('scroll',function(event){
+		common.protected.toggleRouterVisible(event.target);
 	});
 	/*
 	elem.mainSlider.bind('mousewheel',function(e){
