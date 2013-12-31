@@ -25,14 +25,14 @@ ul,ol,li,dl,dt,dd{margin:0;padding:0;list-style:none;}
 .router-name:hover .router-options{visibility:visible;}
 .icon-down{font-size:16px;height:8px;overflow:hidden;display:inline-block;vertical-align:middle;font-family:"宋体";line-height:1;}
 .main{width:100%;height:100%;position:absolute;top:0;left:0;z-index:0;overflow:hidden;z-index:1;}
-.main-slider{overflow:hidden;height:100%;position:relative;}
+.main-slider{height:100%;position:relative;overflow-x:hidden;overflow-y:visible;}
 
 .main-bg{position:absolute;top:0;left:0;z-index:0;width:100%;height:100%;background-color:#000;background-repeat:no-repeat;}
 .main-bg-1{background-image:url(../images/svg/main1.svg);}
 .main-bg-3{background-image:url(../images/svg/main3.svg);}
-.main-1,.main-2,.main-3{height:100%;float:left;overflow:hidden;}
+.main-1,.main-2,.main-3{height:100%;float:left;overflow:hidden;vertical-align:top;}
 .main-2{position:relative;}
-.autoheight{overflow:visible;}
+.autoheight{overflow-y:visible;}
 .main-head-space{height:106px;}
 .slider-ctrs-left,.slider-ctrs-right{color:#fff;text-decoration:none;font-family:"宋体","文泉驿等宽正黑";margin:0 15px;position:absolute;top:50%;font-size:48px;z-index:2;}
 .slider-ctrs-right{position:absolute;right:0;}

@@ -19,7 +19,7 @@
 	var slider = {
 		'index':0,
 		'count':2,
-		'sliderTo':function(i,f){console.log('slideTo',i);
+		'sliderTo':function(i,f){
 			var rect = common.getDocSize(),
 				w = rect.width,
 				activeSlide = $('.main-'+(i+1)),
@@ -54,16 +54,19 @@
 		}
 	};
 	common = $.extend(common,{
+		'config':{
+			'routerList':null	
+		},
 		'getDocSize':function(){
 			return {'width':document.documentElement.clientWidth || document.body.clientWidth,'height':document.documentElement.clientHeight || document.body.clientHeight};	
-		},      
+		},
 		'resizeWin':function(event){
 			var rect = common.getDocSize();
 			$('.main-1,.main-2,.main-3').css({'width':rect.width,'minHeight':812});
 			$('.router_mian_wp').css({'minHeight':rect.height-156});
 			$('.main-1 .router_mian_wp').css({'minHeight':Math.max(rect.height-156,534)});
 			$('.router_con_wp').css({'top':Math.max((rect.height-554-152)/2,106)}); 
-			elem.mainSlider.width(rect.width*3);
+			elem.mainSlider.width(rect.width*3+30);
 			if (event){
 				slider.sliderTo(slider.index,false);
 			}
@@ -92,7 +95,19 @@
 			elem.sliderRight.find('.slider-ctrs-label').html(tip[1]);
 			elem.nav.html(str);
 		},
+		'protected':{
+			//当置当前路由器信息
+			'setCurrentRouter':function(router){
+				common.config.routerInfo = router;
+				$('#router-name').html(router.name);
+				$('.router-options').addClass('none');
+				setTimeout(function(){
+					$('.router-options').removeClass('none');
+				},500);
+			}
+		},
 		'action':{
+			//向左翻页
 			'sliderLeft':function(event,t){
 				var i = slider.index;
 				if (t.hasClass('disabled')){
@@ -103,6 +118,7 @@
 					elem.sliderRight.removeClass('disabled');
 				}
 			},
+			//向右翻页
 			'sliderRight':function(event,t){
 				var i = slider.index;
 				if (t.hasClass('disabled')){
@@ -113,9 +129,43 @@
 					elem.sliderLeft.removeClass('disabled');
 				}
 			},
+			//滚屏到指定页面
 			'slide':function(event,t){
 				slider.sliderTo(+t.attr('data-index'));
+			},
+			//切换路由器
+			'switchRouter':function(event,t){
+				var routerId = t.data('id');
+				for(var i=0,list = common.config.routerList,k=list.length,router;i<k;i++){
+					router = list[i];
+					if (router['routerID'] === routerId){
+						common.protected.setCurrentRouter(router);
+						break;
+					}
+				}
 			}
+		},
+		'init':function(){
+			//拉取路由器列表
+			common.protocol.build('getRouterList',null,function(d){
+				var routerList = d && d.routerList,
+					arr = [];
+				if (d && d.errorCode === 0){
+					if (routerList.length){
+						//按照id进行排序
+						routerList.sort(function(v1,v2){
+							return v1.routerID - v2.routerID;
+						});
+						for(var i=0,k=routerList.length,router;i<k;i++){
+							router = routerList[i];
+							arr.push('<a href="javascript:;" class="router-option" data-action="switchRouter" data-id="'+router['routerID']+'">'+router['name']+'</a>');
+						}
+						common.config.routerList = routerList;
+					}
+				}
+				common.protected.setCurrentRouter(routerList[0]);
+				$('.router-options').html(arr.join(''));
+			});
 		}
 	});
 	$('body').bind('click',function(event){
@@ -126,12 +176,12 @@
 			common.action[action](event,jtarget);
 		}
 	});
-	
+	/*
 	elem.mainSlider.bind('mousewheel',function(e){
 		var k = event.wheelDelta? event.wheelDelta:-event.detail*10;
 			elem.mainSlider[0].scrollTop = this.scrollTop - k;
 			return false;
-	});
+	});*/
 	
 	$('.logo').mouseover(function(){
 		var logo = this;
@@ -158,4 +208,5 @@
 	$(window).resize(common.resizeWin);
 	common.resizeWin();
 	slider.sliderTo(hash['slide'],false);
+	common.init();
 });

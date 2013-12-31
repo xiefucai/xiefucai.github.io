@@ -6,11 +6,11 @@
 .rs_list{color:#fff;font-family:\5FAE\8F6F\96C5\9ED1;font-size:16px;list-style:none;margin:0;padding:0;}
 .rs_list li{height:52px;text-align:center;  }
 .rs_list li a{display:block; line-height:52px;color:#fff  }
-.rs_list li a:hover{background:#1F7BB4;text-decoration:none;  }
+.rs_list li a:hover{background:#1F7BB4;text-decoration:none; }
 .rs_list li.cur a{background:#1F7BB4;}
 .rs_list li:first-child a{border-radius:5px 0 0;}
 
-.table_wp{width:100%;overflow:hidden; }
+.table_wp{width:100%;overflow:hidden;font-size:12px;}
 .router_table_con{color:#3E3E3E;font-family:\5FAE\8F6F\96C5\9ED1;width:100%}
 .router_table_con a{color:#2D95D9;}
 .router_table_con thead th{height:57px;font-size:14px;text-align:center;border-bottom:1px solid #DCDCDC;  }
