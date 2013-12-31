@@ -4,9 +4,9 @@
 		str.replace(/([^&=]+)=([^&=]+)/g,function(){
 			o[arguments[1]] = arguments[2];
 		});
-		return o;	
+		return o;
 	},
-	hash = getParams(location.hash.slice(1));console.log(hash);
+	hash = getParams(location.hash.slice(1));
 	hash['slide'] = (hash['slide'] === undefined?1:+hash['slide']);
 	var elem = {
 		'main':$('.main'),
@@ -22,6 +22,7 @@
 		'sliderTo':function(i,f){console.log('slideTo',i);
 			var rect = common.getDocSize(),
 				w = rect.width,
+				activeSlide = $('.main-'+(i+1)),
 				callback = function(){
 					if (hash['slide'] !== i){
 						hash['slide'] = i;
@@ -34,9 +35,12 @@
 					}else if(slider.index === slider.count){
 						elem.sliderRight.addClass('disabled');
 					}
+					activeSlide.siblings().removeClass('autoheight');
 					common.changeSlideInfo(i);
-				};
+				}
+				;
 			slider.index = i;
+			activeSlide.addClass('autoheight');
 			if (f === false){
 				elem.mainSlider.css({'left':(-i*w)+'px'});
 				elem.mainBg.removeClass('main-bg-1 main-bg-2 main-bg-3').addClass('main-bg-'+(i+1));
@@ -52,7 +56,7 @@
 	common = $.extend(common,{
 		'getDocSize':function(){
 			return {'width':document.documentElement.clientWidth || document.body.clientWidth,'height':document.documentElement.clientHeight || document.body.clientHeight};	
-		},
+		},      
 		'resizeWin':function(event){
 			var rect = common.getDocSize();
 			$('.main-1,.main-2,.main-3').css({'width':rect.width,'minHeight':812});
@@ -73,7 +77,7 @@
 				][i];
 			if (i === 1){
 				str = [
-				'<a href="javascript:;" class="c-white" title="无线" id="light-wifi"><span class="icon-wifi"></span>无线</a>',
+				'<a href="javascript:;" class="c-white" title="无线" id="light-wifi" data-action=""><span class="icon-wifi"></span>无线</a>',
 				'<a href="javascript:;" class="c-white" title="穿墙" id="light-enhance"><span class="icon-enhance"></span>穿墙</a>',
 				'<a href="javascript:;" class="c-white" title="面板灯" id="light-panel"><span class="icon-panel"></span>面板灯</a>'
 				].join(' ');
