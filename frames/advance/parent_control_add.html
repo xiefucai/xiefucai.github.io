@@ -1,0 +1,426 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link type="text/css" rel="stylesheet" href="common.css" media="screen" />
+<script language="javascript" type="text/javascript" src="jquery-1.3.2.js"></script>
+<script language="javascript" type="text/javascript" src="global.js"></script>
+<script language="javascript" type="text/javascript">
+var myjson;
+$(function(){
+	initTimePool();                                             
+	CreateOptions("SELECT_StartTime",timeInnerPool,timeValPool);
+	CreateOptions("SELECT_EndTime",timeInnerPool,timeValPool);
+	var DhcpList = new Array();
+	var listtext=new Array();
+	DhcpList.push("0");
+	listtext.push(variable.land_option);
+	CreateOptions("lan_lists",listtext,DhcpList);
+	 $.getJSON("dataCenter.js", {parent_rules:"",nodeIndex0:""},function(json){
+	 myjson=json;
+  if(json.nodeIndex0!="")
+  {
+  	var rules = json.parent_rules.split(">");
+	var ruleItem = rules[json.nodeIndex0].split("<");
+	
+	OnloadMac(ruleItem[0], $("#pc_cmacTd").children());
+	setJSONValue({
+			'land_comment':ruleItem[1],
+			'url_0':ruleItem[2],
+			'url_1':ruleItem[3],
+			'url_2':ruleItem[4],
+			'url_3':ruleItem[5],
+			'url_4':ruleItem[6],
+			'url_5':ruleItem[7],
+			'url_6':ruleItem[8],
+			'url_7':ruleItem[9],
+			'time_sched_name':ruleItem[10],
+			'SELECT_StartTime':ruleItem[12],
+			'SELECT_EndTime':ruleItem[13],
+			'land_enable'   :ruleItem[14]
+			});
+
+	 InitShow(ruleItem[11]);
+	 if(ruleItem[11].split(",").length==7)
+	 {
+		supplyValue('day_type','1');
+		change_weekdays_status(1);
+	}
+	else
+	{
+		supplyValue('day_type','0');
+		$("#sunday,#monday,#tuesday,#wednesday,#thursday,#friday,#saturday").attr('disabled',false);
+	}
+
+  }
+
+  });
+	
+	$.getJSON("dataCenter.js", {'/tmp/udhcpd_json.leases':'file'},function(json){
+		
+		$.each(json, function(i,n){
+		n.lan_dhcp_macaddr
+			DhcpList.push(n.lan_dhcp_macaddr);
+			listtext.push(n.lan_dhcp_macaddr+"("+n.lan_dhcp_ipaddr+")");
+			});
+		CreateOptions("lan_lists",listtext,DhcpList);
+	});
+	
+});
+
+function InitShow(day){						
+	if(day.indexOf('Sun')!=-1){
+		$("#sunday").attr("checked","true"); //Sun
+	}else{
+		$("#sunday").removeAttr("checked");  //Sun
+	}
+	if(day.indexOf('Mon')!=-1)
+		$("#monday").attr("checked","true"); //Mon
+	else
+		$("#monday").removeAttr("checked");  //Mon
+	if(day.indexOf('Tue')!=-1)
+		$("#tuesday").attr("checked","true"); //Tue
+	else
+		$("#tuesday").removeAttr("checked");  //Tue
+	if(day.indexOf('Wed')!=-1)
+		$("#wednesday").attr("checked","true");//Wed
+	else
+		$("#wednesday").removeAttr("checked"); //Wed
+	if(day.indexOf('Thu')!=-1)
+		$("#thursday").attr("checked","true"); //Thu
+	else
+		$("#thursday").removeAttr("checked");  //Thu
+	if(day.indexOf('Fri')!=-1)
+		$("#friday").attr("checked","true");  //Fri
+	else
+		$("#friday").removeAttr("checked");   //Fri
+	if(day.indexOf('Sat')!=-1)
+		$("#saturday").attr("checked","true");//Sat
+	else
+		$("#saturday").removeAttr("checked"); //Sat
+}
+
+function fillChildMac(){
+if($("#lan_lists").val()!='0')
+OnloadMac($("#lan_lists").val(), $("#pc_cmacTd").children());
+}
+function change_weekdays_status(Enable){
+if(Enable==1)
+	{
+		$("#sunday,#monday,#tuesday,#wednesday,#thursday,#friday,#saturday").attr({'checked':true,'disabled':true});
+	}
+	else
+	{
+	    $("#sunday,#monday,#tuesday,#wednesday,#thursday,#friday,#saturday").attr({'checked':false,'disabled':false});
+	}
+
+
+
+}
+
+function uiSubmit()
+{
+	var addrule;
+		var macaddr=$("#pc_mac_1").val()+":"+$("#pc_mac_2").val()+":"+$("#pc_mac_3").val()+":"+$("#pc_mac_4").val()+":"+$("#pc_mac_5").val()+":"+$("#pc_mac_6").val();
+		
+		if($("#land_comment").val() == ''){
+			alertError('qos_comment_blank');
+			return ;
+		}
+		var disc1=$("#land_comment").val();
+
+		
+		if($("#url_0").val() != '' && $("#url_0").val().length < 2 )
+		{
+			alertError('DomainLength');
+			return;
+		}	
+		if($("#url_1").val() != '' && $("#url_1").val().length < 2 )
+		{
+			alertError('DomainLength');
+			return;
+		}	
+		if($("#url_2").val() != '' && $("#url_2").val().length < 2 )
+		{
+			alertError('DomainLength');
+			return;
+		}	
+		if($("#url_3").val() != '' && $("#url_3").val().length < 2 )
+		{
+			alertError('DomainLength');
+			return;
+		}	
+		if($("#url_4").val() != '' && $("#url_4").val().length < 2 )
+		{
+			alertError('DomainLength');
+			return;
+		}	
+		if($("#url_5").val() != '' && $("#url_5").val().length < 2 )
+		{
+			alertError('DomainLength');
+			return;
+		}	
+		if($("#url_6").val() != '' && $("#url_6").val().length < 2 )
+		{
+			alertError('DomainLength');
+			return;
+		}	
+		if($("#url_7").val() != '' && $("#url_7").val().length < 2 )
+		{
+			alertError('DomainLength');	
+			return;
+		}
+			
+		var url0=$("#url_0").val();
+		var url1=$("#url_1").val();
+		var url2=$("#url_2").val();
+		var url3=$("#url_3").val();
+		var url4=$("#url_4").val();
+		var url5=$("#url_5").val();
+		var url6=$("#url_6").val();
+		var url7=$("#url_7").val();
+		
+		if(url0.length==" "&&url1.length==" "&&url2.length==" "&&url3.length==" "
+		&&url4.length==" "&&url5.length==" "&&url6.length==" "&&url7.length==" ")
+		{		
+			alertError('site_name');
+			return ;
+		}
+		
+			
+		
+		if($("#time_sched_name").val() == ''){
+			alertError('qos_timeschedname_blank');
+			return ;
+		}
+		
+		var time_sched=$("#time_sched_name").val();
+		var selectdays='';
+		if(disc1.indexOf("<")>0 || disc1.indexOf(">")>0)
+		{
+			alertError('InvalidCharacter');
+			return false;
+		}
+		if(url0.indexOf("<")>0 || url0.indexOf(">")>0)
+		{
+			alertError('InvalidCharacter');
+			return false;
+		}
+		
+		if(url1.indexOf("<")>0 || url1.indexOf(">")>0)
+		{
+			alertError('InvalidCharacter');
+			return false;
+		}
+		if(url2.indexOf("<")>0 || url2.indexOf(">")>0)
+		{
+			alertError('InvalidCharacter');
+			return false;
+		}
+		if(url3.indexOf("<")>0 || url3.indexOf(">")>0)
+		{
+			alertError('InvalidCharacter');
+			return false;
+		}
+		if(url4.indexOf("<")>0 || url4.indexOf(">")>0)
+		{
+			alertError('InvalidCharacter');
+			return false;
+		}
+		if(url5.indexOf("<")>0 || url5.indexOf(">")>0)
+		{
+			alertError('InvalidCharacter');
+			return false;
+		}
+		if(url6.indexOf("<")>0 || url6.indexOf(">")>0)
+		{
+			alertError('InvalidCharacter');
+			return false;
+		}
+		if(url7.indexOf("<")>0 || url7.indexOf(">")>0)
+		{
+			alertError('InvalidCharacter');
+			return false;
+		}
+		if(time_sched.indexOf("<")>0 || time_sched.indexOf(">")>0)
+		{
+			alertError('InvalidCharacter');
+			return false;
+		}
+		if($('input[name="day_type"]:checked').val()=="1")
+		{
+			selectdays='Mon,Tue,Wed,Thu,Fri,Sat,Sun,';
+		}
+		else
+		{
+			if($("#sunday").attr("checked")==true)
+	    		 selectdays='Sun,';
+			if($("#monday").attr("checked")==true)
+				 selectdays+='Mon,';
+			if($("#tuesday").attr("checked")==true)
+				 selectdays+='Tue,';
+			if($("#wednesday").attr("checked")==true)
+				 selectdays+='Wed,';
+			if($("#thursday").attr("checked")==true)
+				 selectdays+='Thu,';
+			if($("#friday").attr("checked")==true)
+				 selectdays+='Fri,';
+			if($("#saturday").attr("checked")==true)
+				 selectdays+='Sat,';
+		
+		}
+		selectdays = selectdays.substr(0,selectdays.length-1);
+
+		var begintime=$("#SELECT_StartTime").val();
+		var endtime=$("#SELECT_EndTime").val();
+		
+		addrule=macaddr+ "<"+disc1+"<"+url0+"<"+url1+"<"+url2+"<"+url3+"<"+url4+"<"+url5+"<"+url6+"<"+url7+"<"+time_sched+"<"+selectdays+"<"+begintime+"<"+endtime+"<"+$("#land_enable").val();
+	
+		var nodeindex=parseInt(myjson.nodeIndex0);
+
+		if(myjson.nodeIndex0=="")
+		{
+			if(myjson.parent_rules!="")
+			{
+					addrule = myjson.parent_rules + ">" + addrule;
+			}
+		}
+		else
+		{
+			if(nodeindex>=0)
+			{
+				var rules = myjson.parent_rules.split(">");
+				var editrule="";
+				for(var i = 0; i < nodeindex; i++)
+				{
+					if(rules[i].length > 0)
+					editrule+=rules[i];
+					editrule+=">";
+					
+				}
+
+			   editrule+=addrule;
+			   if( nodeindex < (rules.length))
+				{
+					for(var i = (nodeindex + 1); i < rules.length; i++)
+					{
+						if(rules[i].length > 0)
+						editrule+=">";
+						editrule+=rules[i];
+					}
+				}
+				addrule=editrule;
+			}
+		}
+	
+	var postVar = {
+		getPage : 'parent_control.html',
+		action: "Apply",
+		mode: "PARENT_CONTROL",
+		parent_control_mac:macaddr,
+		parent_control_disc1: disc1,
+		parent_control_key1: url0,
+		parent_control_key2: url1,
+		parent_control_key3: url2,
+		parent_control_key4: url3,
+		parent_control_key5: url4,
+		parent_control_key6: url5,
+		parent_control_key7: url6,
+		parent_control_key8: url7,
+		parent_control_disc2: time_sched,
+		parent_control_day: selectdays,
+		parent_control_time1: begintime,
+		parent_control_time2:endtime,
+		parent_rules : addrule
+	}; 
+	uiPost(postVar);
+}
+</script>
+<div class="config3">
+	<div id="lang_header" class="mainbiao"></div>
+	<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table01">
+		<tbody>
+			<tr>
+				<td id="land_cmac"></td>
+				<td nowrap="true" id="pc_cmacTd" style="width: 60%;">
+					<input type="text" id="pc_mac_1" maxlength="2" size="2" style="width: 30px;"><span>-</span>
+					<input type="text" id="pc_mac_2" maxlength="2" size="2" style="width: 30px;"><span>-</span>
+					<input type="text" id="pc_mac_3" maxlength="2" size="2" style="width: 30px;"><span>-</span>
+					<input type="text" id="pc_mac_4" maxlength="2" size="2" style="width: 30px;"><span>-</span>
+					<input type="text" id="pc_mac_5" maxlength="2" size="2" style="width: 30px;"><span>-</span>
+					<input type="text" id="pc_mac_6" maxlength="2" size="2" style="width: 30px;">
+            	</td>
+			</tr>
+			<tr>
+				<td id="land_lanmac"></td>
+				<td>
+					<select onchange="fillChildMac()" class="list" name="lan_lists" size="1" id="lan_lists" style="width:250px; ">
+					<option value="888"></option>
+					</select>
+			</td>
+		 </tr>
+		 <tr>
+		 	<td id="land_descript"></td>
+			<td><input type="text" maxlength="16" size="17" value="" class="text" name="land_comment" id="land_comment"></td>
+		 </tr>
+		 <tr>
+		 	<td id="land_urlcomment" colspan="2" class="lable"></td>
+		 </tr>
+
+		<tr>
+			<td id="land_urlname0"></td><td><input type="text" maxlength="15" size="25" value="" class="text" name="url_0" id="url_0"></td>
+		</tr>
+		<tr>
+			<td id="land_urlname1"></td><td><input type="text" maxlength="15" size="25" value="" class="text" name="url_1" id="url_1"></td>
+		</tr>
+		<tr>
+			<td id="land_urlname2"></td><td><input type="text" maxlength="15" size="25" value="" class="text" name="url_2" id="url_2"></td>
+		</tr>
+		<tr>
+			<td id="land_urlname3"></td><td><input type="text" maxlength="15" size="25" value="" class="text" name="url_3" id="url_3"></td>
+		</tr>
+		<tr>
+			<td id="land_urlname4"></td><td><input type="text" maxlength="15" size="25" value="" class="text" name="url_4" id="url_4"></td>
+		</tr>
+		<tr>
+			<td id="land_urlname5"></td><td><input type="text" maxlength="15" size="25" value="" class="text" name="url_5" id="url_5"></td>
+		</tr>
+		<tr>
+			<td id="land_urlname6"></td><td><input type="text" maxlength="15" size="25" value="" class="text" name="url_6" id="url_6"></td>
+		</tr>
+		<tr>
+			<td id="land_urlname7"></td><td><input type="text" maxlength="15" size="25" value="" class="text" name="url_7" id="url_7"></td>
+		</tr>
+		 <tr><td id="land_time" colspan="2" class="lable"></td></tr>
+		 <tr><td id="land_schedule"></td><td><input type="text" maxlength="24" size="25" value="" class="text" name="time_sched_name" id="time_sched_name"></td></tr>
+		 <tr><td id="land_day"></td>
+		 	<td><input type="radio" onclick="change_weekdays_status(1)" value="1" id="day_type_all" name="day_type" checked><span id="land_everyday"></span>&nbsp;&nbsp;
+				<input type="radio" onclick="change_weekdays_status(0)" value="0" id="day_type_choose" name="day_type"><span id="land_selectday"></span>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>
+				<input type="checkbox" name="monday" disabled="" id="monday" checked><span id="land_day1"></span>&nbsp;
+				<input type="checkbox" name="tuesday" disabled="" id="tuesday" checked><span id="land_day2"></span>&nbsp;
+				<input type="checkbox" name="wednesday" disabled="" id="wednesday" checked><span id="land_day3"></span>&nbsp;
+				<input type="checkbox" name="thursday" disabled="" id="thursday" checked><span id="land_day4"></span>&nbsp;
+				<input type="checkbox" name="friday" disabled="" id="friday" checked><span id="land_day5"></span>&nbsp;<br>
+				<input type="checkbox" name="saturday" disabled="" id="saturday" checked><span id="land_day6"></span>&nbsp;
+				<input type="checkbox" name="sunday" disabled="" id="sunday" checked><span id="land_day7"></span>
+			</td>
+		</tr>
+		<tr><td id="land_begintime"></td><td><select id="SELECT_StartTime" title="00:00"></select></td></tr>
+		<tr><td id="land_endtime"></td><td> <select id="SELECT_EndTime" title="00:00"></select></td></tr>
+		<tr><td id="land_statue"></td>
+			<td>
+				<select onchange="" name="land_enable" size="1" id="land_enable">
+					<option value="1" id="land_statueenable">Enable</option>
+					<option value="0" id="land_statuedisable">Disable</option>
+				</select>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+	<div class="div_button">
+            <input id="lang_cancle" type="button" onClick="uiPageRefresh();">&nbsp;&nbsp;
+            <input id="lang_apply" type="button" onClick="uiSubmit();">
+    </div>
+</div>  

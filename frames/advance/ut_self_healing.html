@@ -1,0 +1,126 @@
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- include page -->
+<link type="text/css" rel="stylesheet" href="common.css" media="screen" />
+<script language="javascript" type="text/javascript" src="jquery-1.3.2.js"></script>
+<script language="javascript" type="text/javascript" src="global.js"></script>
+<script language="javascript" type="text/javascript">
+$(document).ready(function(){
+	$.getJSON("dataCenter.js", {self_healing_enable:'',self_healing_time:'',self_healing_day:''},function(json){
+	    	EnableDisable(json.self_healing_enable);
+	        InitShow(json.self_healing_day,json.self_healing_time)
+	});
+    $('input[name="nameInitEnable"]').click(function(){
+        EnableDisable($('input[name="nameInitEnable"]:checked').val());
+    });
+	processCSS();
+});
+
+function processCSS(){
+	initTimePool();
+	CreateOptions("SELECT_StartTime",timeInnerPool,timeValPool);
+}
+
+function uiSubmit(){
+	var selectdays='';
+	if($("#sunday").attr("checked")==true)
+	     selectdays='Sun,';
+	if($("#monday").attr("checked")==true)
+	     selectdays+='Mon,';
+	if($("#tuesday").attr("checked")==true)
+	     selectdays+='Tue,';
+	if($("#wednesday").attr("checked")==true)
+	     selectdays+='Wed,';
+	if($("#thursday").attr("checked")==true)
+	     selectdays+='Thu,';
+	if($("#friday").attr("checked")==true)
+	     selectdays+='Fri,';
+	if($("#saturday").attr("checked")==true)
+	     selectdays+='Sat,';
+		 
+	var postVar = { action : "Apply", mode:"self_healing",getPage:"ut_self_healing.html"};
+	
+	if($('input[name="nameInitEnable"]:checked').val() == 1){
+		postVar["self_healing_time"]=$("#SELECT_StartTime").val();
+		postVar["self_healing_day"]=selectdays;
+	}
+	
+ 	postVar["self_healing_enable"]=$('input[name="nameInitEnable"]:checked').val();
+
+	uiPost(postVar);
+	return ; 
+}
+
+function InitShow(day,self_healing_time){						
+	if(day.indexOf('Sun')!=-1){
+		$("#sunday").attr("checked","true"); //Sun
+	}else{
+		$("#sunday").removeAttr("checked");  //Sun
+	}
+	if(day.indexOf('Mon')!=-1)
+		$("#monday").attr("checked","true"); //Mon
+	else
+		$("#monday").removeAttr("checked");  //Mon
+	if(day.indexOf('Tue')!=-1)
+		$("#tuesday").attr("checked","true"); //Tue
+	else
+		$("#tuesday").removeAttr("checked");  //Tue
+	if(day.indexOf('Wed')!=-1)
+		$("#wednesday").attr("checked","true");//Wed
+	else
+		$("#wednesday").removeAttr("checked"); //Wed
+	if(day.indexOf('Thu')!=-1)
+		$("#thursday").attr("checked","true"); //Thu
+	else
+		$("#thursday").removeAttr("checked");  //Thu
+	if(day.indexOf('Fri')!=-1)
+		$("#friday").attr("checked","true");  //Fri
+	else
+		$("#friday").removeAttr("checked");   //Fri
+	if(day.indexOf('Sat')!=-1)
+		$("#saturday").attr("checked","true");//Sat
+	else
+		$("#saturday").removeAttr("checked"); //Sat
+
+	$("#SELECT_StartTime").val(self_healing_time);	
+}
+function EnableDisable(Enable)
+{            
+	if(Enable==1)
+	{
+	    $("input[name=nameInitEnable][value=1]").attr("checked",true);
+		$("#sunday,#monday,#tuesday,#wednesday,#thursday,#friday,#saturday,#SELECT_StartTime").removeAttr("disabled");
+	}
+	else
+	{
+	    $("input[name=nameInitEnable][value=0]").attr("checked",true);
+	    $("#sunday,#monday,#tuesday,#wednesday,#thursday,#friday,#saturday,#SELECT_StartTime").attr("disabled","disabled");
+	}
+}
+
+</script>
+<div id="topdiv" class="config3">
+<div><p id="lang_Schedules_title" class="mainbiao"></p></div>
+<table id="toptable" class="table01">
+	<tr>
+	    <td id="lang_Auto_init" width="40%"></td>
+	    <td >
+	        <input id="idInitEnableOn" type="radio" name="nameInitEnable" value="1"><span id="lang_Init_On"></span>
+	        <input id="idInitEnableOff" type="radio" name="nameInitEnable" value="0"><span id="lang_Init_Off"></span>
+	    </td>
+	</tr>
+	<tr><td id="lang_Set_days" class="lable" colspan="2"></td></tr>
+	<tr><td colspan="2"><input id="sunday" name="sunday" type="checkbox"></input><label id="lang_Sun" for="sunday"></label></td></tr>
+	<tr><td colspan="2"><input id="monday" name="monday" type="checkbox"></input><label id="lang_Mon" for="monday"></label></td></tr>
+	<tr><td colspan="2"><input id="tuesday" name="tuesday" type="checkbox"></input><label id="lang_Tue" for="tuesday"></label></td></tr>
+	<tr><td colspan="2"><input id="wednesday" name="wednesday" type="checkbox"></input><label id="lang_Wed" for="wednesday"></label></td></tr>
+	<tr><td colspan="2"><input id="thursday" name="thursday" type="checkbox"></input><label id="lang_Thu" for="thursday"></label></td></tr>
+	<tr><td colspan="2"><input id="friday" name="friday" type="checkbox"></input><label id="lang_Fri" for="friday"></label></td></tr>
+	<tr><td colspan="2"><input id="saturday" name="saturday" type="checkbox"></input><label id="lang_Sat" for="saturday"></label></td></tr>
+	<tr><td id="lang_Set_time"></td><td><select id="SELECT_StartTime" title="03:00"></select></td></tr>
+</table>
+	<div class="div_button">
+	    <input id="lang_cancle" type="button" onClick="uiPageRefresh();" class="submitBtn">&nbsp;&nbsp;
+	    <input id="lang_apply" type="button" onClick="uiSubmit();" class="submitBtn">
+	<div>
+</div>

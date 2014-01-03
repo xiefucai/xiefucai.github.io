@@ -1,0 +1,1850 @@
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- include page -->
+<link type="text/css" rel="stylesheet" href="common.css" media="screen" />
+<script language="javascript" type="text/javascript" src="jquery-1.3.2.js"></script>
+<script language="javascript" type="text/javascript" src="global.js"></script>
+<script language="javascript" type="text/javascript" src="md5.js"></script>
+<script language="javascript" type="text/javascript">
+ var wl_country = "US";
+ var card;
+ var _tmpMode;
+ var _Bandwidth;
+ var W_GuardInterval;
+ var W_GuardInterval5;
+ var G_json;
+$(function(){
+	$('input').unbind('keyup');
+	$.getJSON("dataCenter.js", {
+		//2G				               //5G
+		'wl0.3_country_code':'',               'wl1.3_country_code':'',               
+		'wl0.3_nband':"",                      'wl1.3_nband':"",             	
+		'wl0.3_phytype':"",             	   'wl1.3_phytype':"",                		 	
+		'wl0.3_radio':"",               	   'wl1.3_radio':"",                  		 	
+		'wl0.3_ssid':"",                	   'wl1.3_ssid':"",                           		 	
+		'wl0.3_bw_cap':"",              	   'wl1.3_bw_cap':"",                 		 	
+		'wl0.3_chanspec':"",            	   'wl1.3_chanspec':"",               		 	
+		'wl0.3_wme':"",                 	   'wl1.3_wme':"",                    		 	
+		'wl0.3_gmode':"",               	   'wl1.3_gmode':"",                  		 	
+		'wl0.3_nmode':"",               	   'wl1.3_nmode':"",                  		 	
+		'wl0.3_gmode_protection':"",    	   'wl1.3_gmode_protection':"",       		 	
+		'wl0.3_nmode_protection':"",    	   'wl1.3_nmode_protection':"",       		 	
+		'wl0.3_mimo_preamble':"",       	   'wl1.3_mimo_preamble':"",          		 	
+		'wl0.3_closed':"",              	   'wl1.3_closed':"",                 		 	
+		'wl0.3_bss_opmode_cap_reqd':"", 	   'wl1.3_bss_opmode_cap_reqd':"",
+		'wl0.3_ap_isolate':'',                 'wl1.3_ap_isolate':'',
+		'wl0.3_rate':'',                      'wl1.3_rate':'',
+		'wl0.3_nmcsidx':'',                    'wl1.3_nmcsidx':'',
+		'wl0.3_plcphdr':'',					   'wl1.3_plcphdr':'',
+		'wl0.3_wdsmode':'',                    'wl1.3_wdsmode':'',
+		'wl_unit': '' , 
+		/********************security**************/  
+		'wl0.3_security_choice':'',	'wl1.3_security_choice':'',
+		'wl0.3_wep':'',            	'wl1.3_wep':'',
+		'wl0.3_akm':'',            	'wl1.3_akm':'',
+		'wl0.3_key':'',            	'wl1.3_key':'',
+		'wl0.3_key1':'',            	'wl1.3_key1':'', 
+		'wl0.3_key2':'',            	'wl1.3_key2':'', 
+		'wl0.3_key3':'',            	'wl1.3_key3':'', 
+		'wl0.3_key4':'',            	'wl1.3_key4':'',
+		'wl0.3_crypto':'',         	'wl1.3_crypto':'', 
+		'wl0.3_wep_type':'',            'wl1.3_wep_type':'',
+		'wl0.3_wpa_psk':'',         	'wl1.3_wpa_psk':'',
+		'wl0.3_auth':'',            	'wl1.3_auth':'',
+		'wl0.3_auth_mode':'',       	'wl1.3_auth_mode':'',
+		'wl0.3_wds_enable':'',       	'wl1.3_wds_enable':'',
+		'wl0.3_wps_mode':'',                'wl1.3_wps_mode':''	
+	},function(json){
+		G_json = json;
+		card = json.wl_unit;
+		$('#SELECT_Adapter').val(card);
+		show_selected_adapter(card);
+		if(card == 0)
+			Onload_init_2G(json);
+		else
+			Onload_init_5G(json);
+			
+		SecurityOptionsCreate();
+		$("#SELECT_Securityoptions").val(G_json['wl'+card+'.3'+'_security_choice']);
+		SecurityOptions(card);
+	});
+	
+	$("#SELECT_Adapter").change(function(){ 
+		card = this.value;
+		if(card == 0)
+			Onload_init_2G(G_json);
+		else
+			Onload_init_5G(G_json);
+			
+		SecurityOptionsCreate();
+		$("#SELECT_Securityoptions").val(G_json['wl'+card+'.3'+'_security_choice']);
+		show_selected_adapter(card);
+		SecurityOptions(card);
+	});
+	 
+	$("#SELECT_Securityoptions").change(function(){
+		SecurityOptions(card);
+	});
+	 
+	$('#SELECT_Region').change(function(){
+		country = this.value;
+		if(card == 0){
+			createExtensionChannel(0);
+			createChannel(country, $("#SELECT_Mode").val());
+		}else{
+			createBandwidth_5G($("#SELECT_Mode5").val(), country);
+			createChannel5(country);
+			createExtensionChannel5(parseInt($("#SELECT_Channel5").val()),country,$("#SELECT_BandWidth5").val());
+		}
+	});
+	
+	
+/**********************2.4G*********************/ 
+	$("#SELECT_BandWidth").change(function(){
+		_Bandwidth = this.value;
+		//createRate(card);
+		if(_Bandwidth == 20){
+			$("#SELECT_ExtensionChannel").attr("disabled","disabled");
+		}else{
+			$("#SELECT_ExtensionChannel").removeAttr("disabled");  
+			createExtensionChannel(parseInt($("#SELECT_Channel").val()));
+		}
+	});
+    
+	$("#SELECT_Channel").change(function(){
+		if($("#SELECT_BandWidth").val()==40)
+		createExtensionChannel(parseInt($("#SELECT_Channel").val()));
+	});
+	
+	$("#SELECT_Mode").change(function(){
+		_tmpMode = this.value;
+		//createRate(card)
+		createChannel($('#SELECT_Region').val(), _tmpMode);
+		SecurityOptionsCreate();
+		SecurityOptions(card);
+		switch(_tmpMode){
+			case 'b':
+			case 'g':
+				$("#SELECT_BandWidth").val(20).attr("disabled","disabled");
+				$("#SELECT_ExtensionChannel").attr("disabled","disabled");
+				break;
+			case 'n':
+			default :
+				$("#SELECT_BandWidth").removeAttr("disabled");
+				if($("#SELECT_BandWidth").val()==40)
+					$("#SELECT_ExtensionChannel").removeAttr("disabled");
+		}
+	});
+
+/******************************5G*********************/
+    $("#SELECT_BandWidth5").change(function(){
+		_Bandwidth = this.value;
+		var _wl_country = $("#SELECT_Region").val();
+        if(_Bandwidth == 40){
+            createChannel5_40M(_wl_country);
+            createExtensionChannel5(parseInt($("#SELECT_Channel5").val()),_wl_country,_Bandwidth);
+        }else if(_Bandwidth == 20){
+            createChannel5(_wl_country);
+			createExtensionChannel5(parseInt($("#SELECT_Channel5").val()),_wl_country,_Bandwidth);
+        }
+        else{
+            createChannel5_80M(_wl_country);
+			createExtensionChannel5(parseInt($("#SELECT_Channel5").val()),_wl_country,_Bandwidth);
+        }
+    });
+    
+    $("#SELECT_Channel5").change(function(){
+        if($("#SELECT_BandWidth5").val()==40)
+            createExtensionChannel5(parseInt($("#SELECT_Channel5").val()),$("#SELECT_Region").val(),$("#SELECT_BandWidth5").val());
+    });
+    
+    $("#SELECT_Mode5").change(function(){
+        _tmpMode = this.value;
+		var _wl_country = $("#SELECT_Region").val();
+		
+		SecurityOptionsCreate();
+		SecurityOptions(card);
+		createBandwidth_5G(_tmpMode, _wl_country);
+		createChannel5(_wl_country);
+		createExtensionChannel5(parseInt($("#SELECT_Channel5").val()),$("#SELECT_Region").val(),$("#SELECT_BandWidth5").val());
+
+		
+    }); 
+    
+    //set css
+	processCSS();
+});
+
+
+function Onload_init_2G(json){
+	createRegion(card)
+	wl_country = json['wl0.3_country_code'];
+	W_GuardInterval = json['wl0.3_plcphdr'];
+	createMode("SELECT_Mode");
+
+
+	var ch_flg = json['wl0.3_chanspec'].substr(json['wl0.3_chanspec'].length-1,1);
+	var num = parseInt(json['wl0.3_chanspec'].replace(/[^0-9]/ig, ""));
+
+	
+	/*mode*/
+	if(json['wl0.3_radio'] == 0){
+		$("#SELECT_BandWidth").attr("disabled","disabled");
+		$("#SELECT_ExtensionChannel").attr("disabled","disabled");
+		$("#SELECT_Mode").attr("disabled","disabled");
+	}
+
+	if(json['wl0.3_nmode'] == 0){
+		if(json['wl0.3_gmode'] == 0) _tmpMode = 'b';
+		else   _tmpMode = 'g';
+			
+		$("#SELECT_BandWidth").val(20).attr("disabled","disabled");
+		$("#SELECT_ExtensionChannel").attr("disabled","disabled");
+	}else{
+		if(json['wl0.3_mimo_preamble'] =="gf")  _tmpMode = 'n';
+		else  _tmpMode = 'bgn';
+	}
+	
+	createChannel(wl_country, _tmpMode);
+	
+	if(json['wl0.3_bw_cap'] == 3){
+		_Bandwidth = 40;
+		$("#SELECT_ExtensionChannel").removeAttr("disabled");
+		createExtensionChannel(num);
+		if(ch_flg == 'u'){
+			$("#SELECT_ExtensionChannel").val(num - 4);    
+		}else if(ch_flg == 'l'){
+			$("#SELECT_ExtensionChannel").val(num + 4); 
+		} 
+	}else{
+		_Bandwidth = 20;
+		createExtensionChannel(0);
+	}
+	/*rate*/
+	/*createRate(card);
+	var tmpMode;
+	if(tmpMode == 'n' || tmpMode == 'bgn'){
+		tmpRate = json.wl0.3_rate;
+	}else{
+		tmpRate = json.wl0.3_nmcsidx;
+	};*/
+					 	
+	setJSONValue({
+		'SELECT_Region':	          json['wl0.3_country_code'],  //country
+		'CHECKBOX_EnableRadio':       json['wl0.3_radio'],//network 
+		'CHECKBOX_EnableSSID':        json['wl0.3_closed']==0?1:0 ,   //broadcast ssid
+		'CHECKBOX_EnableIsolated':	  json['wl0.3_ap_isolate'],//Enable Wireless Isolation
+		'INPUT_ssid':                 json['wl0.3_ssid'],//ssid
+		'SELECT_Mode':                _tmpMode, //mode
+		'SELECT_Channel':             num, //channel  
+		'SELECT_BandWidth':           _Bandwidth,//bandwidth 
+		//'SELECT_MaxRate':             tmpRate,//rate
+		'EnableIsolatedContext':      json['wl0.3_nmode_protection']=='auto'?1:0, //protected mode
+		'SELECT_EnableWmm':           json['wl0.3_wme']=='on'?1:0   //wmm qos   
+	
+	});
+}
+
+
+function Onload_init_5G(json){
+	createRegion(card)
+	wl_country = json['wl1.3_country_code'];
+	W_GuardInterval5 = json['wl1.3_plcphdr'];
+	createMode("SELECT_Mode5");
+	//createBandwidth_5G("a");
+	
+	
+	if(json['wl1.3_radio'] == 0){
+		$("#SELECT_BandWidth5").attr("disabled","disabled");
+		$("#SELECT_ExtensionChannel5").attr("disabled","disabled");
+		$("#SELECT_Mode5").attr("disabled","disabled");
+	}
+	
+	if(json['wl1.3_nmode'] == 0){
+		_tmpMode = 'a';
+		_Bandwidth = 20;
+		$("#SELECT_BandWidth5").attr("disabled","disabled");
+		$("#SELECT_ExtensionChannel5").attr("disabled","disabled");
+	}else{
+		if(json['wl1.3_mimo_preamble'] =="gf"){
+			_tmpMode = 'n';
+		}else{
+			_tmpMode = 'ac';
+			//createBandwidth_5G("ac");
+		}
+	}
+
+	
+	//createRate(card);
+	
+	if(json['wl1.3_bw_cap'] == 7){
+		createChannel5_80M(wl_country);
+		$("#SELECT_Channel5").val(json['wl1.3_chanspec']);
+		_Bandwidth = 80;
+	}else{
+		var ch_flg = json['wl1.3_chanspec'].substr(json['wl1.3_chanspec'].length-1,1);
+		var num5 = parseInt(json['wl1.3_chanspec'].replace(/[^0-9]/ig, ""));
+		if(json['wl1.3_bw_cap'] == 3){
+			_Bandwidth = 40;
+			createChannel5_40M(wl_country);
+			$("#SELECT_ExtensionChannel5").removeAttr("disabled");
+			createExtensionChannel5(num5,wl_country,_Bandwidth);
+		}else{
+			_Bandwidth = 20;
+			createChannel5(wl_country);
+			createExtensionChannel5(0,wl_country,_Bandwidth);
+		} 
+		$("#SELECT_Channel5").val(num5)
+	}
+	/*var tmpRate;
+	if(_tmpMode == 'n' || _tmpMode == 'bgn'){
+		tmpRate = json.wl1.3_rate;
+	}else{
+		tmpRate = json.wl1.3_nmcsidx;
+	};*/
+	
+	createBandwidth_5G(_tmpMode, wl_country);
+	
+	setJSONValue({
+		'SELECT_Region':	          json['wl1.3_country_code'],  //country
+		'CHECKBOX_EnableRadio5':      json['wl1.3_radio'],//network 
+		'CHECKBOX_EnableSSID5':       json['wl1.3_closed']==0?1:0 ,   //broadcast ssid
+		'CHECKBOX_EnableIsolated5':	  json['wl1.3_ap_isolate'],//Enable Wireless Isolation
+		'INPUT_ssid5':                json['wl1.3_ssid'],//ssid
+		'SELECT_Mode5':               _tmpMode, //mode
+		'SELECT_Channel5':            num5, //channel  
+		'SELECT_BandWidth5':          _Bandwidth,//bandwidth
+		//'SELECT_MaxRate5':            tmpRate,//rate  
+		'EnableIsolatedContext5':     json['wl1.3_nmode_protection']=='auto'?1:0, //protected mode
+		'SELECT_EnableWmm5':          json['wl1.3_wme']=='on'?1:0   //wmm qos   
+	
+	});
+	
+}
+
+function show_selected_adapter(sel_val){
+	if(sel_val == 0){
+			$("#table_2g").show();
+			$("#table_5g").hide();
+		}else{
+			$("#table_2g").hide();
+			$("#table_5g").show();
+		}
+}
+function uiSubmit(){
+    var wl_rev = ""
+    var postVar = { action : "Apply", mode:"WLAN",getPage:"wireless_repeater_basic.html"};
+	
+	postVar["wl_unit"]=$("#SELECT_Adapter").val();
+
+	switch($("#SELECT_Region").val()){
+			case 'RU':
+				wl_rev	= "43";
+				break;
+			case 'KR':
+				wl_rev = "59";
+				break;
+			default:
+				wl_rev = "0";
+	}
+		
+		
+	if($("#SELECT_Adapter").val() ==0){
+
+		postVar["wl0.3_country_code"] = $("#SELECT_Region").val();
+		postVar["wl0.3_country_rev"] = wl_rev;
+		
+		postVar["wl0.3_radio"]=$("#CHECKBOX_EnableRadio").attr('checked')==true?1:0;
+		
+		if($("#CHECKBOX_EnableSSID").attr("checked")){
+			postVar["wl0.3_closed"]=0;
+		}else{
+			postVar["wl0.3_closed"]=1;
+			postVar["wl0.3_wps_mode"]="disabled";  
+		}
+		postVar["wl0.3_ap_isolate"]=$("#CHECKBOX_EnableIsolated").attr('checked')==true?1:0;
+		
+		postVar["wl0.3_ssid"]=$("#INPUT_ssid").val();
+		
+		//var rate = $('#SELECT_MaxRate').val();
+		switch($("#SELECT_Mode").val()){
+			case 'b':
+				postVar["wl0.3_nmode"]=0;
+				postVar["wl0.3_gmode"]=0;
+				postVar["wl0.3_bss_opmode_cap_reqd"]=0;
+				//postVar["wl0.3_rate"]=rate;
+				break;
+			case 'g':
+				postVar["wl0.3_nmode"]=0;
+				postVar["wl0.3_gmode"]=4;
+				postVar["wl0.3_bss_opmode_cap_reqd"]=1;
+				//postVar["wl0.3_rate"]=rate;
+				break;
+			case 'n':
+				postVar["wl0.3_nmode"]=-1;
+				postVar["wl0.3_mimo_preamble"]="gf";
+				postVar["wl0.3_bss_opmode_cap_reqd"]=2;
+				/*if(rate > 1000000)
+					postVar["wl0.3_nmcsidx"]=rate;
+				else if(rate == -1)
+					postVar["wl0.3_rate"]=rate;*/
+				break;
+			default:
+				postVar["wl0.3_nmode"]=-1;
+				postVar["wl0.3_mimo_preamble"]="auto";
+				postVar["wl0.3_bss_opmode_cap_reqd"]=0;
+				/*if(rate > 1000000 || rate == -1)
+					postVar["wl0.3_nmcsidx"]=rate;
+				else
+					postVar["wl0.3_rate"]=rate;*/
+		}
+		
+	   
+		if($("#SELECT_BandWidth").val() == 20){
+			postVar["wl0.3_bw_cap"]=1;
+			postVar["wl0.3_chanspec"]=$("#SELECT_Channel").val();
+		}else{
+			//G_wl0.3_bw_cap = 3;
+			postVar["wl0.3_bw_cap"]=3;
+			if(parseInt($("#SELECT_Channel").val()) == 0){
+				postVar["wl0.3_chanspec"]=0;
+			}
+			else{
+				if(parseInt($("#SELECT_Channel").val()) < parseInt($("#SELECT_ExtensionChannel").val())){
+					postVar["wl0.3_chanspec"]=$("#SELECT_Channel").val() + 'l';
+				}else{
+					postVar["wl0.3_chanspec"]=$("#SELECT_Channel").val() + 'u';
+				}  
+		   }
+		} 
+		
+		if( $("#EnableIsolatedContext").val() == 1){
+			postVar["wl0.3_gmode_protection"]="auto";
+			postVar["wl0.3_nmode_protection"]="auto";
+		}else{
+			postVar["wl0.3_gmode_protection"]="off";
+			postVar["wl0.3_nmode_protection"]="off";
+		}
+		
+		if($("#SELECT_EnableWmm").val() == 1){
+			postVar["wl0.3_wme"]="on";
+		}else{
+			postVar["wl0.3_wme"]="off";
+		}
+    }else{
+    /*************5G*************/ 
+	
+		postVar["wl1.3_country_code"] = $("#SELECT_Region").val();
+
+		postVar["wl1.3_country_rev"] = wl_rev;
+		
+		postVar["wl1.3_radio"]=$("#CHECKBOX_EnableRadio5").attr('checked')==true?1:0;
+		
+		if($("#CHECKBOX_EnableSSID5").attr("checked")){
+			postVar["wl1.3_closed"]=0;
+		}else{
+			postVar["wl1.3_closed"]=1;
+			postVar["wl1.3_wps_mode"]="disabled";  
+		}
+		postVar["wl1.3_ap_isolate"]=$("#CHECKBOX_EnableIsolated5").attr('checked')==true?1:0;
+		
+		postVar["wl1.3_ssid"]=$("#INPUT_ssid5").val();
+		
+		//var rate = $('#SELECT_MaxRate5').val();
+		switch($("#SELECT_Mode5").val()){
+			case 'a':
+				postVar["wl1.3_nmode"]=0;
+				postVar["wl1.3_gmode"]=4;
+				postVar["wl1.3_bss_opmode_cap_reqd"]=1;
+				//postVar["wl0.3_rate"]=rate;
+				break;
+			case 'n':
+				postVar["wl1.3_nmode"]=-1;
+				postVar["wl1.3_mimo_preamble"]="gf";
+				postVar["wl1.3_bss_opmode_cap_reqd"]=2;
+				/*if(rate > 1000000)
+					postVar["wl1.3_nmcsidx"]=rate;
+				else
+					postVar["wl1.3_rate"]=rate;*/
+				break;
+			default:
+				postVar["wl1.3_nmode"]=-1;
+				postVar["wl1.3_mimo_preamble"]="auto";
+				postVar["wl1.3_bss_opmode_cap_reqd"]=0;
+				/*if(rate > 1000000)
+					postVar["wl1.3_nmcsidx"]=rate;
+				else
+					postVar["wl1.3_rate"]=rate;*/
+		}
+		
+		if($("#SELECT_BandWidth5").val() == 20){
+			postVar["wl1.3_bw_cap"]=1;
+			postVar["wl1.3_chanspec"]=$("#SELECT_Channel5").val();
+		}else if($("#SELECT_BandWidth5").val() == 40){
+			postVar["wl1.3_bw_cap"]=3;
+			if(parseInt($("#SELECT_Channel5").val()) < parseInt($("#SELECT_ExtensionChannel5").val())){
+				postVar["wl1.3_chanspec"]=$("#SELECT_Channel5").val() + 'l';
+			}else{
+				postVar["wl1.3_chanspec"]=$("#SELECT_Channel5").val() + 'u';
+			}
+		}else{
+			postVar["wl1.3_bw_cap"]=7;
+			postVar["wl1.3_chanspec"]=$("#SELECT_Channel5").val();
+		} 
+		
+		if( $("#EnableIsolatedContext5").val() == 1){
+			postVar["wl1.3_gmode_protection"]="auto";
+			postVar["wl1.3_nmode_protection"]="auto";
+		}else{
+			postVar["wl1.3_gmode_protection"]="off";
+			postVar["wl1.3_nmode_protection"]="off";
+		}
+		
+		if($("#SELECT_EnableWmm5").val() == 1){
+			postVar["wl1.3_wme"]="on";
+		}else{
+			postVar["wl1.3_wme"]="off"; 
+		}
+	}
+	
+	/************security  start**************/
+	var _tmp,_prev;
+	_prev = 'wl'+card+'.3';
+	_tmp = _prev+'_security_choice';
+	postVar[_tmp]= $("#SELECT_Securityoptions").val();
+	
+	if($("#SELECT_Securityoptions").val()=="none")
+	{
+		_tmp = _prev+'_wep';
+		postVar[_tmp]="disabled";
+		
+		_tmp = _prev+'_akm';
+		postVar[_tmp]="none";
+		
+		_tmp = _prev+'_auth';
+		postVar[_tmp]= "0";
+	}
+	else if($("#SELECT_Securityoptions").val()=="wep")
+	{
+		if(G_json['wl'+card+'.3'+'_wps_mode']=="enabled"){
+			if(alertError("WpsConficWep",2)==false)
+				return ;
+			else{
+				_tmp = _prev+'_wps_mode';
+				postVar[_tmp]="disabled";
+			}
+		}
+	  	_tmp = _prev+'_wep';
+		postVar[_tmp]="enabled";
+
+		_tmp = _prev+'_auth';
+		postVar[_tmp]= $("#SELECT_Authtype").val();
+		
+		_tmp = _prev+'_wep_type';
+		postVar[_tmp]= $("#SELECT_Encryptstrength").val();
+		
+		_tmp = _prev+'_key';
+		postVar[_tmp]= $("input[name=INPUT_radiokey]:checked").val();
+		
+		_tmp = _prev+'_key1';
+		postVar[_tmp]= $("#INPUT_key1").val();
+		
+		_tmp = _prev+'_key2';
+		postVar[_tmp]= $("#INPUT_key2").val();
+		
+		_tmp = _prev+'_key3';
+		postVar[_tmp]= $("#INPUT_key3").val();
+		
+		_tmp = _prev+'_key4';
+		postVar[_tmp]= $("#INPUT_key4").val();
+		
+		_tmp = _prev+'_akm';
+		postVar[_tmp]="none";
+	}
+	else if($("#SELECT_Securityoptions").val()=="tkip")
+	{
+		if(G_json['wl'+card+'.3'+'_wps_mode']=="enabled"){
+			if(alertError("WpsConficWep",2)==false)
+				return ;
+			else{
+				_tmp = _prev+'_wps_mode';
+				postVar[_tmp]="disabled";
+			}
+		}
+		_tmp = _prev+'_wep';
+		postVar[_tmp]="disabled";
+		
+		_tmp = _prev+'_akm';
+		postVar[_tmp]="psk";
+		
+		_tmp = _prev+'_wpa_psk';
+		postVar[_tmp]= $("#INPUT_tkipkey").val();
+		
+		_tmp =_prev+'_crypto';
+		postVar[_tmp]="tkip";
+		
+		_tmp = _prev+'_auth';
+		postVar[_tmp]= "0";
+	}
+	else if($("#SELECT_Securityoptions").val()=="aes")
+	{
+		_tmp = _prev+'_wep';
+		postVar[_tmp]="disabled";
+		
+		_tmp = _prev+'_akm';
+		postVar[_tmp]="psk2";
+		
+		_tmp = _prev+'_wpa_psk';
+		postVar[_tmp]= $("#INPUT_aeskey").val();
+		
+		_tmp = _prev+'_crypto';
+		postVar[_tmp]="aes";
+		
+		_tmp = _prev+'_auth';
+		postVar[_tmp]= "0";
+	}
+	else if($("#SELECT_Securityoptions").val()=="tkipaes")
+	{
+		_tmp = _prev+'_wep';
+		postVar[_tmp]="disabled";
+		
+		_tmp = _prev+'_akm';
+		postVar[_tmp]="psk psk2";
+		
+		_tmp = _prev+'_wpa_psk';
+		postVar[_tmp]= $("#INPUT_tkipaeskey").val();
+		
+		_tmp = _prev+'_crypto';
+		postVar[_tmp]="tkip+aes";
+		
+		_tmp = _prev+'_auth';
+		postVar[_tmp]= "0";
+	}
+	/**************security end*****************/
+
+    postVar["apply_wait_time"]=15;   
+	uiPost(postVar);
+	return ;    
+}
+
+//2.4G channel
+function createMode(select_id){	
+	    var new_options,new_values;
+        if(select_id == 'SELECT_Mode'){
+		    new_options =  ['802.11b','802.11g','802.11n','802.11b/g/n'];
+		    new_values  = ['b','g','n','bgn'];
+		}else{	
+		    new_options = ['802.11a','802.11n','802.11a/n/ac'];
+		    new_values  = ['a','n','ac'];		
+		}
+		$(select_id).empty();
+		CreateOptions(select_id,new_options,new_values);
+}
+function createBandwidth_5G (_select_mode, _wl_country){	
+	    var new_options,new_values;
+		
+		if(_select_mode == 'a'){
+			new_options =  ['20MHz'];
+		    new_values  = ['20'];		
+		}
+		else if((_wl_country == 'US' || _wl_country == "KR") && (_select_mode == 'ac')){
+			new_options =  ['20MHz','20/40MHz','20/40/80MHz'];
+			new_values  = ['20','40','80'];
+		}
+		else{	
+			new_options =  ['20MHz','20/40MHz'];
+			new_values  = ['20','40'];
+		}
+
+		
+		$("SELECT_BandWidth5").empty();
+		CreateOptions("SELECT_BandWidth5",new_options,new_values);
+		
+		if(_select_mode == 'a')
+			$("#SELECT_BandWidth5").attr("disabled","disabled");
+		else
+			$("#SELECT_BandWidth5").removeAttr("disabled");
+}
+
+function createChannel(country,mode){	
+	    var new_options,new_values;
+		switch(country){
+			case 'US' : 
+			case 'CO' :
+			case 'MX' :
+			case 'PH' :
+			case 'CA' :{
+				new_options = new Array('Auto','1','2','3','4','5','6','7','8','9','10','11');
+				new_values  = new Array('0','1','2','3','4','5','6','7','8','9','10','11');	
+				break;
+			}
+			case 'JP' : { 
+				if(mode=='b'){
+					new_options = new Array('Auto','1','2','3','4','5','6','7','8','9','10','11','12','13','14');
+					new_values  = new Array('0','1','2','3','4','5','6','7','8','9','10','11','12','13','14');
+				}else{
+					new_options = new Array('Auto','1','2','3','4','5','6','7','8','9','10','11','12','13');
+					new_values  = new Array('0','1','2','3','4','5','6','7','8','9','10','11','12','13');
+				}
+				break;
+			}
+			case 'IL' : {
+				new_options = new Array('Auto','3','4','5','6','7','8','9');
+				new_values  = new Array('0','3','4','5','6','7','8','9');	
+				break;
+			}			
+			default : { //Europ and CN
+				new_options = new Array('Auto','1','2','3','4','5','6','7','8','9','10','11','12','13');
+				new_values  = new Array('0','1','2','3','4','5','6','7','8','9','10','11','12','13');
+			}			
+		}
+		$("#SELECT_Channel").empty();
+		new_options[0]=variable.land_auto;
+		CreateOptions("SELECT_Channel",new_options,new_values);
+}
+
+function createExtensionChannel(_selectChannel){
+   
+	var selectChannel = _selectChannel;	
+	var new_options,new_values;
+   
+	switch(_selectChannel){
+		case 0 :{
+			new_options = ['Auto'];
+			new_values  = ['0'];
+			break;
+		}
+		case 1 :{
+			new_options = ['5'];
+			new_values  = ['5'];
+			break;
+		}
+		case 2 :{
+			new_options = ['6'];
+			new_values  = ['6'];
+			break;
+		}
+		case 3 :{
+			new_options = ['7'];
+			new_values  = ['7'];
+			break;
+		}
+		case 4 :{
+			new_options = ['8'];
+			new_values  = ['8'];
+			break;
+		}
+		case 5 :{
+			new_options = ['1','9'];
+			new_values  = ['1','9'];
+			break;
+		}
+		case 6 :{
+			new_options = ['2','10'];
+			new_values  = ['2','10'];
+			break;
+		}
+		case 7 :{
+			new_options = ['3','11'];
+			new_values  = ['3','11'];
+			break;
+		}
+		case 8 :{
+			if($('SELECT_Channel').length>=13)
+			{
+				new_options = ['4','12'];
+				new_values  = ['4','12'];
+			}
+			else
+			{
+				new_options = ['4'];
+				new_values  = ['4'];
+			}
+			break;
+		}
+		case 9 :{
+			if($('SELECT_Channel').length>=14)
+			{
+				new_options = ['5','13'];
+				new_values  = ['5','13'];
+			}
+			else
+			{
+				new_options = ['5'];
+				new_values  = ['5'];
+			}
+			break;
+		}
+		case 10 :{
+			if($('SELECT_Channel').length>=15)
+			{
+				new_options = ['6','14'];
+				new_values  = ['6','14'];
+			}
+			else
+			{
+				new_options = ['6'];
+				new_values  = ['6'];
+			}
+			break;
+		}
+		case 11 :{
+			new_options = ['7'];
+			new_values  = ['7'];
+			break;
+		}
+		
+		case 12 :{
+			new_options = ['8'];
+			new_values  = ['8'];
+			break;
+		}
+		case 13 :{
+			new_options = ['9'];
+			new_values  = ['9'];
+			break;
+		}
+		case 14 :{
+			new_options = ['10'];
+			new_values  = ['10'];
+			break;
+		}
+		default : {
+			new_options = ['Auto'];
+			new_values  = ['0'];
+		}			
+	}
+	if(new_options[0]=='Auto')
+	{
+		new_options[0]=variable.land_auto;
+	}
+	$("#SELECT_ExtensionChannel").empty();
+	CreateOptions("SELECT_ExtensionChannel",new_options,new_values);
+}
+
+//5G channel
+function createChannel5(country){	
+	    var new_options,new_values;
+		switch(country){
+			case 'KR' : {
+				//36 40 44 48 52 56 60 64 100 104 108 112 116 120 124 149 153 157 161 
+				new_options = new Array("Auto", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "116", "120", "124",  "149", "153", "157", "161"); 
+				new_values  = new Array("0", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "116", "120", "124",  "149", "153", "157", "161"); 
+				break;
+			}
+			case 'RU' :{
+				//36 40 44 48 52 56 60 64 132 136 140 149 153 157 161
+				new_options = new Array("Auto", "36", "40", "44", "48", "52", "56", "60", "64", "132","136","140", "149", "153","157","161"); 
+				new_values  =  new Array("0", "36", "40", "44", "48", "52", "56", "60", "64", "132","136","140", "149", "153","157","161"); 
+			}
+			
+			/*
+			case 'CO' :{
+				new_options = new Array("Auto", "36", "40", "44", "48");
+				new_values  = new Array("0", "36", "40", "44", "48");
+				break;
+			}
+			case 'MX' :{
+				new_options = new Array("Auto", "36", "40", "44", "48", "52", "56", "60", "64");
+				new_values  = new Array("0", "36", "40", "44", "48", "52", "56", "60", "64");
+				break;
+			}
+			case 'PH' :{
+				new_options = new Array("Auto", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "116", "120", "124", "128", "132", "136", "140", "144", "149", "153", "157", "161", "165");
+				new_values  = new Array("0", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "116", "120", "124", "128", "132", "136", "140", "144", "149", "153", "157", "161", "165");
+				break;
+			}
+			case 'CA' :{
+				new_options = new Array("Auto", "36", "40", "44", "48", "52", "56", "60", "64", "149", "153", "157", "161", "165");
+				new_values  = new Array("0", "36", "40", "44", "48", "52", "56", "60", "64", "149", "153", "157", "161", "165");
+				break;
+			}*/
+			case 'CN' : {
+				new_options = new Array("Auto", "149", "153", "157", "161", "165");
+				new_values  = new Array("0", "149", "153", "157", "161", "165");
+				break;
+			}
+			case 'US' : {
+				new_options = new Array("Auto", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "116", "132", "136", "140", "144", "149", "153", "157", "161", "165");
+				new_values  = new Array("0", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "116", "132", "136", "140", "144", "149", "153", "157", "161", "165");
+				//new_options = new Array("Auto", "36", "40", "44", "48", "149", "153", "157", "161", "165");
+				//new_values  = new Array("0", "36", "40", "44", "48", "149", "153", "157", "161", "165");
+				break;
+			}
+			case 'JP' : {
+			    new_options = new Array("Auto", "36", "40", "44", "48", "52", "56", "60", "64", '100', '104', '108', '112', '116', '120', '124', '128', '132', '136', '140');
+			    new_values  = new Array("0", "36", "40", "44", "48", "52", "56", "60", "64", '100', '104', '108', '112', '116', '120', '124', '128', '132', '136', '140');
+				break;
+			}
+			
+			default :  {//Europ 
+				new_options = new Array("Auto", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "116", "120", "124", "128", "132", "136", "140");
+				new_values  = new Array("0", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "116", "120", "124", "128", "132", "136", "140");
+			}			
+		}
+    $("#SELECT_Channel5").empty();
+	new_options[0]=variable.land_auto;
+    CreateOptions("SELECT_Channel5",new_options,new_values);
+}
+
+function createChannel5_40M(country){	
+	    var new_options,new_values;
+		switch(country){
+			case 'KR' : {
+				//36 40 44 48 52 56 60 64 100 104 108 112 116 120 124 149 153 157 161 
+				new_options = new Array("Auto", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "116", "120", "124",  "149", "153", "157", "161"); 
+				new_values  = new Array("0", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "116", "120", "124",  "149", "153", "157", "161"); 
+				break;
+			}
+			case 'RU' :{
+				//36 40 44 48 52 56 60 64 132 136 140 149 153 157 161
+				new_options = new Array("Auto", "36", "40", "44", "48", "52", "56", "60", "64", "132","136","140", "149", "153","157","161"); 
+				new_values  =  new Array("0", "36", "40", "44", "48", "52", "56", "60", "64", "132","136","140", "149", "153","157","161"); 
+			}
+			case 'CO' :{
+				new_options = new Array("Auto", "36", "40", "44", "48");
+				new_values  = new Array("0", "36", "40", "44", "48");
+				break;
+			}
+			case 'MX' :{
+				new_options = new Array("Auto", "36", "40", "44", "48", "52", "56", "60", "64");
+				new_values  = new Array("0", "36", "40", "44", "48", "52", "56", "60", "64");
+				break;
+			}
+			case 'PH' :{
+				new_options = new Array("Auto", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "116", "120", "124", "128", "132", "136", "140", "144", "149", "153", "157", "161", "165");
+				new_values  = new Array("0", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "116", "120", "124", "128", "132", "136", "140", "144", "149", "153", "157", "161", "165");
+				break;
+			}
+			case 'CA' :{
+				new_options = new Array("Auto", "36", "40", "44", "48", "52", "56", "60", "64", "149", "153", "157", "161", "165");
+				new_values  = new Array("0", "36", "40", "44", "48", "52", "56", "60", "64", "149", "153", "157", "161", "165");
+				break;
+			}
+		    case 'CN' : {
+				new_options = new Array("Auto", "149", "153", "157", "161");
+				new_values  = new Array("0", "149", "153", "157", "161");
+				break;
+			}
+			case 'US' : {
+				//not contain of 165 about 40M
+				new_options = new Array("Auto", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "132", "136", "140", "144", "149", "153", "157", "161");
+				new_values  = new Array("0", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "132", "136", "140", "144", "149", "153", "157", "161");
+				//new_options = new Array("Auto", "36", "40", "44", "48", "149", "153", "157", "161");
+				//new_values  = new Array("0", "36", "40", "44", "48", "149", "153", "157", "161");
+				break;
+			}
+			case 'JP' : {
+			    new_options = new Array("Auto", "36", "40", "44", "48", "52", "56", "60", "64", '100', '104', '108', '112', '116', '120', '124', '128', '132', '136');
+			    new_values  = new Array("0", "36", "40", "44", "48", "52", "56", "60", "64", '100', '104', '108', '112', '116', '120', '124', '128', '132', '136');
+				break;
+			}
+			default :  {//Europ 
+				new_options = new Array("Auto", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "116", "120", "124", "128", "132", "136");
+				new_values  = new Array("0", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "116", "120", "124", "128", "132", "136");
+			}			
+		}
+    $("#SELECT_Channel5").empty();
+	new_options[0]=variable.land_auto;
+    CreateOptions("SELECT_Channel5",new_options,new_values);
+}
+
+function createChannel5_80M(country){	
+	    var new_options,new_values;
+		switch(country){
+			case 'KR' : {
+				//36 40 44 48 52 56 60 64 100 104 108 112 116 120 124 149 153 157 161 
+				new_options = new Array("Auto", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "116", "120", "124",  "149", "153", "157", "161"); 
+				new_values  = new Array("0", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "116", "120", "124",  "149", "153", "157", "161"); 
+				break;
+			}
+			case 'RU' :{
+				//36 40 44 48 52 56 60 64 132 136 140 149 153 157 161
+				new_options = new Array("Auto", "36", "40", "44", "48", "52", "56", "60", "64", "132","136","140", "149", "153","157","161"); 
+				new_values  =  new Array("0", "36", "40", "44", "48", "52", "56", "60", "64", "132","136","140", "149", "153","157","161"); 
+			}
+		    case 'CN' : {
+				break;
+			}
+			case 'KR' : {
+				break;
+			}
+			case 'US' : {
+			    new_options = new Array("Auto", "36", "40", "44", "48", "52", "56", "60", "64","100","104","108","112","132","136","140","144","149","153","157","161");
+			    new_values  = new Array("0", "36/80", "40/80",  "44/80", "48/80", "52/80", "56/80", "60/80 ", "64/80","100/80","104/80","108/80","112/80","132/80","136/80","140/80","144/80","149/80","153/80","157/80","161/80");
+				//new_options = new Array("Auto", "36", "40", "44", "48", "149","153","157","161");
+			   // new_values  = new Array("0", "36/80", "40/80", "44/80", "48/80", "149/80", "153/80", "157/80", "161/80");
+				break;
+			}
+			case 'CO' :{
+				break;
+			}
+			case 'MX' :{
+				break;
+			}
+			case 'PH' :{
+				break;
+			}
+			case 'CA' :{
+				break;
+			}
+			case 'JP' : {
+				break;
+			}
+			default :  {//Europ
+			}			
+		}
+    $("#SELECT_Channel5").empty();
+    $("#SELECT_ExtensionChannel5").attr("disabled","disabled");
+	if(new_options[0]=='Auto')
+	{
+		new_options[0]=variable.land_auto;
+	}
+    CreateOptions("SELECT_Channel5",new_options,new_values);
+}
+
+function createExtensionChannel5(_selectChannel,country,_bandwidth){	
+	var new_options,new_values,new_val;
+	switch(country){
+	    case 'CN' :{//153u 161u 149l 157l
+	        switch(_selectChannel){
+	                case 149 :{
+		                new_options = ['153'];
+			            new_values  = ['153'];
+			            break;
+		            }
+	                case 153 :{
+		                new_options = ['149'];
+			            new_values  = ['149'];
+			            break;
+		            }
+	                case 157 :{
+		                new_options = ['161'];
+			            new_values  = ['161'];
+			            break;
+		            }
+	                case 161 :{
+		                new_options = ['157'];
+			            new_values  = ['157'];
+			            break;
+		            }
+		        }
+	        break;
+	    }
+	    case 'CA' :
+	    case 'PH' :
+	    case 'US' :{
+	        if(_selectChannel < 149){
+		        if((_selectChannel % 8)==0 ){
+		            new_val = _selectChannel - 4;
+		            new_options = [new_val];
+			        new_values  = [new_val];
+			    }else{
+		            new_val = _selectChannel + 4;
+		            new_options = [new_val];
+			        new_values  = [new_val];
+		        }
+	        }else{
+	            switch(_selectChannel){
+	                case 149 :{
+		                new_options = ['153'];
+			            new_values  = ['153'];
+			            break;
+		            }
+	                case 153 :{
+		                new_options = ['149'];
+			            new_values  = ['149'];
+			            break;
+		            }
+	                case 157 :{
+		                new_options = ['161'];
+			            new_values  = ['161'];
+			            break;
+		            }
+	                case 161 :{
+		                new_options = ['157'];
+			            new_values  = ['157'];
+			            break;
+		            }
+		            default :{
+		                new_options = [variable.land_auto];
+	                    new_values  = ['0'];
+		            }
+	            }
+	        }
+	        break;
+	    }
+	    case 'CO':
+	    case 'IL':
+	    case 'MX':{
+		    if((_selectChannel % 8)==0 ){ 
+		        new_val = _selectChannel - 4;
+		        new_options = [new_val];
+			    new_values  = [new_val];
+			}else{
+		        new_val = _selectChannel + 4;
+		        new_options = [new_val];
+			    new_values  = [new_val];
+		    }
+		    break;
+		}
+		case 'JP' :{
+			if((_selectChannel % 8)==0 ){
+				new_val = _selectChannel - 4;
+				new_options = [new_val];
+				new_values  = [new_val];
+			}else{
+				new_val = _selectChannel + 4;
+				new_options = [new_val];
+				new_values  = [new_val];
+			}
+		    break;
+		}
+		case 'KR' :{
+		    break;
+		}
+	    default : {//Europ 
+		    if((_selectChannel % 8)==0 ){ /*40u 48u 56u 64u 104u 112u 120u 128u 136u*/ 
+		        new_val = _selectChannel - 4;
+		        new_options = [new_val];
+			    new_values  = [new_val];
+			}else{/* 36l 44l 52l 60l 100l 108l 116l 124l 132l*/
+		        new_val = _selectChannel + 4;
+		        new_options = [new_val];
+			    new_values  = [new_val];
+		    }
+		}			
+	}
+	$("#SELECT_ExtensionChannel5").empty();
+	
+	if(_selectChannel == 0){
+	    new_options = [variable.land_auto];
+	    new_values  = ['0'];
+	    CreateOptions("SELECT_ExtensionChannel5",new_options,new_values);
+	}else{
+	    CreateOptions("SELECT_ExtensionChannel5",new_options,new_values); 
+	}
+	
+	if(_bandwidth==20 || _bandwidth==80)
+		$("#SELECT_ExtensionChannel5").attr("disabled","disabled");
+	else if(_bandwidth==40)
+		$("#SELECT_ExtensionChannel5").removeAttr("disabled");
+}
+
+function createRegion(card){
+	var new_options,new_values;
+	var lang = optionText.Region;
+        if(card == 0){
+		    new_options =  [lang['ZA'],lang['VN'],lang['AU'],lang['CA'],lang['CN'],lang['ES'],lang['DE'],lang['IL'],lang['JP'],lang['KR'],lang['MX'],lang['IQ'],lang['CO'],lang['US'],lang['PH'],lang['RU']];
+		    new_values  = ['ZA','VN','AU','CA','CN','ES','DE','IL','JP','KR','MX','IQ','CO','US','PH','RU'];
+		}else{	
+		    new_options =  [lang['CN'],lang['DE'],lang['JP'],lang['US'],lang['KR'],lang['RU']];
+		    new_values  = ['CN','DE','JP','US','KR','RU'];	
+		}
+		$('#SELECT_Region').empty();
+		CreateOptions('SELECT_Region',new_options,new_values);
+}
+
+function sortNumber(a, b)
+{
+	return a - b;
+}
+
+function arrDelete(_tmpValue)
+{
+	var _tmp = _tmpValue;
+	for (var _i=0; _i < (_tmpValue.length-1); _i++)
+	{
+		if(parseFloat(_tmpValue[_i]) == parseFloat(_tmpValue[_i+1]))
+		{
+			_tmp.splice(_i,2,_tmpValue[_i]);
+		}
+		
+	}
+	return _tmp;
+}
+
+function createRate(card){
+/*
+11abg模式的速率设置：
+wl0.3_rate 
+0/自动
+6000000/6 Mbps 
+9000000/9 Mbps 
+12000000/12 Mbps 
+18000000/18 Mbps 
+24000000/24 Mbps 
+36000000/36 Mbps 
+48000000/48 Mbps 
+54000000/54 Mbps
+
+11n/11ac模式下的速率设置
+wl0.3_nmcsidx
+-1/自动
+其他的先参照公版和sdk页面
+
+wl0.3_nmcsidx
+-1 自动
+-2 非11n时
+其他(除以1000得到速率值)：
+1*1
+	{6500,   13500},	/ MCS  0 /
+	{13000,  27000},	/ MCS  1 /
+	{19500,  40500},	/ MCS  2 /
+	{26000,  54000},	/ MCS  3 /
+	{39000,  81000},	/ MCS  4 /
+	{52000,  108000},	/ MCS  5 /
+	{58500,  121500},	/ MCS  6 /
+	{65000,  135000},	/ MCS  7 /
+2*2
+	{13000,  27000},	/ MCS  8 /
+	{26000,  54000},	/ MCS  9 /
+	{39000,  81000},	/ MCS 10 /
+	{52000,  108000},	/ MCS 11 /
+	{78000,  162000},	/ MCS 12 /
+	{104000, 216000},	/ MCS 13 /
+	{117000, 243000},	/ MCS 14 /
+	{130000, 270000},	/ MCS 15 /
+3*3
+	{19500,  40500},	/ MCS 16 /
+	{39000,  81000},	/ MCS 17 /
+	{58500,  121500},	/ MCS 18 /
+	{78000,  162000},	/ MCS 19 /
+	{117000, 243000},	/ MCS 20 /
+	{156000, 324000},	/ MCS 21 /
+	{175500, 364500},	/ MCS 22 /
+	{195000, 405000},	/ MCS 23 */
+	var n = card;
+	
+	var _MIMO = 3;
+	var _text = ['Auto','54','48','36','24','18','12','11','9','6','5.5','2','1'];
+	var _value = ['-1','54','48','36','24','18','12','11','9','6','5.5','2','1'];
+	var rate_auto = ['auto',-1,-2,0];
+	var rate_b = ['11',11000000];
+	var rate_g = ['54',54000000];
+	var rate_a = ['54',54000000];
+	
+	var M20_N1_G8 = ['65',7];
+	var M20_N1_G4 = ['72.2',7];
+	var M20_N2_G8 = ['130',15];
+	var M20_N2_G4 = ['144.4',15];
+	var M20_N3_G8 = ['195',23];
+	var M20_N3_G4 = ['216.6',23];
+	var M40_N1_G8 = ['135',7];
+	var M40_N1_G4 = ['150',7];
+	var M40_N2_G8 = ['270',15];
+	var M40_N2_G4 = ['300',15];
+	var M40_N3_G8 = ['405',23];
+	var M40_N3_G4 = ['450',23];
+
+	var text_n;
+	var value_n;
+	
+	if(_MIMO == 1){//1x1
+		if(_Bandwidth == '20')
+		{
+			if(W_GuardInterval == 'long'||W_GuardInterval5 == '1ong')
+			{
+				text_n = M20_N1_G8[0];
+				text_n = M20_N1_G8[1];
+			}
+			else
+			{
+				text_n = M20_N1_G4[0];
+				text_n = M20_N1_G4[1];
+			}
+		}
+		else
+		{
+			if(W_GuardInterval == 'long'||W_GuardInterval5 == '1ong')
+			{
+				text_n = [].concat(M40_N1_G8[0]);
+				text_n = [].concat(M40_N1_G8[1]);
+			}
+			else
+			{
+				text_n = [].concat(M40_N1_G4[0]);
+				text_n = [].concat(M40_N1_G4[1]);
+			}
+		}
+    }else if(_MIMO == 2){//2x2
+		if(_Bandwidth == '20')
+		{
+			if(W_GuardInterval == 'long'||W_GuardInterval5 == '1ong')
+			{
+				text_n = [].concat(M20_N1_G8[0] , M20_N2_G8[0]);
+				value_n = [].concat(M20_N1_G8 , M20_N2_G8);
+			}
+			else
+			{
+				text_n = [].concat(M20_N1_G4[0] , M20_N2_G4[0]);
+				value_n = [].concat(M20_N1_G4[1] , M20_N2_G4[1]);
+			}
+		}
+		else
+		{
+			if(W_GuardInterval == 'long'||W_GuardInterval5 == '1ong')
+			{
+				text_n = [].concat(M40_N1_G8[0] , M40_N2_G8[0]);
+				value_n = [].concat(M40_N1_G8[1] , M40_N2_G8[1]);
+			}
+			else
+			{
+				text_n = [].concat(M40_N1_G4[0] , M40_N2_G4[0]);
+				value_n = [].concat(M40_N1_G4[1] , M40_N2_G4[1]);
+			}
+		}
+	}
+	else{//3x3
+		if(_Bandwidth == '20')
+		{
+			if(W_GuardInterval == 'long'||W_GuardInterval5 == '1ong')
+			{
+				text_n = [].concat(M20_N1_G8[0] , M20_N3_G8[0]);
+				value_n = [].concat(M20_N1_G8[1] , M20_N3_G8[1]);
+			}
+			else
+			{
+				text_n = [].concat(M20_N1_G4[0] , M20_N3_G4[0]);
+				value_n = [].concat(M20_N1_G4[1] , M20_N3_G4[1]);
+			}
+		}
+		else
+		{
+			if(W_GuardInterval == 'long'||W_GuardInterval5 == '1ong')
+			{
+				text_n = [].concat(M40_N1_G8[0] , M40_N3_G8[0]);
+				value_n = [].concat(M40_N1_G8[1] , M40_N3_G8[1]);
+			}
+			else
+			{
+				text_n = [].concat(M40_N1_G4[0] , M40_N3_G4[0]);
+				value_n = [].concat(M40_N1_G4[1] , M40_N3_G4[1]);
+			}
+		}
+	}
+	
+	
+	/*if(_tmpMode ==  'b'){ // -> for b	
+	    $('#SELECT_BandWidth').arrt('disabled',true);
+		_text  = [].concat(rate_auto , rate_b);
+		_value = [].concat(rate_auto , rate_b);
+	} else */if (_tmpMode ==  'g') { // -> for g
+	     $('#SELECT_BandWidth').attr('disabled',true);
+		_text  = [].concat(rate_auto[0] , rate_g[0]);
+		_value = [].concat(rate_auto[2] , rate_g[1]);
+	} /*else if (_tmpMode ==  'bg') { // -> for bg
+	     $('#SELECT_BandWidth').arrt('disabled',true);
+		_text  = [].concat(rate_auto , arrDelete(([].concat(rate_b, rate_g)).sort(sortNumber))); 
+		_value = [].concat(rate_auto , arrDelete(([].concat(rate_b, rate_g)).sort(sortNumber))); 
+	} */else if (_tmpMode ==  'n'){ // -> for n only
+	     $('#SELECT_BandWidth').attr('disabled',false);
+		_text  = [].concat(rate_auto[0] , arrDelete(text_n.sort(sortNumber)));
+		_value = [].concat(rate_auto[1] , arrDelete(value_n.sort(sortNumber)));
+	}/*else if (_tmpMode ==  'ng'){ // -> for n/g	 
+	    $('#SELECT_BandWidth').arrt('disabled',false);
+		_text  = [].concat(rate_auto , arrDelete(([].concat(rate_g, text_n)).sort(sortNumber)));
+		_value = [].concat(rate_auto , arrDelete(([].concat(rate_g, text_n)).sort(sortNumber)));
+	}*/else if (_tmpMode ==  'bgn'){ // -> for b/g/n
+		$('#SELECT_BandWidth').attr('disabled',false);
+	    _text  = [].concat(rate_auto[0]  , arrDelete(([].concat(rate_b[0], rate_g[0], text_n)).sort(sortNumber)));
+		_value = [].concat(rate_auto[1]  , arrDelete(([].concat(rate_b[1], rate_g[1] , value_n))));
+	}else if (_tmpMode ==  'a'){
+		 $('#SELECT_BandWidth').attr('disabled',true);
+		_text  = [].concat(rate_auto[0]  , rate_a[0]);
+		_value = [].concat(rate_auto[2] , rate_a[1]);
+	}else if (_tmpMode ==  'ac'){
+		 $('#SELECT_BandWidth').attr('disabled',false);
+		_text  = [].concat(rate_auto[0]  , arrDelete(([].concat(rate_a[0], text_n)).sort(sortNumber)));
+		_value = [].concat(rate_auto[1]  , arrDelete(([].concat(rate_a[1], value_n))));
+	}
+	
+	_text[0]=variable.land_auto;
+
+	if(card == 0){
+		selectid = 'SELECT_MaxRate';
+	}else{
+		selectid = 'SELECT_MaxRate5';
+	}
+	$('#'+selectid).empty();
+	
+	CreateOptions(selectid,_text,_value);
+}
+/********************security  start************************/
+function SecurityOptions(_unit)
+{	
+	var wl_prev = 'wl'+_unit+'.3';
+	var _key = wl_prev+'_key';
+	var _key1 = wl_prev+'_key1';
+	var _key2 = wl_prev+'_key2';
+	var _key3 = wl_prev+'_key3';
+	var _key4 = wl_prev+'_key4';
+	var _auth = wl_prev+'_auth';
+	var _wep_type = wl_prev+'_wep_type';
+	var _wpa_psk = wl_prev+'_wpa_psk';
+	
+	var select_opt = $("#SELECT_Securityoptions").val();
+	if(select_opt=="none")
+	{
+		$("#module_wep, #module_tkip, #module_aes, #module_tkipaes").hide();
+	}
+	else if(select_opt=="wep")
+	{
+		$("#module_tkip, #module_aes, #module_tkipaes").hide();
+		$("#module_wep").show();
+		
+		$("#SELECT_Authtype").val(G_json[_auth]);
+		$("#SELECT_Encryptstrength").val(G_json[_wep_type]);
+		
+		$(":radio[name=INPUT_radiokey][value="+G_json[_key]+"]").attr("checked",'true');
+		$("#INPUT_key1").val(G_json[_key1]);
+		$("#INPUT_key2").val(G_json[_key2]);
+		$("#INPUT_key3").val(G_json[_key3]);
+		$("#INPUT_key4").val(G_json[_key4]);
+		
+		setKeys();
+	}
+	else if(select_opt=="tkip")
+	{
+		$("#module_wep, #module_aes, #module_tkipaes").hide();
+		$("#module_tkip").show();
+		
+		$("#INPUT_tkipkey").val(G_json[_wpa_psk]);
+	}
+	else if(select_opt=="aes")
+	{
+		$("#module_wep, #module_tkip, #module_tkipaes").hide();
+		$("#module_aes").show();
+		
+		$("#INPUT_aeskey").val(G_json[_wpa_psk]);
+	}
+	else if(select_opt=="tkipaes")
+	{
+		$("#module_wep, #module_tkip, #module_aes").hide();
+		$("#module_tkipaes").show();
+		
+		$("#INPUT_tkipaeskey").val(G_json[_wpa_psk]);
+	}
+}
+
+function setKeys()
+{
+	var cf=$("#SELECT_Encryptstrength").val();
+
+	if (cf == '64bits')
+	{
+		if ($("#INPUT_key1").val().length>10)
+		    $('#INPUT_key1').val($('#INPUT_key1').val().substring(0,10));
+		if ($("#INPUT_key2").val().length>10)
+		    $('#INPUT_key2').val($('#INPUT_key2').val().substring(0,10));
+		if ($("#INPUT_key3").val().length>10)
+		    $('#INPUT_key3').val($('#INPUT_key3').val().substring(0,10));
+		if ($("#INPUT_key4").val().length>10)
+		    $('#INPUT_key4').val($('#INPUT_key4').val().substring(0,10));
+
+		$("#INPUT_key1").attr({maxlength:10,size:12});
+		$("#INPUT_key2").attr({maxlength:10,size:12});
+		$("#INPUT_key3").attr({maxlength:10,size:12});
+		$("#INPUT_key4").attr({maxlength:10,size:12});
+    }
+    else if(cf == '128bits')
+    {
+        if ($("#INPUT_key1").val().length>26)
+			$('#INPUT_key1').val($('#INPUT_key1').val().substring(0,26));
+        if ($("#INPUT_key2").val().length>26)
+            $('#INPUT_key2').val($('#INPUT_key2').val().substring(0,26));
+        if ($("#INPUT_key3").val().length>26)
+            $('#INPUT_key3').val($('#INPUT_key3').val().substring(0,26));
+        if ($("#INPUT_key4").val().length>26)
+            $('#INPUT_key4').val($('#INPUT_key4').val().substring(0,26));
+		
+		$("#INPUT_key1").attr({maxlength:26,size:34});
+		$("#INPUT_key2").attr({maxlength:26,size:34});
+		$("#INPUT_key3").attr({maxlength:26,size:34});
+		$("#INPUT_key4").attr({maxlength:26,size:34});
+    }
+
+    WepKeyChange();
+}
+
+function WepKeyChange()
+{
+	for (var i=1; i<=4; i++)
+	{
+		$("#INPUT_key"+i).attr("disabled", ($("input[name=INPUT_radiokey]:checked").val()==i) ? false : true);
+	}
+}
+
+function uiKeyInputMaxlength()
+{
+	if($("#SELECT_Encryptstrength").val() == '64bits')
+		return 10;
+	if($("#SELECT_Encryptstrength").val() == '128bits')
+		return 26;
+}
+
+function SecurityOptionsCreate()
+{
+	var _Bool = false;
+	if(G_json['wl'+card+'.3'+'_wds_enable'] == 1) _Bool = true;
+
+	if(_Bool)
+	{
+		var new_values = ['none','wep'];
+		var new_options  = [variable.lang_none,'Wep'];
+	}
+	else
+	{	var mode_id = card==0?'#SELECT_Mode':'#SELECT_Mode5';
+		if($(mode_id).val()=='n'){
+			var new_values = ['none','aes','tkipaes'];
+			var new_options  = [variable.lang_none,'WPA2-PSK[AES]','WPA-PSK[TKIP]+WPA2-PSK[AES]'];
+		}else{
+			var new_values = ['none','wep','tkip','aes','tkipaes'];
+			var new_options  = [variable.lang_none,'Wep','WPA-PSK[TKIP]','WPA2-PSK[AES]','WPA-PSK[TKIP]+WPA2-PSK[AES]'];
+		}
+	}
+
+	CreateOptions('SELECT_Securityoptions', new_options, new_values);
+}
+function calcPassphrase()
+{
+	if($("#passphraseStrWep").val().length == 0){
+		alertError('PassPhrase_Blank');
+		return;
+	}
+	if($('#SELECT_Encryptstrength').val() == '64bits')
+			PassPhrase40();
+	else
+			PassPhrase104();
+}
+function PassPhrase40()
+{
+	var seed = 0;
+	var pseed = new Array(0, 0, 0, 0);
+	var pkey = new Array(4);
+	pkey[0] = '';
+	pkey[1] = '';
+	pkey[2] = '';
+	pkey[3] = '';
+
+	Length = $("#passphraseStrWep").val().length;
+	
+	if(Length != 0){
+		for (i=0; i<Length; i++ ){
+			pseed[i%4] ^= $("#passphraseStrWep").val().charCodeAt(i);
+		}
+		seed = pseed[0];
+		seed += pseed[1] << 8;
+		seed += pseed[2] << 16;
+		seed += pseed[3] << 24;
+	}
+	
+	for(j=0; j<4; j++){
+		for (i=0; i<5 ;i++ ){
+			seed = (214013 * seed) & 0xffffffff;
+			if(seed & 0x80000000)
+				seed = (seed & 0x7fffffff) + 0x80000000 + 0x269ec3;
+			else
+				seed = (seed & 0x7fffffff) + 0x269ec3;
+			temp = ((seed >> 16) & 0xff);
+			if(temp < 0x10)
+				pkey[j] += "0" + temp.toString(16).toUpperCase();
+			else
+				pkey[j] += temp.toString(16).toUpperCase();
+		}
+		$("#INPUT_key"+(j+1)).val(pkey[j]);	
+	}	
+}
+
+function PassPhrase104()
+{
+	var pseed2 = "";
+	var pkey = new Array(4);
+	
+	pkey[0] = '';
+	pkey[1] = '';
+	pkey[2] = '';
+	pkey[3] = '';
+	
+	Length2 = $("#passphraseStrWep").val().length;
+	    
+	for(p=0; p<64; p++){
+		tempCount = p % Length2;
+		pseed2 += $("#passphraseStrWep").val().substring(tempCount, tempCount+1);
+	}
+	md5Str = calcMD5(pseed2);
+	pkey[0] = md5Str.substring(0, 26).toUpperCase();
+	pkey[1] = md5Str.substring(2, 28).toUpperCase();;
+	pkey[2] = md5Str.substring(4, 30).toUpperCase();;
+	pkey[3] = md5Str.substring(6, 32).toUpperCase();;
+	
+	$("#INPUT_key1").val(pkey[0]);
+	$("#INPUT_key2").val(pkey[1]);
+	$("#INPUT_key3").val(pkey[2]);
+	$("#INPUT_key4").val(pkey[3]);
+}
+/**************security end********************/
+
+function processCSS(){
+	$('table').attr({'width':"100%" ,'border':"0", 'cellpadding':"0" ,'cellspacing':"0"})
+	.children().children().attr('nowrap','');
+	$("tr td:nth-child(2)").width("60%");
+	$(":button").addClass('submitBtn');
+}
+</script>
+<div class="config3">
+<div id="lang_basic" class="mainbiao"></div>
+<table class="table01">
+<tbody>
+	<tr><td id="lang_basic_introduction" class="lable" colspan="2"></td></tr>
+	<tr>
+		<td id="lang_Network_Adapter"></td>
+		<td nowrap="" width="40%">
+			<select id="SELECT_Adapter" >
+				<option value="0">2.4G</option>
+				<option value="1">5G</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td id="lang_Region"></td>
+		<td nowrap=""><select id="SELECT_Region"></select></td>
+	</tr>
+	<tr><td id="lang_wireless_network" class="lable" colspan="2"></td></tr>
+</tbody>
+</table>
+
+<table id="table_2g" class="table01" style="display:none;"><tbody>
+	<tr><td colspan="2">
+        <input type="checkbox" id="CHECKBOX_EnableRadio" />
+        <span id="langEnableRadioContext"></span>
+    </td></tr>
+    <tr><td colspan="2">
+        <input type="checkbox" id="CHECKBOX_EnableSSID" />
+        <span id="langEnableSSIDContext"></span>
+    </td></tr>
+    <tr><td colspan="2">
+        <input type="checkbox" id="CHECKBOX_EnableIsolated" />
+        <span id="langEnableIsolatedContext1"></span>
+    </td></tr>
+     <tr>
+        <td id="lang_SSID" width="40%"></td>
+        <td><input type="text" id="INPUT_ssid" size="25" maxlength="32"></td>
+    </tr>
+    <tr>
+        <td id="lang_mode"></td>
+        <td><select id="SELECT_Mode"></select></td>
+    </tr>
+    <tr>
+        <td id="lang_channel"></td>
+        <td><select id="SELECT_Channel"></select></td>
+    </tr>
+    <tr>
+        <td id="lang_other_channel"></td>
+        <td><select id="SELECT_ExtensionChannel" disabled=""></select></td>
+    </tr>
+    <tr>
+        <td id="lang_2040"></td>
+        <td><select id="SELECT_BandWidth">
+            <option value="20" >20MHz</option>
+            <option value="40" >20/40MHz</option>
+        </select></td>
+    </tr>
+    <tr style="display:none">
+        <td nowrap=""><span id="lang_Rate"></span></td>
+        <td nowrap=""><select id="SELECT_MaxRate" ></select>&nbsp;&nbsp;Mbps</td>
+    </tr>
+    <tr>
+        <td id="langEnableIsolatedContext"></td>
+        <td><select id="EnableIsolatedContext">
+            <option value="0" id="lang_IsolatedOff">&nbsp;Off&nbsp;&nbsp;</option>
+            <option value="1" id="lang_IsolatedOn">&nbsp;On&nbsp;&nbsp;</option>
+        </select></td>
+    </tr>
+    <tr>
+        <td>802.11e/WMM QoS &gt;</td>
+        <td><select id="SELECT_EnableWmm">
+            <option value="0" id="lang_WmmOff">&nbsp;Off&nbsp;&nbsp;</option>
+            <option value="1" id="lang_WmmOn">&nbsp;On&nbsp;&nbsp;</option></select>
+        </td>
+    </tr>
+</tbody></table>
+
+
+<table id="table_5g" class="table01"><tbody>
+	<tr><td colspan="2">
+        <input type="checkbox" id="CHECKBOX_EnableRadio5" />
+        <span id="langEnableRadioContext5"></span>
+    </td></tr>
+    <tr><td colspan="2">
+    	<input type="checkbox" id="CHECKBOX_EnableSSID5" checked="">
+        <span id="langEnableSSIDContext5"></span>
+     </td>
+    </tr>
+    <tr><td colspan="2">
+        <input type="checkbox" id="CHECKBOX_EnableIsolated5" />
+        <span id="langEnableIsolatedContext15"></span>
+    </td></tr>
+     <tr>
+        <td id="lang_SSID5"></td>
+        <td><input type="text" id="INPUT_ssid5" size="25" maxlength="32"></td>
+    </tr>
+    <tr>
+        <td id="lang_mode5"></td>
+        <td><select id="SELECT_Mode5"></select></td>
+    </tr>
+    <tr>
+        <td id="lang_channel5"></td>
+        <td><select id="SELECT_Channel5"></select></td>
+    </tr>
+    <tr>
+        <td id="lang_other_channel5"></td>
+       <td><select id="SELECT_ExtensionChannel5" disabled=""><option value="0">Auto</option></select></td>
+    </tr>
+    <tr>
+        <td id="lang_20405"></td>
+        <td><select id="SELECT_BandWidth5"></select></td>
+    </tr>
+     <tr style="display:none">
+        <td nowrap=""><span id="lang_Rate5"></span></td>
+        <td nowrap=""><select id="SELECT_MaxRate5" ></select>&nbsp;&nbsp;Mbps</td>
+    </tr>
+    <tr>
+        <td id="langEnableIsolatedContext5"></td>
+        <td><select id="EnableIsolatedContext5">
+            <option value="0" id="lang_IsolatedOff5">&nbsp;Off&nbsp;&nbsp;</option>
+            <option value="1" id="lang_IsolatedOn5">&nbsp;On&nbsp;&nbsp;</option></select>
+        </td>
+    </tr>
+    <tr>
+        <td>802.11e/WMM QoS &gt;</td>
+        <td><select id="SELECT_EnableWmm5">
+            <option value="0" id="lang_WmmOff5">&nbsp;Off&nbsp;&nbsp;</option>
+            <option value="1" id="lang_WmmOn5">&nbsp;On&nbsp;&nbsp;</option></select>
+        </td>
+    </tr>
+</tbody></table>
+    
+<table class="table01"><tbody>
+    <tr>
+    	<td class="lable" colspan="2">
+            <span id="lang_Profile_securitynum"></span>
+            <span id="Profile_securitynum"></span>
+    	</td>
+    </tr>
+    <tr>
+        <td><span id="lang_SecurityOptions"></span></td>
+        <td><select id="SELECT_Securityoptions"></select></td>
+    </tr>
+</tbody></table>
+
+<div id="module_wep" style="display:none">
+<table  class="table01"><tbody>
+    <tr><td colspan="2" class="lable"><p id="lang_SecurityEncryptionWep"></p></td></tr>
+    <tr>
+        <td ><span id="lang_AuthenticationType"></span></td>
+        <td><select name="select" id="SELECT_Authtype" >
+                  <option value="2" id="lang_automatic">Automatic</option>
+                  <option value="1" id="lang_shared">Shared Key</option>
+            </select>	
+        </td>
+    </tr>
+    <tr>
+        <td><span id="lang_EncryptionStrength"></span></td>
+        <td ><select id="SELECT_Encryptstrength" onChange="setKeys();">
+                <option value="64bits" id="lang_length64">64 bits</option>
+                <option value="128bits" id="lang_length128">128 bits</option>					
+    		</select>
+        </td>
+    </tr>
+    <tr><td colspan="2" class="lable"><p id="lang_SecurityEncryptionWepKey"></p></td></tr>
+    <tr>
+    	<td>
+            <span id="lang_key1"></span>
+            <input type="radio"  name="INPUT_radiokey" id="INPUT_radiokey1" value="1" onclick="WepKeyChange();">
+        </td>
+    	<td><input type="text" id="INPUT_key1" onFocus="this.maxLength=uiKeyInputMaxlength();"></td>
+    </tr>
+    <tr>
+    	<td >
+        	<span id="lang_key2"></span>
+            <input type="radio"  name="INPUT_radiokey"  id="INPUT_radiokey2" value="2" onclick="WepKeyChange();">
+        </td>
+    	<td ><input type="text" id="INPUT_key2" onFocus="this.maxLength=uiKeyInputMaxlength();"></td>
+    </tr>
+    <tr>
+    	<td >
+        	<span id="lang_key3"></span>
+            <input type="radio"  name="INPUT_radiokey"  id="INPUT_radiokey3" value="3" onclick="WepKeyChange();">
+        </td>
+    	<td><input type="text" id="INPUT_key3" onFocus="this.maxLength=uiKeyInputMaxlength();"></td>
+    </tr>
+    <tr>
+    	<td>
+        	<span id="lang_key4"></span>
+            <input type="radio"  name="INPUT_radiokey"  id="INPUT_radiokey4" value="4" onclick="WepKeyChange();">
+        </td>
+    	<td><input type="text" id="INPUT_key4" onFocus="this.maxLength=uiKeyInputMaxlength();"></td>
+    </tr>
+    <tr>
+    	<td><span id="lang_passphrase"></span></td> 
+        <td align="left">
+            <input type="text" maxlength="30" size="10" id="passphraseStrWep" />
+            <input type="button" id="lang_generate"  onClick="calcPassphrase();">
+    	</td>
+   </tr>
+</tbody>
+</table>
+</div><!---end of <div id="module_wep">--->
+
+<div id="module_tkip" style="display:none">
+<table class="table01">
+<tbody>
+    <tr><td colspan="2" class="lable"><p id="lang_SecurityOptionsWpaPsk"></p></td></tr>
+    <tr>
+    	<td ><span id="lang_PassPhraseWpaPsk"></span></td>
+    	<td >
+        	<input type="text" id="INPUT_tkipkey" size="20" maxlength="64" style="width:auto ">
+            <span id="lang_charactersWpaPsk"></span>
+        </td>
+    </tr>
+</tbody>
+</table>
+</div><!---end of <div id="module_tkip">--->
+
+    
+<div id="module_aes" style="display:none">
+<table class="table01">
+<tbody>
+    <tr><td colspan="2" class="lable"><p id="lang_SecurityOptionsWpa2Psk"></p></td></tr>
+    <tr>
+        <td ><span id="lang_PassPhraseWpa2Psk"></span></td>
+        <td >
+        	<input type="text"  id="INPUT_aeskey" size="20" maxlength="64" style="width:auto ">
+            <span id="lang_charactersWpa2Psk"></span>
+        </td>
+    </tr>
+</tbody>
+</table>
+</div><!---end of <div id="module_aes">--->
+
+<div id="module_tkipaes" style="display:none">
+<table class="table01">
+<tbody>
+    <tr><td class="lable" colspan="2"><p id="lang_SecurityOptionsWpaPskWpa2Psk"></p></td></tr>
+    <tr>
+        <td><span id="lang_PassPhraseWpaPskWpa2Psk"></span></td>
+        <td >
+        	<input type="text"  id="INPUT_tkipaeskey" size="20" maxlength="64" style="width:auto ">
+            <span id="lang_charactersWpaPskWpa2Psk"></span>
+        </td>
+    </tr>
+</tbody>
+</table>
+</div><!---end of <div id="module_tkipaes">--->
+
+<div class="div_button">
+    <input type="button" id="lang_cancle" onClick="uiPageRefresh();">&nbsp;&nbsp;
+    <input type="button" id="lang_apply" onClick="uiSubmit();">
+   </div>
+</div>

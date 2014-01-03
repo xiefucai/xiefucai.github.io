@@ -1,0 +1,35 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- include page -->
+<link type="text/css" rel="stylesheet" href="common.css" media="screen" />
+<script language="javascript" type="text/javascript" src="jquery-1.3.2.js"></script>
+<script language="javascript" type="text/javascript" src="global.js"></script>
+<script language="javascript" type="text/javascript">
+function uiNextPage(){
+   var _mode =$('input:radio[name="WANDetc"]:checked').val(); 
+   var _page='wanadsl.html';
+   
+	if(_mode=='AutoDetc'){
+		_page = 'WIZ_cfm.html';
+	}else{
+		Goto(2,1,"lang_wansetup_wizard","lang_adsl")
+	}
+  window.location.href=_page+"?t="+new Date();
+}
+
+</script>
+
+<div id="toptable" class="config3">
+	<div id="lang_title" class="mainbiao"></div>
+    <div id="lang_introduction" class="mainbiao1"></div>
+    <table><tbody>
+        <tr><td>
+            <input type="radio" name="WANDetc" value="AutoDetc" checked="">
+            <span id="lang_yes"></span>
+        </td></tr>
+        <tr><td>
+            <input type="radio" name="WANDetc" value="MyDetc">
+            <span id="lang_no"></span>
+        </td></tr>
+    </tbody></table>
+    <div class="div_button"><input type="button" class="submitBtn" onClick="uiNextPage();" id="lang_next"></div>
+</div>

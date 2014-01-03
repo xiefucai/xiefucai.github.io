@@ -35,7 +35,7 @@ ul,ol,li,dl,dt,dd{margin:0;padding:0;list-style:none;}
 .main-2{position:relative;}
 .autoheight{overflow-y:visible;}
 .main-head-space{height:106px;}
-.main-foot-space{height:56px;}
+.main-foot-space{height:56px;clear:both;}
 .slider-ctrs-left,.slider-ctrs-right{color:#fff;text-decoration:none;font-family:"宋体","文泉驿等宽正黑";margin:0 15px;position:absolute;top:50%;font-size:48px;z-index:2;}
 .slider-ctrs-right{position:absolute;right:0;}
 .slider-ctrs-label{font-size:18px;position:absolute;top:0;white-space:nowrap;line-height:54px;display:none;}

@@ -1,0 +1,1030 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- include page -->
+<link type="text/css" rel="stylesheet" href="common.css" media="screen" />
+<script language="javascript" type="text/javascript" src="jquery-1.3.2.js"></script>
+<script language="JavaScript" type="text/javascript" src="language.js"></script>
+<script language="javascript" type="text/javascript" src="global.js"></script>
+<script language="javascript" type="text/javascript">
+var myjson;
+$(function(){
+	$.getJSON("dataCenter.js", {lan_backupip:"",lan_backupnetmask:"",router_disable:"",lan_apmodeip:"",lan_apmodenetmask:"",lan_backupip:"",lan_backupnetmask:"",router_disable:"",lan_apmodeip:"",
+	lan_apmodenetmask:"",lan_ipaddr:'',pc_login_macaddr:'gval',sta_enable:"",assoc_ssid:"gval",stainterface:'',sta_assocencmode:"",sta_assocpassword:"",sta_assocauthmode:"",wl0_auth:'',wl1_auth:'',wl0_key:'',wl1_key:'',wl0_mode:'',wl1_mode:'',	wl0_security_choice :'',wl1_security_choice :'',
+		wl0_wep :'',            	wl1_wep :'',
+		wl0_akm :'',            	wl1_akm :'',
+		wl0_key :'',            	wl1_key :'',
+		wl0_key1:'',            	wl1_key1:'', 
+		wl0_key2:'',            	wl1_key2:'', 
+		wl0_key3:'',            	wl1_key3:'', 
+		wl0_key4:'',            	wl1_key4:'',
+		wl0_crypto :'',         	wl1_crypto :'', 
+		wl0_wep_type:'',            wl1_wep_type:'',
+		wl0_wpa_psk:'',         	wl1_wpa_psk:'',
+		wl0_auth:'',            	wl1_auth:'',
+		wl0_auth_mode:'',       	wl1_auth_mode:'',
+		wl0_ssid:"",                	   wl1_ssid:"", 
+		wl_unit : ''},function(json){
+	myjson=json;
+
+	var modeselect="";
+	if(json.router_disable==1&&(json.wl0_mode=="psr"||json.wl1_mode=="psr"))  //repeater模式
+	{
+		$("#SELECT_Mode").val("repeater");
+		 modeselect="repeater";
+	}
+	else if(json.router_disable==1&&json.sta_enable==0)  //ap模式
+	{
+		 $("#SELECT_Mode").val("ap");
+		 modeselect="ap";
+	}
+	else if(json.sta_enable==1)				//sta模式
+	{
+		$("#SELECT_Mode").val("sta");
+		 modeselect="sta";
+	}
+	
+	else									//router模式
+	{
+		$("#SELECT_Mode").val("router");
+		 modeselect="router";
+	}
+	
+	SelectModeChang(modeselect);		//显示对应的模式的页面内容
+	
+	
+	//$("input[name=router_disable][value="+json.router_disable+"]").attr("checked",true); 
+	//加载ap模式
+	OnloadIP4hops(json.lan_apmodeip, $("#lan_ipTd").children());
+	OnloadIP4hops(json.lan_apmodenetmask, $("#lan_maskTd").children());
+	
+	//加载sta模 式
+	$('#SELECT_STA_Adapter').val(myjson.stainterface);
+	if(myjson.assoc_ssid=="(null)")
+	$("#conn_ssid").html("");
+	else
+	$("#conn_ssid").html(myjson.assoc_ssid);//写入连接状态：读取assoc_ssid默认值
+	$("#SELECT_Securityoptions").val(json.sta_assocencmode);   //选用哪种加密方式
+
+		stainterface =$('#SELECT_STA_Adapter').val();//得到2G/5G选中按钮的属性值0--2G 1--5G
+		selectmode = stainterface;			
+		SecurityOptions(selectmode);//根据属性值初始化对应参数（json格式）				
+		//2. 2G、5G模式更改时触发启、禁用操作
+		$('#SELECT_STA_Adapter').change(function(){
+			stainterface =$('#SELECT_STA_Adapter').val();
+			//alert(stainterface);
+			selectmode = stainterface;
+			SecurityOptions(selectmode);
+		});
+		//3. Security Options选项更改时触发的启、禁用及菜单隐藏操作
+		$("#SELECT_Securityoptions").change(function(){
+			SecurityOptions(selectmode);
+		});
+		
+		//repeater模式加载
+		$('#SELECT_repeater_Adapter').val(json.stainterface);
+		$("#Repeater_SELECT_Securityoptions").val(json['wl'+json.stainterface+'.3'+'_security_choice']);
+
+		if(myjson.assoc_ssid=="(null)")
+		$("#repeater_conn_ssid").html("");
+		else
+		$("#repeater_conn_ssid").html(myjson.assoc_ssid);
+
+
+		if(json.stainterface=='0')
+		{
+			$('#repeaterINPUTSsid').val(json.wl0_ssid);
+		}
+		else
+		{
+			$('#repeaterINPUTSsid').val(json.wl1_ssid);
+		}
+		RepeaterSecurityOptions(json.stainterface);
+		$("#SELECT_repeater_Adapter").change(function(){
+		if(this.value=='0')
+		{
+			$('#repeaterINPUTSsid').val(json.wl0_ssid);
+			if(json.stainterface=='1')
+			{
+				$("#conn_ssid").html("");
+				$("#repeater_conn_ssid").html("");
+			}
+			else
+			{
+				$("#conn_ssid").html(myjson.assoc_ssid);
+				$("#repeater_conn_ssid").html(myjson.assoc_ssid);
+			}
+		}
+		else
+		{
+			$('#repeaterINPUTSsid').val(json.wl1_ssid);
+			if(json.stainterface=='0')
+			{
+				$("#conn_ssid").html("");
+				$("#repeater_conn_ssid").html("");
+			}
+			else
+			{
+				$("#conn_ssid").html(myjson.assoc_ssid);			
+				$("#repeater_conn_ssid").html(myjson.assoc_ssid);
+			}
+		}
+		$("#Repeater_SELECT_Securityoptions").val(json['wl'+json.stainterface+'.3'+'_security_choice']);
+		RepeaterSecurityOptions(this.value);
+		
+		});
+		
+    });
+	
+	processCSS();
+});
+
+function Onload_init_repeater_2G()
+{
+
+
+}
+
+
+/********************security  start************************/
+function SecurityOptions(selectmode)
+{	
+	var wl_prev = 'wl'+selectmode;//wl0_ / wl1_
+	var _key = wl_prev+'_key';//wep密码
+	var _auth = wl_prev+'_auth';//wep认证类型
+	var select_opt = $("#SELECT_Securityoptions").val();
+
+	if(select_opt=="none")
+	{
+		$("#module_wep, #module_tkip, #module_aes, #module_tkipaes").hide();
+	}
+	else if(select_opt=="wep")
+	{
+		$("#module_tkip, #module_aes, #module_tkipaes").hide();
+		$("#module_wep").show();
+		if(selectmode=='0')
+		{
+			var indexkey=myjson.wl0_key;
+		}
+		else
+		var indexkey=myjson.wl1_key;
+		$("#SELECT_Authtype").val(myjson[_auth]);
+		$(":radio[name=INPUT_radiokey][value="+indexkey+"]").attr("checked",'true');//根据myjson[_key]初始值选中某个key
+		WepKeyChange();
+		WepKeySet();//设置key
+	}
+	else if(select_opt=="tkip")
+	{
+		$("#module_wep, #module_aes, #module_tkipaes").hide();
+		$("#module_tkip").show();
+		
+		$("#INPUT_tkipkey").val(myjson[sta_assocpassword]);
+	}
+	else if(select_opt=="aes")
+	{
+		$("#module_wep, #module_tkip, #module_tkipaes").hide();
+		$("#module_aes").show();
+		
+		$("#INPUT_aeskey").val(myjson[sta_assocpassword]);
+	}
+	else if(select_opt=="tkipaes")
+	{
+		$("#module_wep, #module_tkip, #module_aes").hide();
+		$("#module_tkipaes").show();
+		
+		$("#INPUT_tkipaeskey").val(myjson[sta_assocpassword]);
+	}
+}
+//设置4个key
+function WepKeySet()
+{
+	var wl_prev = 'wl'+selectmode;//wl0_ / wl1_
+	var _key = wl_prev+'_key';//wep密码
+	if(selectmode=='0')
+	{
+		var indexkey=myjson.wl0_key;
+	}
+	else
+	var indexkey=myjson.wl1_key;
+	
+	$("#INPUT_key"+indexkey).val(myjson.sta_assocpassword);//设置初始值
+	for (var i=1; i<=4; i++)
+	{
+		if ($("#INPUT_key"+i).val().length>26)//密码最大字符长度不超过26
+		{
+			$('#INPUT_key'+i).val($('#INPUT_key'+i).val().substring(0,26));		
+		}
+		$("#INPUT_key"+i).attr({maxlength:26,size:34});
+	}
+	WepKeyChange();
+}
+//禁、启用4个key
+function WepKeyChange()
+{
+	for (var i=1; i<=4; i++)
+	{
+		$("#INPUT_key"+i).attr("disabled", ($("input[name=INPUT_radiokey]:checked").val()==i) ? false : true);
+	}
+}
+/**************security end********************/
+
+function uiKeyInputMaxlength()
+{
+		return 26;
+}
+
+function uiConnect(){
+
+	var postVar = { action : "Apply", mode:"tw_staAssoc",getPage:"wireless_sta.html"};
+	
+	//interface
+	var stainterface =$('#SELECT_STA_Adapter').val();
+
+	postVar["_flg"]=0;
+	
+	if(myjson.sta_enable==1)
+	{
+		;//ok
+	}else{
+		alert('should set to STA mode first');
+	}
+	var assocSSID = $("#INPUTSsid").val();
+	postVar["sta_assocssid"]=assocSSID;
+	postVar["stainterface"]=stainterface;
+	
+	/************security  start**************/
+	var _tmp,_prev;		
+	_prev = 'wl'+selectmode;//selectmode值：0-wl0->2G 1-wl1->5G
+	
+	if($("#SELECT_Securityoptions").val()=="none")
+	{//1.只提交加密方式：none
+		_tmp = 'sta_assocencmode';
+		postVar[_tmp]= "none";
+	}
+	else if($("#SELECT_Securityoptions").val()=="wep")
+	{
+		_tmp = 'sta_assocencmode';
+		postVar[_tmp]= "wep";//1.提交加密方式
+
+		_tmp = _prev+'_auth';
+		postVar[_tmp]= $("#SELECT_Authtype").val();//2.提交wep认证类型
+		
+		_tmp = _prev+'_key';
+		postVar[_tmp]= $("input[name=INPUT_radiokey]:checked").val();//3.提交key
+		
+		//_tmp = _prev+'_sta_assocpassword';
+		_tmp = 'sta_assocpassword';
+		var key = $("input[name=INPUT_radiokey]:checked").val();//key编号
+		postVar[_tmp]= $("#INPUT_key"+key).val();//4.提交key密码
+	}
+	else if($("#SELECT_Securityoptions").val()=="tkip")
+	{
+		_tmp = 'sta_assocencmode';
+		postVar[_tmp]= "tkip";//1.提交加密方式
+
+		_tmp = 'sta_assocauthmode';
+		postVar[_tmp]= "wpapsk";//2.提交wpapsk加密算法
+		
+		_tmp = 'sta_assocpassword';
+		postVar[_tmp]= $("#INPUT_tkipkey").val();//3.提交加密密码
+	}
+	else if($("#SELECT_Securityoptions").val()=="aes")
+	{
+		_tmp = 'sta_assocencmode';
+		postVar[_tmp]= "aes";//1.提交加密方式
+
+		_tmp = 'sta_assocauthmode';
+		postVar[_tmp]= "wpa2psk";//2.提交wpa2psk加密算法
+		
+		_tmp = 'sta_assocpassword';
+		postVar[_tmp]= $("#INPUT_aeskey").val();//3.提交加密密码
+	}
+	else if($("#SELECT_Securityoptions").val()=="tkipaes")
+	{
+		_tmp = 'sta_assocencmode';
+		postVar[_tmp]= "tkip*aes";//1.提交加密方式
+
+		_tmp = 'sta_assocauthmode';
+		postVar[_tmp]= "wpapsk/wpa2psk";//2.提交wpapsk/wpa2psk加密算法
+		
+		_tmp = 'sta_assocpassword';
+		postVar[_tmp]= $("#INPUT_tkipaeskey").val();//3.提交加密密码
+	}
+	/**************security end*****************/		
+
+	uiPost(postVar);
+	return ;
+	
+}
+
+function SelectModeChang(type)
+{
+	if(type=="ap")
+	{
+		$('#apArea').show();
+		$('#repeaterArea').hide();
+		$('#staArea').hide();
+	
+	}
+	
+	else if(type=="sta")
+	{
+		$('#apArea').hide();
+		$('#repeaterArea').hide();
+		$('#staArea').show();
+		if(myjson.sta_enable=='1'&&myjson.wl0_mode==""&&myjson.wl1_mode=="") //此时是STA模式
+		{
+			$("#SELECT_STA_Adapter").attr("disabled",false);
+			$("#INPUTSsid").attr("disabled",false);
+			$("#stascan").attr("disabled",false);
+			$("#SELECT_Securityoptions").attr("disabled",false);
+		}
+		else
+		{
+			$("#SELECT_STA_Adapter").attr("disabled",true);
+			$("#INPUTSsid").attr("disabled",true);
+			$("#stascan").attr("disabled",true);
+			$("#SELECT_Securityoptions").attr("disabled",true);
+		}
+	
+	}
+	
+	else if(type=="repeater")
+	{
+		$('#apArea').hide();
+		$('#staArea').hide();
+		$('#repeaterArea').show();
+		if(myjson.wl0_mode=="psr"||myjson.wl1_mode=="psr")
+		{
+			$("#SELECT_repeater_Adapter").attr("disabled",false);
+			$("#repeaterINPUTSsid").attr("disabled",false);
+			$("#scan").attr("disabled",false);
+			$("#Repeater_SELECT_Securityoptions").attr("disabled",false);
+		}
+		else
+		{
+			$("#SELECT_repeater_Adapter").attr("disabled",true);
+			$("#repeaterINPUTSsid").attr("disabled",true);
+			$("#scan").attr("disabled",true);
+			$("#Repeater_SELECT_Securityoptions").attr("disabled",true);
+		}
+	
+	}
+	else
+	{
+		$('#apArea').hide();
+		$('#staArea').hide();
+		$('#repeaterArea').hide();
+
+	}
+
+
+}
+
+//repeater
+function RepeaterSecurityOptions(_unit)
+{	
+	var wl_prev = 'wl'+_unit;
+	var _key = wl_prev+'_key';
+	var _key1 = wl_prev+'_key1';
+	var _key2 = wl_prev+'_key2';
+	var _key3 = wl_prev+'_key3';
+	var _key4 = wl_prev+'_key4';
+	var _auth = wl_prev+'_auth';
+	var _wep_type = wl_prev+'_wep_type';
+	var _wpa_psk = wl_prev+'_wpa_psk';
+	
+	var select_opt = $("#Repeater_SELECT_Securityoptions").val();
+	if(select_opt=="none")
+	{
+		$("#repeater_module_wep, #repeater_module_tkip, #repeater_module_aes, #repeater_module_tkipaes").hide();
+	}
+	else if(select_opt=="wep")
+	{
+		$("#repeater_module_tkip, #repeater_module_aes, #repeater_module_tkipaes").hide();
+		$("#repeater_module_wep").show();
+		
+		$("#SELECT_repeater_Authtype").val(myjson[_auth]);
+		//$("#SELECT_Encryptstrength").val(myjson[_wep_type]);
+		
+		$(":radio[name=repeaterINPUT_radiokey][value="+myjson[_key]+"]").attr("checked",'true');
+		$("#repeaterINPUT_key1").val(myjson[_key1]);
+		$("#repeaterINPUT_key2").val(myjson[_key2]);
+		$("#repeaterINPUT_key3").val(myjson[_key3]);
+		$("#repeaterINPUT_key4").val(myjson[_key4]);
+		
+		//setKeys();
+	}
+	else if(select_opt=="tkip")
+	{
+		$("#repeater_module_wep, #repeater_module_aes, #repeater_module_tkipaes").hide();
+		$("#repeater_module_tkip").show();
+		
+		$("#repeaterINPUT_tkipkey").val(myjson[_wpa_psk]);
+	}
+	else if(select_opt=="aes")
+	{
+		$("#repeater_module_wep, #repeater_module_tkip, #repeater_module_tkipaes").hide();
+		$("#repeater_module_aes").show();
+		
+		$("#repeaterINPUT_aeskey").val(myjson[_wpa_psk]);
+	}
+	else if(select_opt=="tkipaes")
+	{
+		$("#repeater_module_wep, #repeater_module_tkip, #repeater_module_aes").hide();
+		$("#repeater_module_tkipaes").show();
+		
+		$("#repeaterINPUT_tkipaeskey").val(myjson[_wpa_psk]);
+	}
+}
+
+
+function uiSubmit(){
+
+	var modetype=$('#SELECT_Mode').val();
+	if(modetype=="ap")
+	{
+	
+	
+	//var routermode=$("input[name='router_disable']:checked").val();
+	var interfaceIp=$("#INPUTIpAddr_1").val()+"."+$("#INPUTIpAddr_2").val()+"."+$("#INPUTIpAddr_3").val()+"."+$("#INPUTIpAddr_4").val();
+	var interfaceMask=$("#INPUTSubAddr_1").val()+"."+$("#INPUTSubAddr_2").val()+"."+$("#INPUTSubAddr_3").val()+"."+$("#INPUTSubAddr_4").val();
+	
+	var postVar = { action : "Apply", mode:"APMODE",getPage:"restarting.html",_flg:0};
+	
+	
+	
+	//if(routermode=="1")
+	//{
+		postVar["router_disable"]="1";
+		postVar["lan_ipaddr"]=interfaceIp;
+		postVar["lan_netmask"]=interfaceMask;
+		postVar["lan_apmodeip"]=interfaceIp;
+		postVar["lan_apmodenetmask"]=interfaceMask;
+		postVar["lan_proto"]='static';
+		postVar['wl0_wds_enable']=0;
+		postVar['wl1_wds_enable']=0;
+		
+		postVar["sta_enable"]=0;
+		postVar["wl0_mode"]="";
+		postVar["wl1_mode"]="";
+	//}else{
+		//postVar["lan_ipaddr"]=myjson.lan_backupip;
+		//postVar["lan_netmask"]=myjson.lan_backupnetmask;
+		//postVar["lan_proto"]='dhcp';
+	//}
+	}
+	
+	else if(modetype=="sta"&&myjson.sta_enable=='0')
+	{
+	var tmp = myjson.lan_ipaddr.split('.');
+	var interfaceIp=tmp[0]+"."+tmp[1]+"."+tmp[2]+"."+2;
+	var stainterface =$('#SELECT_STA_Adapter').val();
+	var postVar = { action : "Apply", mode:"tw_apstaSwitch",getPage:"restarting.html",_flg:0};
+	
+	//if($('#sta_enble').attr('checked'))
+	//{
+		postVar["lan_ipaddr"]=interfaceIp;
+		postVar["lan_apmodeip"]=interfaceIp;
+		postVar["router_disable"]=1;
+		postVar["sta_enable"]=1;
+		postVar['wl0_wds_enable']=0;
+		postVar['wl1_wds_enable']=0;
+		
+		postVar["wl0_mode"]="";
+		postVar["wl1_mode"]="";
+	}
+	else if(modetype=="sta"&&myjson.sta_enable=='1')
+	{
+		uiConnect();
+	}
+	
+	else if(modetype=="repeater"&&(myjson.wl0_mode!="psr"&&myjson.wl1_mode!="psr"))
+	{	
+		var tmp = myjson.lan_ipaddr.split('.');
+		var interfaceIp=tmp[0]+"."+tmp[1]+"."+tmp[2]+"."+2;
+		
+		var postVar = { action : "Apply", mode:"Repeater,APMODE",getPage:"restarting.html",_flg:0};
+		var _tmp,_prev;
+		_prev = 'wl0';
+		_tmp = _prev+'_security_choice';
+		postVar[_tmp]= $("#Repeater_SELECT_Securityoptions").val();
+		if($("#SELECT_repeater_Adapter").val()=="0")
+		{
+			postVar["stainterface"]='0';
+			postVar["wl0_mode"]="psr";
+			//postVar["wl0_ssid"]=" ";
+		}
+		else
+		{
+			postVar["stainterface"]='1';
+			postVar["wl1_mode"]="psr";
+			//postVar["wl1_ssid"]=" ";
+		}
+		_tmp = _prev+'_wep';
+		postVar[_tmp]="disabled";
+		
+		_tmp = _prev+'_akm';
+		postVar[_tmp]="none";
+		
+		_tmp = _prev+'_auth';
+		postVar[_tmp]= "0";
+		
+		postVar["router_disable"]=1;
+		postVar["sta_enable"]=0;
+		postVar["lan_ipaddr"]=interfaceIp;
+		postVar["lan_apmodeip"]=interfaceIp;
+
+	}
+	else if(modetype=="repeater"&&(myjson.wl0_mode=="psr"||myjson.wl1_mode=="psr"))
+	{
+		 var postVar = { action : "Apply", mode:"Repeater",getPage:"advancemode.html"};
+		 var repeater_Adapter=$("#SELECT_repeater_Adapter").val();
+		 if(repeater_Adapter=="0")
+		 {
+		 	postVar["stainterface"]='0';
+			postVar["wl0_ssid"]=$("#repeaterINPUTSsid").val();
+		 }
+		 else 
+		 {
+			postVar["stainterface"]='1';
+			 postVar["wl1_ssid"]=$("#repeaterINPUTSsid").val();
+		}
+		if($("#SELECT_repeater_Adapter").val()=="0")
+		postVar["wl0_mode"]="psr";
+		else
+		postVar["wl1_mode"]="psr";
+		 
+		 var _tmp,_prev;
+		_prev = 'wl'+repeater_Adapter;
+		_tmp = _prev+'_security_choice';
+		postVar[_tmp]= $("#Repeater_SELECT_Securityoptions").val();
+	
+	if($("#Repeater_SELECT_Securityoptions").val()=="none")
+	{
+		_tmp = _prev+'_wep';
+		postVar[_tmp]="disabled";
+		
+		_tmp = _prev+'_akm';
+		postVar[_tmp]="none";
+		
+		_tmp = _prev+'_auth';
+		postVar[_tmp]= "0";
+	}
+	else if($("#Repeater_SELECT_Securityoptions").val()=="wep")
+	{
+	  	_tmp = _prev+'_wep';
+		postVar[_tmp]="enabled";
+
+		_tmp = _prev+'_auth';
+		postVar[_tmp]= $("#SELECT_repeater_Authtype").val();
+		
+		//_tmp = _prev+'_wep_type';
+		//postVar[_tmp]= $("#SELECT_Encryptstrength").val();
+		
+		_tmp = _prev+'_key';
+		postVar[_tmp]= $("input[name=repeaterINPUT_radiokey]:checked").val();
+		
+		_tmp = _prev+'_key1';
+		postVar[_tmp]= $("#INPUT_key1").val();
+		
+		_tmp = _prev+'_key2';
+		postVar[_tmp]= $("#INPUT_key2").val();
+		
+		_tmp = _prev+'_key3';
+		postVar[_tmp]= $("#INPUT_key3").val();
+		
+		_tmp = _prev+'_key4';
+		postVar[_tmp]= $("#INPUT_key4").val();
+		
+		_tmp = _prev+'_akm';
+		postVar[_tmp]="none";
+	}
+	else if($("#Repeater_SELECT_Securityoptions").val()=="tkip")
+	{
+		_tmp = _prev+'_wep';
+		postVar[_tmp]="disabled";
+		
+		_tmp = _prev+'_akm';
+		postVar[_tmp]="psk";
+		
+		_tmp = _prev+'_wpa_psk';
+		postVar[_tmp]= $("#repeaterINPUT_tkipkey").val();
+		
+		_tmp =_prev+'_crypto';
+		postVar[_tmp]="tkip";
+		
+		_tmp = _prev+'_auth';
+		postVar[_tmp]= "0";
+	}
+	else if($("#Repeater_SELECT_Securityoptions").val()=="aes")
+	{
+		_tmp = _prev+'_wep';
+		postVar[_tmp]="disabled";
+		
+		_tmp = _prev+'_akm';
+		postVar[_tmp]="psk2";
+		
+		_tmp = _prev+'_wpa_psk';
+		postVar[_tmp]= $("#repeaterINPUT_aeskey").val();
+		
+		_tmp = _prev+'_crypto';
+		postVar[_tmp]="aes";
+		
+		_tmp = _prev+'_auth';
+		postVar[_tmp]= "0";
+	}
+	else if($("#Repeater_SELECT_Securityoptions").val()=="tkipaes")
+	{
+		_tmp = _prev+'_wep';
+		postVar[_tmp]="disabled";
+		
+		_tmp = _prev+'_akm';
+		postVar[_tmp]="psk psk2";
+		
+		_tmp = _prev+'_wpa_psk';
+		postVar[_tmp]= $("#repeaterINPUT_tkipaeskey").val();
+		
+		_tmp = _prev+'_crypto';
+		postVar[_tmp]="tkip+aes";
+		
+		_tmp = _prev+'_auth';
+		postVar[_tmp]= "0";
+	}
+	}
+	
+	else
+	{
+		var postVar = { action : "Apply", mode:"APMODE",getPage:"restarting.html",_flg:0};
+		postVar["lan_ipaddr"]=myjson.lan_backupip;
+		postVar["lan_netmask"]=myjson.lan_backupnetmask;
+		postVar["lan_proto"]='dhcp';
+		postVar["sta_enable"]=0;
+		postVar["router_disable"]=0;
+		postVar["wl0_mode"]="";
+		postVar["wl1_mode"]="";
+	}
+	
+	uiPost(postVar);
+	return ;    
+}
+
+function processCSS(){
+	$(":button").addClass('submitBtn');
+}
+
+function startScan(){
+    window.open("wireless_repeater_scan.html","repeaterscan","width=1000,height=500,resizable=1,scrollbars=1");
+}
+
+function modifyParameter(ssid,keytype)
+{
+var modetype=$('#SELECT_Mode').val();
+if(modetype=="sta")
+{
+$("#INPUTSsid").val(ssid);
+$("#SELECT_Securityoptions").val(keytype);
+SecurityOptions($('#SELECT_STA_Adapter').val());
+}
+else
+{
+$("#repeaterINPUTSsid").val(ssid);
+$("#Repeater_SELECT_Securityoptions").val(keytype);
+RepeaterSecurityOptions($('#SELECT_repeater_Adapter').val());
+}
+}
+
+</script>
+
+
+
+
+<div class="config3">
+	<div id="lang_title" class="mainbiao"></div>
+	<table class="table01" cellpadding="0" cellspacing="0">
+		<tbody>
+		 	<tr>
+				<td width="30%" id="lang_mode"></td>
+				<td>
+					<select id="SELECT_Mode" onChange="SelectModeChang(this.value);">
+						<option value="ap" id="land_modeap">AP模式</option>
+						<option value="sta" id="land_modesta">STA模式</option>
+						<option value="repeater" id="land_moderepeater">repeater模式</option>
+						<option value="router" id="land_moderouter">router模式</option>
+					</select>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div id="apArea" style="display:none; ">
+		 <table class="table01" cellpadding="0" cellspacing="0" style="display:none; "><tbody>
+			<tr><td id="lang_ApEnable" width="30%"></td>
+				<td><input type="radio" name="router_disable" id="idModeBridge" value="1" /><span id="lang_ApOn"></span>
+					<input type="radio" name="router_disable" id="idModeRouter" value="0" checked="" /><span id="lang_ApOff"></span>
+				</td>
+			</tr>
+		</tbody></table>
+		<table id="table_hide" class="table01" cellpadding="0" cellspacing="0"><tbody>
+			<tr>
+				<td id="lang_SpecifyIP" width="30%"></td>
+				<td id="lan_ipTd">
+					<input type="text" id="INPUTIpAddr_1" ><span>.</span>
+					<input type="text" id="INPUTIpAddr_2" ><span>.</span>
+					<input type="text" id="INPUTIpAddr_3" ><span>.</span>
+					<input type="text" id="INPUTIpAddr_4" >
+				</td>
+			</tr>
+			<tr>
+				<td id="lang_Submask" width="30%"></td>
+				<td id="lan_maskTd">
+					<input type="text" id="INPUTSubAddr_1" ><span>.</span>
+					<input type="text" id="INPUTSubAddr_2" ><span>.</span>
+					<input type="text" id="INPUTSubAddr_3" ><span>.</span>
+					<input type="text" id="INPUTSubAddr_4" >
+				</td>
+			</tr>
+		</tbody></table>
+	</div>
+	
+	<div id="staArea">
+			  <table class="table01" cellpadding="0" cellspacing="0"><tbody>
+        <tr style="display:none; "><td class="lable" colspan="3"><input type="checkbox" id="sta_enble"><b><span id="lang_Enable"></span></b></td></tr>
+        <tr>
+			<td width="30%" id="lang_Network_Adapter"></td>
+			<td>
+				<select id="SELECT_STA_Adapter" >
+					<option value="0">2.4G</option>
+					<option value="1">5G</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td width="30%"><span id="lang_conn"></span></td>
+            <td>
+            	<input type="text" id="INPUTSsid">&nbsp;<input type="button" id="stascan" value="Scan" onClick="startScan();" class="button01" style="width:60px; "/>
+            </td>
+
+        </tr>
+       <tr>
+       		<td id="lang_conn_status" ></td>
+            <td><b><span id="conn_ssid"></span></b></td>
+       </tr>
+		<tr>
+			<td><span id="lang_SecurityOptions"></span></td>
+			<td><select id="SELECT_Securityoptions">
+					<option value="none">None</option>
+					<option value="wep">Wep</option>
+					<option value="tkip">WPA-PSK[TKIP]</option>
+					<option value="aes">WPA2-PSK[AES]</option>
+					<option value="tkipaes">WPA-PSK[TKIP]+WPA2-PSK[AES]</option>
+				</select>
+			</td>
+		</tr>	 
+    </tbody></table>
+<!-- 隐藏菜单 -->	
+<div id="module_wep" style="display:none">
+<table  class="table01"><tbody>
+    <tr><td class="lable" colspan="2"><p id="lang_SecurityEncryptionWep"></p></td></tr>
+    <tr>
+        <td width="30%"><span id="lang_AuthenticationType"></span></td>
+        <td><select name="select" id="SELECT_Authtype" >
+                  <option value="2" id="lang_automatic"></option>
+                  <option value="1" id="lang_shared"></option>
+            </select>	
+        </td>
+    </tr>
+<!--    <tr>
+        <td><span id="lang_EncryptionStrength"></span></td>
+        <td ><select id="SELECT_Encryptstrength" onChange="setKeys();">
+                <option value="64bits" id="lang_length64"></option>
+                <option value="128bits" id="lang_length128"></option>					
+    		</select>
+        </td>
+    </tr>-->
+    <tr><td class="lable" colspan="2"><p id="lang_SecurityEncryptionWepKey"></p></td></tr>
+    <tr>
+    	<td width="30%">
+            <span id="lang_key1"></span>
+            <input type="radio"  name="INPUT_radiokey" id="INPUT_radiokey1" value="1" onclick="WepKeyChange();">
+        </td>
+    	<td><input type="text" id="INPUT_key1" onFocus="this.maxLength=uiKeyInputMaxlength();"></td>
+    </tr>
+    <tr>
+    	<td >
+        	<span id="lang_key2"></span>
+            <input type="radio"  name="INPUT_radiokey"  id="INPUT_radiokey2" value="2" onclick="WepKeyChange();">
+        </td>
+    	<td ><input type="text" id="INPUT_key2" onFocus="this.maxLength=uiKeyInputMaxlength();"></td>
+    </tr>
+    <tr>
+    	<td >
+        	<span id="lang_key3"></span>
+            <input type="radio"  name="INPUT_radiokey"  id="INPUT_radiokey3" value="3" onclick="WepKeyChange();">
+        </td>
+    	<td><input type="text" id="INPUT_key3" onFocus="this.maxLength=uiKeyInputMaxlength();"></td>
+    </tr>
+    <tr>
+    	<td>
+        	<span id="lang_key4"></span>
+            <input type="radio"  name="INPUT_radiokey"  id="INPUT_radiokey4" value="4" onclick="WepKeyChange();">
+        </td>
+    	<td><input type="text" id="INPUT_key4" onFocus="this.maxLength=uiKeyInputMaxlength();"></td>
+    </tr>
+</tbody>
+</table>
+</div><!---end of <div id="module_wep">--->
+
+<div id="module_tkip" style="display:none">
+<table class="table01">
+<tbody>
+    <tr><td colspan="2" class="lable"><p id="lang_SecurityOptionsWpaPsk"></p></td></tr>
+    <tr>
+    	<td width="30%"><span id="lang_PassPhraseWpaPsk"></span></td>
+    	<td>
+        	<input type="text" id="INPUT_tkipkey" size="20" maxlength="64" style="width:auto ">
+            <span id="lang_charactersWpaPsk"></span>
+        </td>
+    </tr>
+</tbody>
+</table>
+</div><!---end of <div id="module_tkip">--->
+
+    
+<div id="module_aes" style="display:none">
+<table class="table01">
+<tbody>
+    <tr><td colspan="2" class="lable"><p id="lang_SecurityOptionsWpa2Psk"></p></td></tr>
+    <tr>
+        <td width="30%"><span id="lang_PassPhraseWpa2Psk"></span></td>
+        <td>
+        	<input type="text"  id="INPUT_aeskey" size="20" maxlength="64" style="width:auto ">
+            <span id="lang_charactersWpa2Psk"></span>
+        </td>
+    </tr>
+</tbody>
+</table>
+</div><!---end of <div id="module_aes">--->
+
+<div id="module_tkipaes" style="display:none">
+<table class="table01">
+<tbody>
+    <tr><td class="lable" colspan="2"><p id="lang_SecurityOptionsWpaPskWpa2Psk"></p></td></tr>
+    <tr>
+        <td width="30%"><span id="lang_PassPhraseWpaPskWpa2Psk"></span></td>
+        <td >
+        	<input type="text"  id="INPUT_tkipaeskey" size="20" maxlength="64" style="width:auto ">
+            <span id="lang_charactersWpaPskWpa2Psk"></span>
+        </td>
+    </tr>
+</tbody>
+</table>
+</div><!---end of <div id="module_tkipaes">--->
+
+</div><!--end of staarea-->
+
+<div id="repeaterArea" style="display:none; ">
+	<table class="table01" cellpadding="0" cellspacing="0">
+		<tbody>
+		       <tr>
+				<td width="30%" id="lang_Network_repeaterAdapter"></td>
+				<td>
+					<select id="SELECT_repeater_Adapter" >
+						<option value="0">2.4G</option>
+						<option value="1">5G</option>
+					</select>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	
+	<table class="table01" cellpadding="0" cellspacing="0"><tbody>
+		<tr>
+			<td width="30%"><span id="lang_repeaterconn"></span></td>
+            <td>
+            	<input type="text" id="repeaterINPUTSsid">&nbsp;<input type="button" id="scan" value="Scan" onClick="startScan();" class="button01" style="width:60px; "/>
+            </td>
+        </tr>
+       <tr>
+       		<td id="lang_repeater_conn_status" ></td>
+            <td><b><span id="repeater_conn_ssid"></span></b></td>
+       </tr>
+		<tr>
+			<td><span id="lang_repeater_SecurityOptions"></span></td>
+			<td><select id="Repeater_SELECT_Securityoptions" onChange="RepeaterSecurityOptions($('#SELECT_repeater_Adapter').val());">
+					<option value="none">None</option>
+					<option value="wep">Wep</option>
+					<option value="tkip">WPA-PSK[TKIP]</option>
+					<option value="aes">WPA2-PSK[AES]</option>
+					<option value="tkipaes">WPA-PSK[TKIP]+WPA2-PSK[AES]</option>
+				</select>
+			</td>
+		</tr>	 
+    </tbody></table>
+<!-- 隐藏菜单 -->	
+<div id="repeater_module_wep" style="display:none">
+<table  class="table01"><tbody>
+    <tr><td class="lable" colspan="2"><p id="lang_repeater_SecurityEncryptionWep"></p></td></tr>
+    <tr>
+        <td width="30%"><span id="lang_repeater_AuthenticationType"></span></td>
+        <td><select name="select" id="SELECT_repeater_Authtype" >
+                  <option value="2" id="lang_repeater_automatic">Automatic</option>
+                  <option value="1" id="lang_repeater_shared">Shared Key</option>
+            </select>	
+        </td>
+    </tr>
+<!--    <tr>
+        <td><span id="lang_EncryptionStrength"></span></td>
+        <td ><select id="SELECT_Encryptstrength" onChange="setKeys();">
+                <option value="64bits" id="lang_length64"></option>
+                <option value="128bits" id="lang_length128"></option>					
+    		</select>
+        </td>
+    </tr>-->
+    <tr><td class="lable" colspan="2"><p id="lang_repeater_SecurityEncryptionWepKey"></p></td></tr>
+    <tr>
+    	<td width="30%">
+            <span id="lang_key1"></span>
+            <input type="radio"  name="repeaterINPUT_radiokey" id="repeaterINPUT_radiokey1" value="1" onclick="WepKeyChange();">
+        </td>
+    	<td><input type="text" id="repeaterINPUT_key1" onFocus="this.maxLength=uiKeyInputMaxlength();"></td>
+    </tr>
+    <tr>
+    	<td >
+        	<span id="lang_key2"></span>
+            <input type="radio"  name="repeaterINPUT_radiokey"  id="repeaterINPUT_radiokey2" value="2" onclick="WepKeyChange();">
+        </td>
+    	<td ><input type="text" id="repeaterINPUT_key2" onFocus="this.maxLength=uiKeyInputMaxlength();"></td>
+    </tr>
+    <tr>
+    	<td >
+        	<span id="lang_key3"></span>
+            <input type="radio"  name="repeaterINPUT_radiokey"  id="repeaterINPUT_radiokey3" value="3" onclick="WepKeyChange();">
+        </td>
+    	<td><input type="text" id="repeaterINPUT_key3" onFocus="this.maxLength=uiKeyInputMaxlength();"></td>
+    </tr>
+    <tr>
+    	<td>
+        	<span id="lang_key4"></span>
+            <input type="radio"  name="repeaterINPUT_radiokey"  id="repeaterINPUT_radiokey4" value="4" onclick="WepKeyChange();">
+        </td>
+    	<td><input type="text" id="repeaterINPUT_key4" onFocus="this.maxLength=uiKeyInputMaxlength();"></td>
+    </tr>
+</tbody>
+</table>
+</div><!---end of <div id="module_wep">--->
+
+<div id="repeater_module_tkip" style="display:none">
+<table class="table01">
+<tbody>
+    <tr><td colspan="2" class="lable"><p id="lang_repeater_SecurityOptionsWpaPsk"></p></td></tr>
+    <tr>
+    	<td width="30%"><span id="lang_repeater_PassPhraseWpaPsk"></span></td>
+    	<td>
+        	<input type="text" id="repeaterINPUT_tkipkey" size="20" maxlength="64" style="width:auto ">
+            <span id="lang_repeater_charactersWpaPsk"></span>
+        </td>
+    </tr>
+</tbody>
+</table>
+</div><!---end of <div id="module_tkip">--->
+
+    
+<div id="repeater_module_aes" style="display:none">
+<table class="table01">
+<tbody>
+    <tr><td colspan="2" class="lable"><p id="lang_repeater_SecurityOptionsWpa2Psk"></p></td></tr>
+    <tr>
+        <td width="30%"><span id="lang_repeater_PassPhraseWpa2Psk"></span></td>
+        <td>
+        	<input type="text"  id="repeaterINPUT_aeskey" size="20" maxlength="64" style="width:auto ">
+            <span id="lang_repeater_charactersWpa2Psk"></span>
+        </td>
+    </tr>
+</tbody>
+</table>
+</div><!---end of <div id="module_aes">--->
+
+<div id="repeater_module_tkipaes" style="display:none">
+<table class="table01">
+<tbody>
+    <tr><td class="lable" colspan="2"><p id="lang_repeater_SecurityOptionsWpaPskWpa2Psk"></p></td></tr>
+    <tr>
+        <td width="30%"><span id="lang_repeater_PassPhraseWpaPskWpa2Psk"></span></td>
+        <td >
+        	<input type="text"  id="repeaterINPUT_tkipaeskey" size="20" maxlength="64" style="width:auto ">
+            <span id="lang_repeater_charactersWpaPskWpa2Psk"></span>
+        </td>
+    </tr>
+</tbody>
+</table>
+</div><!---end of <div id="module_tkipaes">--->
+
+
+
+</div><!--end of repeaterArea-->
+
+     <div class="div_button">
+        <input type="button" id="lang_cancle" onClick="uiPageRefresh();">&nbsp;&nbsp;
+        <input type="button" id="lang_apply" onClick="uiSubmit();">
+  </div>
+
+</div>

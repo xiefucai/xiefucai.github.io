@@ -1,0 +1,32 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<META content="MSHTML 6.00.2800.1141" name=GENERATOR>
+<style type="text/css">
+body { background:#adcce7; }
+.head_bold {
+	FONT-WEIGHT: bold; FONT-SIZE: 17px; LINE-HEIGHT: 30px; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: none;}
+.tabletype{margin-top:10px;}
+</style>
+<title>Logout</title>
+<link type="text/css" rel="stylesheet" href="common.css" media="screen" />
+<script language="javascript" type="text/javascript" src="jquery-1.3.2.js"></script>
+<script language="javascript" type="text/javascript" src="global.js"></script>
+<script language="javascript" type="text/javascript" >
+$(document).ready(function(){
+	$.getJSON("dataCenter.js",{authIp:'val'},function(json){
+	var logout_info1=variable.land_toomany2+"&nbsp;"+json.authIp + "&nbsp;"+variable.land_toomany3;
+	var logout_info2=variable.land_toomany1;
+	$("#logout_info2").html(logout_info2);
+	$("#logout_info1").html(logout_info1);
+});
+});
+</script>
+<table width="100%" cellpadding="0" cellspacing="0" class="tabletype">
+	<tbody>
+		<tr align="center">
+			<td class="head_bold">
+				<h1 align="center" id="logout_info2"></h1><br>
+				<span id="logout_info1"></span>
+			</td>
+		</tr>
+	</tbody>
+</table>

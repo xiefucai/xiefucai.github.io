@@ -1,0 +1,66 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link type="text/css" rel="stylesheet" href="common.css" media="screen" />
+<script language="javascript" type="text/javascript" src="jquery-1.3.2.js"></script>
+<script language="javascript" type="text/javascript" src="global.js"></script>
+<script language="javascript" type="text/javascript">
+$(function(){
+$.getJSON("dataCenter.js", {samba_mode:'',samba_passwd:''},function(json){
+ $("#samba_mode").val(json.samba_mode);
+  $("#samba_passwd").val(json.samba_passwd);
+  if(json.samba_mode!='1')
+  $("#samba_passwd").attr("disabled","disabled");
+  else
+  $("#samba_passwd").attr("disabled","");
+
+});
+$("#samba_mode").change(function(){
+	if($(this).val()!='1')
+	$("#samba_passwd").attr("disabled","disabled");
+	else
+	$("#samba_passwd").attr("disabled","");
+});
+ });
+ 
+function uiSubmit(){
+ var postVar = {
+	    getPage : "samba.html",
+	    action : "Apply",
+	    mode : "SAMBA",
+		samba_mode:$("#samba_mode").val(),
+		samba_passwd:$("#samba_passwd").val()
+	};
+	uiPost(postVar);
+	return ;
+}
+</script>
+<div class="config3">
+<div id="lang_samba" class="mainbiao"></div> 
+<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="table01">
+	<tr>
+		<td class="typical_label" id="land_mode"></td>
+		<td class="tdsecond">
+			<select name="samba_mode" id="samba_mode">
+				<option value="0" id="land_disable">Disabled</option>
+				<option value="1" id="land_user">User</option>
+				<option value="2" id="land_share">Share</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="typical_label" id="land_usrname"></td>
+		<td class="tdsecond">
+		<span>admin</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="typical_label" id="land_password"></td>
+		<td class="tdsecond">
+		<input type="password" id="samba_passwd" name="samba_passwd" disabled="">
+		</td>
+	</tr>
+</table>
+<div class="div_button">
+ <input id="lang_cancle" type="button" onClick="uiPageRefresh();" class="submitBtn"> &nbsp;&nbsp;
+<input id="lang_apply" type="button" onClick="uiSubmit();" class="submitBtn">
+</div>
+</div>

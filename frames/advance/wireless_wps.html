@@ -1,0 +1,424 @@
+<script type="text/javascript" src="/html/js/ajax.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- include page -->
+<link type="text/css" rel="stylesheet" href="common.css" media="screen" />
+<script language="javascript" type="text/javascript" src="jquery-1.3.2.js"></script>
+<script language="javascript" type="text/javascript" src="global.js"></script>
+<script language="javascript" type="text/javascript">
+var G_json; 
+var card;
+$(function(){
+	processCSS();
+	$.getJSON("dataCenter.js",{
+		//2.4G                 //5G
+		wl0_wps_mode:'',         wl1_wps_mode:'',
+		wl0_ssid:'',             wl1_ssid :'',
+		wl0_crypto:'',           wl1_crypto:'',
+		wl0_security_choice:'',	 wl1_security_choice:'',
+		wl0_closed:'',           wl1_closed:'',
+		wl0_key:'',              wl1_key:'',
+		wl0_key1:'',             wl1_key1:'',
+		wl0_key2:'',             wl1_key2:'',
+		wl0_key3:'',             wl1_key3:'',
+		wl0_key4:'',             wl1_key4:'',
+		wl0_wpa_psk:'',          wl1_wpa_psk:'',
+		wps_hardware_btn:'',	 wl_unit : '',
+		wps_device_pin:''		
+	},function(json){
+		G_json = json;
+		card = G_json['wl_unit'];
+		Onload_init(G_json,card);
+		disCtrlWpsButton(); 
+		disCtrlSecurityOption();
+		                          
+	});
+
+	$("#SELECT_Aapter").change(function (){
+		card = this.value;
+		Onload_init(G_json,card);
+		disCtrlWpsButton(); 
+		disCtrlSecurityOption();
+	});
+
+	$("#SELECT_WpsEnable").change(function(){
+		disCtrlWpsButton();
+	});
+	
+});
+
+function Onload_init(G_json,card){
+
+	var G_enable = G_json['wl'+card+'_wps_mode'];
+	supplyValue('SELECT_Aapter' , card);
+	supplyValue('SELECT_WpsEnable',G_enable);
+	if(G_enable == 'enabled'){
+		$("#WPSZONE,#BUTTON_ZONE").show();
+	}else{
+		$("#WPSZONE,#BUTTON_ZONE").hide();
+		uiWpsConfic(G_json['wl'+card+'_closed'],G_json['wl'+card+'_security_choice']);
+	}
+	
+	if(card == 0){
+		supplyValue('SELECT_HardwareButton', G_json['wps_hardware_btn']);
+	}else{
+		$("#BUTTON_ZONE").hide();
+	}
+	
+	var value;
+	if(G_json['wl'+card+'_security_choice'] == 'none'){
+		value = data_language['wireless_wps.html']['dynamic'][0];
+	}else{
+		value = data_language['wireless_wps.html']['dynamic'][1];
+	}
+	setJSONValue({
+		'INPUT_CurrentPin' : G_json['wps_device_pin'],
+		'INPUT_SSID'       : G_json['wl'+card+'_ssid'],
+		'security_state'   : value
+	});
+}
+
+function disCtrlSecurityOption()
+{
+	var W_BeaconTyp = G_json['wl'+card+'_security_choice'] ;
+	switch(W_BeaconTyp){
+		case 'none':
+			$("#zone1").show();	
+			$("#zone2,#zone3,#zone4").hide();
+			break;
+		case 'wep':
+			//$("#zone1").hide();	
+			//$("#zone2,#zone3,#zone4").show();
+			break;
+		case 'tkip':
+			$("#zone1").hide();
+			$("#zone2,#zone3,#zone4").show();
+			setJSONValue({
+				'security_options'  : 'WPA-PSK[TKIP]',
+				'key_method '       : (G_json['wl'+card+'_crypto']).toUpperCase(),
+				'key_way'           : '(PSK):',
+				'key_value'         : G_json['wl'+card+'_wpa_psk']
+			});
+			break;
+		case 'aes':
+			$("#zone1").hide();
+			$("#zone2,#zone3,#zone4").show();
+			setJSONValue({
+				'security_options'  : 'WPA2-PSK[AES]',
+				'key_method '       : (G_json['wl'+card+'_crypto']).toUpperCase(),
+				'key_way'           : '(PSK):',
+				'key_value'         : G_json['wl'+card+'_wpa_psk']
+			});
+			break;
+		case 'tkipaes':
+			$("#zone1").hide();
+			$("#zone2,#zone3,#zone4").show();
+			setJSONValue({
+				'security_options'  : 'WPA-PSK[TKIP]+WPA2-PSK[AES]',
+				'key_method '       : (G_json['wl'+card+'_crypto']).toUpperCase(),
+				'key_way'           : '(PSK):',
+				'key_value'         : G_json['wl'+card+'_wpa_psk']
+			});
+			break;
+	}
+}
+
+function disCtrlWpsButton()
+{
+	if($("#SELECT_WpsEnable").val() == 'enabled')
+		$("#INPUT_ClientPin,#enroll,#genrate_pin,#restore_pin,#start_PBC").removeAttr("disabled");
+	else
+		$("#INPUT_ClientPin,#enroll,#genrate_pin,#restore_pin,#start_PBC").attr("disabled",true);
+}
+
+function uiSubmit(){
+	var postVar = { action : "Apply", mode:"WLAN",getPage:"wireless_wps.html"};
+	
+	var W_WPSEnable = G_json['wl'+card+'_wps_mode'];
+	var W_SSIDEnable = G_json['wl'+card+'_closed'];
+	var W_BeaconType = G_json['wl'+card+'_security_choice'];
+	var _key = G_json['wl'+card+'_key']; 
+	var W_Wepkey = G_json['wl'+card+'_key'+_key];
+	
+	if(W_WPSEnable=="disabled" && $("#SELECT_WpsEnable").val()=='enabled' && W_SSIDEnable=="1" && (W_BeaconType=="wep" || W_BeaconType=="tkip")){
+		if(alertError("TurnOnWpsConficssidwepsecurity",2)==false)
+			return ;
+		else{
+			postVar['wl'+card+'_closed']=0;	
+			postVar['wl'+card+'_security_choice']="tkipaes";
+			
+			if(W_BeaconType=="wep")
+				postVar['wl'+card+'_wpa_psk']=W_Wepkey;
+				
+			postVar['wl'+card+'_wep']="disabled";
+			postVar['wl'+card+'_crypto']="tkip+aes";
+			postVar['wl'+card+'_akm']="psk psk2";				
+		}
+	}else if(W_WPSEnable=="disabled"&&$("#SELECT_WpsEnable").val()=='enabled'&&W_SSIDEnable=="1"){
+		if(alertError("TurnOnWpsConficssid",2)==false)
+			return ;
+		else
+			postVar['wl'+card+'_closed']=0;	
+	}else if(W_WPSEnable=="disabled"&&$("#SELECT_WpsEnable").val()=='enabled'&&(W_BeaconType=="wep" || W_BeaconType=="tkip")){
+		if(alertError("TurnOnWpsConficwepsecurity",2)==false)
+			return ;
+		else
+		{
+			postVar['wl'+card+'_closed']=0;	
+			postVar['wl'+card+'_security_choice']="tkipaes";
+			
+			if(W_BeaconType=="wep")
+				postVar['wl'+card+'_wpa_psk']=W_Wepkey;
+				
+			postVar['wl'+card+'_wep']="disabled";
+			postVar['wl'+card+'_crypto']="tkip+aes";
+			postVar['wl'+card+'_akm']="psk psk2";	
+		}
+	}
+    postVar['wl'+card+'_wps_mode']=$("#SELECT_WpsEnable").val();
+	if(card == 0)
+		postVar["wps_hardware_btn"]=$("#SELECT_HardwareButton").val();
+	
+	postVar["wl_unit"]=card;
+	
+	postVar["apply_wait_time"]=15;
+	uiPost(postVar);
+	return ;    
+}
+
+function uiWpsConfic(W_SSIDEnable,W_BeaconType)
+{
+	if(W_SSIDEnable=="1" && (W_BeaconType=="wep" || W_BeaconType=="tkip"))
+	{
+		alertError("WpsConficWepSsid",1);
+		return ;
+	}
+	else if(W_SSIDEnable=="1")
+	{
+		alertError("WpsConficSsid",1);
+		return ;	
+	}
+	else if(W_BeaconType=="wep" || W_BeaconType=="tkip")
+	{
+		alertError("WpsConficwepsecurity",1);
+		return ;	
+	}	
+}
+function uiStartPBC()
+{	var postVar = { action : "Apply", mode:"WPS",getPage:"wireless_wps.html",_flg:"1"};
+	
+	postVar["wps_wlname"]=ui_Wps_wlname();
+	postVar["wps_action"]="WPS PBC START";    
+	postVar['wl'+card+'_wps_mode']=$("#SELECT_WpsEnable").val();
+	postVar["wl_unit"]=card;
+		
+	popup_wps();
+	uiPost(postVar);
+	return ;  
+}
+
+function uiStartPIN()
+{
+	var G_wps_sta_pin = $("#INPUT_ClientPin").val();   
+	if(G_wps_sta_pin == '')
+	{
+		alertError("InvalidPin",1);
+		return false;
+	}
+	else if(G_wps_sta_pin.match(/^[0-9]{8}$/) == null)
+	{
+		alertError("InvalidPin",1);
+		return false;
+	}
+	else if(!checkPIN(G_wps_sta_pin))
+	{
+		alertError("PinChecksumFailed",1);
+		return false;
+	}
+	var postVar = { action : "Apply", mode:"WPS",getPage:"wireless_wps.html",_flg:"1"};
+	
+	postVar["wps_wlname"]=ui_Wps_wlname();
+	postVar["wps_action"]="WPS PIN START";
+	postVar["wps_sta_pin"]=G_wps_sta_pin;
+	
+	postVar['wl'+card+'_wps_mode']=$("#SELECT_WpsEnable").val();
+	postVar["wl_unit"]=card;
+		
+	popup_wps();
+	uiPost(postVar);
+	return ;  
+}
+function ui_Wps_wlname()
+{
+		return 'wl'+card;
+}
+function popup_wps()
+{	var href = "wireless_wps_show.html"+"?t="+ new Date();
+	var pbcwin = window.open (href, "pbc", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,width=450,height=200,resizable=0");
+}
+
+function checkPIN( pin ) 
+{
+	var accum = 0;
+	var pinNum = Number(pin);
+    
+	if(pinNum == NaN)
+		return false;
+    
+	accum += 3 * (Math.floor(pinNum / 10000000) % 10); 
+	accum += 1 * (Math.floor(pinNum / 1000000) % 10); 
+	accum += 3 * (Math.floor(pinNum / 100000) % 10); 
+	accum += 1 * (Math.floor(pinNum / 10000) % 10); 
+	accum += 3 * (Math.floor(pinNum / 1000) % 10); 
+	accum += 1 * (Math.floor(pinNum / 100) % 10); 
+	accum += 3 * (Math.floor(pinNum / 10) % 10); 
+	accum += 1 * (Math.floor(pinNum / 1) % 10); 
+	
+	return (0 == (accum % 10));
+}
+
+function Checksum( pin ) 
+{
+	var accum = 0;
+	var pinNum = Number(pin);
+	
+	if(pinNum == NaN)
+		return false;
+	    	
+	pinNum *= 10;
+	accum += 3 * (Math.floor(pinNum / 10000000) % 10); 
+	accum += 1 * (Math.floor(pinNum / 1000000) % 10); 
+	accum += 3 * (Math.floor(pinNum / 100000) % 10); 
+	accum += 1 * (Math.floor(pinNum / 10000) % 10); 
+	accum += 3 * (Math.floor(pinNum / 1000) % 10); 
+	accum += 1 * (Math.floor(pinNum / 100) % 10); 
+	accum += 3 * (Math.floor(pinNum / 10) % 10); 
+	accum += 1 * (Math.floor(pinNum / 1) % 10); 
+	var digit = accum % 10;
+
+	return (10 - digit) % 10;
+}
+
+function GerneratePIN()
+{
+	var postVar = { action : "Apply", mode:"WPS",getPage:"wireless_wps.html"};
+
+	postVar["wps_wlname"]=ui_Wps_wlname();
+	postVar["wps_action"]="GENERATE";
+
+	postVar["apply_wait_time"]=5;
+	postVar["wl_unit"]=card;
+		
+	uiPost(postVar);
+	return ;
+}
+function RestorePIN()
+{
+	$("#INPUT_CurrentPin").html('12345678');
+	var postVar = { action : "Apply", mode:"WPS",getPage:"wireless_wps.html"};
+	
+	postVar["wps_wlname"]=ui_Wps_wlname();
+	postVar["wps_sta_pin"]="12345678";
+
+	uiPost(postVar);
+	return ;
+}
+
+function processCSS(){
+	$("tr td:nth-child(2)").width("50%");	
+	$(":button").addClass('submitBtn').parent().attr("align","right");
+	var hf = "wireless_basic.html" +"?t=" + new Date();
+	$("#lang_wl_security").parent().attr("href",hf);
+}
+</script>
+<div class="config3">
+	<div id="lang_Wps" class="mainbiao"></div>
+    	<table class="table01"><tbody>
+        	<tr class="lable"><td id="lang_Network_Adapter">Adapter :</td>
+                <td><select id="SELECT_Aapter" >
+                        <option value="0">2.4G</option>
+                        <option value="1">5G</option>
+                	</select>
+                </td>
+            </tr>
+            <tr><td id="lang_wps_setup"></td>
+                <td>
+                    <select id="SELECT_WpsEnable">
+                        <option value="enabled" id="lang_wps_on">Enabled</option>
+                        <option value="disabled" id="lang_wps_off">Disabled</option>
+                    </select>
+                </td>
+            </tr>
+            <tr id="BUTTON_ZONE">
+                <td id="lang_wps_button"></td>
+                <td align="left">
+                    <select id="SELECT_HardwareButton" onChange="" name="SELECT_HardwareButton">
+                        <option value="enabled" id="lang_wps_ButtonOn">Enabled</option>
+                        <option value="disabled" id="lang_wps_ButtonOff">Disabled</option>
+                    </select>
+                </td>
+            </tr>
+            <tr><td colspan="2"><input type="button" id="lang_apply" onClick="uiSubmit();"/></td></tr>
+        </tbody></table>
+    
+        <table id="WPSZONE" class="table01"><tbody>
+            <tr><td class="lable" colspan="2" id="lang_wps_method1"></td></tr>
+            <tr><td>
+                    <span id="lang_wps_tip3"></span>&nbsp;&nbsp;
+                    <input type="text" maxlength="8" size="12" value="" id="INPUT_ClientPin"/>
+                </td>
+                <td ><input type="button" onclick="uiStartPIN();" id="enroll"></td>
+            </tr>
+        
+            <tr id="ForRe1">
+            	<td>
+                    <span id="lang_routerpin"></span>&nbsp;
+                    <span id="INPUT_CurrentPin"></span>
+                </td>
+                <td nowrap="true">
+                	<input type="button" id="genrate_pin" onClick="GerneratePIN();"/>
+                    <input type="button" id="restore_pin" onClick="RestorePIN();" style="display:none"/>
+               </td>      
+            </tr>
+            <tr><td class="lable" colspan="2" id="lang_wps_method2"></td></tr>
+            <tr><td colspan="2"><input type="button" id="start_PBC" onClick="uiStartPBC();"/></td></tr>
+        
+            <tr><td class="lable" colspan="2" id="lang_wps_method3"></td></tr>	
+            <tr><td id="lang_network_name"></td>
+                <td align="left"  id="INPUT_SSID"></td>
+            </tr>
+            <tr><td id="lang_wireless_security"></td>
+                <td align="left"  id="security_state"></td>
+            </tr>
+            <tr id="zone1">
+                    <td id="lang_configure_security"></td>
+                    <td  align="left">
+                        <a class="more"><span id="lang_wl_security"></span></a>
+                    </td>
+            </tr>
+            <tr id="zone2">
+                <td id="lang_network_authentication"></td>
+                <td align="left" id="security_options"></td>
+            </tr>
+            <tr id="zone3">
+                <td id="lang_data_encryption"></td>
+                <td align="left"  id="key_method"></td>
+            </tr>
+            <tr id="zone4">
+                <td>
+                    <span id="lang_network_key"></span>&nbsp;
+                    <span id="key_way"></span>
+                </td>
+                <td align="left" id="key_value"></td>
+            </tr>
+    </tbody></table>
+</div>
+
+			
+			
+			
+			
+			
+			
+			
+			
+			

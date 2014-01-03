@@ -1,0 +1,206 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link type="text/css" rel="stylesheet" href="common.css" media="screen" />
+<script language="javascript" type="text/javascript" src="jquery-1.3.2.js"></script>
+<script language="javascript" type="text/javascript" src="global.js"></script>
+<script language="javascript" type="text/javascript">
+var myjson;
+	$(function(){
+	    $.getJSON("dataCenter.js", {qos_orules:""},function(json){
+		myjson=json;
+		var array_value = [];
+		var l;
+		var k=0;
+		var rules=json.qos_orules.split(">");
+		for(var i=0; i<rules.length; i++)
+		{
+		var ruleType=""
+		var addressType="";
+		var protol="";
+		var portfilter="";
+		var class11="";
+			if(rules[i].length <= 0)
+			continue;
+		ruleItem = rules[i].split("<");
+		
+		if(ruleItem[0] == 'qos_up')
+			ruleType = variable.land_qosRuleType1;
+		else
+			ruleType = variable.land_qosRuleType;
+		if(ruleItem[1] == 1)
+			addressType=variable.land_qosAddressType1;
+		else if(ruleItem[1] == 2)
+			addressType=variable.land_qosAddressType2;
+		else if(ruleItem[1] == 3)
+			addressType=variable.land_qosAddressType3;
+		else
+			addressType=variable.land_qosAddressType4;
+			
+		if(ruleItem[3] == -2)
+			protol=variable.land_qosAddrFilter4;
+		else if(ruleItem[3] == -1)
+			protol="TCP/UDP";
+		else if(ruleItem[3] == 6)
+			protol="TCP";
+		else if(ruleItem[3] == 17)
+			protol="UDP";
+		else
+			protol="";
+			
+		if(ruleItem[4] == "d")
+			portfilter=variable.land_qosAddrFilter1;
+		else if(ruleItem[4] == "s")
+			portfilter=variable.land_qosAddrFilter2;
+		else if(ruleItem[4] == "x")
+			portfilter=variable.land_qosAddrFilter3;
+		else
+			portfilter=variable.land_qosAddrFilter4;
+			
+		if(ruleItem[9] == 0)
+			class11=variable.land_qosClass1;
+		else if(ruleItem[9] == "1")
+			class11=variable.land_qosClass2;
+		else if(ruleItem[9] == "2")
+			class11=variable.land_qosClass3;
+		else if(ruleItem[9] == "3")
+			class11=variable.land_qosClass4;
+		else if(ruleItem[9] == "4")
+			class11=variable.land_qosClass5;
+		l=i+1;
+		array_value[k] = ['<input type="checkbox" name="rule_'+k+'" id="rule_'+k+'"/>', 
+								l,
+								ruleType,
+								addressType,
+								ruleItem[2],//Priority
+								protol,
+								portfilter,
+								ruleItem[5],
+								class11,
+								ruleItem[10]				
+							  ];
+
+		k++;
+	}
+	$T('td_qoslist',array_value);
+		
+	});
+});
+
+function edit(){
+var rules=myjson.qos_orules.split(">");
+var chkid;
+var index;
+var flag=0;
+	for(i = 0; i < rules.length; i++)
+	{
+		chkid = "rule_" + i ;
+		if($("#"+chkid).attr("checked")== true)
+		{
+			index = i;
+			flag++;
+		}
+	}
+	if(flag==0 || flag>1)
+	{
+		alertError('qos_edit');
+		return false;
+	}
+var postVar = {
+		getPage : 'qos_add.html',
+		action: "Apply",
+		mode: "ADDPARAMODE",
+		nodeIndex0 : index,
+		_flg : 0
+	}; 
+	uiPost(postVar);
+
+}
+
+function add(){
+
+	var postVar = {
+		getPage : 'qos_add.html',
+		action: "Apply",
+		mode: "ADDPARAMODE",
+		nodeIndex0 : "",
+		_flg : 0
+	}; 
+	uiPost(postVar);
+
+}
+
+function delRule(){
+	var rules=myjson.qos_orules.split(">");
+	var i;
+	var chkid;
+	var resetrule="";
+	var flag=0;
+	for(i = 0; i < rules.length; i++)
+	{
+		chkid = "rule_" + i ;
+		if($("#"+chkid).attr("checked") == true)
+		{
+			flag = 1;
+			break;
+		}
+	}
+	if(!flag)
+	{
+		alertError('qos_delete');
+		return false;
+	}
+	
+	for(i = 0; i < rules.length; i++)
+	{
+		chkid = "rule_" + i ;
+		if($("#"+chkid).attr("checked")== false)
+		{
+			if(resetrule.length > 1)
+			{
+				resetrule+=">";
+				resetrule+=rules[i];
+			}
+			
+			else
+			resetrule=rules[i];
+		}
+	}
+	var postVar = {
+		getPage : 'qos_list.html',
+		action: "Apply",
+		mode: "QOS",
+		qos_orules : resetrule
+	}; 
+	uiPost(postVar);
+}
+
+function uiCancel()
+{
+	document.location.href = "qos_service.html";
+}
+</script>
+<div class="config3">
+<div id="lang_qoslist_header" class="mainbiao"></div>
+<table id="td_qoslist" width="100%"  border="0" cellpadding="0" cellspacing="0" class="table01">
+    <tr>
+        <th id="td_qoslist_head1" nowrap="" class="subhead" align="center"></th>
+        <th id="td_qoslist_head2" nowrap="" class="subhead" align="center">#</th>
+        <th id="td_qoslist_head10" nowrap="" class="subhead" align="center"></th>
+        <th id="td_qoslist_head3" nowrap="" class="subhead" align="center"></th>
+        <th id="td_qoslist_head4" nowrap="" class="subhead" align="center"></th>
+        <th id="td_qoslist_head5" nowrap="" class="subhead" align="center"></th>
+        <th id="td_qoslist_head6" nowrap="" class="subhead" align="center"></th>
+        <th id="td_qoslist_head7" nowrap="" class="subhead" align="center"></th>
+        <th id="td_qoslist_head8" nowrap="" class="subhead" align="center"></th>
+        <th id="td_qoslist_head9" nowrap="" class="subhead" align="center"></th>
+    </tr>
+</table>
+<div class="div_button1">
+    <input type="button" onclick="edit();" class="submitBtn" name="edit" id="land_edit">&nbsp;&nbsp;
+    <input type="button" onclick="add();" class="submitBtn"  name="edit" id="land_add">&nbsp;&nbsp;
+    <input type="button" &nbsp;&nbsp;="" class="submitBtn" onclick="delRule();" name="delete" id="land_delete">	
+</div>
+<div class="div_button">
+    <input type="button" onclick="uiCancel();" id="land_cancel">&nbsp;&nbsp;
+    <input type="button" onclick="uiPageRefresh();" id="land_refresh">	
+</div>
+</div>

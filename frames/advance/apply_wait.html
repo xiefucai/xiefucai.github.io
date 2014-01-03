@@ -1,0 +1,37 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- include page -->
+<link type="text/css" rel="stylesheet" href="common.css" media="screen" />
+<script language="javascript" type="text/javascript" src="jquery-1.3.2.js"></script>
+<script language="JavaScript" type="text/javascript" src="global.js"></script>
+<script language="javascript" type="text/javascript">
+var TimeNum;
+var timeoutId;
+$(function(){
+	if (window.data_language != undefined)
+	chg_language(window.data_language['apply_wait.html']);
+	TimeNum = top.leftFrame.$("#wait_time").val();
+	timeoutId=setInterval("startRequest()",1000);	
+});
+
+function startRequest(){
+	--TimeNum;
+	if (TimeNum < 1) 
+	{
+		clearInterval(timeoutId);
+		var hf = top.leftFrame.$("#lan_ip").val();
+		if(hf){
+			top.leftFrame.$("#lan_ip").val("");
+			top.location.href = "http://"+hf+"/index.html";
+		}else{
+			window.document.location.href = top.leftFrame.$("#topage").val()+"?t="+new Date();
+		}
+	}
+}
+</script>
+<div class="config3">
+<div><p id="lang_apply" class="mainbiao"></p></div>
+<table width="100%" cellspacing:"0",cellpadding:"0"><tbody>
+	<tr><td align="center"><img src="wait30.gif" /></td></tr>
+	<tr><td align="center"><span id="lang_applying"></span></td></tr>
+</tbody></table>
+</div>	

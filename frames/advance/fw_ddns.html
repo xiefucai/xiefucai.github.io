@@ -1,0 +1,179 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link type="text/css" rel="stylesheet" href="common.css" media="screen" />
+<script language="javascript" type="text/javascript" src="jquery-1.3.2.js"></script>
+<script language="javascript" type="text/javascript" src="global.js"></script>
+<script language="javascript" type="text/javascript">
+var G_DDNSEnable ;
+var G_DDNSState;
+$(document).ready(function(){
+	processCSS();
+	$.getJSON("dataCenter.js",{ddns_enable :'', 
+	                          ddns_provider :'',
+	                          ddns_authuser :'',
+	                          ddns_authpass :'',
+	                          ddns_hostname :'',
+	                          ddns_update   :''
+	                         },function(json){
+	                            
+	                            var tmp = json.ddns_hostname.split('.');
+	                            $("#INPUT_HostName1").val(tmp[0]);        
+		                        $("#INPUT_HostName2").val(tmp[1]||'');    
+		                        $("#INPUT_HostName3").val(tmp[2]||'');    
+		                        $("#INPUT_UserName" ).val(json.ddns_authuser); 
+		                        $("#INPUT_Password" ).val(json.ddns_authpass); 
+		                        $("#SELECT_DddnsEnable").val(json.ddns_enable);
+	                            if(json.ddns_enable == 1){	                                
+	                                $("#subtable").show();
+	                            }else{
+	                                $("#subtable").hide();
+	                            } 	                            
+	});
+	statusAjax();
+	$("#SELECT_DddnsEnable").change(function(){
+		if($(this).val()=='0')
+			$("#subtable").hide();
+		else
+			$("#subtable").show();
+	});
+	$("#lang_web_site").click(function(){
+		
+	if($("#SELECT_DddnsEnable").val()=='0')
+		alertError('fw_ddnsWebsite');
+	else 
+		window.open("http://www.dyndns.org","_blank");
+	});
+});
+
+//处理CSS
+function processCSS(){
+	$("tr td:nth-child(2)").width("60%");
+	$('#lang_web_site').width("80px");
+	$.each($("input:text"), function(i,n){
+		if($(n).next().html() == "." || $(n).prev().html() == "."  ){
+			$(n).attr({ maxlength: "63", size: "15" }).width("25%");
+		}
+	});
+}
+
+function uiSubmit(){
+	var G_ddns_hostname;
+    var postVar = { action : "Apply", mode:"ddns",getPage:"fw_ddns.html"};
+	
+    if($("#SELECT_DddnsEnable").val() == 1){
+        if($("#INPUT_HostName1").val()!="" && $("#INPUT_HostName2").val()!="" && $("#INPUT_HostName3").val()!="")
+	    {  
+	        G_ddns_hostname=$("#INPUT_HostName1").val()+"."+$("#INPUT_HostName2").val()+"."+$("#INPUT_HostName3").val();
+	    }
+		else
+		{
+			alertError("DdnsInvalidHostname");
+			return;
+		}
+
+		postVar["ddns_hostname"]=G_ddns_hostname;
+		postVar["ddns_authuser"]=$("#INPUT_UserName").val();
+		postVar["ddns_authpass"]=$("#INPUT_Password").val();
+		postVar["ddns_provider"]="dyndns.org";
+    }
+	postVar["ddns_enable"]=$("#SELECT_DddnsEnable").val();
+	
+	uiPost(postVar);
+	return ;    
+}
+function displayDDNSState(){
+	var delay_time = 1000;
+	var temp = window.data_language['fw_ddns.html']['dynamic'];
+	if(G_DDNSEnable == "0"){
+			//'Dynamic DNS service is not enabled.'
+			$("#ddns_status_show").html(temp[0]);
+		}
+	/*else if(G_wanConnction[0][1] == ""){
+			//'No update action. There is no IP address on the Internet port.'
+			$("#ddns_status_show").html(temp[1]);
+			setTimeout("statusAjax()", delay_time)
+		}*/
+	else if(G_DDNSState == 'WAN Connection disconnected'){
+			//'No update action. There is no IP address on the Internet port.'
+			$("#ddns_status_show").html(temp[1]);
+			setTimeout("statusAjax()", delay_time)
+		}
+	else if(G_DDNSState == 'Service Provider Invalid'){
+			//'Update failed.The service provider is not reachable.'
+			$("#ddns_status_show").html(temp[2]);
+			setTimeout("statusAjax()", delay_time)
+		}
+	else if(G_DDNSState == 'Host Name is not registered'){
+			//'Update failed.Host name is not correct.'
+			$("#ddns_status_show").html(temp[3]);
+			setTimeout("statusAjax()", delay_time)
+		}
+	else if(G_DDNSState == 'Wrong user name or password')
+		{
+			//'Authentication failed.User name or password is not correct.'
+			$("#ddns_status_show").html(temp[4]);
+			setTimeout("statusAjax()", delay_time)
+		}
+	else if(G_DDNSState == 'IP updated successful')
+		{
+			//'update successfully'
+			$("#ddns_status_show").html(temp[5]);
+			setTimeout("statusAjax()", delay_time)
+		}
+	else{
+			//'Update failed.The service provider is not reachable.'
+			$("#ddns_status_show").val('');
+			setTimeout("statusAjax()", delay_time)
+		}
+}
+
+function statusAjax()
+{
+    $.getJSON("dataCenter.js",{ddns_enable :'',ddns_update:''},function(json){
+        G_DDNSEnable = json.ddns_enable;
+        G_DDNSState = json.ddns_update
+        displayDDNSState();
+    });   
+}
+
+</script>
+<div class="config3">
+<div><p class="mainbiao" id="lang_DynamicDNS"></p></div>
+<table border="0" cellpadding="0" cellspacing="0" class="table01">
+	<tr>
+		<td><span id="lang_Ddns"></span></td>
+		<td>
+			<select id="SELECT_DddnsEnable">
+						<option value='0' id="lang_DnsOff">Disabled</option>
+						<option value='1' id="lang_DynDns">DynDNS</option>
+			</select>
+			<input type="button" name="connect_ddns" id="lang_web_site">
+		</td>
+	</tr>
+</table>
+<table id="subtable" border="0" cellpadding="0" cellspacing="0" class="table01">
+	<tr>
+		<td id="lang_Ddns_Status"></td>
+		<td id="ddns_status_show"></td>
+	</tr>
+	<tr>
+		<td id="lang_user_name"></td>
+		<td><input type="text" maxlength="63" size="15" value="" id="INPUT_UserName" style="width:25%;"></td>
+	</tr>
+	<tr>
+		<td id="lang_password"></td>
+		<td><input type="password" maxlength="20" size="15" value="" id="INPUT_Password" style="width:25%;"></td>
+	</tr>
+	<tr>
+		<td id="lang_hostname"></td>
+		<td nowrap="nowrap">
+			<input type="text"  value="" id="INPUT_HostName1"/><span>.</span>
+			<input type="text"  value="" id="INPUT_HostName2"/><span>.</span>
+			<input type="text"  value="" id="INPUT_HostName3"/>
+		</td>
+	</tr>
+</table>
+<div class="div_button">
+	<input class="submitBtn" type="button" id="lang_cancle" onClick="uiPageRefresh();"/>&nbsp;&nbsp;
+	<input class="submitBtn" type="button" id="lang_apply" onClick="uiSubmit();"/>
+</div>
+</div>

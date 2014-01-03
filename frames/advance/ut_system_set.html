@@ -1,0 +1,473 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- include page -->
+<link type="text/css" rel="stylesheet" href="common.css" media="screen" />
+<script language="javascript" type="text/javascript" src="jquery-1.3.2.js"></script>
+<script language="javascript" type="text/javascript" src="global.js"></script>
+<script language="javascript" type="text/javascript">
+var G_LocalTime = "undefined";
+$(function(){
+	//Process Options.
+	
+	initTimePool();                                             
+	CreateOptions("SELECT_StartTime",timeInnerPool,timeValPool);
+	CreateOptions("SELECT_EndTime",timeInnerPool,timeValPool);
+	
+	var SNTPServer = new Array("132.163.4.102","207.200.81.113", "129.132.2.21", "130.149.17.8");
+	var i=0;
+	var ntptext=[];
+	for(var text in optionText.NTPService)
+	{
+		ntptext[i]=optionText.NTPService[text];
+		i++;
+	}
+	CreateOptions("SELECT_NTPServer1",ntptext,SNTPServer);
+	CreateOptions("SELECT_NTPServer2",ntptext,SNTPServer);
+	
+	//75个时区
+	var TimeZoneValue= new Array();
+	var timezone=[];
+	for(var i=0; i<=74; i++){
+		TimeZoneValue.push(i);
+	}
+	var i=0;
+	for(var text in optionText.TimeZone)
+	{
+		timezone[i]=optionText.TimeZone[text];
+		i++;
+	}
+	CreateOptions("INPUT_TimeZone",timezone,TimeZoneValue);
+	
+	$.getJSON("dataCenter.js", {http_wanport:'',
+								sessiontimeout:'',
+	                            wlan_time_enable:'',
+	                            wlan_start_time:'',
+	                            wlan_end_time:'',
+	                            wlan_day_time:'',
+	                            any_ip_enable:'',
+	                            start_src_ip:'',
+	                            end_src_ip:'',
+	                            access_port:'',
+	                            autoupdate_enable:'',
+	                            ntp_DaylightSavingsUsed:'',  //heyanping add
+	                            ntp_localtime:'',   //heyanping add
+	                            ntp_server_option1:'',//heyanping
+	                            ntp_server_option2:'',//heyanping
+	                            ntp_timezone_option:'',//heyanping
+								wl0_wds_enable:'',        wl1_wds_enable:'',
+								wl0_wdsmode:'',           wl1_wdsmode:'',
+								spi_firewall_enable:'',   router_disable:''
+	                            },function(json){
+	                            	//NTP,heyanping add
+									$("#INPUT_SessionTimeOut").val(json.sessiontimeout/60);
+	                            	G_LocalTime = json.ntp_localtime;//heyanping add
+	                            	
+	                            	$("#INPUT_TimeZone").val(json.ntp_timezone_option);
+	                            	$("#SELECT_NTPServer1").val(json.ntp_server_option1);
+	                            	$("#SELECT_NTPServer2").val(json.ntp_server_option2);
+	                            	
+	                            	if(json.ntp_DaylightSavingsUsed == '0')
+	                            	{
+	                            			$("#Check_adjust").removeAttr("checked");
+	                            	}
+	                            	else
+	                            	{
+	                            			$("#Check_adjust").attr({checked:'checked'});
+	                            	}
+	                             //Remote Management:
+	                            $("#INPUT_Port_No").val(json.access_port);
+		                        if(!json.start_src_ip){
+	                                $("#INPUT_Port_No").attr("disabled",true); 
+		                        }else{
+		                            if(json.start_src_ip==json.end_src_ip){
+		                                $("#only_ip").children().removeAttr("disabled");
+		                                OnloadIP4hops(json.end_src_ip,$("#only_ip").children());
+		                            }else{
+		                                $("#INPUT_AnyIp").attr("checked",true);
+		                           	    $("#only_ip").children().attr("disabled",true);
+	                                    $("#INPUT_Port_No").removeAttr("disabled"); 
+	                                }
+		                        }
+		                        if(json.autoupdate_enable == 1)
+		                            $("input[name=updateFwEnable][value=1]").attr("checked",true);
+		                        else
+		                            $("input[name=updateFwEnable][value=0]").attr("checked",true);
+	                             //Eco Mode: 
+		                        if(json.wlan_time_enable == 1)
+		                            $("#INPUT_DisableRadio").attr("checked",true);
+		                        else
+		                            $("#INPUT_DisableRadio").removeAttr("checked");
+								
+		                        InitShow(json.wlan_start_time,json.wlan_end_time,json.wlan_day_time)
+								if(json.wl0_wds_enable==1&&json.wl0_wdsmode=='Repeater' || json.wl1_wds_enable==1&&json.wl1_wdsmode=='Repeater'|| json.router_disable==1){
+									  $("#INPUT_TimeZone,#Check_adjust,#SELECT_NTPServer1,#SELECT_NTPServer2,#INPUT_AnyIp,#INPUT_Port_No").attr("disabled",true);
+		                           	  $("#only_ip").children().attr("disabled",true);  
+								}else if(json.spi_firewall_enable==1){
+									  $("#INPUT_AnyIp,#INPUT_Port_No").attr("disabled",true);
+		                           	  $("#only_ip").children().attr("disabled",true);
+									  
+								}
+	});
+	
+	 //Remote Management:
+	$("#INPUT_AnyIp").click(function(){
+	    if($("#INPUT_AnyIp").attr("checked") == true)
+	    {
+	        $("#only_ip").children().attr("disabled",true);
+	        $("#INPUT_Port_No").removeAttr("disabled");
+	    }else{
+	        $("#only_ip").children().removeAttr("disabled");
+	        $("#INPUT_Port_No").attr("disabled",true);
+	    }
+	});
+	$("#only_ip").children().change(function(){
+	    var ipaddr = $("#INPUTSingleIpAddr_1").val() + $("#INPUTSingleIpAddr_2").val() + $("#INPUTSingleIpAddr_3").val() + $("#INPUTSingleIpAddr_4").val();
+	    if(ipaddr!="")
+	        $("#INPUT_Port_No").removeAttr("disabled");
+	     else
+	        $("#INPUT_Port_No").attr("disabled",true);
+	});	
+	
+	processCSS();
+});
+
+function uiSubmit(){
+    var postVar = { action : "Apply",getPage:"ut_system_set.html"};
+	
+    //Remote Management:
+    var ipaddr = $("#INPUTSingleIpAddr_1").val() + "." + $("#INPUTSingleIpAddr_2").val() + "." + $("#INPUTSingleIpAddr_3").val() + "." + $("#INPUTSingleIpAddr_4").val();
+    var tmpaddr1 = $("#SELECT_NTPServer1").val() + " " +$("#SELECT_NTPServer2").val(); //heyanping add
+    var strtimezone = "undefined"; //heyanping add
+    var DaylightSavingsStart = G_LocalTime.substr(0,4)+'-04-01T00:00:00';//heyanping add
+	var DaylightSavingsEnd = G_LocalTime.substr(0,4)+'-06-30T23:59:59';//heyanping add
+	if($("#INPUT_OldPassword").val()!=""||$("#INPUT_NewPassword").val()!=""||$("#INPUT_ConfirmPassword").val()!="")
+	{
+		var oldpassWord=Base64.Encode($("#INPUT_OldPassword").val().replace(/\s/g,"@"));
+		var newpassWord=Base64.Encode($("#INPUT_NewPassword").val().replace(/\s/g,"@"));
+		var confirmpssWord=Base64.Encode($("#INPUT_ConfirmPassword").val().replace(/\s/g,"@"));;
+		postVar["mode"]="AUTH,ut_system_set,wlan_time,NTP";
+		postVar["auth_action"]="modifypassword";
+		postVar["oldpasswd"]=oldpassWord;
+		postVar["newpasswd"]=newpassWord;
+		postVar["newconfirmpasswd"]=confirmpssWord;
+	}
+	else
+	{
+	postVar["mode"]="ut_system_set,wlan_time,NTP";
+	}
+	
+	postVar["sessiontimeout"]=$("#INPUT_SessionTimeOut").val()*60;
+    postVar["autoupdate_enable"]=$('input[name="updateFwEnable"]:checked').val();
+    //heyanping add start
+    switch($('#INPUT_TimeZone').val())
+    {
+    	case "0":
+    		strtimezone="-12:00";
+    		break;
+    	case "1":
+    		strtimezone="-11:00";
+    		break;
+    	case "2":
+    		strtimezone="-10:00";
+    		break;
+    	case "3":
+    		strtimezone="-9:00";
+    		break;
+    	case "4":
+    		strtimezone="-8:00";
+    		break;
+    	case "5":
+    	case "6":
+    	case "7":
+    		strtimezone="-7:00";
+    		break;
+    	case "8":
+    	case "9":
+    	case "10":
+    	case "11":
+    		strtimezone="-6:00";
+    		break;
+    	case "12":
+    	case "13":
+    	case "14":
+    		strtimezone="-5:00";
+    		break;
+    	case "15":
+    	case "16":
+    	case "17":
+    		strtimezone="-4:00";
+    		break;
+    	case "18":
+    		strtimezone="-3:30";
+    		break;
+    	case "19":
+    	case "20":
+    	case "21":
+    		strtimezone="-3:00";
+    		break;
+    	case "22":
+    		strtimezone="-2:00";
+    		break;
+    	case "23":
+    	case "24":
+    		strtimezone="-1:00";
+    		break;
+    	case "25":
+    	case "26":
+    		strtimezone="+0:00";
+    		break;
+    	case "27":
+    	case "28":
+    	case "29":
+    	case "30":
+    	case "31":
+    		strtimezone="+1:00";
+    		break;
+    	case "32":
+    	case "33":
+    	case "34":
+    	case "35":
+    	case "36":
+    	case "37":
+    		strtimezone="+2:00";
+    		break;
+    	case "38":
+    	case "39":
+    	case "40":
+    	case "41":
+    		strtimezone="+3:00";
+    		break;
+    	case "42":
+    		strtimezone="+3:30";
+    		break;
+    	case "43":
+    	case "44":
+    		strtimezone="+4:00";
+    		break;
+    	case "45":
+    		strtimezone="+4:30";
+    		break;
+    	case "46":
+    	case "47":
+    		strtimezone="+5:00";
+    		break;
+    	case "48":
+    		strtimezone="+5:30";
+    		break;
+    	case "49":
+    		strtimezone="+5:45";
+    		break;
+    	case "50":
+    	case "51":
+    	case "52":
+    		strtimezone="+6:00";
+    		break;
+    	case "53":
+    		strtimezone="+6:30";
+    		break;
+    	case "54":
+    	case "55":
+    		strtimezone="+7:00";
+    		break;
+    	case "56":
+    	case "57":
+    	case "58":
+    	case "59":
+    	case "60":
+    		strtimezone="+8:00";
+    		break;
+    	case "61":
+    	case "62":
+    	case "63":
+    		strtimezone="+9:00";
+    		break;
+    	case "64":
+    	case "65":
+    		strtimezone="+9:30";
+    		break;
+    	case "66":
+    	case "67":
+    	case "68":
+    	case "69":
+    	case "70":
+    		strtimezone="+10:00";
+    		break;
+    	case "71":
+    	case "72":
+    		strtimezone="+11:00";
+    		break;
+    	case "73":
+    	case "74":
+    		strtimezone="+12:00";
+    		break;
+    	default:
+    		strtimezone="undefined";
+    		break;
+  }  	
+    	  
+    //heyanping add end
+    if($("#INPUT_AnyIp").attr("checked") == true)
+    {
+       postVar["any_ip_enable"]=1;
+       postVar["start_src_ip"]="0.0.0.0";
+       postVar["end_src_ip"]="255.255.255.255";
+       postVar["access_port"]=$("#INPUT_Port_No").val(); 
+    }else{
+       if(ipaddr != "..."){
+           postVar["any_ip_enable"]=1;
+           postVar["start_src_ip"]=ipaddr;
+           postVar["end_src_ip"]=ipaddr;
+    	   postVar["access_port"]=$("#INPUT_Port_No").val(); 
+        }else{
+            postVar["any_ip_enable"]=0;
+        }
+    }
+    
+    //for ntp
+    postVar["ntp_server"]=tmpaddr1; 
+    postVar["ntp_DaylightSavingsUsed"]=$("#Check_adjust").attr("checked")==false ? 0 : 1; 
+    postVar["ntp_timezone"]=strtimezone; 
+    postVar["ntp_DaylightSavingsStart"]=DaylightSavingsStart; 
+    postVar["ntp_DaylightSavingsEnd"]=DaylightSavingsEnd; 
+    postVar["ntp_DaylightSavingsOffset"]="+1:00"; 
+    	
+	postVar["ntp_timezone_option"]=$("#INPUT_TimeZone").val();
+	postVar["ntp_server_option1"]=$("#SELECT_NTPServer1").val();
+	postVar["ntp_server_option2"]=$("#SELECT_NTPServer2").val();
+	
+    //Eco Mode:
+    var selectdays='';
+	if($("#INPUT_Su").attr("checked")==true)
+	     selectdays='Sun,';
+	if($("#INPUT_Mo").attr("checked")==true)
+	     selectdays+='Mon,';
+	if($("#INPUT_TU").attr("checked")==true)
+	     selectdays+='Tue,';
+	if($("#INPUT_We").attr("checked")==true)
+	     selectdays+='Wed,';
+	if($("#INPUT_Th").attr("checked")==true)
+	     selectdays+='Thu,';
+	if($("#INPUT_Fr").attr("checked")==true)
+	     selectdays+='Fri,';
+	if($("#INPUT_Sa").attr("checked")==true)
+	     selectdays+='Sat,';
+	
+	/* for heyanping NTP mode */
+	postVar["wlan_time_enable"]=$("#INPUT_DisableRadio").attr("checked")==true?1:0;
+	postVar["wlan_start_time"]=$("#SELECT_StartTime").val();
+	postVar["wlan_end_time"]=$("#SELECT_EndTime").val();
+	postVar["wlan_day_time"]=selectdays;
+	postVar["apply_wait_time"]=10;
+
+	uiPost(postVar);
+	return; 
+}
+function InitShow(wlan_start_time,wlan_end_time,day){						
+	if(day.indexOf('Sun')!=-1){
+		$("#INPUT_Su").attr("checked","true"); //Sun
+	}else{
+		$("#INPUT_Su").removeAttr("checked");  //Sun
+	}
+	if(day.indexOf('Mon')!=-1)
+		$("#INPUT_Mo").attr("checked","true"); //Mon
+	else
+		$("#INPUT_Mo").removeAttr("checked");  //Mon
+	if(day.indexOf('Tue')!=-1)
+		$("#INPUT_TU").attr("checked","true"); //Tue
+	else
+		$("#INPUT_TU").removeAttr("checked");  //Tue
+	if(day.indexOf('Wed')!=-1)
+		$("#INPUT_We").attr("checked","true");//Wed
+	else
+		$("#INPUT_We").removeAttr("checked"); //Wed
+	if(day.indexOf('Thu')!=-1)
+		$("#INPUT_Th").attr("checked","true"); //Thu
+	else
+		$("#INPUT_Th").removeAttr("checked");  //Thu
+	if(day.indexOf('Fri')!=-1)
+		$("#INPUT_Fr").attr("checked","true");  //Fri
+	else
+		$("#INPUT_Fr").removeAttr("checked");   //Fri
+	if(day.indexOf('Sat')!=-1)
+		$("#INPUT_Sa").attr("checked","true");//Sat
+	else
+		$("#INPUT_Sa").removeAttr("checked"); //Sat
+
+	$("#SELECT_StartTime").val(wlan_start_time);
+	$("#SELECT_EndTime").val(wlan_end_time);	
+}
+
+function processCSS(){
+	$("#toptable tr td:only-child").attr("colSpan","2");		
+	$("#INPUT_Port_No").unbind("keyup");
+	$(":button").addClass('submitBtn');
+	$("#sub_table tr td").css("border","0px");
+}
+
+</script>
+<div id="topdiv" class="config3">
+    <div><p id="lang_system_set" class="mainbiao"></p></div>
+    <table id="toptable" class="table01"><tbody>
+        <tr><td id="lang_admin_password" class="lable">&nbsp;</td></tr>
+        <tr><td id="lang_current_password"></td><td><input id="INPUT_OldPassword" type="password" maxlength="64" size="64"></td></tr>
+        <tr><td id="lang_new_password"></td><td><input id="INPUT_NewPassword" type="password" maxlength="64" size="64"></td></tr>
+        <tr><td id="lang_confirm_password"></td><td><input id="INPUT_ConfirmPassword" type="password" maxlength="64" size="64"></td></tr>
+        <tr><td id="lang_login_out"></td><td><input id="INPUT_SessionTimeOut" type="text" maxlength="2" size="4" style="width:30px"/><span id="lang_time"></span></td></tr>
+        <tr ><td id="lang_curtime" class="lable"></td><td id="INPUT_LocalTime" class="lable"></td></tr>
+        <tr>
+            <td id="lang_timezone"></td>
+            <td>
+                <select name="INPUT_TimeZone" id="INPUT_TimeZone" title="58"></select>
+            </td>
+        </tr>
+        <tr>
+            <td id="lang_daylight_saving"></td>
+            <td><input id="Check_adjust" type="checkbox" /><span id="lang_daylight_help"></span></td>
+        </tr>
+        <tr>
+            <td id="lang_firttime"></td>
+            <td><select id="SELECT_NTPServer1" name="SELECT_NTPServer1"></select></td>
+        </tr>
+        <tr>
+            <td id="lang_secondtime"></td>
+            <td><select id="SELECT_NTPServer2" name="SELECT_NTPServer2"></select></td>
+        </tr>
+        <tr><td id="lang_Remo_Mana" class="lable"></td></tr>
+        <tr><td><input id="INPUT_AnyIp" type="checkbox" value="1"></input><span id="lang_any_ip"></span></td></tr>
+        <tr><td id="lang_only_ip"></td>
+        	<td id="only_ip">
+            	<input id="INPUTSingleIpAddr_1" type="text" /><span>.</span>
+                <input id="INPUTSingleIpAddr_2" type="text" /><span>.</span>
+                <input id="INPUTSingleIpAddr_3" type="text" /><span>.</span>
+                <input id="INPUTSingleIpAddr_4" type="text" />
+        </td></tr>
+        <tr><td id="lang_PortNumber"></td><td><input id="INPUT_Port_No" type="text"></td></tr>
+        <tr><td id="lang_update_enable" class="lable"></td></tr>
+        <tr>
+            <td id="lang_fw_enable"></td>
+            <td>
+                <input type="radio" name="updateFwEnable" id="updateFwEnableOn" value="1"><span id="lang_update_On"></span>
+                <input type="radio" name="updateFwEnable" id="updateFwOff" value="0"><span id="lang_update_Off"></span>
+            </td>
+        </tr>
+        <tr><td id="lang_eco_enable" class="lable"></td></tr>
+        <tr>
+            <td><span><input id="INPUT_DisableRadio" type="checkbox"></span><span id="lang_disable_radio"></span></td>
+            <td>
+                <select id="SELECT_StartTime" title="00:00"></select>
+                <span id="lang_To"></span>
+                <select id="SELECT_EndTime" title="00:00"></select>
+            </td>
+        </tr>
+        <tr><td></td><td align="left">
+                <table id="sub_table"><tbody>
+                    <tr><td id="lang_su">&nbsp;</td><td id="lang_mo"></td><td id = "lang_tu"></td><td id="lang_we"></td><td id = "lang_th"></td><td id = "lang_fr"></td><td id = "lang_sa"></td></tr>
+                    <tr><td><input id="INPUT_Su" type="checkbox"></td><td><input id="INPUT_Mo" type="checkbox"></td><td><input id="INPUT_TU" type="checkbox"></td><td><input id="INPUT_We" type="checkbox"></td><td><input id="INPUT_Th" type="checkbox"></td><td><input id="INPUT_Fr" type="checkbox"></td><td><input id="INPUT_Sa" type="checkbox"></td></tr>
+                </tbody></table>
+            </td>
+        </tr>
+    </table>
+    <div class="div_button">
+            <input id="lang_cancle2" type="button" onClick="uiPageRefresh();">&nbsp;&nbsp;
+            <input id="lang_apply2" type="button" onClick="uiSubmit();">
+    </div>
+</div>

@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- include page -->
+<link type="text/css" rel="stylesheet" href="common.css" media="screen" />
+<script language="javascript" type="text/javascript" src="jquery-1.3.2.js"></script>
+<script language="javascript" type="text/javascript" src="global.js"></script>
+<script language="javascript" type="text/javascript" >
+var i = 1;
+function uiSubmit(_value)
+{
+    var postVar =$("#tableinput input").serializeArray();
+
+	ui_Post(postVar);
+	return;	
+}
+$(function(){
+    $('#addTextInput').click(function(){
+        if(i < 100) {
+  	        var tmp = '<tr align="center" ><td width="30%"><span><b>'+ $("#parent_text").val() + '</b><span/></td><td width="60%"><input type="text" size="50" name="'+ $("#parent_text").val() +'" value="' +$("#parent_value").val() +'"/>'+'</td><td class="del-text" width="10%"><b>del</b></td></tr>';
+			
+		    $('#tableinput').append(tmp);
+		    i++;
+         } else {
+            alert("最多加100个");
+         }
+    });
+	
+  $('.del-text').live('click',function(){
+        $(this).parent().remove();
+    });
+	
+	processCSS();
+});
+
+function processCSS()
+{	
+	$("#tableinput").width("80%");
+	$(":button").addClass("submitBtn");
+}
+
+function ui_Post(postVar){
+	$.post("postCenter.js",postVar,
+		function(data){
+			var code = data.result;
+			var suggestion = data.suggestion;
+			var queryInfo = data.queryInfo;
+			if(code == "255" || code == "0"){
+				alert("Success!" + " sug->" + suggestion + ' query->' + queryInfo);
+				return;
+			}else{
+				if(window.errorCode[256] != undefined){
+					alert(window.errorCode[code] +  " sug->" + suggestion + ' query->' + queryInfo);
+				}
+				else{
+					alert(window.errorCode[256] +  " sug->" + suggestion + ' query->' + queryInfo);
+				}
+				return;
+			}
+	}, "json");
+}
+
+</script>
+</head>
+<body>
+<form>
+<div class="config3">
+	<p id="lang_test" class="mainbiao">TEST > All</p>
+	<table class="table01"><tbody>
+		<tr><td align="right" width="50%"><span>Name</span><input id="parent_text" name="parent_text"/></td>
+			<td></td>
+		</tr>   
+		<tr>
+			<td align="right"><span>Value</span><input id="parent_value" name="parent_value"/></td>
+			<td align="left"><input id="addTextInput" type="button" value="Add"/></td>
+		</tr>
+	</tbody></table>
+	<br /><br /><br />
+	<div align="center">
+		<table id="tableinput" class="table01"><tbody>
+			<tr style="display:none"><td>
+				<input type="hidden" name="getpage" id="test" value="test.test">
+				<input type="hidden"  name="action" value="Apply">
+			</td></tr>
+	</tbody></table></div>
+	
+	<div align="center" class="div_button">
+		<input type="button"  id="lang_apply" onClick="uiSubmit();" value="Apply"/>
+	</div>
+</div>
+</form>
+</body>
+</html>
