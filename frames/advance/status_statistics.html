@@ -3,9 +3,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Wireless Router</title>
-<link type="text/css" rel="stylesheet" href="common.css" media="screen" />
-<script language="javascript" type="text/javascript" src="jquery-1.3.2.js"></script>
-<script language="javascript" type="text/javascript" src="global.js"></script>
+<link type="text/css" rel="stylesheet" href="/css/advance/common.css" media="screen" />
+<script language="javascript" type="text/javascript" src="/js/advance/jquery-1.3.2.js"></script>
+<script language="javascript" type="text/javascript" src="/js/advance/global.js"></script>
 <script type="text/javascript">
 var _flg_stop = 0;
 var freshtime = 5;
@@ -18,7 +18,7 @@ $(function(){
 function Onload_init()
 {
 	var statistics;
-	$.getJSON("dataCenter.js", {'/var/traffic_statistic.txt':'file'},function(json){
+	$.getJSON("/dataCenter.js", {'/var/traffic_statistic.txt':'file'},function(json){
 		statistics = json;
 		setJSONValue({
 				'INPUT_LAN1_PacketsSent'     : json['vlan1']['txPacktes'],
@@ -36,7 +36,7 @@ function Onload_init()
 				'INPUT_WLAN_txbytes_5G'      : parseInt(json['eth2']['txBytes'])+parseInt(json['wl1.1']['txBytes'])+parseInt(json['wl1.2']['txBytes']),
 				'INPUT_WLAN_rxbytes_5G'      : parseInt(json['eth2']['rxBytes'])+parseInt(json['wl1.1']['rxBytes'])+parseInt(json['wl1.2']['rxBytes'])
 		});
-		$.getJSON("dataCenter.js", {wan_proto:''},function(json){
+		$.getJSON("/dataCenter.js", {wan_proto:''},function(json){
 			if(json.wan_proto == 'dhcp' ||json.wan_proto == 'static' ){
 				setJSONValue({
 					'INPUT_WAN_PacketsSent'      : statistics['vlan2']['txPacktes'],
