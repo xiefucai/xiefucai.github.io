@@ -1,5 +1,5 @@
 @charset "utf-8";/******************************************5358u new**************************************************************/
-body {font:12px "Î¢ÈíÑÅºÚ";margin:0px auto;overflow-x:hidden;visibility:hidden;}
+body {font:12px "Î¢ÈíÑÅºÚ";margin:0px auto;overflow:hidden;visibility:hidden;}
 .mainbiao{border-bottom:1px solid #ccc;color:#333;font-size:18px;font-weight:bold;margin:0;padding:10px 0;}
 .mainbiao1{padding:5px;margin-bottom:10px;background:#adcce7;}
 .table01 {border-collapse:collapse;margin:10px 0 0;}
@@ -47,4 +47,4 @@ textarea{width:100%;height:200px;font-family:monospace;font-size:11px;background
   background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
   text-decoration: none;
 }
-.bottom{clear:both;height:20px;font-size:1px;border-bottom:1px solid #f00;background:#090;}
+.bottom{clear:both;height:0;font-size:1px;border-bottom:1px solid #f00;background:#090;}

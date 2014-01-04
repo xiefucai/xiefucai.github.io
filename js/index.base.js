@@ -65,7 +65,7 @@
 		},
 		'resizeWin':function(event){
 			var rect = common.getDocSize();
-			$('.main-1,.main-2,.main-3').css({'width':rect.width,'minHeight':812});
+			$('.main-1,.main-2,.main-3').css({'width':rect.width/*,'minHeight':812*/});
 			$('.router_mian_wp').css({'minHeight':rect.height-156});
 			$('.main-1 .router_mian_wp').css({'minHeight':Math.max(rect.height-156,534)});
 			$('.router_con_wp').css({'top':Math.max((rect.height-554-152)/2,106)}); 
@@ -156,8 +156,11 @@
 						break;
 					}
 				}
+			},
+			//
+			'showRightFrame':function(event,t){
+				t.parent().addClass('cur').siblings().removeClass('cur');
 			}
-			
 		},
 		'init':function(){
 			//拉取路由器列表

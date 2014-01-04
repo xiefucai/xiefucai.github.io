@@ -281,8 +281,46 @@ function systemDate(t) {
 }
 
 function ShowStatistics() {
+	/*
 	var href = "status_statistics.html" + "?t=" + new Date();
 	var pbcwin = window.open(href, "pbc", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,width=600,height=300,resizable=0");
+	*/
+	var url = 'status_statistics.html?t=' + (+new Date()),
+		moveCenter = function(){
+			common.dialog.moveTo((document.documentElement.clientWidth - 588)/2,(document.documentElement.scrollTop || document.body.scrollTop)+(document.documentElement.clientHeight||document.body.clientHeight-400)/2);
+		},
+		showFrame = function(){
+			common.dialog.showFrame(url);
+			moveCenter();
+		};
+	if (window.common && common.dialog){
+		showFrame();
+	}else{
+		$.getScript('/js/common.dialog.js',function(){
+			showFrame();
+			window.onmessage = function(event){
+				var d = (event || window.event).data;console.log(d);
+				if (d){
+					d = common.string.toJSON(d);
+				}
+				if (d && d.action){
+					if (d.action === "resize"){console.log(d.data);
+						common.dialog.resizeTo(580,d.data.height-6);
+					}else if(d.action === "success"){
+						common.dialog.close();
+					}
+				}
+			};
+			if (window.postMessage === undefined){
+				setInterval(function(){
+					var name = window.name;
+					if (name){
+						window.onmessage({"data":name});
+					}
+				},500);
+			};
+		});
+	}
 }
 
 function Connect_Status() {}
