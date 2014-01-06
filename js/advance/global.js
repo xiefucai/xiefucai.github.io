@@ -233,11 +233,11 @@ function language_translate() {
 		current_visit: "val"
 	},
 	function(json) {
-		
+		console.log(json.current_visit);
 		if (json.current_visit){
 			json.current_visit = json.current_visit.replace(/.*\//g,'');
 		}
-		
+		console.log(json.current_visit);
 		chg_language(window.data_language[json.current_visit]);
 		copyHelp(window.help_language[json.current_visit]);
 		if (title_show[json.current_visit] != undefined && title_show[json.current_visit] != "") top.document.title = title_show[json.current_visit];

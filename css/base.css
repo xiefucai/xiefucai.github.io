@@ -42,5 +42,13 @@ ul,ol,li,dl,dt,dd{margin:0;padding:0;list-style:none;}
 .slider-ctrs-right .slider-ctrs-label{right:40px;}
 .slider-ctrs-left .slider-ctrs-label{left:40px;}
 .slider-ctrs-left:hover .slider-ctrs-label,.slider-ctrs-right:hover .slider-ctrs-label{display:block;}
+
+.advance-title{font-size:14px;height:58px;line-height:58px;border-bottom:1px solid #DBDBDB;text-indent:25px;margin:0;display:none;}
+.advance-nav{width:149px;border-right:1px solid #DBDBDB;background:#EDEDED;position:absolute;top:59px;bottom:0;display:none;}
+.advance-nav a{display:block;height:40px;line-height:40px;text-indent:25px;font-size:14px;color:#3E3E3E;margin:4px;}
+.advance-nav a:hover{color:#1AA7FF;}
+.advance-nav a.cur,.advance-nav a.cur:hover{background:#E1E1E1;color:#3E3E3E;cursor:default;}
+.advance-mode .advance-nav,.advance-mode .advance-title{display:block;}
+.advance-mode .router_frame2{margin-left:150px;}
 .disabled{opacity:0;filter:alpha(opacity=0)\9;cursor:default;}
 .none{display:none;}

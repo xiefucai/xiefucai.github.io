@@ -1,0 +1,53 @@
+﻿<!doctype html>
+<html dir="ltr" lang="zh-CN">
+<head>
+	<meta charset="UTF-8" />
+	<title>路由器高级设置 - 迅雷路由——你一直等待的下载机</title>
+	<!--BUILD:./css/frame.form.css-->
+	<link rel="stylesheet" href="../css/frame.css" type="text/css" />
+	<link rel="stylesheet" href="../css/frame.form.css" type="text/css" />
+	<!--/BUILD-->
+</head>
+<body>
+<form class="form">
+	<ul class="form-table">
+		<li class="form-item">
+			<span class="form-label">局域网IP地址</span>
+			<input class="form-text" type="text" placeholder="192.168.1.1"/>
+		</li>
+		<li class="form-item right">
+			<span class="form-label">DHCP服务</span>
+			<span class="form-check">
+				<input type="checkbox"/>
+			</span>
+		</li>
+		<li class="form-item">
+			<span class="form-label">IP分配范围</span>
+			<input class="form-text" type="text" placeholder="192.168.1.1"/>
+			<input class="form-text" type="text" placeholder="192.168.1.255"/>
+		</li>
+		<li class="form-item">
+			<span class="form-label">租用范围</span>
+			<input class="form-text form-text-short" type="text"/>
+			<span class="form-select">
+				<input type="text" class="form-select-input" value="小时"/>
+				<span class="form-select-angle"></span>
+				<div class="form-select-opts">
+					<a href="javascript:;" class="active">小时</a>
+					<a href="javascript:;">天</a>
+					<a href="javascript:;">周</a>
+					<a href="javascript:;">月</a>
+					<a href="javascript:;">年</a>
+				</div>
+			</span>
+		</li>
+		<li class="form-item mt20">
+			<input class="form-button" type="submit" value="保存设置"/>
+		</li>
+	</ul>
+</form>
+<div id="bottom" class="bottom"></div>
+<script type="text/javascript" src="../js/jquery-1.4.3.min.js"></script>
+<script type="text/javascript" src="../js/advance.base.js"></script>
+</body>
+</html>

@@ -160,6 +160,15 @@
 			//
 			'showRightFrame':function(event,t){
 				t.parent().addClass('cur').siblings().removeClass('cur');
+				if (t.attr('title') === '高级设置'){
+					$('.router_mian').addClass('advance-mode');
+				}else{
+					$('.router_mian').removeClass('advance-mode');
+				}
+			},
+			//
+			'showRightFrame2':function(event,t){
+				t.addClass('cur').siblings().removeClass('cur');
 			}
 		},
 		'init':function(){

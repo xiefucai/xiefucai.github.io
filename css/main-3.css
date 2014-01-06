@@ -1,6 +1,7 @@
 ﻿.pl{margin:0 0 0 10px;}
 .router_mian_box{width:868px;margin:0 auto;background:rgba(19,26,33,0.7);border-radius:5px 5px 0 0;font:12px/1.5 tahoma,arial,\5b8b\4f53,sans-serif;position:relative;z-index:1;left:-10px;}
 .router_mian_wp{position:relative;margin:0 0 0 176px;zoom:1;background:#F3F4F5;border-radius:0 5px 5px 0  ;min-height: 554px;_height:554px;}
+.router_mian_wp .router_mian{min-height:540px;}
 .router_sider{margin-left:-176px;width:176px;position:absolute;left:0;top:0;}
 .router_sider h3{font-weight:normal;font-size:18px;font-family:\5FAE\8F6F\96C5\9ED1;color:#637A96;padding:19px 0 10px 13px;}
 .rs_list{color:#fff;font-family:\5FAE\8F6F\96C5\9ED1;font-size:16px;list-style:none;margin:0;padding:0;}
