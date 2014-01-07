@@ -9,45 +9,51 @@
 	<!--/BUILD-->
 </head>
 <body>
-<form class="form">
+<form class="form" id="form" onsubmit="return false;">
 	<ul class="form-table">
 		<li class="form-item">
 			<span class="form-label">局域网IP地址</span>
-			<input class="form-text" type="text" placeholder="192.168.1.1"/>
+			<input class="form-text" type="text" data-tip="路由器的IP地址（出厂缺省设定：192.168.1.1)" name="lan_ipaddr"/>
+			<input type="hidden" name="lan_netmask" value="255.255.255.0" data-label="子网掩码"/>
 		</li>
 		<li class="form-item right">
 			<span class="form-label">DHCP服务</span>
 			<span class="form-check">
-				<input type="checkbox"/>
+				<input type="checkbox" name="lan_proto" data-checked="dhcp" data-unchecked="static"/>
 			</span>
+			<input type="hidden" name="lan_domain" value="peiluyou.com"/>
 		</li>
 		<li class="form-item">
 			<span class="form-label">IP分配范围</span>
-			<input class="form-text" type="text" placeholder="192.168.1.1"/>
-			<input class="form-text" type="text" placeholder="192.168.1.255"/>
+			<input class="form-text" type="text" placeholder="192.168.1.1" name="dhcp_start"/>
+			<input class="form-text" type="text" placeholder="192.168.1.255" name="dhcp_end"/>
 		</li>
 		<li class="form-item">
 			<span class="form-label">租用范围</span>
-			<input class="form-text form-text-short" type="text"/>
 			<span class="form-select">
-				<input type="text" class="form-select-input" value="小时"/>
+				<input type="text" class="form-select-input" name="lan_lease" value="一天" data-value="86400" readonly/>
 				<span class="form-select-angle"></span>
 				<div class="form-select-opts">
-					<a href="javascript:;" class="active">小时</a>
-					<a href="javascript:;">天</a>
-					<a href="javascript:;">周</a>
-					<a href="javascript:;">月</a>
-					<a href="javascript:;">年</a>
+					<a href="javascript:;" data-value="4294967296">永远</a>
+					<a href="javascript:;" class="active" data-value="1800">半小时</a>
+					<a href="javascript:;" data-value="3600">一小时</a>
+					<a href="javascript:;" data-value="7200">两小时</a>
+					<a href="javascript:;" data-value="43200">半天</a>
+					<a href="javascript:;" data-value="86400">一天</a>
+					<a href="javascript:;" data-value="172800">两天</a>
+					<a href="javascript:;" data-value="604800">一周</a>
+					<a href="javascript:;" data-value="1209600">两周</a>
 				</div>
 			</span>
 		</li>
 		<li class="form-item mt20">
-			<input class="form-button" type="submit" value="保存设置"/>
+			<input class="form-button" type="submit" value="保存设置" data-action="postForm"/>
 		</li>
 	</ul>
 </form>
 <div id="bottom" class="bottom"></div>
 <script type="text/javascript" src="../js/jquery-1.4.3.min.js"></script>
 <script type="text/javascript" src="../js/advance.base.js"></script>
+<script type="text/javascript" src="../js/advance.router.js"></script>
 </body>
 </html>

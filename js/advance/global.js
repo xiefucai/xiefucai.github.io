@@ -73,7 +73,7 @@ var common = {
 		var h = $('#bottom').offset().top;
 		if (window !== parent){
 			common.postMessage({"action":"resize","data":{"height":h}});
-		}else{
+		}else if(window.frameElement){
 			frameElement.height = h;
 		}
 	},

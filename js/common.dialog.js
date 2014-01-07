@@ -1,4 +1,6 @@
-﻿window.common = window.common || {};
+﻿if (!window.common){
+	window.common = {};
+}
 window.common.dialog = (function(){
 	var newElem = function(tagName,parent,styleVal,innerStr,doc){
 			var elem = (doc || document).createElement(tagName);

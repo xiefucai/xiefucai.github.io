@@ -2,31 +2,21 @@
 <html dir="ltr" lang="zh-CN">
 <head>
 	<meta charset="UTF-8" />
-	<title>WIFI高级设置 - 迅雷路由——你一直等待的下载机</title>
+	<title>WIFI设置 - 迅雷路由——你一直等待的下载机</title>
 	<!--BUILD:./css/frame.form.css-->
 	<link rel="stylesheet" href="../css/frame.css" type="text/css" />
 	<link rel="stylesheet" href="../css/frame.form.css" type="text/css" />
 	<!--/BUILD-->
 </head>
 <body>
-<form class="form form-wifi">
+<form class="form">
 	<ul class="form-table">
 		<li class="form-item">
-			<span class="form-label">无线信道</span>
-			<span class="form-select">
-				<input type="text" class="form-select-input" value="1" readonly/>
-				<span class="form-select-angle"></span>
-				<div class="form-select-opts">
-					<a href="javascript:;" class="active">小时</a>
-					<a href="javascript:;">天</a>
-					<a href="javascript:;">周</a>
-					<a href="javascript:;">月</a>
-					<a href="javascript:;">年</a>
-				</div>
-			</span>
+			<span class="form-label">WIFI名称</span>
+			<input class="form-text" type="text"  placeholder=""/>
 		</li>
 		<li class="form-item">
-			<span class="form-label">信号强度</span>
+			<span class="form-label">加密方式</span>
 			<span class="form-select">
 				<input type="text" class="form-select-input" value="穿墙模式" readonly/>
 				<span class="form-select-angle"></span>
@@ -37,21 +27,20 @@
 			</span>
 		</li>
 		<li class="form-item">
-			<span class="form-label">隐藏SSID</span>
+			<span class="form-label">WIFI密码</span>
+			<input class="form-text" type="text"  placeholder=""/>
+		</li>
+		<li class="form-item">
+			<span class="form-label">WIFI开关</span>
 			<span class="form-check">
 				<input type="checkbox"/>
 			</span>
 		</li>
 		<li class="form-item">
-			<span class="form-label">无线MAC地址访问控制</span>
+			<span class="form-label">5G高速网络</span>
 			<span class="form-check">
 				<input type="checkbox"/>
 			</span>
-		</li>
-		<li class="form-item">
-			<input type="radio" name="macstatus" value="1" id="mac1" checked/> <label for="mac1">允许以下MAC地址访问</label> <br/>
-			<input type="radio" name="macstatus" value="0" id="mac2"/> <label for="mac2">禁止以下MAC地址访问</label>
-			<input class="form-text" type="text"  placeholder="输入mac地址后，按Enter键快速添加"/>
 		</li>
 		<li class="form-item mt20">
 			<input class="form-button" type="submit" value="保存设置"/>
@@ -61,6 +50,5 @@
 <div id="bottom" class="bottom"></div>
 <script type="text/javascript" src="../js/jquery-1.4.3.min.js"></script>
 <script type="text/javascript" src="../js/advance.base.js"></script>
-<script type="text/javascript" src="../js/advance.wifi.js"></script>
 </body>
 </html>

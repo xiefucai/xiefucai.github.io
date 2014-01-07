@@ -162,6 +162,13 @@
 				t.parent().addClass('cur').siblings().removeClass('cur');
 				if (t.attr('title') === '高级设置'){
 					$('.router_mian').addClass('advance-mode');
+					(function(elem){
+						elem.trigger('click');
+						//$('#frame2').attr('src',elem.attr('href'));
+						$('#frame2')[0].src = elem.attr('href');
+					})($('.advance-nav').find('a:eq(0)'))
+					;
+					return false;
 				}else{
 					$('.router_mian').removeClass('advance-mode');
 				}
@@ -197,9 +204,13 @@
 	$('body').bind('click',function(event){
 		var target = event.target,
 			jtarget = $(target),
-			action = jtarget.attr('data-action');
+			action = jtarget.attr('data-action'),
+			r;
 		if (action && common.action[action]){
-			common.action[action](event,jtarget);
+			r = common.action[action](event,jtarget);
+		}
+		if (r === false){
+			return r;
 		}
 	});
 	
