@@ -2,9 +2,12 @@
 a{text-decoration:none;}
 a:focus{outline:none;}
 ul,ol,li,dl,dt,dd{margin:0;padding:0;list-style:none;}
+.left{text-align:left;}
 .center{text-align:center;}
 .right{text-align:right;}
 .gray{color:#999;}
+.blue{color:#1AA7FF;}
 .ml15{margin-left:15px;}
 .mt20{margin-top:20px;}
 .clear{clear:both;}
+.none{display:none;}

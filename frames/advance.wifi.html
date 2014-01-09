@@ -8,53 +8,85 @@
 	<link rel="stylesheet" href="../css/frame.form.css" type="text/css" />
 	<!--/BUILD-->
 </head>
-<body>
-<form class="form form-wifi">
+<body> 
+<form class="form form-wifi" id="form" onsubmit="return false;">
 	<ul class="form-table">
 		<li class="form-item">
 			<span class="form-label">无线信道</span>
 			<span class="form-select">
-				<input type="text" class="form-select-input" value="1" readonly/>
+				<input type="text" name="channel" class="form-select-input" value="自动" data-value="0" readonly/>
 				<span class="form-select-angle"></span>
 				<div class="form-select-opts">
-					<a href="javascript:;" class="active">小时</a>
-					<a href="javascript:;">天</a>
-					<a href="javascript:;">周</a>
-					<a href="javascript:;">月</a>
-					<a href="javascript:;">年</a>
+					<span data-value="0" class="active">自动</span>
+					<span data-value="1">1</span>
+					<span data-value="2">2</span>
+					<span data-value="3">3</span>
+					<span data-value="4">4</span>
+					<span data-value="5">5</span>
+					<span data-value="6">6</span>
+					<span data-value="7">7</span>
+					<span data-value="8">8</span>
+					<span data-value="9">9</span>
+					<span data-value="10">10</span>
+					<span data-value="11">11</span>
 				</div>
 			</span>
+			<input type="hidden" name="extendChannel" value="0"/>
 		</li>
+		<!--
 		<li class="form-item">
 			<span class="form-label">信号强度</span>
 			<span class="form-select">
 				<input type="text" class="form-select-input" value="穿墙模式" readonly/>
 				<span class="form-select-angle"></span>
 				<div class="form-select-opts">
-					<a href="javascript:;" class="active">普通模式</a>
-					<a href="javascript:;">穿墙模式</a>
+					<span class="active">普通模式</span>
+					<span >穿墙模式</span>
 				</div>
 			</span>
 		</li>
+		-->
 		<li class="form-item">
 			<span class="form-label">隐藏SSID</span>
 			<span class="form-check">
-				<input type="checkbox"/>
+				<input type="checkbox" name="ssid_enable" checked/>
 			</span>
 		</li>
 		<li class="form-item">
 			<span class="form-label">无线MAC地址访问控制</span>
 			<span class="form-check">
-				<input type="checkbox"/>
+				<input type="checkbox" name="macvisible"/>
 			</span>
 		</li>
-		<li class="form-item">
-			<input type="radio" name="macstatus" value="1" id="mac1" checked/> <label for="mac1">允许以下MAC地址访问</label> <br/>
-			<input type="radio" name="macstatus" value="0" id="mac2"/> <label for="mac2">禁止以下MAC地址访问</label>
-			<input class="form-text" type="text"  placeholder="输入mac地址后，按Enter键快速添加"/>
-		</li>
-		<li class="form-item mt20">
-			<input class="form-button" type="submit" value="保存设置"/>
+		<div id="mac-visible" class="none">
+			<li class="form-item">
+				<span class="form-select">
+					<input type="text" name="mac_enable" class="form-select-input" value="允许以下MAC地址访问" data-value="allow" readonly/>
+					<span class="form-select-angle"></span>
+					<div class="form-select-opts">
+						<span class="active" data-value="allow">允许以下MAC地址访问</span>
+						<span data-value="disabled">禁止以下MAC地址访问</span>
+					</div>
+				</span>
+			</li>
+			<div id="mac-config">
+				<li class="form-item">
+					<span class="form-label">MAC地址1</span>
+					<input type="text" name="mac" class="form-text"  placeholder=""/>
+					<a href="javascript:;" class="form-delbtn" data-action="delMacAddr" title="删除">&times;</a>
+				</li>
+				<li class="form-item">
+					<span class="form-label">MAC地址2</span>
+					<input type="text" name="mac" class="form-text"  placeholder=""/>
+					<a href="javascript:;" class="form-delbtn" data-action="delMacAddr" title="删除">&times;</a>
+				</li>
+				<li class="form-item">
+					<a href="javascript:;" class="form-addbtn" data-action="addMacAddr">✚ 添加MAC地址</a>
+				</li>
+			</div>
+		</div>
+		<li class="mt20 center">
+			<input class="form-button" type="submit" value="保存" data-action="postForm"/>
 		</li>
 	</ul>
 </form>

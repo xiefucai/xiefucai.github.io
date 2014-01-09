@@ -4,6 +4,15 @@
 		postVar = {action:"Apply",mode:"LANDHCP",getPage:"lan_set.html"},
 		srcData = {};
 	
+	$(form['lan_proto']).bind('change',function(){
+		if ($(this).is(':checked')){
+			$('#dhcp-config').removeClass('none');
+		}else{
+			$('#dhcp-config').addClass('none');
+		}
+		common.resize();
+	});
+	
 	$.getJSON("/dataCenter.js", {
 		'lan_ipaddr':'',
 		'lan_netmask':'',
