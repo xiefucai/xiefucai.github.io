@@ -9,39 +9,39 @@
 	<!--/BUILD-->
 </head>
 <body>
-<form class="form">
+<form class="form" id="form" onsubmit="return false">
 	<ul class="form-table">
 		<li class="form-item">
 			<span class="form-label">类型</span>
 			<span class="form-select">
-				<input type="text" class="form-select-input" value="L2TP" readonly/>
+				<input type="text" name="proto" class="form-select-input" value="L2TP" data-value="L2TP" readonly/>
 				<span class="form-select-angle"></span>
 				<div class="form-select-opts">
-					<span class="active">L2TP</span>
-					<span>PPTP</span>
+					<span class="active" data-value="L2TP">L2TP</span>
+					<span data-value="PPTP">PPTP</span>
 				</div>
 			</span>
 		</li>
 		<li class="form-item">
 			<span class="form-label">服务器地址</span>
-			<input class="form-text" type="text"/>
+			<input class="form-text" type="text" name="server"/>
 		</li>
 		<li class="form-item">
 			<span class="form-label">用户名</span>
-			<input class="form-text" type="text"/>
+			<input class="form-text" type="text" name="username"/>
 		</li>
 		<li class="form-item">
 			<span class="form-label">密码</span>
-			<input class="form-text" type="password"/>
+			<input class="form-text" type="password" name="pasw"/>
 		</li>
 		<li class="form-item">
 			<span class="form-label">模式</span>
 			<span class="form-select">
-				<input type="text" class="form-select-input" value="全局模式" readonly/>
+				<input type="text" name="pattern" class="form-select-input" value="全局模式" readonly/>
 				<span class="form-select-angle"></span>
 				<div class="form-select-opts">
-					<span class="active">全局模式</span>
-					<span>智能模式</span>
+					<span class="active" data-value="0">全局模式</span>
+					<span data-value="1">智能模式</span>
 				</div>
 			</span>
 		</li>
@@ -53,12 +53,13 @@
 		</li>
 		
 		<li class="center mt20">
-			<input class="form-button" type="submit" value="保存"/>
+			<input class="form-button" type="submit" value="保存" data-action="postForm"/>
 		</li>
 	</ul>
 </form>
 <div id="bottom" class="bottom"></div>
 <script type="text/javascript" src="../js/jquery-1.4.3.min.js"></script>
 <script type="text/javascript" src="../js/advance.base.js"></script>
+<script type="text/javascript" src="../js/advance.pptp.js"></script>
 </body>
 </html>

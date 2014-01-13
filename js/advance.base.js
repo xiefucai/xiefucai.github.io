@@ -101,7 +101,7 @@
 			}
 		},
 		'resize':function(event){
-			var h = $('#bottom').offset().top;
+			var h = Math.ceil($('#bottom').offset().top);
 			if (window !== parent){
 				frameElement.height = h;
 				common.postMessage({"action":"resize","data":{"height":h}});
@@ -138,6 +138,37 @@
 			});
 		},
 		'action':{
+			'showTip':function(tipName,tipTarget){
+				var tip = $('#globalTip'),
+					commTip = window.common.tip,
+					offset = tipTarget.offset(),
+					format = function(str){
+						return str.replace(/==\s(\S+)\s==/g,'<h3 class="form-tip-title">$1</h3>')
+						.replace(/\*{3}(.*)\*{3}/g,'<span class="red">$1</span>')
+						.replace(/\n/g,'<br/>');
+					};
+				if (!tip.length){
+					tip = $(['<div class="form-tip none" id="globalTip">',
+					'<span class="form-tip-angel"></span>',
+					'<span class="form-tip-angel-shadow"></span>',
+					'<div class="form-tip-content"></div>',
+					'</div>'].join('')).appendTo($('body'));
+				}
+				if (commTip && commTip[tipName]){
+					tip.css({'top':offset.top})
+					.removeClass('none')
+					.find('.form-tip-content')
+					.html(format(commTip[tipName]));
+				}else{
+					console.log(tipName,common.tip);
+				}
+			},
+			'hideTip':function(tipName,tipTarget){
+				var tip = $('#globalTip');
+				if (tip.length){
+					tip.addClass('none');
+				}
+			}
 		},
 		'component':{
 			'checkbox':{
@@ -188,6 +219,12 @@
 								return false;
 							}
 							selector.addClass('focus');
+						},
+						'keydown':function(event){
+							if (event.keyCode === 9){
+								selector.removeClass('focus');
+								return true;
+							}	
 						},
 						'keyup':function(event){
 							var code = event.keyCode,
@@ -250,20 +287,32 @@
 			}
 		}
 	};
-	$('body').bind('click',function(event){
-		var target = event.target,
-			jtarget = $(target),
-			action = jtarget.attr('data-action');
-		if (action && common.action[action]){
-			common.action[action](event,jtarget);
-		}else if(target.tagName === 'INPUT' && target.type === 'checkbox'){
-			common.component.checkbox.onChange(jtarget);
-		}else if(target.tagName !== 'INPUT' && !jtarget.parent().hasClass('form-select')){
-			$('.form-select').filter('.focus').removeClass('focus');
-		}else if(target.tagName === 'INPUT'){
-			$('.form-select').filter('.focus').removeClass('focus');
-			if (jtarget.parent().hasClass('form-select')){
-				jtarget.parent().addClass('focus');
+	$('body').bind({
+		'click':function(event){
+			var target = event.target,
+				jtarget = $(target),
+				action = jtarget.attr('data-action');
+			if (action && common.action[action]){
+				common.action[action](event,jtarget);
+			}else if(target.tagName === 'INPUT' && target.type === 'checkbox'){
+				common.component.checkbox.onChange(jtarget);
+			}else if(target.tagName !== 'INPUT' && !jtarget.parent().hasClass('form-select')){
+				$('.form-select').filter('.focus').removeClass('focus');
+			}else if(target.tagName === 'INPUT'){
+				$('.form-select').filter('.focus').removeClass('focus');
+				if (jtarget.parent().hasClass('form-select') && !jtarget.parent().hasClass('disabled')){
+					jtarget.parent().addClass('focus');
+				}
+			}
+		},
+		'mouseover':function(event){
+			var target = event.target,
+				jtarget = $(target),
+				tipName = jtarget.attr('data-tip');
+			if (tipName){
+				common.action.showTip(tipName,jtarget);
+			}else{
+				common.action.hideTip(tipName,jtarget);
 			}
 		}
 	});

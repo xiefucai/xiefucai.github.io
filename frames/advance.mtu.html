@@ -9,21 +9,23 @@
 	<!--/BUILD-->
 </head>
 <body>
-<form class="form">
+<form class="form" id="form" onsubmit="return false">
 	<ul class="form-table">
 		<li class="form-item">
 			<span class="form-label">MTU设置</span>
-			<input class="form-text form-text-middle" type="text"/>
-			<span class="form-word"><a href="javascript:;" class="ml15 blue">使用默认值</a></span>
+			<input class="form-text form-text-middle" type="text" name="mtu" value=""/>
+			<span class="form-word"><a href="javascript:;" class="ml15 blue" data-action="setDefaultVal">使用默认值</a></span>
+			<a href="javascript:;" class="form-help" data-tip="mtu"></a>
 		</li>
 		<li class="clear gray left">(设定TCP/IP协议传输数据报时的最大传输单元)</li>
 		<li class="mt20 center">
-			<input class="form-button" type="submit" value="保存"/>
+			<input class="form-button" type="submit" value="保存" data-action="postForm"/>
 		</li>
 	</ul>
 </form>
 <div id="bottom" class="bottom"></div>
 <script type="text/javascript" src="../js/jquery-1.4.3.min.js"></script>
 <script type="text/javascript" src="../js/advance.base.js"></script>
+<script type="text/javascript" src="../js/advance.mtu.js"></script>
 </body>
 </html>

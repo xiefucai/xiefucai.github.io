@@ -9,30 +9,32 @@
 	<!--/BUILD-->
 </head>
 <body>
-<form class="form">
+<form class="form" id="form" onsubmit="return false">
 	<ul class="form-table">
 		<li class="form-item">
 			<span class="form-label">MAC地址克隆</span>
-			<span class="form-select">
-				<input type="text" class="form-select-input" value="默认" readonly/>
+			<span class="form-select disabled">
+				<input type="text" name="selector" class="form-select-input" value="默认" readonly/>
 				<span class="form-select-angle"></span>
-				<div class="form-select-opts">
+				<div class="form-select-opts" id="maclist">
 					<span class="active">默认</span>
 					<span>复制</span>
 					<span>手动</span>
 				</div>
 			</span>
+			<a href="javascript:;" class="form-help" data-tip="selector"></a>
 		</li>
-		<li class="form-item">
-			<input class="form-text" type="text"/>
+		<li class="form-item none" id="custom">
+			<input class="form-text" type="text" name="mac"/>
 		</li>
 		<li class="mt20 center">
-			<input class="form-button" type="submit" value="保存"/>
+			<input class="form-button" type="submit" value="保存" data-action="postForm"/>
 		</li>
 	</ul>
 </form>
 <div id="bottom" class="bottom"></div>
 <script type="text/javascript" src="../js/jquery-1.4.3.min.js"></script>
 <script type="text/javascript" src="../js/advance.base.js"></script>
+<script type="text/javascript" src="../js/advance.mac.js"></script>
 </body>
 </html>

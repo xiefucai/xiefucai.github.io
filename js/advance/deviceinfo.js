@@ -1,5 +1,6 @@
 $(function() {
 	processCSS();
+	current_visit = "deviceinfo.html";
 	$.getJSON("/dataCenter.js", {
 		time: "time",
 		wan0_hwaddr: '',
@@ -111,7 +112,7 @@ $(function() {
 		if (json.wl0_wds_enable == 1 && json.wl0_wdsmode == 'Repeater' || json.wl1_wds_enable == 1 && json.wl1_wdsmode == 'Repeater' || json.router_disable == 1) $('#wanport').hide();
 
 		systemDate(json.time * 1000);
-
+		frameElement.height = $('#bottom').offset().top;
 	});
 	
 	

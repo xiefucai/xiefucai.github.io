@@ -2,7 +2,26 @@
 	var jform = $('#form'),
 		form = jform[0],
 		postVar = {action:"Apply",mode:"LANDHCP",getPage:"lan_set.html"},
-		srcData = {};
+		srcData = {},
+		showDhcpList = function(list){
+			var arr = [],
+				table = $('#dhcp-list');
+			if (list.length && list[0]){
+				for(var i=0,k=list.length;i<k;i++){
+					arr.push(
+						['<tr>',
+							'<td>'+list[i].replace(/</g,'</td><td>')+'</td>',
+							'<td align="center">',
+								'<a href="javascript:;" data-action="removeDhcp">删除</a> ',
+								'<a href="javascript:;" data-action="editDhcp">编辑</a>',
+							'</td>',
+						'</tr>'].join(''));
+				}
+				table.html(arr.join(''));
+			}else{
+				table.html('<tr><td colspan="4">尚未添加DHCP设备</td></tr>');
+			}
+		};
 	
 	$(form['lan_proto']).bind('change',function(){
 		if ($(this).is(':checked')){
@@ -37,9 +56,73 @@
 				common.component.checkbox.setValue.call(input[0],json[i]);
 			}
 		}
+		showDhcpList(json.lan_reserve_config.split('>'));
 	});
 		
 	$.extend(common.action,{
+		'addDhcpDevice':function(event,t){
+			var frame = $('#dhcpFrame');
+			if (frame.length === 0){
+				frame = $('<div id="dhcpFrame" class="popframe none"><iframe frameborder="0" width="100%" height="100%"></iframe></div>').appendTo($('body'));
+			}
+			frame.css({
+				'top':t.offset().top+t.height()+1
+			}).removeClass('none')
+			.find('iframe')
+			.attr('src','advance.router.dhcp.html?t='+(+new Date()));
+		},
+		'removeDhcp':function(event,t){
+			var postVar={'action':'Apply','mode':'LAN_RESERVE_IP','getPage':'lan_set.html'},
+				postData = {},
+				list = srcData.lan_reserve_config.split('>'),
+				mac = t.parent().parent().find('td:eq(1)').text();
+			;
+			for(var i=0,k=list.length;i<k;i++){
+				if (list[i].indexOf(mac)>-1){
+					list.splice(i,1);
+					break;
+				}
+			}
+			
+			postData['lan_reserve_config']=list.join('>');
+			common.http.post($.extend(postVar,postData),function(data){
+				var code = +data.result;
+				if (common.http.response[code]){
+					common.http.response[code](data);
+				}else if(code === 0){
+					location.reload();
+				}
+			});
+		},
+		'editDhcp':function(event,t){console.log(111);
+			var list = srcData.lan_reserve_config.split('>'),
+				mac = t.parent().parent().find('td:eq(1)').text(),
+				postData = {},
+				index = 0,
+				postVar = {
+					'getPage':'lan_reserv_add.html',
+					'action':'Apply',
+					'mode':'ADDPARAMODE',
+					'_flg':0
+				};
+				console.log(list,mac);
+				for(var i=0,k=list.length;i<k;i++){
+					if (list[i].indexOf(mac)>-1){
+						index = i;
+						break;
+					}
+				};
+				postData['nodeIndex0'] = index;
+				
+			common.http.post($.extend(postVar,postData),function(data){
+				var code = +data.result;
+				if (common.http.response[code]){
+					common.http.response[code](data);
+				}else if(code === 0){
+					common.action.addDhcpDevice(null,$('.form-addbtn'));
+				}
+			});
+		},
 		'postForm':function(event,t){
 			var form = t[0].form;
 			var ipaddr = form['lan_ipaddr'].value;
@@ -71,4 +154,8 @@
 			});
 		}
 	});
+	
+	$.extend(window.common,{'tip':{
+		'lan_proto':'== DHCP服务 == 为使用此路由器上网的设备分配IP地址'	
+	}});
 });

@@ -49,8 +49,8 @@
 				callback();
 			}else{
 				elem.mainSlider.animate({'left':(-i*w)+'px'},callback);
-				elem.mainBg.fadeOut(function(){
-					$(this).removeClass('main-bg-1 main-bg-2 main-bg-3').addClass('main-bg-'+(i+1)).fadeIn();
+				elem.mainBg.fadeOut('slow',function(){
+					$(this).removeClass('main-bg-1 main-bg-2 main-bg-3').addClass('main-bg-'+(i+1)).fadeIn(1500);
 				});
 			}
 		}
@@ -91,7 +91,7 @@
 				str = [
 				'<a href="http://g.xunlei.com/" target="_blank" class="c-white" title="机友论坛">机友论坛</a>',
 				'<a href="http://vip.xunlei.com/" target="_blank" class="c-white" title="开通会员">开通会员</a>',
-				'<a href="http://g.xunlei.com/" target="_blank" class="c-white" title="网上商城">网上商城</a>'
+				'<a href="http://shop.xunlei.com/" target="_blank" class="c-white" title="网上商城">网上商城</a>'
 				].join(' ');
 			}
 			elem.sliderLeft.find('.slider-ctrs-label').html(tip[0]);

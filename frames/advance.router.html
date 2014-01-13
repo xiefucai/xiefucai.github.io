@@ -22,6 +22,7 @@
 				<input type="checkbox" name="lan_proto" data-checked="dhcp" data-unchecked="static"/>
 			</span>
 			<input type="hidden" name="lan_domain" value="peiluyou.com"/>
+			<a href="javascript:;" class="form-help" data-tip="lan_proto"></a>
 		</li>
 		<div id="dhcp-config" class="none">
 			<li class="form-item">
@@ -46,6 +47,25 @@
 						<span data-value="1209600">两周</span>
 					</div>
 				</span>
+			</li>
+			<li class="form-item">
+				<span class="form-label">DHCP设备列表</span>
+				<a href="javascript:;" class="form-addbtn" data-action="addDhcpDevice">✚ 添加DHCP设备</a>
+			</li>
+			<li>
+				<table class="table01" cellpadding="8" width="100%">
+					<thead>
+					<tr>
+						<th align="center">IP</th>
+						<th align="center">MAC地址</th>
+						<th align="center">设备名称</th>
+						<th align="center">操作</th>
+					</tr>
+					</thead>
+					<tbody id="dhcp-list">
+						<td colspan="3">数据加载中...</td>
+					</tbody>
+				</table>
 			</li>
 		</div>
 		<li class="mt20 center">
