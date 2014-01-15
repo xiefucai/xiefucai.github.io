@@ -70,6 +70,20 @@
 					'error':err || function(){}
 				});
 			},
+			'success':function(dialog,data,timer,callback){
+				var code = +data.result,
+					t = this;
+					setTimeout(function(){
+						t.removeClass('form-loading');
+						if (common.http.response[code]){
+							common.http.response[code](data);
+						}else if(code === 0){
+							dialog.alert('保存成功！',callback);
+						}else{
+							dialog.alert('保存失败');
+						}
+					},(timer || 1) * 1000);	
+			},
 			'response':{
 				'2003':function(){
 					top.location.href = '/toomany.html';

@@ -27,15 +27,16 @@
 		<div id="tab0" class="none">
 			<li class="form-item">
 				<span class="form-label">帐号</span>
-				<input type="text" name="pppoe_username" class="form-text"  placeholder=""/>
+				<input type="text" name="pppoe_username" class="form-text"  placeholder="请输入宽带帐号" data-rule="pppoe_username"/>
 			</li>
 			<li class="form-item">
 				<span class="form-label">密码</span>
-				<input type="text" name="pppoe_passwd" class="form-text"  placeholder=""/>
+				<input type="text" name="pppoe_passwd" class="form-text"  placeholder="请输入宽带密码" data-rule="pppoe_pasw"/>
 			</li>
 			<li class="form-item">
 				<span class="form-label">服务名</span>
-				<input type="text" name="pppoe_service" class="form-text"  placeholder=""/>
+				<input type="text" name="pppoe_service" class="form-text"  placeholder="请输入运营商服务名" data-rule="pppoe_service"/>
+				<a href="javascript:;" class="form-help" data-tip="pppoe_service"></a>
 			</li>
 			<li class="form-item">
 				<span class="form-label">模式</span>
@@ -62,7 +63,7 @@
 			</li>
 			<li class="form-item">
 				<span class="form-label">主机名</span>
-				<input type="text" name="hostname" class="form-text"  placeholder=""/>
+				<input type="text" name="hostname" class="form-text"  placeholder="" data-rule="hostname"/>
 				<a href="javascript:;" class="form-help" data-tip="hostname"></a>
 			</li>
 		</div>
@@ -70,7 +71,7 @@
 			<li class="form-item">
 				<span class="form-label">网络名称</span>
 				<span class="form-select">
-					<input type="text" name="power" value="正在扫描中..." data-value="0" class="form-select-input loading"  readonly/>
+					<input type="text" name="power" value="正在扫描中..." data-value="0" class="form-select-input form-loading"  readonly/>
 					<span class="form-select-angle"></span>
 					<div class="form-select-opts">
 						<span  class="active" data-value="0">谢福才</span>
@@ -81,7 +82,7 @@
 			<li class="right"><a href="javascript:;" data-action="scaneWifi" class="blue">重新扫描</a></li>
 			<li class="form-item">
 				<span class="form-label">网络密码</span>
-				<input type="text" name="ssid_pasw" class="form-text"  placeholder=""/>
+				<input type="text" name="ssid_pasw" class="form-text"  placeholder="" data-rule="ssidpasw"/>
 			</li>
 			<li class="form-item">
 				<span class="form-label">状态</span>
@@ -101,11 +102,11 @@
 			<div class="dns-config none">
 				<li class="form-item">
 					<span class="form-label">DNS地址</span>
-					<input type="text" name="dns1" class="form-text"  placeholder=""/>
+					<input type="text" name="dns1" class="form-text"  placeholder="" data-rule="ip"/>
 				</li>
 				<li class="form-item">
 					<span class="form-label">DNS地址</span>
-					<input type="text" name="dns2" class="form-text"  placeholder=""/>
+					<input type="text" name="dns2" class="form-text"  placeholder="" data-rule="ip"/>
 				</li>
 			</div>
 		</div>
@@ -113,23 +114,23 @@
 		<div class="wire-config none">
 			<li class="form-item">
 				<span class="form-label">IP地址</span>
-				<input type="text" name="ipaddr" class="form-text"  placeholder=""/>
+				<input type="text" name="ipaddr" class="form-text"  placeholder="" data-rule="ip"/>
 			</li>
 			<li class="form-item">
 				<span class="form-label">子网掩码</span>
-				<input type="text" name="netmask" class="form-text"  placeholder=""/>
+				<input type="text" name="netmask" class="form-text"  placeholder="" data-rule="netmask"/>
 			</li>
 			<li class="form-item">
 				<span class="form-label">网关</span>
-				<input type="text" name="gateway" class="form-text"  placeholder=""/>
+				<input type="text" name="gateway" class="form-text"  placeholder="" data-rule="gateway"/>
 			</li>
 			<li class="form-item">
 				<span class="form-label">DNS地址</span>
-				<input type="text" name="usrdns1" class="form-text"  placeholder=""/>
+				<input type="text" name="usrdns1" class="form-text"  placeholder="" data-rule="ip"/>
 			</li>
 			<li class="form-item">
 				<span class="form-label">DNS地址</span>
-				<input type="text" name="usrdns2" class="form-text"  placeholder=""/>
+				<input type="text" name="usrdns2" class="form-text"  placeholder="" data-rule="ip"/>
 			</li>
 		</div>
 		
@@ -141,6 +142,7 @@
 <div id="bottom" class="bottom"></div>
 <script type="text/javascript" src="../js/jquery-1.4.3.min.js"></script>
 <script type="text/javascript" src="../js/advance.base.js"></script>
+<script type="text/javascript" src="../js/common.dialog.js"></script>
 <script type="text/javascript" src="../js/advance.network.js"></script>
 </body>
 </html>

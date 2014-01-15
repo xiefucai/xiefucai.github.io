@@ -2,6 +2,7 @@
 	var jform= $('#form'),
 		form = jform[0],
 		srcData = {},
+		dialog = common.dialog(),
 		maclist = $('#maclist'),
 		selector = $(form['selector']);
 	
@@ -20,7 +21,7 @@
 		vlan2_hwaddr:'',
 		pc_login_macaddr:'gval'
 	},function(json){
-		srcData = json;
+		srcData = json;console.log(json);
 		var list = [
 			'<span class="active" data-mac="'+json['wan0_hwaddr']+'" data-value="0">默认</span>',
 			'<span data-mac="'+json['pc_login_macaddr']+'" data-value="1">复制'+json['vlan2_hwaddr']+'</span>',
@@ -42,16 +43,13 @@
 				postData['apply_wait_time'] = 2;
 				postData['_flg'] = 0;
 				postData['wan0_hwaddr'] = form['mac'].value;
+				t.addClass('form-loading');
 				common.http.post($.extend(postVar,postData),function(data){
-					var code = data.result;
-					if (common.http.response[code]){
-						common.http.response[code](data);
-					}else{
-						
-					}
+					common.http.success.call(t,dialog,data,postData['apply_wait_time']);
 				});
 			}else{
 				//不需要保存，因为没有修改
+				dialog.alert('没有修改，不需要保存！');
 			}
 			
 		}

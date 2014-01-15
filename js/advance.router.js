@@ -3,6 +3,7 @@
 		form = jform[0],
 		postVar = {action:"Apply",mode:"LANDHCP",getPage:"lan_set.html"},
 		srcData = {},
+		dialog = common.dialog(),
 		showDhcpList = function(list){
 			var arr = [],
 				table = $('#dhcp-list');
@@ -144,13 +145,9 @@
 				'lan_backupip':ipaddr,
 				'lan_backupnetmask':netmask
 			};
+			t.addClass('form-loading');
 			common.http.post($.extend(postVar,postData),function(data){
-				var code = data.result;
-				if (common.http.response[code]){
-					common.http.response[code](data);
-				}else{
-					
-				}
+				common.http.success.call(t,dialog,data,postData['apply_wait_time']);
 			});
 		}
 	});

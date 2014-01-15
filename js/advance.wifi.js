@@ -3,6 +3,7 @@
 		form = jform[0],
 		postVar = {action:"Apply",mode:"WLAN",getPage:"wireless_basic.html"},
 		srcData = {},
+		dialog = common.dialog(),
 		extendChannel = [[0],[5],[6],[7],[8],[1,9],[2,10],[3,11],[4],[5],[6],[7],[8],[9],[10]],
 		//根据随机数生成
 		getRandomPasw = function(v){
@@ -170,7 +171,6 @@
 				//加密方式
 				security = getFormValue('security') && srcData.wl0_security_choice || 'tkipaes',
 				//表单数据
-				postData5G = {},
 				postData = {
 					'wl_unit':0, // [2.4G,5G]
 					'wl0_country_code':'US',
@@ -262,23 +262,27 @@
 				copyDataTo5G = function(data){
 					for (var i in data){
 						if (/^wl0_/.test(i)){
-							postData5G[i.replace('wl0_','wl1_')] = data[i];
+							postData[i.replace('wl0_','wl1_')] = data[i];
 						}else{
-							postData5G[i] = data[i];
+							postData[i] = data[i];
 						}
 					}
-					postData5G['wl_unit'] = 1;
-					postData5G['wl1_ssid'] = data['wl0_ssid'] + '-5G';
-					postData5G['wl1_radio'] = form['wifi5g_enable']?+form['wifi5g_enable'].checked:+srcData.wl1_radio;
-					postData5G['wl1_chanspec'] = 0; //5G模式下频道为自动
-					postData5G['wl1_bw_cap'] = 7; //5G模式下的带宽
+					postData['wl_unit'] = 1;
+					postData['wl1_ssid'] = data['wl0_ssid'] + '-5G';
+					postData['wl1_radio'] = form['wifi5g_enable']?+form['wifi5g_enable'].checked:+srcData.wl1_radio;
+					postData['wl1_chanspec'] = 0; //5G模式下频道为自动
+					postData['wl1_bw_cap'] = 7; //5G模式下的带宽
 					
 					//5G无线模式为802.11a/n/ac
-					postData5G['wl1_nmode'] = -1;
-					postData5G['wl1_bss_opmode_cap_reqd'] = 0; 
-					postData5G['wl1_mimo_preamble'] = 'auto'; 
+					postData['wl1_nmode'] = -1;
+					postData['wl1_bss_opmode_cap_reqd'] = 0; 
+					postData['wl1_mimo_preamble'] = 'auto'; 
 				};
-				
+			
+			if (t.hasClass('form-loading')){
+				return;
+			}
+			
 			if (postData['wl0_closed'] === 1){
 				postData['wl0_wps_mode'] = 'disabled';
 			};
@@ -292,7 +296,7 @@
 			};
 			
 			switchSecurity(security);
-			
+			/*
 			common.http.post($.extend(postData,postVar),function(data){
 				var code = data.result;
 				if (common.http.response[code]){
@@ -301,15 +305,11 @@
 					
 				}
 			});
-			
+			*/
 			copyDataTo5G(postData);
-			common.http.post($.extend(postData5G,postVar),function(data){
-				var code = data.result;
-				if (common.http.response[code]){
-					common.http.response[code](data);
-				}else{
-					
-				}
+			t.addClass('form-loading');
+			common.http.post($.extend(postVar,postData),function(data){
+				common.http.success.call(t,dialog,data,postData['apply_wait_time']);
 			});
 			
 			jform.find('[name=\'mac\']').each(function(){

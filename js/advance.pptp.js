@@ -1,6 +1,7 @@
 ﻿$(function(){
-	var srcData;
-	var jform = $('#form'),
+	var srcData,
+		dialog = common.dialog(),
+		jform = $('#form'),
 		form = jform[0],
 		postVar = {
 			'action':'Apply',
@@ -141,14 +142,9 @@
 			postData['wan0_unit']='0';
 			
 			setData[postData['mode']]();
-			
+			t.addClass('form-loading');
 			common.http.post($.extend(postVar,postData),function(data){
-				var code = data.result;
-				if (common.http.response[code]){
-					common.http.response[code](data);
-				}else{
-					
-				}
+				common.http.success.call(t,dialog,data,postData['apply_wait_time']);
 			});
 		}
 	});

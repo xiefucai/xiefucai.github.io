@@ -1,5 +1,6 @@
 ﻿$(function(){
 	var myjson,
+		dialog = common.dialog(),
 		jform = $('#form'),
 		form = jform[0];
 	var strAnsi2Unicode = function(asContents) {
@@ -166,15 +167,12 @@
 				}
 				
 				postData['lan_reserve_config']=add_rev_info;
+				
+				t.addClass('form-loading');
 				common.http.post($.extend(postVar,postData),function(data){
-					var code = +data.result;
-					if (common.http.response[code]){
-						common.http.response[code](data);
-					}else if(code === 0){
+					common.http.success.call(t,dialog,data,postData['apply_wait_time'],function(){
 						parent.location.reload();
-					}else{
-						console.log(code);
-					}
+					});
 				});
 		},
 		'cancel':function(event,t){

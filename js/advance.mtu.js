@@ -1,6 +1,7 @@
 ﻿$(function(){
 	var jform = $('#form'),
 		form = jform[0],
+		dialog = common.dialog(),
 		postVar = {
 			'action':'Apply',
 			'getPage':'deviceinfo.html',
@@ -46,14 +47,9 @@
 			}
 			postData['mode'] = srcData.wan0_proto.toUpperCase();
 			postData['wan0_'+srcData['wan0_proto']+'_mtu'] = form['mtu'].value;
-			
+			t.addClass('form-loading');
 			common.http.post($.extend(postVar,postData),function(data){
-				var code = data.result;
-				if (common.http.response[code]){
-					common.http.response[code](data);
-				}else{
-					
-				}
+				common.http.success.call(t,dialog,data,postData['apply_wait_time']);
 			});
 		}
 	});

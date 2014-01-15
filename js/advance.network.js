@@ -1,5 +1,6 @@
 ﻿$(function(){
 	var srcData;
+	var dialog = common.dialog();
 	var jform = $('#form'),
 		form = jform[0],
 		postVar = {
@@ -206,14 +207,9 @@
 			postData['wan0_unit']='0';	// [2.4G,5G网络]
 			postData['wan0_usrdns']=[getFormValue('dns1'),getFormValue('dns2')].join(' ');
 			setData[postData['mode']]();
-			
+			t.addClass('form-loading');
 			common.http.post($.extend(postVar,postData),function(data){
-				var code = data.result;
-				if (common.http.response[code]){
-					common.http.response[code](data);
-				}else{
-					
-				}
+				common.http.success.call(t,dialog,data,postData['apply_wait_time']);
 			});
 		}
 	});

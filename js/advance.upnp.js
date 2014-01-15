@@ -1,6 +1,7 @@
 ﻿$(function(){
 	var jform = $('#form'),
 		form = jform[0],
+		dialog = common.dialog(),
 		postVar = {action:"Apply",mode:"UPNP",getPage:"upnp.html"},
 		srcData = {},
 		setFormValue = function(name,value){
@@ -48,7 +49,7 @@
 			});
 		};
 	
-	$.getJSON("/dataCenter.js", {
+	$.getJSON('/dataCenter.js', {
 		'upnp_enable': '',
 		'upnp_advertisement_period': '',
 		'upnp_advertisement_ttl': '',
@@ -70,13 +71,9 @@
 				'upnp_advertisement_period': getFormValue('advertisement_period',30),
 				'upnp_advertisement_ttl': getFormValue('advertisement_ttl',4)
 			};
+			t.addClass('form-loading');
 			common.http.post($.extend(postVar,postData),function(data){
-				var code = data.result;
-				if (common.http.response[code]){
-					common.http.response[code](data);
-				}else{
-					
-				}
+				common.http.success.call(t,dialog,data,postData['apply_wait_time']);
 			});
 		}
 	});
