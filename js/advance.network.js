@@ -119,7 +119,8 @@
 		
 	},function(json){
 		var types = ['pppoe','dhcp','wifi'],
-			i = types.indexOf(srcData['wan0_proto']);	
+			//i = types.indexOf(srcData['wan0_proto']);	
+			i = $.inArray(srcData['wan0_proto'],types);
 			srcData = json,
 			dns = (srcData && srcData.wan0_usrdns || '').split(/\s+/);
 			if (i<0 && /^(pptp|l2tp)$/i.test(srcData['wan0_proto'])){

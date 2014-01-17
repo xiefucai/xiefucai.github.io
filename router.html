@@ -9,15 +9,21 @@
 		<link rel="stylesheet" href="./css/main-2.css" type="text/css" />
 		<link rel="stylesheet" href="./css/main-3.css" type="text/css" />
 		<!--/BUILD-->
+		<!--[if lt IE 9]>
+		<link rel="stylesheet" href="./css/ie8.css" type="text/css" />
+		<![endif]-->
+		<!--[if lt IE 7]>
+		<link rel="stylesheet" href="./css/ie7.css" type="text/css" />
+		<![endif]-->
 	</head>
 	<body>
-		<header>
+		<div class="header">
 			<div class="header-inner">
 				<a href="javascript:;" class="logo" title="迅雷路由——你一直等待的下载机" data-action="slide" data-index="1">迅雷路由——你一直等待的下载机</a>
 				<!--<img src="images/logo.gif" class="logo"/>-->
-				<nav class="header-inner-right"></nav>
+				<div class="header-inner-right"></div>
 			</div>
-		</header>
+		</div>
 		<div class="router-selector">
 			<div href="javascript:;" class="router-name">
 				<a id="router-name" href="javascript:;" class="c-white">迅雷路由 - xiefucai</a> <span class="icon-down">ˇ</span>
@@ -148,7 +154,7 @@
 									<a href="frames/advance.routeraccount.html" data-action="showRightFrame2" target="frame2">路由器帐号设置</a>
 								</div>
 								<div class="router_frame2">
-									<iframe src="about:blank" width="100%" height="90%" frameborder="0" class="" id="frame2" name="frame2"></iframe>
+									<iframe src="about:blank" width="100%" height="90%" frameborder="0" class="" id="frame2" name="frame2" allowtransparency="true"></iframe>
 								</div>
 							</div>
 						</div>

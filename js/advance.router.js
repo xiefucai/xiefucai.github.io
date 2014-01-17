@@ -33,7 +33,7 @@
 		common.resize();
 	});
 	
-	$.getJSON("/dataCenter.js", {
+	$.getJSON('/dataCenter.js', {
 		'lan_ipaddr':'',
 		'lan_netmask':'',
 		'lan_proto':'',

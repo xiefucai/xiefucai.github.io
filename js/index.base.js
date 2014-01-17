@@ -67,7 +67,7 @@
 		},
 		'getDocSize':function(){
 			//为了不显示滚动条，所以加上30
-			return {'width':(document.documentElement.clientWidth || document.body.clientWidth)+20,'height':document.documentElement.clientHeight || document.body.clientHeight};	
+			return {'width':(document.documentElement.clientWidth || document.body.clientWidth)+20,'height':document.documentElement.clientHeight || document.body.clientHeight};
 		},
 		'resizeWin':function(event){
 			var rect = common.getDocSize();

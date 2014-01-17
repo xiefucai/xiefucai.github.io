@@ -1,6 +1,5 @@
 ﻿input:focus::-webkit-input-placeholder,input:focus::-moz-placeholder{
 	opacity:0;
-	
 }
 .form{
 	margin:25px auto 0;
@@ -37,7 +36,6 @@
 	text-align:left;
 	white-space:nowrap;
 	margin-top:4px;
-	
 }
 .form-text{
 	width:172px;
@@ -45,7 +43,7 @@
 	border:1px solid #CDCDCD;
 	padding:0 13px;
 	margin:4px 0;
-	
+	line-height:40px\9;
 }
 .form-text:focus{
 	outline:none;
@@ -54,15 +52,14 @@
 }
 .form-check{
 	display:inline-block;
+	zoom:1;
 	width:65px;
 	height:30px;
-	background:url(../images/checkbox.gif)0 -31px no-repeat;
+	background:url(../images/checkbox.gif) 0 -31px no-repeat;
 	margin:10px 0 0;
-	
 }
 .form-check-checked{
 	background-position:0 0;
-	
 }
 .form-check input{
 	-webkit-appearance:none;
@@ -72,7 +69,6 @@
 	margin:0;
 	opacity:0;
 	filter:alpha(opacity=0)\9;
-	
 }
 .form-check input:focus{
 	outline:none;
@@ -136,7 +132,7 @@
 	padding:0 12px;
 	position:relative;
 	z-index:2;
-	
+	line-height:40px\9;
 }
 .form-select-input:focus{
 	outline:none;

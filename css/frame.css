@@ -1,4 +1,4 @@
-﻿html,body{margin:0;padding:0;overflow:hidden;font-family:"微软雅黑";}
+﻿html,body{margin:0;padding:0;overflow:hidden;font-family:"微软雅黑";background:none;}
 button::-moz-focus-inner,input::-moz-focus-inner,a::-moz-focus-inner{border:0;}
 a{text-decoration:none;}
 a:focus{outline:none;}
