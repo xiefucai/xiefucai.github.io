@@ -17,7 +17,10 @@
 		'mainSlider':$('.main-slider'),
 		'sliderLeft':$('.slider-ctrs-left'),
 		'sliderRight':$('.slider-ctrs-right'),
-		'nav':$('.header-inner-right')
+		'nav':$('.header-inner-right'),
+		'footer':$('#footer'),
+		'frame1':$('#frame1'),
+		'frame2':$('#frame2')
 	},
 	slider = {
 		'index':0,
@@ -25,12 +28,8 @@
 		'sliderTo':function(i,f){
 			var rect = common.getDocSize(),
 				w = rect.width,
-				activeSlide = $('.main-'+(i+1)),
+				activeSlide,
 				callback = function(){
-					if (hash['slide'] !== i){
-						hash['slide'] = i;
-						location.hash = $.param(hash);
-					}
 					elem.sliderLeft.removeClass('disabled');
 					elem.sliderRight.removeClass('disabled');
 					
@@ -39,12 +38,22 @@
 					}else if(slider.index === slider.count){
 						elem.sliderRight.addClass('disabled');
 					}
+					
+					if (f === undefined){
+						hash['slide'] = $('.main-'+i).attr('data-hash') || i;
+						location.hash = $.param(hash);
+						if (i === 2 && !$('.main-'+i).attr('data-hash')){
+							$('.router_sider').find('li:eq(0)').find('a').trigger('click');
+						}
+					}
+					
 					activeSlide.addClass('autoheight').siblings().removeClass('autoheight');
 					common.changeSlideInfo(i);
 					common.protected.toggleRouterVisible(activeSlide[0]);
 				}
 				;
 			slider.index = i;
+			activeSlide = $('.main-'+(i+1));
 			activeSlide.removeClass('autoheight');
 			if (f === false){
 				elem.mainSlider.css({'left':(-i*w)+'px'});
@@ -60,7 +69,7 @@
 	};
 	
 	
-	hash['slide'] = (hash['slide'] === undefined?1:+hash['slide']);
+	hash['slide'] = (hash['slide'] === undefined?'1':hash['slide']);
 	common = $.extend(common,{
 		'config':{
 			'routerList':null	
@@ -78,6 +87,23 @@
 			elem.mainSlider.width(rect.width*3+30);
 			if (event){
 				slider.sliderTo(slider.index,false);
+			}
+		},
+		'setCurrentPage':function(p){
+			//slider.sliderTo(,false);
+			var i = +(p[0] || 0),
+				j = +(p[1] || 0),
+				k = +(p[2] || 0);
+			slider.sliderTo(i,false);
+			switch (i){
+				case 0:;break;
+				case 1:;break;
+				case 2:
+					$('.router_sider').find('li:eq('+j+')').find('a').trigger('click');
+					if (j === 3){
+						$('.advance-nav').find('a:eq('+k+')').trigger('click');
+					}
+				;break;
 			}
 		},
 		'changeSlideInfo':function(i){
@@ -165,27 +191,40 @@
 			},
 			//
 			'showRightFrame':function(event,t){
-				t.parent().addClass('cur').siblings().removeClass('cur');
+				var routerFace = $('.router_mian'),
+					setFrameUrl = function(url){
+						elem.frame2[0].src = url+'?t='+(+new Date());
+					};
+					t.parent().addClass('cur').siblings().removeClass('cur');
+				
 				if (t.attr('title') === '高级设置'){
-					$('.router_mian').addClass('advance-mode');
+					routerFace.addClass('advance-mode');
 					(function(elem){
 						elem.trigger('click');
 						//$('#frame2').attr('src',elem.attr('href'));
-						$('#frame2')[0].src = elem.attr('href');
-					})($('.advance-nav').find('a:eq(0)'))
-					;
-					return false;
+						setFrameUrl(elem.attr('href'));
+					})($('.advance-nav').find('a:eq(0)'));
 				}else{
-					$('.router_mian').removeClass('advance-mode');
+					setFrameUrl(t.attr('href'));
+					routerFace.removeClass('advance-mode');
 				}
+				
+				hash['slide'] = [2,t.parent().index()].join('-');
+				location.hash = $.param(hash);
+				$('.main-2').attr('data-hash',hash['slide']);
+				return false;
 			},
 			//
 			'showRightFrame2':function(event,t){
 				t.addClass('cur').siblings().removeClass('cur');
+				hash['slide'] = [2,3,t.index()].join('-');
+				location.hash = $.param(hash);
+				$('.main-2').attr('data-hash',hash['slide']);
 			}
 		},
 		'init':function(){
 			//拉取路由器列表
+			/*
 			common.protocol.build('getRouterList',null,function(d){
 				var routerList = d && d.routerList,
 					arr = [];
@@ -205,25 +244,92 @@
 				common.protected.setCurrentRouter(routerList[0]);
 				$('.router-options').html(arr.join(''));
 			});
-		}
-	});
-	
-	$(document).bind({
-		'touchstart':function(event){
-			console.log(event.type);
-			//px = event.touches[0].pageX;
-			//console.log('touchmove',event);
-		},
-		'touchmove':function(event){
-			console.log('touchmove',event.changedTouches);
-		},
-		'touchend':function(event){
-			if (event.pageX - px>100){
-				elem.sliderLeft.trigger('click');
-			}else if(event.pageX - px < -100){
-				elem.sliderRight.trigger('click');
+			*/
+			common.protocol.getRouterData({
+				'wan0_proto':'',
+				'wan0_hwaddr':''
+			},function(d){console.log(d);
+				elem.footer.html([
+					'<span>系统版本：1.0.0</span>',
+					'<span>mac地址：'+d['wan0_hwaddr']+'</span>',
+					'<span>服务热线：0755-51851888</span>'
+				].join(''));	
+			});
+		}/*,
+		'onTouch':function(event){
+			if (event.pointerType === 'touch'){
+				switch (event.type) {
+					case "touchstart":
+					case "pointerdown":
+					case "MSPointerDown":
+					common.onTouchStart(event);
+					break;
+					
+					case "touchmove":
+					case "pointermove":
+					case "MSPointerMove":
+					common.onTouchMove(event);
+					break;
+					
+					case "touchend":
+					case "pointerup":
+					case "MSPointerUp":
+					common.onTouchEnd(event);
+					break;
+				}
 			}
 		},
+		'onTouchStart':function(event){
+			var curX = event.pageX || event.targetTouches[0].pageX;
+			console.log('onTouchStart',curX);
+		},
+		'onTouchMove':function(event){
+			var curX = event.pageX || event.targetTouches[0].pageX;
+			console.log('onTouchMove',curX);
+		},
+		'onTouchEnd':function(event){
+			var curX = event.pageX || event.targetTouches[0].pageX;
+			console.log('onTouchEnd',curX);
+		}*/
+	});
+	
+	if (window.addEventListener){/*
+		if (window.navigator.msPointerEnabled) {
+			this.element.addEventListener("MSPointerDown", function(e){
+				console.log();
+			}, false);
+			this.element.addEventListener("MSPointerMove", eventHandlerName, false);
+			this.element.addEventListener("MSPointerUp", eventHandlerName, false);
+		}*/
+		document.body.addEventListener('touchstart', function(e){
+			console.log('touchstart');
+			px = e.touches[0].pageX;
+		}, false);
+		
+		document.body.addEventListener('touchmove', function(e){
+			slider.touchX = e.touches[0].pageX;
+		}, false);
+		
+		document.body.addEventListener('touchend', function(e){
+			if (slider.touchX && slider.touchX-px>100){
+				elem.sliderLeft.trigger('click');
+			}else if(slider.touchX && slider.touchX - px < -100){
+				elem.sliderRight.trigger('click');
+			}
+		}, false);
+		/*
+		if (window.navigator.msPointerEnabled) {
+			document.body.addEventListener("MSPointerDown", common.onTouch, false);
+			document.body.addEventListener("MSPointerMove", common.onTouch, false);
+			document.body.addEventListener("MSPointerUp", common.onTouch, false);
+		}
+		document.body.addEventListener("touchstart", common.onTouch, false);
+		document.body.addEventListener("touchmove", common.onTouch, false);
+		document.body.addEventListener("touchend", common.onTouch, false);
+		*/
+	}
+	
+	$('body').bind({
 		'mousedown':function(event){
 			px = event.pageX;
 		},
@@ -240,13 +346,12 @@
 			}
 		},
 		'mousewheel':function(e){
+			clearTimeout(slider.slideTimer);
 			if (e.originalEvent.deltaX < 0){
-				clearTimeout(slider.slideTimer);
 				slider.slideTimer = setTimeout(function(){
 					elem.sliderLeft.trigger('click');	
 				},50);
 			}else if(e.originalEvent.deltaX > 0){
-				clearTimeout(slider.slideTimer);
 				slider.slideTimer = setTimeout(function(){
 					elem.sliderRight.trigger('click');	
 				},50);
@@ -254,6 +359,8 @@
 			//console.log(,e.originalEvent.deltaY);
 		}
 	});
+	
+	
 	
 	$('body').bind('click',function(event){
 		var target = event.target,
@@ -308,6 +415,6 @@
 	
 	$(window).resize(common.resizeWin);
 	common.resizeWin();
-	slider.sliderTo(hash['slide'],false);
+	common.setCurrentPage(hash['slide'].split('-'));
 	common.init();
 });
