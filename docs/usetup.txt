@@ -1,0 +1,56 @@
+curl -X POST http://192.168.111.1:9999/getstatus?cvc=101'&'ov=23'&'device=huaweiske'&'imei=28383882'&'pdtid=457388'&'uid=141734790'&'statusid=36'&'routerId=xxhhll -d "" -v
+
+nfs
+mkdir /tmp/utu;mount -t nfs -o nolock 192.168.111.100:/home/xhl/work/sandai_svn/wthink/Board/tag/1.1 /tmp/utu;cd /tmp/utu/build/bin;export LD_LIBRARY_PATH=/tmp/utu/build/lib
+
+nfs-gs
+mkdir /tmp/utu;mount -t nfs -o nolock 192.168.108.100:/home/xhl/work/sandai_svn/wthink/Board/tag/1.1 /tmp/utu;cd /tmp/utu/build/bin;export LD_LIBRARY_PATH=/tmp/utu/build/lib
+
+
+# 获取路由器连接的设备
+curl -X POST http://192.168.111.1:9999/getstatus?cvc=101'&'ov=23'&'device=huaweiske'&'imei=28383882'&'pdtid=457388'&'uid=141734790'&'statusId=36'&'routerId=xxhhll -d "" -v
+
+# 获取AP
+curl -X POST http://192.168.111.1:9999/getap?cvc=101'&'ov=23'&'device=huaweiske'&'imei=28383882'&'pdtid=457388'&'uid=141734790'&'routerId=xxhhll -d "" -v
+
+# 设置wifi开关
+curl -X POST http://192.168.111.1:9999/setstatus?cvc=101'&'ov=23'&'device=huaweiske'&'imei=28383882'&'pdtid=457388'&'uid=141734790'&'statusid=37'&'routerId=xxhhll -d '{"wlan24g": "true", "wlan5g": "true"}' -v
+
+# 获取wifi开关
+curl -X POST http://192.168.111.1:9999/getstatus?cvc=101'&'ov=23'&'device=huaweiske'&'imei=28383882'&'pdtid=457388'&'uid=141734790'&'statusid=37'&'routerId=xxhhll -d '' -v
+
+# 设置wifi配置
+curl -X POST http://192.168.111.1:9999/setstatus?cvc=101'&'ov=23'&'device=huaweiske'&'imei=28383882'&'pdtid=457388'&'uid=141734790'&'statusid=38'&'routerId=xxhhll -d '{"ssid": "dameng_xiao_jj", "security": "true", "key": "12342234"}' -v
+
+# 获取wifi配置
+curl -X POST http://192.168.111.1:9999/getstatus?cvc=101'&'ov=23'&'device=huaweiske'&'imei=28383882'&'pdtid=457388'&'uid=141734790'&'statusid=38'&'routerId=xxhhll -d '' -v
+
+# 获取wifi穿墙模式开关
+ curl -X POST http://192.168.111.1:9999/getstatus?cvc=101'&'ov=23'&'device=huaweiske'&'imei=28383882'&'pdtid=457388'&'uid=141734790'&'statusid=39'&'routerId=xxhhll -d "" -v
+
+# 设置wifi穿墙模式开关
+ curl -X POST http://192.168.111.1:9999/setstatus?cvc=101'&'ov=23'&'device=huaweiske'&'imei=28383882'&'pdtid=457388'&'uid=141734790'&'statusid=39'&'routerId=xxhhll -d '{"enable": "true"}' -v
+
+# 获取WAN连接详情
+ curl -X POST http://192.168.111.1:9999/getconnectionsettings?cvc=101'&'ov=23'&'device=huaweiske'&'imei=28383882'&'pdtid=457388'&'uid=141734790'&'routerId=xxhhll -d "" -v
+
+# 设置WAN连接详情
+# pppoe
+ curl -X POST http://192.168.111.1:9999/setconnectionsettings?cvc=101'&'ov=23'&'device=huaweiske'&'imei=28383882'&'pdtid=457388'&'uid=141734790'&'routerId=xxhhll -d '{"curType": "1", "pppoe": {"account": "jjjjjj@163.gd.tel", "password": "hhhhh", "autodns": "false", "dns1": "8.8.8.8", "dns2": "212.180.23.57"}}' -v
+
+# static
+ curl -X POST http://192.168.111.1:9999/setconnectionsettings?cvc=101'&'ov=23'&'device=huaweiske'&'imei=28383882'&'pdtid=457388'&'uid=141734790'&'routerId=xxhhll -d '{"curType": "3", "static": {"dns1": "202.159.23.15", "dns2": "212.180.23.57", "ip": "192.168.108.100", "mask": "255.255.255.0", "gateway": "192.168.108.1"}}' -v
+
+# dhcp
+ curl -X POST http://192.168.111.1:9999/setconnectionsettings?cvc=101'&'ov=23'&'device=huaweiske'&'imei=28383882'&'pdtid=457388'&'uid=141734790'&'routerId=xxhhll -d '{"curType": "2", "dhcp": {"autodns": "false", "dns1": "202.159.23.15", "dns2": "212.180.23.57"}}' -v
+
+# repeater
+ curl -X POST http://192.168.111.1:9999/setconnectionsettings?cvc=101'&'ov=23'&'device=huaweiske'&'imei=28383882'&'pdtid=457388'&'uid=141734790'&'routerId=xxhhll -d '{"curType": "4", "repeater": {"ssid": "XL_Mobile_5G", "password": "duanhui123"}}' -v
+
+
+ # kick设备
+ curl -X POST http://192.168.111.1:9999/breakdevice?cvc=101'&'ov=23'&'device=huaweiske'&'imei=28383882'&'pdtid=457388'&'uid=141734790'&'routerId=xxhhll -d '{"devices": [{"macAddr": "0123456789AB", "kick": "234"},{"macAddr": "BA9876543210", "kick": "456"}]}' -v
+
+# 限速设备
+ curl -X POST http://192.168.111.1:9999/setdevicespeedlimit?cvc=101'&'ov=23'&'device=huaweiske'&'imei=28383882'&'pdtid=457388'&'uid=141734790'&'routerId=xxhhll -d '{"devices": [{"macAddr": "0123456789AB", "limit": "0"},{"macAddr": "BA9876543210", "limit": "1", "upload": "100", "download": "250"}]}' -v
+

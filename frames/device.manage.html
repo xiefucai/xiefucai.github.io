@@ -22,7 +22,11 @@
 				<th class="rtc_07">强制断开</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="device-list">
+		<tr>
+			<td colspan="7">设备加载中...</td>
+		</tr>
+		<!--
 			<tr>
 				<td>WIFI</td>
 				<td>B8:78:2E:00:B7:99</td>
@@ -58,16 +62,20 @@
 			<td>
 				<a href="#" title="强制断开">强制断开</a>
 			</td>
-			</tr>
+			</tr>-->
 		</tbody>
 	</table>
 </div> <!-- 表格结束 -->
-<div class="speed_chat_box">
+<div class="speed_chat_box none">
 	<h3>当前路由状态<span class="speed">当前下载速度：1.7M／s</span></h3>
 	<div class="speed_chat">这里放速度图表</div>
 </div>
 <div id="bottom" class="bottom"></div>
 <script type="text/javascript" src="../js/jquery-1.4.3.min.js"></script>
-<script type="text/javascript" src="../js/download.mine.js"></script>
+<script type="text/javascript" src="../js/advance.code.js"></script>
+<script type="text/javascript" src="../js/advance.base.js"></script>
+<script type="text/javascript" src="../js/common.dialog.js"></script>
+<script type="text/javascript" src="../js/index.protocol.js"></script>
+<script type="text/javascript" src="../js/device.manage.js"></script>
 </body>
 </html>
