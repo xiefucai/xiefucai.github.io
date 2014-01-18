@@ -7,11 +7,11 @@ window.common.dialog = function(){
 		tpl = ['<div class="modulebox">',
 				'<iframe width="100%" height="100%" frameborder="0" class="modulebox_iframe"></iframe>',
 				'<div class="modulebox_mask"></div>',
-				'<div class="modulebox_win">',
+				'<form class="modulebox_win">',
 					'<a href="javascript:;" class="modulebox_close" title="关闭">&times;</a>',
 					'<h2 class="modulebox_title">提示</h2>',
 					'<div class="modulebox_content"></div>',
-				'</div>',
+				'</form>',
 			'</div>'].join('');
 	 var m = $(tpl).appendTo($('body')),
 	 	 w = m.find('.modulebox_win'),
@@ -76,7 +76,7 @@ window.common.dialog = function(){
 			 				'##',
 			 		  '</div>',
 				 	   '<div class="ib_wrap">',
-				 		  '<a href="javascript:;" class="modulebox_button w_ok">确定</a>',
+				 		  '<input type="button" class="modulebox_button w_ok" value="确定"/>',
 				 	   '</div>'].join('');
 		 		if (typeof(op) === 'string'){
 		 			op = tpl.replace('##',op);
@@ -86,9 +86,14 @@ window.common.dialog = function(){
 		 			$.extend(settings,op);
 		 		}
 		 		this.show(settings);
-		 		c.find('.w_ok').bind('click',function(){
-		 			o.close();
-					callback && callback();
+		 		c.find('.w_ok').bind('click',function(event){
+		 			var ret = true;
+		 			if (callback){
+		 				ret = callback.call(this,event);
+		 			}
+		 			if (ret !== false){
+		 				o.close();
+		 			}
 					return false;
 		 		});
 		 	},

@@ -149,7 +149,7 @@
 	},function(json){
 		var input;
 		srcData = json;
-		setFormValue('ssid',json['wl0_ssid']);
+		setFormValue('ssid',json['wl0_ssid'] || ('xunlei_'+(+new Date())));
 		setFormValue('ssid_pasw',json['wl0_wpa_psk']);
 		//初使化是否隐藏SSID
 		setCheckBoxValue('ssid_enable',+(+json['wl0_closed']));

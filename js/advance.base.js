@@ -45,7 +45,7 @@
 					}else if(typeof s === "string"){
 						return '"'+s+'"';
 					}else if(typeof s === "number"){
-						return s;
+						return '"'+s+'"';
 					}else{
 						return s;
 					}
