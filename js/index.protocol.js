@@ -1,6 +1,6 @@
 ﻿//首页第二屏
 (function(){
-	var basePath = 'http://192.168.111.1:9999/',
+	var basePath = 'http://192.168.1.1:9999/', //'http://' + location.hostname + ':9999/',
 		api = {
 		'getRouterList':{
 			'name': '获取路由设备',
@@ -18,12 +18,16 @@
 			}
 		},
 		'setDeviceSpeedLimit':{
-			'name':'获取连接到本路由器上的设备',
+			'name':'限制上网设备的上下行网速',
 			'url':'setdevicespeedlimit',
 			'method':'post',
-			'paras':{
-				//'routerId':'xxhhll'
-			}
+			'paras':{}
+		},
+		'breakDevices':{
+			'name':'踢设备',
+			'url':'breakdevice',
+			'method':'post',
+			'paras':{}
 		}
 	},
 	postFrame = $('<iframe width="10" height="10" frameborder="0" class="postFrame" id="postFrame" name="postFrame"></iframe>').appendTo($('body')),
@@ -62,12 +66,17 @@
 		'getRemoteData':function(name,data,callback){
 			var p = [],
 				cgi = api[name],
-				actionName = 'callback_'+(+new Date()),
+				actionName = name,
 				url = basePath+cgi.url;
 				data = data || {};
-			if (callback && callback.success){
+			if (callback){
 				cgi.paras = $.extend(cgi.paras || {},{'action':actionName});
-				common[actionName] = callback.success;
+				if (callback.success){
+					common.callback.success[actionName] = callback.success;
+				}
+				if (callback.error){
+					common.callback.error[actionName] = callback.error;
+				}
 			}
 			if (cgi.method === 'get'){
 				data = $.extend(data,cgi.paras);
@@ -78,16 +87,13 @@
 				p.push('<input type="hidden" name="t" value="'+(+new Date())+'"/>');
 			}else if(cgi.method === 'post'){
 				url = [url,$.param($.extend(cgi.paras,request.config.paras))].join('?');
-				console.log(data);
-				for(var i in data){
-					p.push('<textarea class="none" name="'+i+'">'+data[i]+'</textarea>');
-				}
+				p.push('<textarea class="none" name="data">'+common.json.toString(data)+'</textarea>');
 			}
+			postFrame.attr('data-actid',actionName).removeAttr('data-loaded');
 			postForm.html(p.join(''));
 			postForm[0].action = url;
 			postForm[0].target = 'postFrame';
 			postForm[0].method = cgi.method || 'post';
-			console.log(postForm[0].outerHTML);
 			postForm[0].submit();
 		},
 		'build':function(name,data,succ,err){
@@ -103,13 +109,10 @@
 			}else{
 				alert('请求地址：' + name + '还未配置');
 			}
-		}
-	};
-	//basePath = 'http://' + location.hostname + ':9999/'
-	common.protocol = $.extend(common.protocol,request);
-	
-	var onMessage = function(d){
-		var data;
+		},
+		'onMessage':function(d){
+			var data;
+			postFrame.attr('data-loaded',1);
 			if (!(common && common.string && common.string.toJSON)){
 				return;
 			}
@@ -119,28 +122,45 @@
 			if (data.action){
 				var actionName = data.action;
 				delete data.action;
-				common[actionName](data);
-				//common[actionName] = null;
-				//delete common[actionName];
+				common.callback.success[actionName](data);
 			}
-		};
-
+		}
+	};
+	
+	common.callback = $.extend(common.callback,{'success':{},'error':{}});
+	common.protocol = $.extend(common.protocol,request);
+	
 	if (window.postMessage){
 			if (window.addEventListener){
 				window.addEventListener('message',function(event){
-					onMessage(event.data);
+					request.onMessage(event.data);
 				});
 			}else{
 				window.attachEvent('onmessage',function(event){
-					onMessage(event.data);
+					request.onMessage(event.data);
 				});
 			}
 	}else{
 		setInterval(function(){
 			var name = window.name;
-			onMessage(name);
+			request.onMessage(name);
 		},2000);
 	}
 	
-	
+	(function(s,f){
+		s.onload = f;
+		s.onreadystatechange = function(){
+			if (s.readyState === 'complete'){
+				f();
+			}
+		}
+	})(postFrame[0],function(){
+		setTimeout(function(){
+			var callback = common.callback.error,
+				action = postFrame.attr('data-actid');
+			if (!postFrame.attr('data-loaded') && callback && action){
+				callback[action]();
+			}
+		},100);
+	});
 })();

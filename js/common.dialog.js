@@ -108,8 +108,8 @@ window.common.dialog = function(){
 			 				'##',
 			 		  '</div>',
 				 	  '<div class="ib_wrap">',
-						 '<a href="javascript:;" class="w_btn w_cancel ib ml0">取消</a>',
-						 '<a href="javascript:;" class="w_btn w_ok ib">确定</a>',
+						 '<a href="javascript:;" class="modulebox_button w_cancel ib ml0">取消</a> ',
+						 '<a href="javascript:;" class="modulebox_button w_ok">确定</a>',
 					  '</div>'].join('');
 		 		if (typeof(op) === 'string'){
 		 			op = tpl.replace('##',op);

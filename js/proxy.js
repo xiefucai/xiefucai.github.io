@@ -60,6 +60,9 @@
 				'success':function(data){
 					postMessage(data);
 					setTimeout(requestAgain,p['interval']);
+				},
+				'error':function(){
+					setTimeout(requestAgain,p['interval']);
 				}
 			});
 		};

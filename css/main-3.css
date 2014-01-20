@@ -15,7 +15,8 @@
 .router_table_con{color:#3E3E3E;font-family:\5FAE\8F6F\96C5\9ED1;width:100%}
 .router_table_con a{color:#2D95D9;}
 .router_table_con thead th{height:57px;font-size:14px;text-align:center;border-bottom:1px solid #DCDCDC;  }
-.router_table_con td{text-align:center;border-bottom:1px solid #DCDCDC;height:70px;  }
+.router_table_con td{text-align:center;border-bottom:1px solid #DCDCDC;height:70px;}
+.router_table_con td.left{text-align:left;}
 .router_table_con .rtc_01{width:74px;}
 .router_table_con .rtc_02{width:128px;}
 .router_table_con .rtc_03{width:120px;}
@@ -28,3 +29,5 @@
 .speed_chat_box{padding:16px 20px 20px;font-size:14px;font-family:\5FAE\8F6F\96C5\9ED1;color:#3E3E3E;position:relative;  }
 .speed_chat_box h3{margin:0  0 20px;font-weight:normal;position:relative;zoom:1;font-size:14px;}
 .speed_chat_box h3 .speed{position:absolute;right:0;}
+.speed_chat{height:300px;}
+.chart-tooltip{position:absolute;border:1px solid #fdd;padding:2px;background:#fee;font-size:12px;}
