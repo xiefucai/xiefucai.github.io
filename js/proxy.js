@@ -69,11 +69,8 @@
 		
 		p['interval'] = +p['interval'];
 		postMessage(d);
-		console.log(p['interval']);
 		if (!isNaN(p['interval']) && p['interval']>0){
 			p['interval'] = p['interval'] * 1000;
-			
-			console.log(p['interval']);
 			if (!window.jQuery){
 				var s = document.createElement('script');
 					s.type='text/javascript';
@@ -89,6 +86,5 @@
 					}
 					document.getElementsByTagName('head')[0].appendChild(s);	
 			}
-			//$.ajax();
 		}
 })(window.userData);

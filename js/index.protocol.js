@@ -1,7 +1,12 @@
-﻿//首页第二屏
-(function(){
-	var basePath = 'http://192.168.1.1:9999/', //'http://' + location.hostname + ':9999/',
+﻿(function(common){
+	var basePath = 'http://' + location.hostname + ':9999/',
 		api = {
+		'getAp':{
+			'name':'获取路由器设备信息',
+			'url':'getap',
+			'method':'post',
+			'paras':{}
+		},
 		'getRouterList':{
 			'name': '获取路由设备',
 			'url': 'getrouterlist',
@@ -13,8 +18,31 @@
 			'url':'getstatus',
 			'method':'get',
 			'paras':{
-				'statusId':36,
-				'routerId':'xxhhll'
+				'statusId':36
+			}
+		},
+		'getWifiState':{
+			'name':'获取wifi启用状态',
+			'url':'getstatus',
+			'method':'get',
+			'paras':{
+				'statusId':37
+			}
+		},
+		'getWifiStrength':{
+			'name':'获取wifi强度',
+			'url':'getstatus',
+			'method':'get',
+			'paras':{
+				'statusId':39
+			}
+		},
+		'setWifiStrength':{
+			'name':'设置wifi强度',
+			'url':'getstatus',
+			'method':'post',
+			'paras':{
+				'statusId':39
 			}
 		},
 		'setDeviceSpeedLimit':{
@@ -27,6 +55,12 @@
 			'name':'踢设备',
 			'url':'breakdevice',
 			'method':'post',
+			'paras':{}
+		},
+		'getConnectionSettings':{
+			'name':'获取路由器远程链接情况',
+			'url':'getconnectionsettings',
+			'method':'get',
 			'paras':{}
 		}
 	},
@@ -114,21 +148,25 @@
 			var data;
 			postFrame.attr('data-loaded',1);
 			if (!(common && common.string && common.string.toJSON)){
+				console.log('未引入common.string.toJSON',location.href);
 				return;
 			}
 			
 			data = common.string.toJSON(d);
-			
 			if (data.action){
 				var actionName = data.action;
 				delete data.action;
-				common.callback.success[actionName](data);
+				if (common.callback.success[actionName]){
+					common.callback.success[actionName](data);
+				}else{
+					console.log('not exists common.callback.success.'+actionName,location.href);
+				}
 			}
+		},
+		'stopLoop':function(){
+			postFrame.attr('src','about:blank');
 		}
 	};
-	
-	common.callback = $.extend(common.callback,{'success':{},'error':{}});
-	common.protocol = $.extend(common.protocol,request);
 	
 	if (window.postMessage){
 			if (window.addEventListener){
@@ -163,4 +201,11 @@
 			}
 		},100);
 	});
-})();
+	
+	$.extend(common,{
+		'callback':{'success':{
+			'resize':function(){}	
+		},'error':{}},
+		'protocol':request
+	});
+})(window.common);

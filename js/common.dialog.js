@@ -1,6 +1,9 @@
-﻿$(function(){
+﻿(function(){
 if (!window.common){
 	window.common = {};
+}
+if (!window.common.action){
+	window.common.action = {};
 }
 window.common.dialog = function(){
 	var o,
@@ -158,4 +161,4 @@ window.common.dialog = function(){
 	 b.bind('click',function(){o.close();return false;});
 	 return o;
 }
-});
+})();

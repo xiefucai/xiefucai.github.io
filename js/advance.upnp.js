@@ -2,7 +2,7 @@
 	var jform = $('#form'),
 		form = jform[0],
 		dialog = common.dialog(),
-		postVar = {action:"Apply",mode:"UPNP",getPage:"upnp.html"},
+		postVar = {action:'Apply',mode:'UPNP',getPage:'upnp.html'},
 		srcData = {},
 		setFormValue = function(name,value){
 			if (form[name]){
@@ -48,37 +48,42 @@
 				$('#upnp-list').html(UpnpList.join(''));
 			});
 		};
-	
-	$.getJSON('/dataCenter.js', {
-		'upnp_enable': '',
-		'upnp_advertisement_period': '',
-		'upnp_advertisement_ttl': '',
-		'spi_firewall_enable': ''
-	},function(json){console.log(json);
-		var input;
-		srcData = json;
-		setCheckBoxValue('upnp_enable',+json['upnp_enable']);
-		setFormValue('advertisement_period',json['upnp_advertisement_period']);
-		setFormValue('advertisement_ttl',json['upnp_advertisement_ttl']);
-		getUpnpList();
-	});
 		
-	$.extend(common.action,{
-		'postForm':function(event,t){
-			var form = t[0].form;
-			var postData = {
-				'upnp_enable': +form['upnp_enable'].checked,
-				'upnp_advertisement_period': getFormValue('advertisement_period',30),
-				'upnp_advertisement_ttl': getFormValue('advertisement_ttl',4)
-			};
-			t.addClass('form-loading');
-			common.http.post($.extend(postVar,postData),function(data){
-				common.http.success.call(t,dialog,data,postData['apply_wait_time']);
+	$.extend(window.common,{
+		'tip':{
+			'upnp_enable':'== 通用即插即用控制 == 开启之后\n1) 网络电器和计算机等设备可在需要时接入网络并且连接到其它设备\n2) UPNP设备可自动发现网络上其它UPNP设备登记的服务\n\n禁用之后\n路由器将不允许任何设备对路由器的资源进行自动控制，比如端口映射（转发）。'	
+		},
+		'init':function(){
+			$.extend(common.action,{
+				'postForm':function(event,t){
+					var form = t[0].form;
+					var postData = {
+						'upnp_enable': +form['upnp_enable'].checked,
+						'upnp_advertisement_period': getFormValue('advertisement_period',30),
+						'upnp_advertisement_ttl': getFormValue('advertisement_ttl',4)
+					};
+					t.addClass('form-loading');
+					common.http.post($.extend(postVar,postData),function(data){
+						common.http.success.call(t,dialog,data,postData['apply_wait_time']);
+					});
+				}
+			});
+	
+			$.getJSON('/dataCenter.js', {
+				'upnp_enable': '',
+				'upnp_advertisement_period': '',
+				'upnp_advertisement_ttl': '',
+				'spi_firewall_enable': ''
+			},function(json){
+				var input;
+				srcData = json;
+				setCheckBoxValue('upnp_enable',+json['upnp_enable']);
+				setFormValue('advertisement_period',json['upnp_advertisement_period']);
+				setFormValue('advertisement_ttl',json['upnp_advertisement_ttl']);
+				getUpnpList();
 			});
 		}
 	});
 	
-	$.extend(window.common,{'tip':{
-		'upnp_enable':'== 通用即插即用控制 == 开启之后\n1) 网络电器和计算机等设备可在需要时接入网络并且连接到其它设备\n2) UPNP设备可自动发现网络上其它UPNP设备登记的服务\n\n禁用之后\n路由器将不允许任何设备对路由器的资源进行自动控制，比如端口映射（转发）。'	
-	}});
+	$.getScript('/js/advance.base.js');
 });

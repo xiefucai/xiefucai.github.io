@@ -70,6 +70,7 @@
 	
 	
 	hash['slide'] = (hash['slide'] === undefined?'1':hash['slide']);
+	
 	common = $.extend(common,{
 		'config':{
 			'routerList':null	
@@ -248,13 +249,27 @@
 			common.protocol.getRouterData({
 				'wan0_proto':'',
 				'wan0_hwaddr':''
-			},function(d){console.log(d);
+			},function(d){
 				elem.footer.html([
 					'<span>系统版本：1.0.0</span>',
 					'<span>mac地址：'+d['wan0_hwaddr']+'</span>',
 					'<span>服务热线：0755-51851888</span>'
 				].join(''));	
 			});
+			
+			//获取网络连接信息
+			common.protocol.getRemoteData('getConnectionSettings',{},{'success':function(data){
+				var code = +data.errorCode;
+				console.log('getConnectionSettings',data);
+				if (code === 0){
+					
+				}else{
+					
+				}
+			},'error':function(){
+				
+			}});
+			
 		}/*,
 		'onTouch':function(event){
 			if (event.pointerType === 'touch'){
@@ -330,18 +345,22 @@
 	}
 	
 	$('body').bind({
+		'keydown':function(event){
+			if (event.keyCode === 37){
+				elem.sliderLeft.trigger('click');
+			}else if(event.keyCode === 39){
+				elem.sliderRight.trigger('click');
+			}
+		},
 		'mousedown':function(event){
 			px = event.pageX;
-		},
-		'mouseover':function(){
-			
 		},
 		'mouseup':function(event){
 			if (!getSelectText()){
 				if (event.pageX - px>100){
-					$('.slider-ctrs-left').trigger('click');
+					elem.sliderLeft.trigger('click');
 				}else if(event.pageX - px < -100){
-					$('.slider-ctrs-right').trigger('click');
+					elem.sliderRight.trigger('click');
 				}
 			}
 		},
@@ -356,7 +375,6 @@
 					elem.sliderRight.trigger('click');	
 				},50);
 			}
-			//console.log(,e.originalEvent.deltaY);
 		}
 	});
 	
@@ -416,5 +434,5 @@
 	$(window).resize(common.resizeWin);
 	common.resizeWin();
 	common.setCurrentPage(hash['slide'].split('-'));
-	common.init();
+	$.getScript('/js/common.lib.js',common.init);
 });

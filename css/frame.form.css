@@ -193,6 +193,7 @@
 	
 }
 .form-addbtn{
+	position:relative;
 	width:172px;
 	padding:0 13px;
 	height:40px;
@@ -204,7 +205,16 @@
 	line-height:40px;
 	text-align:center;
 	font-size:14px;
-	
+	cursor:pointer;
+}
+.form-file{
+	position:absolute;
+	width:100%;
+	height:100%;
+	left:0;
+	top:0;
+	opacity:0;
+	filter:alpha(opacity=0)\9;
 }
 .form-disabled .form-addbtn,.form-disabled .form-delbtn{
 	cursor:default;
@@ -472,3 +482,5 @@ a.modulebox_close:hover{
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#E4E4E4', endColorstr='#D8D8D8');
 	border:0;
 }
+.pb0{padding-bottom:0;}
+.pb340{padding-bottom:340px;}
