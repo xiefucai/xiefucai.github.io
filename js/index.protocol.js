@@ -1,7 +1,12 @@
-﻿//首页第二屏
-(function(){
-	var basePath = 'http://192.168.1.1:9999/',
+﻿(function(common){
+	var basePath = 'http://' + location.hostname + ':9999/',
 		api = {
+		'getAp':{
+			'name':'获取路由器设备信息',
+			'url':'getap',
+			'method':'post',
+			'paras':{}
+		},
 		'getRouterList':{
 			'name': '获取路由设备',
 			'url': 'getrouterlist',
@@ -13,9 +18,50 @@
 			'url':'getstatus',
 			'method':'get',
 			'paras':{
-				'statusid':36,
-				'routerid':'xxhhll'
+				'statusId':36
 			}
+		},
+		'getWifiState':{
+			'name':'获取wifi启用状态',
+			'url':'getstatus',
+			'method':'get',
+			'paras':{
+				'statusId':37
+			}
+		},
+		'getWifiStrength':{
+			'name':'获取wifi强度',
+			'url':'getstatus',
+			'method':'get',
+			'paras':{
+				'statusId':39
+			}
+		},
+		'setWifiStrength':{
+			'name':'设置wifi强度',
+			'url':'getstatus',
+			'method':'post',
+			'paras':{
+				'statusId':39
+			}
+		},
+		'setDeviceSpeedLimit':{
+			'name':'限制上网设备的上下行网速',
+			'url':'setdevicespeedlimit',
+			'method':'post',
+			'paras':{}
+		},
+		'breakDevices':{
+			'name':'踢设备',
+			'url':'breakdevice',
+			'method':'post',
+			'paras':{}
+		},
+		'getConnectionSettings':{
+			'name':'获取路由器远程链接情况',
+			'url':'getconnectionsettings',
+			'method':'get',
+			'paras':{}
 		}
 	},
 	postFrame = $('<iframe width="10" height="10" frameborder="0" class="postFrame" id="postFrame" name="postFrame"></iframe>').appendTo($('body')),
@@ -24,14 +70,14 @@
 		'config':{
 			'host':'/',
 			'paras':{
-				'cv':'101',				//客户端版本名称，如 1.0.101， 1.2.32
-				'cvc':'101',			//客户端版本号，int类型，随版本迭代而递增。
-				'ov':'23',				//操作系统版本号
-				'device':'huaweiske',			//客户端设备品牌型号
-				'imei':'28383882',			//客户端设备唯一标识(IMEI号等）
+				'cv':'',				//客户端版本名称，如 1.0.101， 1.2.32
+				'cvc':'',				//客户端版本号，int类型，随版本迭代而递增。
+				'ov':'',				//操作系统版本号
+				'device':'',			//客户端设备品牌型号
+				'imei':'',				//客户端设备唯一标识(IMEI号等）
 				'pdtid':3,				//客户端的产品ID
-				'routerid':'',		//路由器ID
-				'uid':'141734790'				//迅雷帐号ID
+				'routerid':'',			//路由器ID
+				'uid':'141734790'		//迅雷帐号ID
 			},
 			'api':api
 		},
@@ -51,17 +97,35 @@
 				}
 			});	
 		},
-		'getRemoteData':function(name,data){
+		'getRemoteData':function(name,data,callback){
 			var p = [],
-				cgi = api[name];
-			data = data || {};
-			data = $.extend(data,cgi.paras);
-			data = $.extend(data,request.config.paras);
-			for(var i in data){
-				p.push('<input type="hidden" name="'+i+'" value="'+data[i]+'"/>');
+				cgi = api[name],
+				actionName = name,
+				url = basePath+cgi.url;
+				data = data || {};
+			if (callback){
+				cgi.paras = $.extend(cgi.paras || {},{'action':actionName});
+				if (callback.success){
+					common.callback.success[actionName] = callback.success;
+				}
+				if (callback.error){
+					common.callback.error[actionName] = callback.error;
+				}
 			}
+			if (cgi.method === 'get'){
+				data = $.extend(data,cgi.paras);
+				data = $.extend(data,request.config.paras);
+				for(var i in data){
+					p.push('<textarea class="none" name="'+i+'">'+data[i]+'</textarea>');
+				}
+				p.push('<input type="hidden" name="t" value="'+(+new Date())+'"/>');
+			}else if(cgi.method === 'post'){
+				url = [url,$.param($.extend(cgi.paras,request.config.paras))].join('?');
+				p.push('<textarea class="none" name="data">'+common.json.toString(data)+'</textarea>');
+			}
+			postFrame.attr('data-actid',actionName).removeAttr('data-loaded');
 			postForm.html(p.join(''));
-			postForm[0].action = basePath+cgi.url;
+			postForm[0].action = url;
 			postForm[0].target = 'postFrame';
 			postForm[0].method = cgi.method || 'post';
 			postForm[0].submit();
@@ -79,8 +143,69 @@
 			}else{
 				alert('请求地址：' + name + '还未配置');
 			}
+		},
+		'onMessage':function(d){
+			var data;
+			postFrame.attr('data-loaded',1);
+			if (!(common && common.string && common.string.toJSON)){
+				console.log('未引入common.string.toJSON',location.href);
+				return;
+			}
+			
+			data = common.string.toJSON(d);
+			if (data.action){
+				var actionName = data.action;
+				delete data.action;
+				if (common.callback.success[actionName]){
+					common.callback.success[actionName](data);
+				}else{
+					console.log('not exists common.callback.success.'+actionName,location.href);
+				}
+			}
+		},
+		'stopLoop':function(){
+			postFrame.attr('src','about:blank');
 		}
 	};
 	
-	common.protocol = $.extend(common.protocol,request);
-})();
+	if (window.postMessage){
+			if (window.addEventListener){
+				window.addEventListener('message',function(event){
+					request.onMessage(event.data);
+				});
+			}else{
+				window.attachEvent('onmessage',function(event){
+					request.onMessage(event.data);
+				});
+			}
+	}else{
+		setInterval(function(){
+			var name = window.name;
+			request.onMessage(name);
+		},2000);
+	}
+	
+	(function(s,f){
+		s.onload = f;
+		s.onreadystatechange = function(){
+			if (s.readyState === 'complete'){
+				f();
+			}
+		}
+	})(postFrame[0],function(){
+		setTimeout(function(){
+			var callback = common.callback.error,
+				action = postFrame.attr('data-actid');
+			if (!postFrame.attr('data-loaded') && callback && action){
+				callback[action]();
+			}
+		},100);
+	});
+	
+	$.extend(common,{
+		'callback':{'success':{
+			'resize':function(){}	
+		},'error':{}},
+		'protocol':request
+	});
+})(window.common);

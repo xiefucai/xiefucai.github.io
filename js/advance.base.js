@@ -1,61 +1,5 @@
-﻿var common = {
-	'string':{
-		'parseJSON':function(s){
-			try {
-				eval('common.__json__=' + s);
-				return common.__json__;
-			} catch(e) {
-				return null;
-			}
-		},
-		'toJSON':function(s){
-			if (window.JSON) {
-				try {
-					return JSON.parse(s);
-				} catch(e) {
-					return null;
-				}
-			} else {
-				try {
-					eval('common.__json__=' + s);
-					return common.__json__;
-				} catch(e) {
-					return null;
-				}
-			}
-		}	
-	},
-	'json':{
-		'toString':function(o){
-			if (window.JSON){
-				return JSON.stringify(o);
-			}
-		
-			var arr = [],
-				format = function(s){
-					if (typeof s === "object" && s !== null){
-						if (s.length){
-							var sarr = [];
-							for(var j=0,jk=s.length;j<jk;j++){
-								sarr.push(format(s[j]));
-							}
-							return "["+sarr.join(",")+"]";
-						}
-						return common.json.toString(s);
-					}else if(typeof s === "string"){
-						return '"'+s+'"';
-					}else if(typeof s === "number"){
-						return s;
-					}else{
-						return s;
-					}
-				};
-			for(var i in o){
-				arr.push(['"'+i+'"',format(o[i])].join(":"));
-			}
-			return "{"+arr.join(",")+"}";
-		}	
-	},
+﻿$.extend(window.common,{
+	'action':{},
 	'http':{
 		'post':function(data,succ,err){
 			$.ajax({
@@ -64,12 +8,19 @@
 				'dataType':'text',
 				'type':'post',
 				'success':function(text){
-					succ(common.string.parseJSON(text));
+					var data = common.string.parseJSON(text),
+						code = +(data && data.result);
+					
+					if(common.http.response[code]){
+						common.http.response[code](data);
+					}else{
+						succ(data);
+					}
 				},
 				'error':err || function(){}
 			});
 		},
-		'success':function(dialog,data,timer,callback){
+		'success':function(dialog,data,timer,callback,errCallBack){
 			var code = +data.result,
 				t = this;
 				setTimeout(function(){
@@ -79,7 +30,7 @@
 					}else if(code === 0){
 						dialog.alert('保存成功！',callback);
 					}else{
-						dialog.alert('保存失败');
+						errCallBack?errCallBack(code):dialog.alert('保存失败');
 					}
 				},(timer || 1) * 1000);	
 		},
@@ -95,6 +46,10 @@
 	'postMessage':function(s){
 		var _opener = window.opener;
 		var isMSIE = /msie/i.test(navigator.userAgent);
+		if (!(window.common && common.json && common.json.toString)){
+			console.log('common.json.toString未加载',s,location.href);
+			return;
+		}
 		s = common.json.toString(s);
 		if (window.postMessage){
 			parent.postMessage(s,"*");
@@ -123,7 +78,7 @@
 			common.postMessage({"action":"resize","data":{"height":h}});
 		}
 	},
-	'init':function(){
+	'start':function(){
 		$.extend({
 			'getJSON':function(url,data,callback){
 				$.ajax({
@@ -150,40 +105,10 @@
 			common.component.checkbox.initEvent.call(this);
 		});
 	},
-	'action':{
-		'showTip':function(tipName,tipTarget){
-			var tip = $('#globalTip'),
-				commTip = window.common.tip,
-				offset = tipTarget.offset(),
-				format = function(str){
-					return str.replace(/==\s(\S+)\s==/g,'<h3 class="form-tip-title">$1</h3>')
-					.replace(/\*{3}(.*)\*{3}/g,'<span class="red">$1</span>')
-					.replace(/\n/g,'<br/>');
-				};
-			if (!tip.length){
-				tip = $(['<div class="form-tip none" id="globalTip">',
-				'<span class="form-tip-angel"></span>',
-				'<span class="form-tip-angel-shadow"></span>',
-				'<div class="form-tip-content"></div>',
-				'</div>'].join('')).appendTo($('body'));
-			}
-			if (commTip && commTip[tipName]){
-				tip.css({'top':offset.top})
-				.removeClass('none')
-				.find('.form-tip-content')
-				.html(format(commTip[tipName]));
-			}else{
-				console.log(tipName,common.tip);
-			}
-		},
-		'hideTip':function(tipName,tipTarget){
-			var tip = $('#globalTip');
-			if (tip.length){
-				tip.addClass('none');
-			}
-		}
-	},
 	'component':{
+		'checker':function(form,dialog){
+				
+		},
 		'checkbox':{
 			'initEvent':function(){
 				var checker = $(this),
@@ -294,42 +219,83 @@
 			'setValue':function(value){
 				var selector = $(this.parentNode),
 					input = $(this),
-					opts = selector.find('.form-select-opts');
-					opts.find('span[data-value="'+value+'"]').trigger('doSelect');
+					opts = selector.find('.form-select-opts').removeClass('active');
+					opts.find('span[data-value="'+value+'"]').trigger('doSelect').trigger('mouseover');
 			}
 		}
 	}
-};
-$(function(){
-	$('body').bind({
-		'click':function(event){
-			var target = event.target,
-				jtarget = $(target),
-				action = jtarget.attr('data-action');
-			if (action && common.action[action]){
-				common.action[action](event,jtarget);
-			}else if(target.tagName === 'INPUT' && target.type === 'checkbox'){
-				common.component.checkbox.onChange(jtarget);
-			}else if(target.tagName !== 'INPUT' && !jtarget.parent().hasClass('form-select')){
-				$('.form-select').filter('.focus').removeClass('focus');
-			}else if(target.tagName === 'INPUT'){
-				$('.form-select').filter('.focus').removeClass('focus');
-				if (jtarget.parent().hasClass('form-select') && !jtarget.parent().hasClass('disabled')){
-					jtarget.parent().addClass('focus');
-				}
-			}
-		},
-		'mouseover':function(event){
-			var target = event.target,
-				jtarget = $(target),
-				tipName = jtarget.attr('data-tip');
-			if (tipName){
-				common.action.showTip(tipName,jtarget);
-			}else{
-				common.action.hideTip(tipName,jtarget);
+});
+
+$.extend(window.common.action,{
+	'showTip':function(tipName,tipTarget){
+		var tip = $('#globalTip'),
+			commTip = window.common.tip,
+			offset = tipTarget.offset(),
+			format = function(str){
+				return str.replace(/==\s(\S+)\s==/g,'<h3 class="form-tip-title">$1</h3>')
+				.replace(/\*{3}(.*)\*{3}/g,'<span class="red">$1</span>')
+				.replace(/\n/g,'<br/>');
+			};
+		if (!tip.length){
+			tip = $(['<div class="form-tip none" id="globalTip">',
+			'<span class="form-tip-angel"></span>',
+			'<span class="form-tip-angel-shadow"></span>',
+			'<div class="form-tip-content"></div>',
+			'</div>'].join('')).appendTo($('body'));
+		}
+		if (commTip && commTip[tipName]){
+			tip.css({'top':offset.top})
+			.removeClass('none')
+			.find('.form-tip-content')
+			.html(format(commTip[tipName]));
+		}
+	},
+	'hideTip':function(tipName,tipTarget){
+		var tip = $('#globalTip');
+		if (tip.length){
+			tip.addClass('none');
+		}
+	}
+});
+
+$('body').bind({
+	'click':function(event){
+		var target = event.target,
+			jtarget = $(target),
+			action = jtarget.attr('data-action');
+		if (action && common.action[action]){
+			common.action[action](event,jtarget);
+		}else if(target.tagName === 'INPUT' && target.type === 'checkbox'){
+			common.component.checkbox.onChange(jtarget);
+		}else if(target.tagName !== 'INPUT' && !jtarget.parent().hasClass('form-select')){
+			$('.form-select').filter('.focus').removeClass('focus');
+		}else if(target.tagName === 'INPUT'){
+			$('.form-select').filter('.focus').removeClass('focus');
+			if (jtarget.parent().hasClass('form-select') && !jtarget.parent().hasClass('disabled')){
+				jtarget.parent().addClass('focus');
 			}
 		}
+	},
+	'mouseover':function(event){
+		var target = event.target,
+			jtarget = $(target),
+			tipName = jtarget.attr('data-tip');
+		if (tipName){
+			common.action.showTip(tipName,jtarget);
+		}else{
+			common.action.hideTip(tipName,jtarget);
+		}
+	}
+});
+
+$.getScript('/js/common.lib.js',function(){
+	console.log('common.lib.js loaded');
+	$.getScript('/js/index.protocol.js',function(){
+		console.log('index.protocol.js loaded');
+		$.extend(window.common,common);
+		common.start();
+		if (window.common.init){
+			window.common.init();
+		}
 	});
-	common.init();
-	window.common = $.extend(window.common,common);
 });

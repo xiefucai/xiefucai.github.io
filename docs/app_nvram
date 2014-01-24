@@ -1,0 +1,51 @@
+1、设置wifi网络开关命令	
+		nvram set wl0_radio=0; //关闭2.4g(1:开启)
+		nvram set wl1_radio=0; //关闭5g(1:开启)
+		nvram set RC_ModeType=4;//wlan模块重启标志
+		rc restart; //rc重启生效参数
+
+2、 设置wifi配置命令	设置wifi ssid, 是否启用密码
+		nvram set wl0_ssid="xxxx"; //设置2.4g ssid
+		nvram set wl1_ssid="xxxx"; //设置2.4g ssid
+		nvram set RC_ModeType=4;//wlan模块重启标志
+		rc restart; //rc重启生效参数
+
+3、设置wifi穿墙模式命令	发射功率的调大，调小
+4、设置mac地址过滤	
+		nvram set filter_macmode="disabled"; //禁用mac过滤功能
+		nvram set filter_macmode="allow"; //启用mac过滤功能
+		nvram set filter_maclist="00:1e:e3:11:22:33 00:1e:e3:11:33:44"; //启用mac过滤功能(多个mac，用空格隔开)
+		nvram set RC_ModeType=2;
+		rc restart; //rc重启生效参数
+
+5、设置mac地址限速	
+	//功能未完成
+
+6、设置wan连接	设置wan账号，密码；DNS,静态IP。
+	 static:
+	 nvram set wan0_proto=static; //拨号方式为static
+	 nvram set wan0_unit=0;
+	 nvram set wan0_dnsauto_enable=0; //设置静态dns是要将此参数置为0，否则表示自动获取dns
+	 nvram set wan0_ipaddr="xxx.xxx.xxx.xxx";
+	 nvram set wan0_netmask="xxx.xxx.xxx.xxx";
+	 nvram set wan0_gateway="xxx.xxx.xxx.xxx";
+	 nvram set wan0_gateway="xxx.xxx.xxx.xxx";
+	 nvram set wan0_usrdns="xxx.xxx.xxx.xxx xxx.xxx.xxx.xxx";
+	 nvram set RC_ModeType=2;//wan模块重启标志
+	 rc restart; //rc重启生效参数	 
+	pppoe:
+	nvram set wan0_proto=pppoe //拨号方式为pppoe
+	nvram set wan0_pppoe_ifname=ppp0 
+	nvram set wan0_pppoe_username=tw5 //pppoe用户名
+	nvram set wan0_pppoe_passwd=tw5 //pppoe密码
+	nvram set wan0_pppoe_service=xx //Service Name
+	nvram set wan0_pppoe_mru=1480 //mru
+	nvram set wan0_pppoe_mtu=1480 //mtu
+	nvram set wan0_pppoe_demand=0 //按需拨号时为1
+	nvram set wan0_unit=0 
+	nvram set wan0_dnsauto_enable=0 //设置静态dns是要将此参数置为0，否则表示自动获取dns
+	nvram set wan0_usrdns="xxx.xxx.xxx.xxx xxx.xxx.xxx.xxx";
+	nvram set RC_ModeType=2;//wan模块重启标志
+	rc restart; //rc重启生效参数		 
+7、中继模式设置
+	//功能未完成

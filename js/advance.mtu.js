@@ -17,44 +17,53 @@
 			'pptp':1436,
 			'l2tp':1430
 		};
-	$.getJSON('/dataCenter.js', {
-		wan0_proto:'',
-		wan0_pppoe_mtu:'',
-		wan0_pptp_mtu:'',
-		wan0_l2tp_mtu:''
-	},function(json){
-		var proto = json.wan0_proto;// 使用的哪种网络连接方式
-			srcData = json;
-			form['mtu'].value = json['wan0_'+proto+'_mtu'] || '';
-		if (!defaultValue[json.wan0_proto]){
-			$(form['mtu']).attr('disabled','disabled');
-			disabled = true;
-		}
-		console.log(json);
-	});
-	
-	$.extend(common.action,{
-		'setDefaultVal':function(event,t){
-			if (disabled){
-				return;
-			}
-			form['mtu'].value = defaultValue[srcData['wan0_proto']];
-		},
-		'postForm':function(event,t){
-			var postData = {};
-			if (disabled){
-				return;
-			}
-			postData['mode'] = srcData.wan0_proto.toUpperCase();
-			postData['wan0_'+srcData['wan0_proto']+'_mtu'] = form['mtu'].value;
-			t.addClass('form-loading');
-			common.http.post($.extend(postVar,postData),function(data){
-				common.http.success.call(t,dialog,data,postData['apply_wait_time']);
+
+	$.extend(common,{
+		'init':function(){
+			$.getJSON('/dataCenter.js', {
+				wan0_proto:'',
+				wan0_pppoe_mtu:'',
+				wan0_pptp_mtu:'',
+				wan0_l2tp_mtu:''
+			},function(json){
+				var proto = json.wan0_proto;// 使用的哪种网络连接方式
+					srcData = json;
+					form['mtu'].value = json['wan0_'+proto+'_mtu'] || '';
+				if (!defaultValue[json.wan0_proto]){
+					$(form['mtu']).attr('disabled','disabled');
+					disabled = true;
+				}
 			});
+		},
+		'tip':{
+			'mtu':'== MTU设置 == 当使用宽带拨号方式连接互联网的时候才能进行MTU设置'	
 		}
 	});
 	
-	$.extend(window.common,{'tip':{
-		'mtu':'== MTU设置 == 当使用宽带拨号方式连接互联网的时候才能进行MTU设置'	
-	}});
+	$.getScript('/js/advance.base.js',function(){
+		$.extend(common.action,{
+			'setDefaultVal':function(event,t){
+				if (disabled){
+					return;
+				}
+				form['mtu'].value = defaultValue[srcData['wan0_proto']];
+			},
+			'postForm':function(event,t){
+				var postData = {};
+				if (disabled){
+					return;
+				}
+				if (!srcData.wan0_proto){
+					dialog.alert('未能获取网络连接方式，保存失败！');
+					return;
+				}
+				postData['mode'] = srcData.wan0_proto.toUpperCase();
+				postData['wan0_'+srcData['wan0_proto']+'_mtu'] = form['mtu'].value;
+				t.addClass('form-loading');
+				common.http.post($.extend(postVar,postData),function(data){
+					common.http.success.call(t,dialog,data,postData['apply_wait_time']);
+				});
+			}
+		});
+	});
 });
