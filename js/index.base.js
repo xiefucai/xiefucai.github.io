@@ -357,7 +357,18 @@
 				},50);
 			}
 			//console.log(,e.originalEvent.deltaY);
+		},
+		'keydown':function(event){
+			switch(event.keyCode){
+				case 37:
+					elem.sliderRight.trigger('click');
+				break;
+				case 39:
+					elem.sliderLeft.trigger('click');
+				break;
+			}
 		}
+			
 	});
 	
 	
