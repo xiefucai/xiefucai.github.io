@@ -6,8 +6,9 @@
 	border:1px solid #3380B5;
 	width:250px;
 	border-radius:3px;
+	z-index:999999;
 }
-.youdao-close{position:absolute;top:5px;right:5px;color:#fff;text-decoration:none;font-size:12px;text-shadow:0 0 1px #3380B5;font-weight:bold;}
+.youdao-close{position:absolute;top:0;right:0;color:#fff;text-decoration:none;font-size:20px;text-shadow:0 0 1px #3380B5;font-weight:bold;line-height:1;padding:0 10px;background-image: linear-gradient(to bottom, #2D83D5 0%, rgba(255,255,255,0) 100%);}
 .youdao-search-form{height:60px;border-radius:3px 3px 0 0;-webkit-user-select:none;cursor:move;
 /* IE10 Consumer Preview */ 
 background-image: -ms-linear-gradient(top, #FFFFFF 0%, #FFFFFF 100%);
