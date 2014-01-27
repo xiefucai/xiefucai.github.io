@@ -376,9 +376,8 @@
 				},50);
 			}
 		}
+			
 	});
-	
-	
 	
 	$('body').bind('click',function(event){
 		var target = event.target,
