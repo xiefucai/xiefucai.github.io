@@ -1,0 +1,79 @@
+﻿.youdao{
+	position:absolute;
+	top:100px;
+	left:100px;
+	background:rgba(162, 220, 242,.8);
+	border:1px solid #3380B5;
+	width:250px;
+	border-radius:3px;
+}
+.youdao-close{position:absolute;top:5px;right:5px;color:#fff;text-decoration:none;font-size:12px;text-shadow:0 0 1px #3380B5;font-weight:bold;}
+.youdao-search-form{height:60px;border-radius:3px 3px 0 0;-webkit-user-select:none;cursor:move;
+/* IE10 Consumer Preview */ 
+background-image: -ms-linear-gradient(top, #FFFFFF 0%, #FFFFFF 100%);
+
+/* Mozilla Firefox */ 
+background-image: -moz-linear-gradient(top, #FFFFFF 0%, #FFFFFF 100%);
+
+/* Opera */ 
+background-image: -o-linear-gradient(top, #FFFFFF 0%, #FFFFFF 100%);
+
+/* Webkit (Safari/Chrome 10) */ 
+background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FFFFFF), color-stop(1, #FFFFFF));
+
+/* Webkit (Chrome 11+) */ 
+background-image: -webkit-linear-gradient(top, #FFFFFF 0%, #FFFFFF 100%);
+
+/* W3C Markup, IE10 Release Preview */ 
+background-image: linear-gradient(to bottom, rgba(255,255,255,.5) 0%, rgba(255,255,255,0) 100%);
+}
+.youdao-header{
+	height:20px;
+	line-height:20px;
+	font-size:12px;
+	text-indent:5px;
+	color:#3D4654;
+	font-weight:bold;
+}
+.youdao-search-text{
+	border:1px solid #7DA8C3;
+	padding:0 5px;
+	margin:5px 5px 5px 5px;
+	border-radius:3px;
+	width:175px;
+	height:24px;
+}
+.youdao-search-text:focus{
+	outline:none;
+	border-color:#00AAC2;
+}
+.youdao-search-btn{
+	border:1px solid #7DA8C3;
+	border-radius:3px;
+	padding:0 8px;
+	margin:0;
+	height:26px;
+	cursor:pointer;
+	/* IE10 Consumer Preview */ 
+	background-image: -ms-linear-gradient(top, #FFFFFF 0%, #FFFFFF 100%);
+
+	/* Mozilla Firefox */ 
+	background-image: -moz-linear-gradient(top, #FFFFFF 0%, #FFFFFF 100%);
+
+	/* Opera */ 
+	background-image: -o-linear-gradient(top, #FFFFFF 0%, #FFFFFF 100%);
+
+	/* Webkit (Safari/Chrome 10) */ 
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FFFFFF), color-stop(1, #FFFFFF));
+
+	/* Webkit (Chrome 11+) */ 
+	background-image: -webkit-linear-gradient(top, #FFFFFF 0%, #ccc 100%);
+
+	/* W3C Markup, IE10 Release Preview */ 
+	background-image: linear-gradient(to bottom, #fff 0%, #eee 100%);
+}
+.youdao-viewer{border:1px solid #7DA8C3;background:#fff;margin:0 5px 5px;min-height:40px;padding:5px;font-size:12px;max-height:100px;overflow:hidden;}
+.youdao-viewer-content{margin:0;padding:0;line-height:1.5;}
+.youdao-viewer:hover{overflow-y:auto;}
+.youdao-speech{font-style:normal;color:gray;margin-left:8px;}
+.youdao-word{margin-top:8px;font-weight:normal;color:#090;display:block;}

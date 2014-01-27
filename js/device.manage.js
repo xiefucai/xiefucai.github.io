@@ -9,7 +9,6 @@
 		connTypes = ['有线','WIFI','WIFI-5G'],
 		unit = 1024,
 		getSpeeds = function(k){
-			k = k / 8;
 			if (k / unit < unit){
 				return (k/unit).toFixed(2)+'K';
 			}else if(k / unit / unit < unit){
@@ -63,7 +62,7 @@
 							common.chart.tooltip.addClass('none').removeAttr('style');
 							var x = item.datapoint[0].toFixed(2),
 							y = item.datapoint[1].toFixed(2);
-							common.chart.showToolTip(item.pageX, item.pageY,item.series.label+':<br/>下行速度：'+y+'MB/s');
+							common.chart.showToolTip(item.pageX, item.pageY,item.series.label+':<br/>下行速度：'+y+'KB/s');
 						}
 					} else {
 						common.chart.tooltip.addClass('none').removeAttr('style');
@@ -78,7 +77,7 @@
 				item = list[i];
 				mac = item['macAddress'];
 				routerSpeed += item['recvSpeed'];
-				speed = Number((item['recvSpeed']/unit/unit/8).toFixed(2));
+				speed = Number((item['recvSpeed']/unit).toFixed(2));
 				if (!data[mac]){
 					data[mac] = [];
 				}
