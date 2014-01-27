@@ -1,5 +1,11 @@
 ﻿(function(){
 var url='http://toolbox.youdao.com/api/dict?keyfrom=dictproxy&q={q}&id=0&rnd={rnd}&url={url}&callback={callback}',
+	getScrollTop = function(){
+		return document.documentElement.scrollTop || document.body.scrollTop;
+	},
+	getClientHeight = function(){
+		return document.documentElement.clientHeight || document.body.clientHeight;
+	},
 	query = function(s){
 		var o ={};
 		o.q = s;
@@ -55,6 +61,7 @@ var url='http://toolbox.youdao.com/api/dict?keyfrom=dictproxy&q={q}&id=0&rnd={rn
 			css.type = 'text/css';
 			css.href = 'http://www.xiefucai.com/css/dict.youdao.css';
 			box.style.left = ((document.documentElement.clientWidth || document.body.clientWidth) - 300)+'px';
+			box.style.top = (getScrollTop() + 100)+'px';
 			header.innerHTML = '有道词典';
 			closeBtn.innerHTML = '&times;';
 			closeBtn.href = 'javascript:;';
@@ -90,6 +97,11 @@ var url='http://toolbox.youdao.com/api/dict?keyfrom=dictproxy&q={q}&id=0&rnd={rn
 			document.onmouseup = function(event){
 				moving = false;
 			}
+			container.onmousewheel = function(e){
+				var k = event.wheelDelta? event.wheelDelta:-event.detail*10;
+					this.scrollTop = this.scrollTop - k;
+					return false;
+			}
 		return {
 			'box':box,
 			'form':form,
@@ -103,7 +115,8 @@ var url='http://toolbox.youdao.com/api/dict?keyfrom=dictproxy&q={q}&id=0&rnd={rn
 	window.DICT = {
 		'show':function(ret,data){
 			var arr = [],
-				con;
+				con,
+				top = 0;
 			if (ret === '0'){
 				data = eval('('+data+')');
 				cusCon = data && data.customTranslation && data.customTranslation.content,
@@ -126,8 +139,14 @@ var url='http://toolbox.youdao.com/api/dict?keyfrom=dictproxy&q={q}&id=0&rnd={rn
 				elems.searchTxt.value = data.originalQuery;
 			}
 			elems.container.innerHTML = arr.join('');
-			console.log(elems.box);
 			elems.box.style.display = 'block';
+			top = parseInt(elems.box.style.top,10);
+			if (top < getScrollTop()){
+				top = getScrollTop() + 300;
+			}else if(top > getScrollTop() + getClientHeight()){
+				top = getScrollTop() + 300;
+			}
+			elems.box.style.top = top+'px';
 		},
 		'search':getWord
 	};
