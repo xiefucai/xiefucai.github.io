@@ -1,0 +1,31 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>javascript在线代码编辑器</title>
+</head>
+<body>
+<form>
+	<label>请输入文件扩展名：</label>
+	<input type="text" value="swf" name="suffixes" /> <input type="button" value="检查" onclick="alert(detectFlashInstalled(this.form['suffixes'].value));"/>
+</form>
+<div id="d1"></div>
+</body>
+<script>
+var el = document.body,
+	alert = function(s){
+		document.getElementById('d1').innerHTML = s;
+	},
+	detectFlashInstalled = function(s){
+		var plugins = navigator.plugins,
+			i=0,plugin,k=plugins.length;
+		for(;i<k;i++){
+			plugin = plugins[i] && plugins[i][0];
+			if (plugin && plugin.suffixes === s){
+				return true;
+			}
+		}
+		return false;
+	};
+</script>
+</html>
