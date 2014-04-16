@@ -20,8 +20,8 @@
 #Menu div a{background:url(menubg.gif) no-repeat; background-repeat: no-repeat;text-decoration:none;cursor:pointer;}
 #Menu div a img {margin:auto 4px; vertical-align:middle; border:0;}
 </style>
-<script language="javascript" type="text/javascript" src="jquery-1.3.2.js"></script>
-<script language="javascript" type="text/javascript" src="global.js"></script>
+<script language="javascript" type="text/javascript" src="/js/advance/jquery-1.3.2.js"></script>
+<script language="javascript" type="text/javascript" src="/js/advance/global.js"></script>
 <script language="javascript" type="text/javascript">
 var G_menuTermRepeater = ['wiz','lang_adsl','media','land_samba','lang_ftpdsetting','lang_usbhttp','lang_usbdlna','land_qosservice','advanced','lang_upnp','lang_VirtualServers','lang_ddns','lang_staticroute','lang_porttrigger','security','land_parent_control','lang_wansetup','lang_urlfilter','lang_macfiltering','lang_SecurityLog','lang_Email','lang_SelfHealing','download'];
 var G_menuTermBasic = ['lang_wpssetup'];
@@ -78,7 +78,7 @@ $(function() {
 });
 
 function uiLogout(){
-	$.post("postCenter.js",{action:"Apply",auth_action : "logout",mode : "AUTH"},function(){
+	$.post("/postCenter.js",{action:"Apply",auth_action : "logout",mode : "AUTH"},function(){
 		top.location.href="login.html";
 	});
 }
@@ -147,21 +147,21 @@ function uiMenuDisableGray(_A,_Bool)
 </script>
 <body>
 <div id="Menu">
-	<div onClick="Show(1,img1);"><a target="mainFrame" href="deviceinfo.html"  id="status" style="vertical-align:middle;"><img src="icon02.gif" align="absmiddle" id="img1"/><span id="lang_status" ></span></a></div>
+	<div onClick="Show(1,img1);"><a target="mainFrame" href="deviceinfo.html"  id="status" style="vertical-align:middle;"><img src="/images/advance/icon02.gif" align="absmiddle" id="img1"/><span id="lang_status" ></span></a></div>
         <ul id="1" style="display:none;">
             <li><a target="mainFrame" href="deviceinfo.html" id="lang_routerstatus"></a></li>
             <li><a target="mainFrame" href="lan_dhcp.html" id="lang_dhcp"></a></li>
         </ul>
 				
-	<div onClick="CloseAll(7);"><a target="mainFrame" href="WIZ_sel.html" id="wiz"><img src="icon01.gif" align="absmiddle"/><span id="lang_wizard"></span></a></div>    
+	<div onClick="CloseAll(7);"><a target="mainFrame" href="WIZ_sel.html" id="wiz"><img src="/images/advance/icon01.gif" align="absmiddle"/><span id="lang_wizard"></span></a></div>    
 
-	<div onClick="Show(2,img2);"><a target="mainFrame" href="lan_set.html" id="wanlan"><img src="icon02.gif" align="absmiddle" id="img2"/><span id="lang_wansetup_new"></span></a></div>
+	<div onClick="Show(2,img2);"><a target="mainFrame" href="lan_set.html" id="wanlan"><img src="/images/advance/icon02.gif" align="absmiddle" id="img2"/><span id="lang_wansetup_new"></span></a></div>
         <ul id="2" style="display:none;">
             <li><a target="mainFrame" href="lan_set.html" id="lang_lansetup"></a></li>
             <li><a target="mainFrame" href="wanadsl.html" id="lang_adsl"></a></li>
         </ul>
         
-	<div onClick="Show(3,img3);"><a target="mainFrame" href="wireless_basic.html" id="wlan"><img src="icon02.gif" align="absmiddle" id="img3"/><span id="lang_wirelessmain"></span></a></div>
+	<div onClick="Show(3,img3);"><a target="mainFrame" href="wireless_basic.html" id="wlan"><img src="/images/advance/icon02.gif" align="absmiddle" id="img3"/><span id="lang_wirelessmain"></span></a></div>
         <ul id="3" style="display:none;">
             <li><a target="mainFrame" href="wireless_basic.html" id="lang_wirelesssetup"></a></li>
             <li><a target="mainFrame" href="wireless_wps.html" id="lang_WifiProtected"></a></li>
@@ -173,7 +173,7 @@ function uiMenuDisableGray(_A,_Bool)
 			 <li><a target="mainFrame" href="advancemode.html" id="lang_wirelessmode"></a></li>
         </ul>
 
-	<div onClick="Show(4,img4);" ><a target="mainFrame" href="samba.html" id="media"><img src="icon02.gif" align="absmiddle" id="img4"/><span id="lang_qosmain"></span></a></div>
+	<div onClick="Show(4,img4);" ><a target="mainFrame" href="samba.html" id="media"><img src="/images/advance/icon02.gif" align="absmiddle" id="img4"/><span id="lang_qosmain"></span></a></div>
         <ul id="4" style="display:none;">
             <li><a target="mainFrame" href="samba.html" id="land_samba"></a></li>
             <li><a target="mainFrame" href="ftpd_setting.html" id="lang_ftpdsetting"></a></li>
@@ -182,7 +182,7 @@ function uiMenuDisableGray(_A,_Bool)
             <li><a target="mainFrame" href="qos_service.html" id="land_qosservice"></a></li>
         </ul>
         
-    <div onClick="Show(5,img5);" ><a target="mainFrame" href="upnp.html" id="advanced"><img src="icon02.gif" align="absmiddle" id="img5"/><span id="lang_advanced"></span></a></div>
+    <div onClick="Show(5,img5);" ><a target="mainFrame" href="upnp.html" id="advanced"><img src="/images/advance/icon02.gif" align="absmiddle" id="img5"/><span id="lang_advanced"></span></a></div>
         <ul id="5" style="display:none;">
         	<li><a target="mainFrame" href="upnp.html" id="lang_upnp"></a></li>
              <li><a target="mainFrame" href="fw_portmap.html" id="lang_VirtualServers"></a></li>
@@ -191,7 +191,7 @@ function uiMenuDisableGray(_A,_Bool)
             <li><a target="mainFrame" href="porttrigger.html" id="lang_porttrigger"></a></li>  
         </ul>
 		       
-    <div onClick="Show(6,img6);" ><a target="mainFrame" href="parent_control.html" id="security"><img src="icon02.gif" align="absmiddle" id="img6"/><span id="lang_firewall"></span></a></div>
+    <div onClick="Show(6,img6);" ><a target="mainFrame" href="parent_control.html" id="security"><img src="/images/advance/icon02.gif" align="absmiddle" id="img6"/><span id="lang_firewall"></span></a></div>
         <ul id="6" style="display:none;">
         	<li><a target="mainFrame" href="parent_control.html" id="land_parent_control"></a></li>
             <li><a target="mainFrame" href="fw_wansetup.html" id="lang_wansetup"></a></li>  
@@ -199,7 +199,7 @@ function uiMenuDisableGray(_A,_Bool)
             <li><a target="mainFrame" href="fw_macfilter.html" id="lang_macfiltering"></a></li> 
         </ul>
 
-	<div onClick="Show(7,img7);"><a target="mainFrame" href="ut_reboot.html" id="utilities"><img src="icon02.gif" align="absmiddle" id="img7"/><span id="lang_utilities"></span></a></div>
+	<div onClick="Show(7,img7);"><a target="mainFrame" href="ut_reboot.html" id="utilities"><img src="/images/advance/icon02.gif" align="absmiddle" id="img7"/><span id="lang_utilities"></span></a></div>
         <ul id="7" style="display:none;">
             <li><a target="mainFrame" href="ut_reboot.html" id="lang_reboot"></a></li>
             <li><a target="mainFrame" href="ut_prev.html" id="lang_restrore_setting"></a></li>
@@ -209,7 +209,7 @@ function uiMenuDisableGray(_A,_Bool)
             <li><a target="mainFrame" href="ut_system_set.html" id="lang_SystemSetting"></a></li>
             <li><a target="mainFrame" href="ut_self_healing.html" id="lang_SelfHealing"></a></li>  
         </ul>
-	<div onClick="CloseAll(7);" ><a target="mainFrame" href="download_bt.html" id="download"><img src="icon01.gif" align="absmiddle"/><span id="lang_download"></span></a></div>
+	<div onClick="CloseAll(7);" ><a target="mainFrame" href="download_bt.html" id="download"><img src="/images/advance/icon01.gif" align="absmiddle"/><span id="lang_download"></span></a></div>
 		<a onclick="uiLogout();" id="lang_logout" style="display:block;padding:10px 0 0 150px;color:#000;font-weight:bold;font-size:12pt; cursor:pointer"></a>
     <div class="clear">
         <input type="hidden" id="wait_time" value="">
