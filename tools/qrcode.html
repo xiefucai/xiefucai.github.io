@@ -1,0 +1,37 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>二维码生成工具</title>
+<script type="text/javascript" src="http://mat1.gtimg.com/app/opent/js/jquery-1.4.3.min.js"></script>
+<script type="text/javascript" src="http://mat1.gtimg.com/app/opent/js/qrcode.min.js"></script>
+</head>
+<body>
+<form id="form1">
+	宽<input type="text" value="120" name="width"/>
+	高<input type="text" value="120" name="height"/>
+	网址<input type="text" value="" name="url" placeholder="http://"/>
+	<input type="button" value="生成" onclick="showQRCode"/>
+</form>
+<div id="code" style="text-align:center;margin:20px auto;"></div>
+</body>
+<script>
+$(function(){
+	var form = $('#form1')[0],
+		qr = $('#code');
+	window.showQRCode = function(){
+		var img;
+		qr.html('');
+		img = $('<div></div>').appendTo(qr);
+		img.css({
+			'text-align':'center',
+			'width':form['width'].value || 120,
+			'height':form['height'].value || 120,
+		});
+		new QRCode(img[0],form['url'].value); 
+	}
+	form['url'].value = location.search.slice(5);
+	window.showQRCode();
+});
+</script>
+</html>
