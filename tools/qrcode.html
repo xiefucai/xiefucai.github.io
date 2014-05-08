@@ -11,9 +11,9 @@
 	宽<input type="text" value="120" name="width"/>
 	高<input type="text" value="120" name="height"/>
 	网址<input type="text" value="" name="url" placeholder="http://"/>
-	<input type="button" value="生成" onclick="showQRCode"/>
+	<input type="button" value="生成" onclick="showQRCode()"/>
 </form>
-<div id="code" style="text-align:center;margin:20px auto;"></div>
+<div id="code" style="text-align:center;margin:20px;"></div>
 </body>
 <script>
 $(function(){
@@ -24,13 +24,12 @@ $(function(){
 		qr.html('');
 		img = $('<div></div>').appendTo(qr);
 		img.css({
-			'text-align':'center',
-			'width':form['width'].value || 120,
-			'height':form['height'].value || 120,
+			'text-align':'center'
 		});
-		new QRCode(img[0],form['url'].value); 
+		new QRCode(qr[0],{'text':form['url'].value,'width':form['width'].value || 120,
+			'height':form['height'].value || 120}); 
 	}
-	form['url'].value = location.search.slice(5);
+	form['url'].value = decodeURIComponent(location.search.slice(5));
 	window.showQRCode();
 });
 </script>
