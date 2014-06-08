@@ -165,6 +165,12 @@
 		'touchmove':function(){return false;}
 	});
 	
+	$(form['tel']).bind({
+		'focus':function(){
+			document.body.scrollTop = $(this).offset().top;
+		}
+	});
+	
 	$(form).bind({
 		'submit':function(event){
 			var tel = $.trim(form['tel'].value);
