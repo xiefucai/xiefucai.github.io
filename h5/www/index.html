@@ -43,15 +43,16 @@
 					<h2 class="title">身边秘事 不能无视</h2>
 				</div>
 			</div>
-			<form class="form">
+			<form class="form" id="form">
 				<div class="form-item">
 					<input type="number" name="tel" class="form-text" placeholder="请输入手机号码申请内测"/>
-					<a href="javascript:;" class="form-close">&times;</a>
+					<div class="form-result none" id="result">请输入手机号码申请内测</div>
+					<a href="javascript:;" class="form-close" id="delbtn">&times;</a>
 				</div>
-				<div class="form-item form-item2"><input type="button" name="submit" value="提交申请" class="form-button"/></div>
+				<div class="form-item form-item2"><input type="submit" name="submit" value="提交申请" class="form-button"/></div>
 			</form>
 		</div>
-		<div class="p2">
+		<div class="p2" id="page-share">
 			<div class="share">
 				<h2 class="title2"><strong class="share-txt">分享到</strong></h2>
 				<div class="btns">
