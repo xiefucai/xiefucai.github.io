@@ -58,8 +58,11 @@
 		},
 		'touchend':function(event){
 			var d = pageY2 - pageY;
-			if (((slider.count - 1) === slider.index) && (pageY2 - pageY > 0)){
-				return;
+			if (((slider.count - 1) === slider.index)){
+				alert(pageY2-pageY);
+			}
+			if (((slider.count - 1) === slider.index) && (pageY2 - pageY < 0)){
+				return true;
 			}
 			if (d > 100){
 				slider.slidePrev();
