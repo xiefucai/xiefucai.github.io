@@ -50,11 +50,10 @@
 		},
 		'touchmove':function(event){
 			pageY2 = event.touches[0].pageY;
-			console.log('slider.count',slider.count,slider.index,pageY2 - pageY);
 			if (((slider.count - 1) === slider.index) && (pageY2 - pageY > 0)){
 				return;
 			}
-			slideElem[0].scrollTop = scrollTop + (pageY2 - pageY);
+			slideElem[0].scrollTop = scrollTop - (pageY2 - pageY);
 			return false;
 		},
 		'touchend':function(event){
@@ -63,9 +62,9 @@
 				return;
 			}
 			if (d > 100){
-				slider.slideNext();
-			}else if(d < -100){
 				slider.slidePrev();
+			}else if(d < -100){
+				slider.slideNext();
 			}else{
 				slider.slideTo(slider.index);
 			}
