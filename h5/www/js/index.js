@@ -50,8 +50,8 @@
 		},
 		'touchmove':function(event){
 			pageY2 = event.touches[0].pageY;
-			if (((slider.count - 1) === slider.index) && (pageY2 - pageY > 0)){
-				return;
+			if (((slider.count - 1) === slider.index) && (pageY2 - pageY < 0)){
+				return true;
 			}
 			slideElem[0].scrollTop = scrollTop - (pageY2 - pageY);
 			return false;
@@ -59,7 +59,7 @@
 		'touchend':function(event){
 			var d = pageY2 - pageY;
 			if (((slider.count - 1) === slider.index)){
-				alert(pageY2-pageY);
+				//alert(pageY2-pageY);
 			}
 			if (((slider.count - 1) === slider.index) && (pageY2 - pageY < 0)){
 				return true;
