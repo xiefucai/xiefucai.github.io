@@ -1,0 +1,58 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<title>电影搜索</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+	<!-- http://cloud.d5dm.com/api/?callback=jQuery182011199382459744811_1400751015973&ap=dht&kw=%E5%8F%8B%E6%83%85%E5%A4%A7%E4%BD%9C%E6%88%B0&_=1400751016058 -->
+	<style type="text/css">
+		body{margin:0;padding:0;}
+		.form{margin:0;padding:0 0 5px;background:#288BCC;overflow:hidden;}
+		.form-inner{margin:5px 10px 0 5px;position:relative;}
+		.text{border:0;height:40px;width:100%;padding:5px;font-size:18px;}
+		.button{position:absolute;top:0;right:-5px;bottom:0;border:1px solid #fff;padding:0 25px;margin:0;border-radius:5px;font-size:18px;}
+		.list{padding:15px 0;margin:0;}
+		.list dt{font-size:18px;margin:10px 10px 0 10px;overflow:hidden;}
+		.list dd{font-size:14px;margin:0 10px;padding:5px 0 10px;color:#999;border-bottom:1px solid #eee;position:relative;height:30px;top:5px;}
+		.list .download{display:inline-block;position:absolute;right:0;top:0;text-decoration:none;color:#fff;font-size:18px;background:#288BCC;border-radius:5px;padding:5px 15px;}
+		.page-loading{position:absolute;top:100px;width:100%;text-align:center;}
+		.page-loading-text{line-height:20px;height:20px;padding:40px 45px 10px;margin:0 auto;background:url(http://www.peiluyou.com/images/loading4.gif) 50% 10px #fff no-repeat;color:#999;display:inline-block;border-radius:5px;box-shadow:0 0 10px #999;border:1px solid #ccc\9;font-size:14px;z-index:10;}
+	</style>
+</head>
+<body>
+<form id="form" class="form">
+<div class="form-inner"><input type="text" placeholder="请输入电影名称" name="key" class="text"/><input type="button" value="搜索" name="button" class="button"/></div>
+</form>
+<dl id="list" class="list"></dl>
+<div class="page-loading none"><span class="page-loading-text">正在加载</span></div>
+</body>
+<script type="text/javascript" src="http://mat1.gtimg.com/app/opent/js/jquery-1.4.3.min.js"></script>
+<script>
+var renderList = function(list){
+	var elem = $('#list');
+	$('.page-loading').hide();
+	elem.html('');
+	for(var i=0,k=list.length;i<k;i++){
+		elem.append('<dt>'+list[i]['title']+'</dt>');
+		elem.append('<dd>'+list[i]['size']+'<a href="http://www.peiluyou.com/frames/dowwload.task.html?url='+encodeURIComponent(list[i]['magnet'])+'" target="_blank" class="download">下载</a></dd>');
+	}
+};
+$(function(){
+	var form = $('#form')[0],
+		appScript;
+	form['key'].value = decodeURIComponent(location.search.slice(1).replace(/^.*=/,''));
+	$(form['button']).bind('click',function(){
+		var key = $.trim(form['key'].value);
+		$('.page-loading').show();
+		if (key){
+			if (appScript){
+				$(appScript).remove();
+			}
+			appScript = document.createElement('script');
+			document.body.appendChild(appScript);
+			appScript.type='text/javascript';
+			appScript.src = 'http://cloud.d5dm.com/api/?callback=renderList&ap=dht&kw='+encodeURIComponent(key)+'&_='+(+new Date());
+		}
+	}).trigger('click');
+});
+</script>
+</html>
