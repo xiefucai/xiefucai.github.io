@@ -26,7 +26,7 @@
 		},10);
 	},
 	isTelNum = function(val){
-		if (new RegExp(/[^\d]/g).test(c)) {
+		if (new RegExp(/[^\d]/g).test(val)) {
 			return false;
 		}
 		if (val.length == 11) {
@@ -36,8 +36,8 @@
 				return false;
 			}
 		} else {
-			if (c.length >= 14) {
-				if (new RegExp(/^008860?9\d{8}$/).test(c)) {
+			if (val.length >= 14) {
+				if (new RegExp(/^008860?9\d{8}$/).test(val)) {
 					return true
 				} else {
 					return false;
