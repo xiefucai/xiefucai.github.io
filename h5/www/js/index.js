@@ -23,7 +23,7 @@
 				if (times >= 10){
 					clearInterval(timer);
 					slideElem[0].scrollTop = t2;
-					$('.page'+i).addClass('active').siblings().removeClass('active');
+					$('.page'+(i+1)).addClass('active').siblings().removeClass('active');
 					return;
 				}
 				slideElem[0].scrollTop += d;
@@ -72,4 +72,5 @@
 			return false;
 		}
 	});
+	slider.slideTo(0);
 })(Zepto);
