@@ -4,6 +4,8 @@
 	pageY = 0,
 	pageY2 = 0,
 	scrollTop = 0,
+	curPage = 0,
+	curSlide = 0,
 	turnPage = function(i){
 		var t = document.body.scrollTop,
 			h = document.body.clientHeight,
@@ -12,6 +14,7 @@
 			times = 0,
 			timer = 0;
 		document.body.scrollTop = (t2-t)%10 + t;
+		curPage = i;
 		timer = setInterval(function(){
 			if (times < 10){
 				document.body.scrollTop = document.body.scrollTop + d;
@@ -64,6 +67,7 @@
 				if (times >= 10){
 					clearInterval(timer);
 					slideElem[0].scrollTop = t2;
+					curSlide = i;
 					$('.page'+(i+1)).addClass('active').siblings().removeClass('active');
 					return;
 				}
@@ -82,6 +86,14 @@
 			if (i > 0){
 				slider.slideTo(i-1);
 			}
+		}
+	},
+	orientationListener = function(event){
+		//gamma(x),alpha(y),beta(z)
+		if (curPage === 0){
+			$('#sliders').find('.page').css({
+				'margin-left':Math.floor(event.gamma)+'px'
+			});
 		}
 	},
 	showResult = function(i,t){
@@ -191,5 +203,10 @@
 	$('#delbtn').bind('click',function(){
 		form['tel'].value = '';
 	});
+	
+	window.addEventListener('deviceorientation', orientationListener, false); //方向感应器
+	window.addEventListener('MozOrientation', orientationListener, false); //方向感应器 for firefox
+	window.addEventListener('devicemotion', orientationListener, false); //重力加速感应器 for iphone, android
+	turnPage(0);
 	slider.slideTo(0);
 })(Zepto);
