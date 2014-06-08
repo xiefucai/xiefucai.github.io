@@ -111,8 +111,13 @@
 		'touchend':function(event){
 			var d = pageY2 - pageY;
 			if (((slider.count - 1) === slider.index) && (pageY2 - pageY < 0)){
-				turnPage(1);
-				return true;
+				if (pageY2 - pageY < -50){
+					turnPage(1);
+					return false;
+				}else{
+					slider.slideTo(slider.index);
+					return false;
+				}
 			}
 			if (d > 100){
 				slider.slidePrev();
@@ -132,7 +137,7 @@
 		},
 		'touchmove':function(event){
 			pageY2 = event.touches[0].pageY;
-			document.body.scrollTop = scrollTop - (pageY2 - pageY);
+			//document.body.scrollTop = scrollTop - (pageY2 - pageY);
 			return false;
 		},
 		'touchend':function(event){
