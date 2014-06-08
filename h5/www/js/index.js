@@ -167,7 +167,7 @@
 	
 	$(form['tel']).bind({
 		'focus':function(){
-			document.body.scrollTop = $(this).offset().top;
+			document.body.scrollTop = $(form).offset().top;
 		}
 	});
 	
