@@ -1,0 +1,94 @@
+<html>
+	<head>
+		<title>
+			判断是否是webview浏览器
+		</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+		<meta name="viewport" content="minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0, width=device-width, user-scalable=no"/>
+		<style type="text/css">
+			body{margin:0;padding:0;}
+			ul{margin:0;padding:0;list-style:none;}
+			li ul{background:#fff;margin:8px 0 8px 16px;}
+			li{background:#eee;border:1px solid #ccc;padding:8px;margin-top:-1px;}
+			li[data-action]{color:#090;}
+			li[data-type="function"]{color:#BD247B;}
+			li[data-type="null"]{color:#67A7E3;}
+			li[data-type="number"]{color:#f50;}
+			li[data-type="boolean"]{color:#05f;}
+			.closeed ul{
+				display:none;
+			}
+			
+		</style>
+		<script>
+			var zz = {};
+				zz.get = function(s){
+					var a = s.split("."),w = window;
+					for(var i=0,k=a.length;i<k;i++){
+						if(a[i])w = w[a[i]];
+					}
+					return w;
+				};
+				zz.tree = function(os,dom){
+				var o = (typeof os === "string"?zz.get(os):os),
+					str = (typeof os === "string"?os:""),
+					pre = "",
+					arr = [],
+					elem = document.createElement('ul');
+					
+					if (dom.childElementCount > 0){
+						if (dom.className === "closeed"){
+							dom.className = "opened";
+						}else{
+							dom.className = "closeed";
+						}
+						return;
+					}
+				
+				for (var i in o){
+					if (str){
+						pre = str+".";
+					}
+					pre = pre+i;
+					
+					if (/^(string|number|function|boolean)$/i.test(typeof o[i])){
+						arr.push('<li data-type="'+(typeof o[i])+'" data-action="run" data-path="'+pre+'"><strong>'+pre+'</strong>:'+o[i]+'</li>');
+					}else if(o[i] === null){
+						arr.push('<li data-type="null" data-path="'+pre+'"><strong>'+pre+'</strong>:'+o[i]+'</li>');
+					}else{
+						arr.push('<li data-type="'+(typeof o[i])+'" data-action="tree" data-path="'+pre+'">'+pre+':'+o[i]+'</li>');
+					}
+					pre = "";
+				}
+				elem.innerHTML = arr.join("\n");
+				dom.appendChild(elem);
+			};
+			zz.run = function(os,dom){
+				var type = dom.getAttribute('data-type'),o;
+				if (type === "function"){
+					o = zz.get(os);
+					if (o){
+						alert(o());
+					}
+				}
+			}
+			window.onload = function(){
+				window.onclick = function(event){
+					var target = (window.event && window.event.srcElement) || event.target,
+						action = target.getAttribute('data-action');
+					if (action){
+						zz[action](target.getAttribute('data-path'),target);
+					}
+				}
+				zz.tree(window,document.getElementById('content'));
+			}
+			
+			window.onerror = function(sMessage,sUrl,sLine){
+				alert([sMessage,sUrl,sLine].join("\n"));
+			};
+		</script>
+	</head>
+	<body>
+		<div id="content"></div>
+	</body>
+</html>
