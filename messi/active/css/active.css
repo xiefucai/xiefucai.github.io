@@ -2,16 +2,16 @@
 body{margin:0;padding:0;display:block;height:100%;}
 .pages{position:absolute;top:47px;bottom:0;right:0;left:0;overflow:hidden;}
 .page{display:block;height:100%;text-align:center;position:relative;overflow:hidden;}
-.header-text{height:46px;line-height:46px;border-bottom:1px solid #38ACAF;margin:0;padding:0;font-size:14px;font-weight:normal;color:#fff;background:url(../images/back.gif) 10px 50% no-repeat;background-size:12px auto;text-indent:30px;}
+.header-text,.header-text:visited{height:46px;line-height:46px;border-bottom:1px solid #38ACAF;margin:0;padding:0;font-size:14px;font-weight:normal;color:#fff;background:url(../images/back.gif) 10px 50% no-repeat;background-size:12px auto;text-indent:30px;text-decoration:none;display:inline-block;}
 .page1{background:url(../images/p1.png) 50% 200px no-repeat #FBF6DC;background-size:auto 279px;}
 .next{display:block;position:absolute;left:0;bottom:0;text-align:center;width:100%;text-decoration:none;color:#EF6B00;}
 .next::after{content:'';display:block;height:15px;width:24px;background:url(../images/next.png) -24px 0  no-repeat;background-size:48px auto;margin:10px auto;}
 .page1 .next::after{background-position:0 0;}
-.banner{height:180px;position:relative;}
-.banner .light{position:absolute;top:0;bottom:0;left:0;right:0;z-index:0;background:url(../images/light.jpg) no-repeat;background-size:100% 100%;}
+.banner{height:180px;position:relative;overflow:hidden;}
+.banner .light{position:absolute;background:url(../images/light.jpg) no-repeat #4CBEC1;background-size:100% 100%;width:200%;height:200%;top:50%;left:50%;margin:-50% 0 0 -100%;}
 .banner .jiji{width:61px;height:76px;background:url(../images/jiji.png) no-repeat;background-size:61px auto;position:absolute;z-index:1;left:50%;top:50%;margin:-63px 0 0 -141px;}
 .banner .text1{width:347px;height:97px;background:url(../images/text.png) no-repeat;background-size:347px auto;position:absolute;z-index:2;top:50%;left:50%;margin-left:-173px;margin-top:-43px;}
-.banner .mask{position:absolute;bottom:0;left:0;right:0;height:32px;background:url(../images/mask.png) 50% 100%  no-repeat;background-size:100% 100%;}
+.banner .mask{position:absolute;bottom:0;left:0;right:0;height:31px;background:url(../images/mask.png) 50% 100%  no-repeat;background-size:100% 100%;}
 
 .lottery-index{display:block;width:100px;height:100px;border-radius:50%;line-height:100px;text-align:center;background:#FFCC33;color:#fff;margin:25px auto 10px;font-size:24px;}
 .lottery-name{color:#fff;font-size:18px;}
@@ -22,5 +22,38 @@ body{margin:0;padding:0;display:block;height:100%;}
 .page5{background:url(../images/p5.jpg) 50% 50% no-repeat;background-size:190px  auto;}
 @media only screen and (max-width: 320px){
     .banner{height:120px;}
+    .banner .jiji{background-size:40px auto;width:40px;height:50px;margin:-53px 0 0 -91px;}
+    .banner .text1{background-size:231px auto;margin-left:-115px;height:65px;}
+    .page1{background-size:245px auto;background-position:50% 140px;}
+    .page2{background-size:auto 242px;}
+    .page3{background-size:auto 242px;}
+    .page4{background-size:auto 242px;}
 }
+.active .next::after{position:relative;-webkit-animation:next 0.8s infinite;-webkit-animation-timing-function:linear;}
+.active .light{-webkit-animation:light 5s infinite;-webkit-animation-timing-function:linear;}
+.active .jiji{-webkit-animation:jiji 3s infinite;-webkit-animation-timing-function:linear;}
 .none{display:none;}
+
+@-webkit-keyframes next
+{
+	0%{top:0;}
+	50%{top:-10px;}
+	100%{top:0;}
+}
+@-webkit-keyframes light
+{
+	0%{-webkit-transform:rotate(-15deg);}
+	25%{-webkit-transform:rotate(0);}
+	50%{-webkit-transform:rotate(15deg);}
+	75%{-webkit-transform:rotate(0deg);}
+	100%{-webkit-transform:rotate(-15deg);}
+}
+@-webkit-keyframes jiji
+{
+	0%{top:50%;}
+	10%{top:40%;-webkit-transform:rotateY(0);}
+	20%{-webkit-transform:rotateY(180deg);}
+	60%{-webkit-transform:rotateY(180deg);}
+	70%{top:40%;-webkit-transform:rotateY(0);}
+	80%{top:50%;}
+}

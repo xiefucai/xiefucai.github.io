@@ -6,25 +6,6 @@
 	scrollTop = 0,
 	curPage = 0,
 	curSlide = 0,
-	turnPage = function(i){
-		var t = document.body.scrollTop,
-			h = document.body.clientHeight,
-			t2 = i * h,
-			d = Math.floor((t2 - t)/10),
-			times = 0,
-			timer = 0;
-		document.body.scrollTop = (t2-t)%10 + t;
-		curPage = i;
-		timer = setInterval(function(){
-			if (times < 10){
-				document.body.scrollTop = document.body.scrollTop + d;
-				times++;
-			}else{
-				clearInterval(timer);
-				document.body.scrollTop = t2;
-			}
-		},10);
-	},
 	isTelNum = function(val){
 		if (new RegExp(/[^\d]/g).test(val)) {
 			return false;
@@ -124,7 +105,6 @@
 			var d = pageY2 - pageY;
 			if (((slider.count - 1) === slider.index) && (pageY2 - pageY < 0)){
 				if (pageY2 - pageY < -50){
-					turnPage(1);
 					return false;
 				}else{
 					slider.slideTo(slider.index);
@@ -184,10 +164,10 @@
 	$('#delbtn').bind('click',function(){
 		form['tel'].value = '';
 	});
-	
+	/*
 	window.addEventListener('deviceorientation', orientationListener, false); //方向感应器
 	window.addEventListener('MozOrientation', orientationListener, false); //方向感应器 for firefox
 	window.addEventListener('devicemotion', orientationListener, false); //重力加速感应器 for iphone, android
-	turnPage(0);
+	*/
 	slider.slideTo(0);
 })(Zepto);
