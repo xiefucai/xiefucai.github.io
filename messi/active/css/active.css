@@ -8,7 +8,7 @@ body{margin:0;padding:0;display:block;height:100%;}
 .next{display:block;position:absolute;left:0;bottom:0;text-align:center;width:100%;text-decoration:none;color:#EF6B00;}
 .next::after{content:'';display:block;height:15px;width:24px;background:url(../images/next.png) -24px 0  no-repeat;background-size:48px auto;margin:10px auto;}
 .page1 .next::after{background-position:0 0;}
-.banner{height:180px;position:relative;overflow:hidden;}
+.banner{height:180px;position:relative;overflow:hidden;background:#4CBEC1;}
 .banner .light{position:absolute;background:url(../images/light.jpg) no-repeat #4CBEC1;background-size:100% 100%;width:200%;height:200%;top:100%;left:50%;margin:-50% 0 0 -100%;}
 .banner .jiji{width:61px;height:76px;background:url(../images/jiji.png) no-repeat;background-size:61px auto;position:absolute;z-index:1;left:50%;top:50%;margin:-63px 0 0 -141px;}
 .banner .text1{width:347px;height:97px;background:url(../images/text.png) no-repeat;background-size:347px auto;position:absolute;z-index:2;top:50%;left:50%;margin-left:-173px;margin-top:-43px;}
@@ -42,6 +42,15 @@ body{margin:0;padding:0;display:block;height:100%;}
     .page5{background-position:50% 140px;}
     .lottery-index{width:50px;height:50px;font-size:14px;line-height:50px;}
     .lottery-name{font-size:14px;}
+}
+@media only screen and (min-width: 640px){
+	.banner .light{top:120%;}
+}
+@media only screen and (min-width: 800px){
+	.banner .light{top:170%;}
+}
+@media only screen and (min-width: 1000px){
+	.banner .light{top:220%;}
 }
 .active .next::after{position:relative;-webkit-animation:next 0.8s infinite;-webkit-animation-timing-function:linear;}
 .active .light{-webkit-animation:light 5s infinite;-webkit-animation-timing-function:linear;}
