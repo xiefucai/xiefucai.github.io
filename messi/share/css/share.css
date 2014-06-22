@@ -5,7 +5,7 @@ body{background:url(../images/1.jpg) 50% 0 no-repeat #1E1C21;}
 .main{max-width:1148px;min-height:480px;border:1px solid #CFCFCF;background:#fff;margin:0 auto 50px;position:relative;box-shadow:0 0 3px #CFCFCF;z-index:1;}
 .box{width:640px;position:absolute;top:0;height:480px;border-right:1px solid #CFCFCF;display:table;overflow:hidden;}
 .box-text{display:table-cell;vertical-align:middle;text-align:center;line-height:1.5;font-size:36px;text-shadow:1px 1px 0 #fff;}
-.list{margin:0 0 0 660px;overflow:auto;list-style:none;padding:0;height:480px;font-family:微软雅黑;[;margin-right:10px;]}
+.list{margin:0 0 0 660px;overflow:hidden;list-style:none;padding:0;height:480px;font-family:微软雅黑;[;margin-right:10px;]}
 .list:hover{overflow-y:auto;}
 .list-item{background-repeat:no-repeat;background-position:0 10px;padding:10px 0 10px 55px;font-size:16px;margin:0;overflow:hidden;}
 .list-info{margin:8px 0 0;color:#999;word-spacing:5px;}
