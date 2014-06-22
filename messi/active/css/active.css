@@ -9,7 +9,7 @@ body{margin:0;padding:0;display:block;height:100%;}
 .next::after{content:'';display:block;height:15px;width:24px;background:url(../images/next.png) -24px 0  no-repeat;background-size:48px auto;margin:10px auto;}
 .page1 .next::after{background-position:0 0;}
 .banner{height:180px;position:relative;overflow:hidden;}
-.banner .light{position:absolute;background:url(../images/light.jpg) no-repeat #4CBEC1;background-size:100% 100%;width:200%;height:200%;top:70%;left:50%;margin:-50% 0 0 -100%;}
+.banner .light{position:absolute;background:url(../images/light.jpg) no-repeat #4CBEC1;background-size:100% 100%;width:200%;height:200%;top:100%;left:50%;margin:-50% 0 0 -100%;}
 .banner .jiji{width:61px;height:76px;background:url(../images/jiji.png) no-repeat;background-size:61px auto;position:absolute;z-index:1;left:50%;top:50%;margin:-63px 0 0 -141px;}
 .banner .text1{width:347px;height:97px;background:url(../images/text.png) no-repeat;background-size:347px auto;position:absolute;z-index:2;top:50%;left:50%;margin-left:-173px;margin-top:-43px;}
 .banner .mask{position:absolute;bottom:0;left:0;right:0;height:31px;background:url(../images/mask.png) 50% 100%  no-repeat;background-size:100% 100%;}
@@ -25,7 +25,7 @@ body{margin:0;padding:0;display:block;height:100%;}
     .banner{height:120px;}
     .banner .jiji{background-size:40px auto;width:40px;height:50px;margin:-53px 0 0 -91px;}
     .banner .text1{background-size:231px auto;margin-left:-115px;height:65px;}
-    .page1{background-size:163px auto;background-position:50% 100px;}
+    .page1{background-size:163px auto;background-position:50% 140px;}
     .page2{background-size:auto 242px;}
     .page3{background-size:auto 242px;}
     .page4{background-size:auto 242px;}
