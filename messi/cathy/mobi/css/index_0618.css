@@ -95,7 +95,7 @@ body{
 .page1-wrapper{
 	height: 100%;
 	background: url(../images/p1.jpg) top center no-repeat;
-	background-size: 320px auto;
+	background-size: 100% auto;
 }
 .page1 .top-area{
 	margin: 0 auto;
@@ -132,8 +132,8 @@ h1{
 	margin-top: 30px; 
 }
 .page1 .txt2{
-	font-size: 12px;
-	margin-top: 9px;
+	font-size: 14px;
+	margin-top: 10px;
 }
 .download{
 	width: 214px;
