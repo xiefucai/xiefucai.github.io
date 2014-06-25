@@ -68,7 +68,6 @@ body{
 	color:#fff;
 	background: #0F1314;
 	display:block;
-	-webkit-text-size-adjust:none;
 	-webkit-tap-highlight-color:rgba(0,0,0,0)
 }
 .wrapper{
@@ -128,11 +127,11 @@ h1{
 .logo-txt::after{left:53%;}
 .active .logo-txt::before,.active .logo-txt::after{-webkit-animation:jiji 4s infinite;-webkit-animation-timing-function:linear;}
 .page1 .txt1{
-	font-size: 20px;
+	font-size: 28px;
 	margin-top: 30px; 
 }
 .page1 .txt2{
-	font-size: 14px;
+	font-size: 18px;
 	margin-top: 10px;
 }
 .download{
@@ -258,12 +257,12 @@ h1{
 	white-space:nowrap;
 	-webkit-transition:all 0.7s linear 0;
 }
-.active .f-name{opacity:1;font-size:20px;}
+.active .f-name{opacity:1;font-size:28px;}
 .f-desc{
 	margin-top: 9px;
-	font-size: 12px;
+	font-size:18px;
 	color: #A2DBDD;
-	line-height: 18px;
+	line-height:1.2;
 }
 .page4 .btn-android{
 	height: 34px;
@@ -338,5 +337,5 @@ h1{
 	80%{margin-left:0;}
 }
 @media screen and (-webkit-device-pixel-ratio:2){
-
+	
 }
