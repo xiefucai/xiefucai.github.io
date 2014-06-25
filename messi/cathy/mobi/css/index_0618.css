@@ -338,5 +338,5 @@ h1{
 	80%{margin-left:0;}
 }
 @media screen and (-webkit-device-pixel-ratio:2){
-	.btn-android,.btn-ios{width:206px;height:64px;line-height:64px;}
+
 }
