@@ -328,7 +328,7 @@ h1{
 	80%{margin-left:0;}
 }
 @media only screen and (min-width: 100px){
-	.page1 .txt1{font-size:24px;white-space:nowrap;}
+	.page1 .txt1{font-size:70px;white-space:nowrap;}
 	.f-desc{white-space:nowrap;}
 }
 @media only screen and (min-width: 245px){
