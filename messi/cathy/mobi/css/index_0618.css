@@ -125,15 +125,19 @@ h1{
 }
 .logo-txt::before,.logo-txt::after{content:'';display:block;position:absolute;top:9px;width:6px;height:8px;border-radius:50%;background:#000;margin-left:0px;}
 .logo-txt::after{left:53%;}
-.active .logo-txt::before,.active .logo-txt::after{-webkit-animation:jiji 4s infinite;-webkit-animation-timing-function:linear;}
+.active .logo-txt::before,.active .logo-txt::after{-webkit-animation:'jiji' 4s infinite linear;}
 .page1 .txt1{
-	font-size: 28px;
-	margin-top: 30px; 
+	font-size: 70px;
+	margin-top: 30px;
+	white-space:nowrap;
+	opacity:0; 
+	-webkit-transition:all 0.7s linear 0;
 }
 .page1 .txt2{
 	font-size: 18px;
 	margin-top: 10px;
 }
+.active .page1 .txt1{font-size:28px;opacity:1;}
 .download{
 	width: 100%;
 	height: 34px;
