@@ -24,7 +24,6 @@
 		
 		$('body').bind({
 			'touchstart':function(event){
-				//.salary-touchbtn
 				var target = event.target,
 					sliderBtn = $('.salary-touchbtn')[0];
 				if ($.contains(sliderBtn,target) || (sliderBtn === target)){
@@ -33,7 +32,6 @@
 					o.cHeight = elem.height();
 					o.x0 = event.touches[0].pageX;
 					o.y0 = event.touches[0].pageY;
-					console.log(o);
 					return false;
 				}
 			},
