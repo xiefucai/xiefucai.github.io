@@ -16,5 +16,5 @@ body{background:#F0F0F0;}
 .salary-tip::before{content:'';border:6px dashed transparent;border-right:6px solid #FC3;position:absolute;left:-12px;top:8px;}
 .salary-btns{text-align:center;}
 .salary-btn{background:#4CBEC1;border-radius:5px;display:inline-block;padding:10px 20px;color:#fff;text-decoration:none;}
-.salary-question{text-align:center;margin-top:15px;}
+.salary-question{text-align:center;margin:15px auto;}
 .salary-question a,.salary-question a:visited{color:#4CBEC1;text-decoration:none;}

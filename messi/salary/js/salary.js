@@ -19,17 +19,23 @@
 		}
 		elemBar.css('height',((+elem.attr('data-value')-min)*100/(max-min))+'%');
 		$('.salary-touchbtn').bind({
-			'touchstart':function(event){
-				o.moving = true;
-				o.height = Number(elemBar[0].style.height.replace(/[^\d\.]/g,''));
-				o.cHeight = elem.height();
-				o.x0 = event.touches[0].pageX;
-				o.y0 = event.touches[0].pageY;
-				console.log(o);
-			}
+			
 		});
 		
 		$('body').bind({
+			'touchstart':function(event){
+				//.salary-touchbtn
+				var target = event.target,
+					sliderBtn = $('.salary-touchbtn')[0];
+				if ($.contains(sliderBtn,target) || (sliderBtn === target)){
+					o.moving = true;
+					o.height = Number(elemBar[0].style.height.replace(/[^\d\.]/g,''));
+					o.cHeight = elem.height();
+					o.x0 = event.touches[0].pageX;
+					o.y0 = event.touches[0].pageY;
+					console.log(o);
+				}
+			},
 			'touchmove':function(event){
 				var r = 0,v=0;
 				if (o.moving){
