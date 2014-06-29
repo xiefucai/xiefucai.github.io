@@ -34,6 +34,7 @@
 					o.x0 = event.touches[0].pageX;
 					o.y0 = event.touches[0].pageY;
 					console.log(o);
+					return false;
 				}
 			},
 			'touchmove':function(event){
@@ -46,6 +47,7 @@
 					elemBar.css('height',r+'%');
 					elemBar.find('.salary-tip').html('&yen;'+Math.floor(v));
 					elem.attr('data-value',Math.floor(v));
+					return false;
 				}
 			},
 			'touchend':function(){
