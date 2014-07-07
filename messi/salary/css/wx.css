@@ -1,0 +1,53 @@
+﻿html,body{margin:0;padding:0;display:block;height:100%;min-height:500px;}
+.bg-gray{background:#F0F0F0;}
+.orange{color:#FFBC1C;}
+.gray{color:#999;}
+.center{text-align:center;}
+.share-body{height:100%;overflow:hidden;text-align:center;}
+.share-footer{margin-top:-50px;height:50px;line-height:50px;background:#222;color:#fff;text-indent:83px;position:relative;font-size:12px;}
+.share-footer::before{content:'';display:block;position:absolute;left:8px;bottom:5px;width:60px;height:60px;background:url(../images/logo.png) no-repeat #4EBCC1;background-size:60px 60px;background-position:0 7px;border-radius:50%;border:3px solid #fff;}
+.share-footer-btn,.share-footer-btn:visited{line-height:30px;display:block;position:absolute;top:10px;right:8px;background:#4EBCC1;border-radius:5px;padding:0 10px;color:#fff;text-indent:0;text-decoration:none;}
+.share-title{margin:100px 10px 0;text-align:center;color:#333;font-size:18px;line-height:1.2;}
+.share-btn,.share-btn:visited,.search-btn,.search-btn:visited{display:inline-block;margin:15px auto;background:#FFBC1C;color:#fff;text-decoration:none;padding:10px 15px;border-radius:5px;}
+.search-btn,.search-btn:visited{background:#4EBCC1;}
+.share-des{text-align:center;margin:0 10px;color:#999;font-size:12px;}
+
+.keywords{padding:10px 8px;background:#fff;border-bottom:1px solid #C8C8C8;}
+.keyword,.keyword:visited{color:#4CBEC1;text-decoration:none;border-radius:12px 3px 3px 12px;line-height:24px;padding:0 10px 0 17px;border:1px solid #4CBEC1;display:inline-block;position:relative;margin:5px;background:#F6FCFC;}
+.keyword::before{content:'';position:absolute;top:50%;left:7px;border:1px solid #4CBEC1;height:3px;width:3px;border-radius:50%;margin-top:-2px;}
+
+.search-bar{position:relative;}
+.search-form{margin:10px;position:relative;}
+.search-form-bg{margin-right:44px;}
+.search-form-text{width:100%;padding:10px 12px 10px 30px;font-size:18px;vertical-align:middle;border-radius:5px;border:1px solid #E5E5E5;background:url(../images/search.png) 8px 50% no-repeat #fff;background-size:auto 19px;}
+.search-form-text:focus{outline:0;border-color:#4CBEC1;}
+.search-bar .search-form{margin-right:55px;}
+.search-bar .search-cancel,.search-bar .search-cancel:visited{position:absolute;right:10px;line-height:30px;top:50%;margin-top:-15px;position:absolute;color:#777;text-decoration:none;}
+.search-times{margin:10px 10px 30px;color:#999;}
+
+.search-list{margin:0;padding:0;border-top:1px solid #C8C8C8;}
+.search-list-li{line-height:40px;border-bottom:1px solid #C8C8C8;margin:0 10px;}
+.search-list-li::before{content:'>';color:#ccc;margin-bottom:-40px;display:block;line-height:40px;text-align:right;font-weight:bold;}
+.search-list-link{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#666;text-decoration:none;margin-right:15px;}
+
+.search-null{padding-top:70px;background:url(../images/error.png) 50% 0 no-repeat;background-size:auto 60px;line-height:1.2;}
+
+.search-result{background:#fff;overflow:hidden;padding:10px 0;border-bottom:1px solid #E3E3E3;margin:0;overflow:hidden;color:#666;}
+.search-result-title{margin:0;padding:10px;line-height:1.2;font-size:18px;}
+.search-result-item{line-height:34px;margin:0 10px;}
+.search-info-value{text-align:right;margin-top:-34px;}
+
+.share-header{padding:15px 0;background:#fff;color:#666;border-bottom:1px solid #E7E7E7;}
+.share-header-title{font-size:12px;}
+.share-header-subtitle{font-size:18px;margin:10px 0 0;}
+.share-header-tip{margin:15px auto 0;display:inline-block;border:1px solid #FFDB88;border-radius:3px;padding:5px 10px;color:#FFB60B;text-decoration:none;position:relative;}
+.share-header-tip::before,.share-header-tip::after{content:'';display:block;position:absolute;top:-20px;left:50%;border:10px dashed transparent;z-index:0;border-bottom:10px solid #FFDB88;margin-left:-10px;}
+.share-header-tip::after{border-bottom-color:#fff;z-index:1;margin-top:1px;}
+
+.share-distribute{}
+.share-distribute-title{line-height:70px;}
+.share-distributes{min-height:150px;position:relative;}
+.share-distributes a,.share-distributes a:visited{display:inline-block;position:absolute;color:#666;text-decoration:none;font-size:24px;}
+
+.share-security{line-height:1.5;font-size:12px;background:url(../images/security.png) 50% 0 no-repeat;padding-top:65px;background-size:60px auto;margin:50px 0 0;}
+.none{display:none;}
