@@ -1,0 +1,35 @@
+<!doctype html>
+<html dir="ltr" lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="pragma" content="no-cache"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0" />
+		<title>叽叽</title>
+		<link rel="stylesheet" href="css/lottery.css" type="text/css" />
+		<link rel="icon" type="image/png" href="/images/favicon.png" />
+	</head>
+	<body class="center">
+		<noscript><div>请设置您的浏览器，启用javascript脚本！</div></noscript>
+		<div class="lottery-chance">
+			您有<span class="lottery-chance-num">1</span>次抽奖机会
+			<div class="lottery-chance-word">快试试手气吧！</div>
+		</div>
+		<div class="lottery-board">
+			<div class="lottery-info lottery-info-error">
+				<div class="lottery-info-txt">您没有中奖<br/>邀请好友再来抽奖吧</div>
+			</div>
+			<canvas class="lottery-mask" id="c1"></canvas>
+		</div>
+		
+		<div class="lottery-board">
+			<div class="lottery-info lottery-info-succ">
+				<div class="lottery-info-title">恭喜！您已中奖</div>
+				<div class="lottery-info-txt">3个工作日内我们将会为您注册叽叽的手机号码充值话费</div>
+			</div>
+			<canvas class="lottery-mask" id="c2"></canvas>
+		</div>
+		
+		<script type="text/javascript" src="http://www.jiji.ly/static/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="js/lottery.js"></script>
+	</body>
+</html>
