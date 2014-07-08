@@ -1,4 +1,5 @@
 ﻿html,body{margin:0;padding:0;display:block;height:100%;min-height:500px;}
+.bg-wx{background:url(../images/bg.jpg) no-repeat;background-size:100% 100%;overflow:hidden;}
 .bg-gray{background:#F0F0F0;}
 .orange{color:#FFBC1C;}
 .gray{color:#999;}
@@ -50,4 +51,10 @@
 .share-distributes a,.share-distributes a:visited{display:inline-block;position:absolute;color:#666;text-decoration:none;font-size:24px;}
 
 .share-security{line-height:1.5;font-size:12px;background:url(../images/security.png) 50% 0 no-repeat;padding-top:65px;background-size:60px auto;margin:50px 0 0;}
+
+.wx-share-arrow{display:block;height:91px;background:url(../images/arrow.png) 100% 0 no-repeat;margin:10px;background-size:auto 91px;}
+.wx-share-words{text-align:center;color:#5A5F66;}
+.wx-share-words1{margin:0 0 35px;}
+.wx-share-words1::after{content:'';width:23px;height:20px;background:url(../images/icon1.png) no-repeat;background-size:23px auto;display:inline-block;vertical-align:-3px;margin-left:10px;}
+.wx-share-words2::after{content:'';height:75px;background:url(../images/icon2.png) 50% 0 no-repeat;background-size:auto 75px;display:block;margin-top:10px;}
 .none{display:none;}
