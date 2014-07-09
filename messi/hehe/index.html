@@ -11,12 +11,12 @@
 	<body class="center">
 		<noscript><div>请设置您的浏览器，启用javascript脚本！</div></noscript>
 		<div class="lottery-chance">
-			您有<span class="lottery-chance-num">1</span>次吃饭机会
+			您有<span class="lottery-chance-num">1</span>次抽奖机会
 			<div class="lottery-chance-word">快试试手气吧！</div>
 		</div>
-		<div class="lottery-board">
+		<div class="lottery-board none">
 			<div class="lottery-info lottery-info-error">
-				<div class="lottery-info-txt">您没有中奖<br/>邀请好友再来吃饭吧</div>
+				<div class="lottery-info-txt">您没有中奖<br/>邀请好友再来抽奖吧</div>
 			</div>
 			<canvas class="lottery-mask" id="c1"></canvas>
 		</div>
@@ -28,7 +28,11 @@
 			</div>
 			<canvas class="lottery-mask" id="c2"></canvas>
 		</div>
-		
+		<div class="lottery-share none">
+			<div class="lottery-share-tip">分享中奖才能生效哦</div>
+			<div class="center"><a href="javascript:;" class="share-btn">立即分享</a></div>
+		</div>
+		<div class="footer"></div>
 		<script type="text/javascript" src="http://www.jiji.ly/static/js/jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" src="js/lottery.js"></script>
 	</body>

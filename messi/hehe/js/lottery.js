@@ -30,6 +30,8 @@
 				isOnClearing = null;
 				if (canvas.toDataURL().length/canvas.totalSize < 0.5){
 					ctx.clearRect(0,0,canvas.width,canvas.height);
+					$('.lottery-share').removeClass('none');
+					$(canvas).addClass('none');
 				}
 			}
 		}
@@ -39,6 +41,9 @@
 			isOnClearing = this;
 		},
 		'touchmove':function(event){
+			if (!isOnClearing){
+				return;
+			}
 			var e = event.originalEvent,
 				px = e.targetTouches[0].pageX,
 				py = e.targetTouches[0].pageY,
