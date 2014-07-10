@@ -42,8 +42,8 @@ $(function(){
 	form['key'].value = decodeURIComponent(location.search.slice(1).replace(/^.*=/,''));
 	$(form['button']).bind('click',function(){
 		var key = $.trim(form['key'].value);
-		$('.page-loading').show();
 		if (key){
+			$('.page-loading').show();
 			if (appScript){
 				$(appScript).remove();
 			}
