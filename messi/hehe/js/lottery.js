@@ -2,17 +2,22 @@
 	var c, w, h;
 	var drawImage = function(img,elem,src){console.log(img,img.src);
 		var e = $(elem),
-			context;
+			w = e.parent().width(),
+			h = e.parent().height(),
+			context,
+			tempData;
 			if (elem.getContext){
 				context = elem.getContext('2d');
 				context.lineJoin = 'round';
+				context.lineCap = 'round';
 				context.globalCompositeOperation = "source-over";
-				context.drawImage(img,0,0,e.parent().width(),e.parent().height());
+				context.drawImage(img,0,0,w,h);
 				context.fill();
-				w = e.parent().width();
-				h = e.parent().height();
+				tempData = context.getImageData(0,0,w,h);
 				elem.totalSize = elem.toDataURL().length;
 				e.css('background','rgba(0,0,0,0)').siblings('.lottery-info').addClass('visible');
+				context.clearRect(0,0,w,h);
+				context.putImageData(tempData,0,0);
             } else {
                 alert("您的浏览器不支持 canvas 标签");
                 return;
@@ -21,13 +26,18 @@
 	doEraser = function(x,y,e){
 		var canvas = this,
 			radius = 25,
-			ctx = canvas.getContext('2d');
+			ctx = canvas.getContext('2d'),
+			tempData;
             ctx.globalCompositeOperation = "destination-out";
 			ctx.beginPath();
-			ctx.arc(x, y, radius, 0, Math.PI * 2);
-			ctx.strokeStyle = "rgba(0,0,0,0)";
-			ctx.fill();
-			ctx.globalCompositeOperation = "source-over";
+			ctx.arc(x, y, radius, 0, Math.PI * 2,true);
+			ctx.strokeStyle = "rgba(255,255,255,0)";
+			//ctx.fill();
+			ctx.stroke();
+			/*
+			tempData = ctx.getImageData(0,0,canvas.width,canvas.height);
+			ctx.clearRect(0,0,canvas.width,canvas.height);
+			ctx.putImageData(tempData,0,0);*/
 	},
 	isOnClearing = null;
 	
@@ -50,8 +60,8 @@
 					ctx.clearRect(0,0,canvas.width,canvas.height);
 					$('.lottery-share').removeClass('none');
 					$(canvas).addClass('none');
+					canvas = null;
 				}
-				canvas = null;
 			}
 		}
 	});
