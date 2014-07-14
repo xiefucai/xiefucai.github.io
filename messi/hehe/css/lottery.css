@@ -1,4 +1,4 @@
-﻿body,html{margin:0;padding:0;width:100%;height:100%;}
+body,html{margin:0;padding:0;width:100%;height:100%;}
 body{background:#F7F3E4;}
 .center{text-align:center;}
 .lottery-chance{margin:3em auto 2em;display:inline-block;color:#A17235;font-size:2em;background:#F6E9C5;padding:15px 25px;position:relative;}
@@ -9,8 +9,8 @@ body{background:#F7F3E4;}
 .lottery-chance::after{right:-14%;background-position:100% 0;}
 
 .lottery-board{width:454px;height:363px;margin:0 auto;background:url(../images/lottery.area.png) no-repeat;background-size:100% 100%;position:relative;overflow:hidden;}
-.lottery-mask{position:absolute;width:100%;height:100%;z-index:1;top:0;right:0;bottom:0;left:0;background:url(../images/lottery.mask.png) no-repeat;background-size:100% 100%;}
-.lottery-info{position:absolute;top:12.67%;bottom:0;left:0;right:0;}
+.lottery-mask{position:absolute;width:100%;height:100%;z-index:1;top:0;right:0;bottom:0;left:0;/*background:url(../images/lottery.mask.png) no-repeat;background-size:100% 100%;*/}
+.lottery-info{position:absolute;top:12.67%;bottom:0;left:0;right:0;visibility:hidden;}
 .lottery-info-error{background:url(../images/lottery.result.not.png) 50% 33% no-repeat;background-size:31.28% auto;}
 .lottery-info-txt{position:absolute;bottom:18.92%;left:0;right:0;text-align:center;color:#999;font-size:1.7em;max-width:80%;margin:0 auto;}
 .lottery-info-succ .lottery-info-txt{font-size:1.4em;bottom:7%;}
@@ -22,6 +22,12 @@ body{background:#F7F3E4;}
 .share-btn,.share-btn:visited{display:inline-block;margin:15px auto;background:#4CBEC1;color:#fff;text-decoration:none;padding:0.5em 1.5em;border-radius:5px;font-size:2em;}
 .footer{height:2em;}
 .none{display:none;}
+.visible{visibility:visible;}
+@media only screen and (max-width: 480px){
+	body{font-size:10px;}
+    .lottery-board{width:227px;height:182px;}
+}
+
 
 @media only screen and (max-width: 320px){
 	body{font-size:10px;}
