@@ -21,6 +21,7 @@
 	doEraser = function(x,y,e){
 		var canvas = this,
 			radius = 25,
+			data,
 			ctx = canvas.getContext('2d');
             ctx.globalCompositeOperation = "destination-out";
 			ctx.beginPath();
@@ -28,6 +29,8 @@
 			ctx.strokeStyle = "rgba(0,0,0,0)";
 			ctx.fill();
 			ctx.globalCompositeOperation = "source-over";
+			data = ctx.getImageData(0,0,canvas.width,canvas.height);
+			ctx.putImageData(data,0,0,canvas.width,canvas.height);
 	},
 	isOnClearing = null;
 	
