@@ -26,6 +26,18 @@
 	doEraser = function(x,y,e){
 		var canvas = this,
 			radius = 25,
+<<<<<<< HEAD
+			data,
+			ctx = canvas.getContext('2d');
+            ctx.globalCompositeOperation = "destination-out";
+			ctx.beginPath();
+			ctx.arc(x, y, radius, 0, Math.PI * 2);
+			ctx.strokeStyle = "rgba(0,0,0,0)";
+			ctx.fill();
+			ctx.globalCompositeOperation = "source-over";
+			data = ctx.getImageData(0,0,canvas.width,canvas.height);
+			ctx.putImageData(data,0,0,canvas.width,canvas.height);
+=======
 			ctx = canvas.getContext('2d'),
 			tempData;
             ctx.globalCompositeOperation = "destination-out";
@@ -38,6 +50,7 @@
 			tempData = ctx.getImageData(0,0,canvas.width,canvas.height);
 			ctx.clearRect(0,0,canvas.width,canvas.height);
 			ctx.putImageData(tempData,0,0);*/
+>>>>>>> a5e7eab8e568ea4340e586f44a85092a95af340d
 	},
 	isOnClearing = null;
 	

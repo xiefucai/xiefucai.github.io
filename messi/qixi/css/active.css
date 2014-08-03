@@ -1,6 +1,6 @@
 ﻿html{background:#2C283C;}
 body{margin:0;padding:0;display:block;height:100%;}
-.pages{position:absolute;top:47px;bottom:0;right:0;left:0;overflow:hidden;}
+.pages{position:absolute;top:0;bottom:0;right:0;left:0;overflow:hidden;}
 .page{display:block;height:100%;text-align:center;position:relative;overflow:hidden;}
 .header{border-bottom:1px solid #38ACAF;background:#4CBEC1;}
 .header-text,.header-text:visited{height:46px;line-height:46px;margin:0;padding:0;font-size:14px;font-weight:normal;color:#fff;background:url(../images/back.gif) 10px 50% no-repeat;background-size:12px auto;text-indent:30px;text-decoration:none;display:inline-block;}
@@ -34,6 +34,10 @@ body{margin:0;padding:0;display:block;height:100%;}
 }
 @media only screen and (min-width: 400px){
 	.page2,.page3,.page4{background-size:270px auto;}
+}
+@media only screen and (max-height: 450px){
+	.banner{max-height:180px;height:180px;background-size:auto 100%;}
+	.banner img{display:none;}
 }
 @-webkit-keyframes nexticon
 {
