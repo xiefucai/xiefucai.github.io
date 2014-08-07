@@ -16,18 +16,19 @@ input,::after,::before,a,section,li,div{-webkit-box-sizing:border-box;box-sizing
 .content{position:relative;}
 .content::before{content:'';position:absolute;z-index:2;top:0;right:0;bottom:0;left:0;background:transparent;}
 .content-img{vertical-align:bottom;width:100%;}
-.content-option{position:absolute;z-index:1;width:6px;height:6px;border-radius:50%;border:2px solid rgba(0,0,0,0.8);background:#fff;}
-.content-option::before{content:attr(title);position:absolute;top:-0.7em;font-size:1em;padding:0.3em 1em;background:rgba(0,0,0,0.8);border-radius:1em;color:#fff;white-space:nowrap;}
-.content-option-1::before{left:1.4em;}
-.content-option-2::before{right:1.4em;}
-.content-option::after{content:'';width:0;height:0;border:10px dotted transparent;display:block;margin-top:-0.5em;position:absolute;}
-.content-option-1::after{border-right:10px solid rgba(0,0,0,0.8);left:1px;}
-.content-option-2::after{border-left:10px solid rgba(0,0,0,0.8);right:1px;}
+.content-option{position:absolute;z-index:1;width:6px;height:6px;border-radius:50%;border:2px solid rgba(0,0,0,0.5);background:#fff;}
+.content-option::before{content:attr(title);position:absolute;top:-10px;font-size:14px;line-height:30px;
+padding:0 5px;background:rgba(0,0,0,0.8);color:#fff;white-space:nowrap;margin-top:-1px;}
+.content-option-1::before{left:30px;border-radius:0 5px 5px 0;padding-right:15px;}
+.content-option-2::before{right:30px;border-radius:5px 0 0 5px;padding-left:15px;}
+.content-option::after{content:'';width:0;height:0;border:15px dotted transparent;opacity:0.8;display:block;position:absolute;top:-10px;margin-top:-1px;}
+.content-option-1::after{border-right:15px solid #000;left:0;}
+.content-option-2::after{border-left:15px solid #000;right:0;}
 
 .content-result-box{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);overflow:hidden;z-index:3;display:table-cell;vertical-align:middle;}
 .content-result{margin:0 15%;width:70%;padding:0;vertical-align:middle;display:inline-block;}
 .content-result-item{
-	margin:3rem 0;list-style:none;padding:0;height:4px;background:rgba(255,255,255,0.8);position:relative;line-height:1;
+	margin:3rem 0;list-style:none;padding:0;height:4px;background:rgba(255,255,255,0.5);position:relative;line-height:1;
 }
 .content-result-item-percent{height:4px;background:#33CCCC;}
 .content-result-item-label{position:absolute;top:10px;font-size:1rem;color:#fff;}
