@@ -1,6 +1,6 @@
 ﻿$(function(){
 	var dialog = common.dialog(),
-		times = 0;//抽奖次数
+		times = 5;//抽奖次数
 	$('#start-btn').click(function(){
 		var img = $(this).prev(),
 			i = Math.floor(Math.random() * 6);
@@ -11,6 +11,7 @@
 			dialog.alert('对不起，你的抽奖机会已用完');
 			return;
 		}
+		times--;
 		img.removeClass('turntable-img-0 turntable-img-1 turntable-img-2 turntable-img-3 turntable-img-4 turntable-img-5').addClass('rotating');
 		setTimeout(function(){
 			img.addClass('turntable-img-'+i).removeClass('rotating');
