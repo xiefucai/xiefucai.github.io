@@ -66,8 +66,8 @@
 .wx-share-words1{margin:0 0 35px;}
 .wx-share-words1::after{content:'';width:23px;height:20px;background:url(../images/icon1.png) no-repeat;background-size:23px auto;display:inline-block;vertical-align:-3px;margin-left:10px;}
 .wx-share-words2::after{content:'';height:75px;background:url(../images/icon2.png) 50% 0 no-repeat;background-size:auto 75px;display:block;margin-top:10px;}
-.download-btn,.download-btn:visited{display:block;background:#fff;border:1px solid #E6E6E6;margin:10px;padding:10px 0;color:#4EBBC0;border-radius:5px;overflow:hidden;position:relative;text-decoration:none;}
-.download-btn::before{content:'';background:url(../images/down.gif) 50% 50% no-repeat #4EBBC0;position:absolute;top:0;bottom:0;left:0;width:38px;background-size:50% 50%;}
+.download-btn,.download-btn:visited{display:block;background:#fff;border:1px solid #E6E6E6;margin:10px 25px 20px;padding:10px 0;color:#4EBBC0;-webkit-border-radius:5px;overflow:hidden;position:relative;text-decoration:none;overflow:hidden;}
+.download-btn::before{content:'';background:url(../images/down.gif) 50% 50% no-repeat #4EBBC0;position:absolute;top:0;bottom:0;left:0;width:38px;background-size:50% 50%;-webkit-border-radius:5px 0 0 5px;}
 .none{display:none;}
 @media only screen and (max-width: 800px){
 	.share-distributes{font-size:2.5em;}
