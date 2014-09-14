@@ -1,5 +1,6 @@
 $(function(){
 	var content = $('#content'),
+		timer = 0,
 		initTip = function(){
 			img = content.find('img').get(0),
 			newImg = new Image(),
@@ -52,6 +53,26 @@ $(function(){
 		$(this).addClass('none');
 		return false;
 	});
+	$('window').bind('scroll',function(){
+		
+	});
+	
+	window.onscroll = function(){
+		clearTimeout(timer);//alert(1);
+		timer = setTimeout(function(){
+			var top = document.documentElement.scrollTop || document.body.scrollTop,
+				cHeight = document.documentElement.clientHeight || document.body.clientHeight,
+				sHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+			
+			if (top + cHeight >= sHeight - 30){
+				$('#footer').removeClass('unvisible');
+			}else{
+				$('#footer').addClass('unvisible');
+			}
+		},50);
+	};
+	
 	initTip();
 	window.onresize = initTip;
+	window.onscroll();
 });
