@@ -53,9 +53,6 @@ $(function(){
 		$(this).addClass('none');
 		return false;
 	});
-	$('window').bind('scroll',function(){
-		
-	});
 	
 	window.onscroll = function(){
 		clearTimeout(timer);//alert(1);
@@ -64,15 +61,15 @@ $(function(){
 				cHeight = document.documentElement.clientHeight || document.body.clientHeight,
 				sHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
 			
-			if (top + cHeight >= sHeight - 30){
+			if (top + cHeight >= sHeight - 50){
 				$('#footer').removeClass('unvisible');
 			}else{
+			//	alert([top,cHeight,sHeight].join(','));
 				$('#footer').addClass('unvisible');
 			}
 		},50);
 	};
-	
+	$('body').bind('touchend',window.onscroll).trigger('touchend');
 	initTip();
 	window.onresize = initTip;
-	window.onscroll();
 });
