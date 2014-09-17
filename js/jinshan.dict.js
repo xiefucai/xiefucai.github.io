@@ -1,5 +1,5 @@
 ﻿(function(){
-var url='http://toolbox.youdao.com/api/dict?keyfrom=dictproxy&q={q}&id=0&rnd={rnd}&url={url}&callback={callback}',
+var url = 'http://open.iciba.com/huaci/dict.php?word={q}',
 	getScrollTop = function(){
 		return document.documentElement.scrollTop || document.body.scrollTop;
 	},
@@ -9,9 +9,6 @@ var url='http://toolbox.youdao.com/api/dict?keyfrom=dictproxy&q={q}&id=0&rnd={rn
 	query = function(s){
 		var o ={};
 		o.q = s;
-		o.rnd = +new Date();
-		o.url = encodeURIComponent(location.href);
-		o.callback = 'DICT.show';
 		return url.replace(/\{(\w+)\}/g,function(){
 			return o[arguments[1]]	
 		});
@@ -19,18 +16,18 @@ var url='http://toolbox.youdao.com/api/dict?keyfrom=dictproxy&q={q}&id=0&rnd={rn
 	getSelectText = function(){
 		return (document.selection ? document.selection.createRange().text: document.getSelection()).toString().replace(/[\s\n]+/g, " ");
 	},
-	getWord = function(word){console.log(word);
+	getWord = function(word){
 		var url = query(word || getSelectText()),
 			s = document.getElementById('youdao-dict');
 		if (s){
 			s.src = url;
-		}else{
-			s = document.createElement('script');
-			s.type='text/javascript';
-			s.src = url;
-			s.id = 'youdao-dict';
-			document.getElementsByTagName('head')[0].appendChild(s);
+			s.parentNode.removeChild(s);
 		}
+		s = document.createElement('script');
+		s.type='text/javascript';
+		s.src = url;
+		s.id = 'youdao-dict';
+		document.getElementsByTagName('head')[0].appendChild(s);
 	},
 	newElem = function(p,t,c,id){
 		var e = document.createElement(t);
@@ -53,17 +50,20 @@ var url='http://toolbox.youdao.com/api/dict?keyfrom=dictproxy&q={q}&id=0&rnd={rn
 				header = newElem(form,'div','youdao-header'),
 				searchTxt = newElem(form,'input','youdao-search-text'),
 				searchBtn = newElem(form,'input','youdao-search-btn'),
-				container = newElem(box,'div','youdao-viewer','youdao-viewer'),
+				container = newElem(box,'div','youdao-viewer','icIBahyI-main_cont'),
 				closeBtn = newElem(box,'a','youdao-close'),
+				loading = newElem(box,'span','loading','loading'),
 				moving = false,
 				startx = 0,
 				starty = 0;
+			loading.style.height='auto';
+			
 			css.rel = 'stylesheet';
 			css.type = 'text/css';
 			css.href = 'http://www.xiefucai.com/css/dict.youdao.css';
 			box.style.left = ((document.documentElement.clientWidth || document.body.clientWidth) - 300)+'px';
 			box.style.top = (getScrollTop() + 100)+'px';
-			header.innerHTML = '有道词典';
+			header.innerHTML = '金山词霸';
 			closeBtn.innerHTML = '&times;';
 			closeBtn.href = 'javascript:;';
 			closeBtn.onclick = function(){
@@ -76,6 +76,7 @@ var url='http://toolbox.youdao.com/api/dict?keyfrom=dictproxy&q={q}&id=0&rnd={rn
 					return false;
 				}
 			}
+			searchTxt.value = getSelectText();
 			searchBtn.type='button';
 			searchBtn.value = '查词';
 			searchBtn.onclick = function(){
@@ -149,7 +150,11 @@ var url='http://toolbox.youdao.com/api/dict?keyfrom=dictproxy&q={q}&id=0&rnd={rn
 			}
 			elems.box.style.top = top+'px';
 		},
-		'search':getWord
+		'search':function(){
+			elems.box.style.display = 'block';
+			elems.searchTxt.value = getSelectText();
+			getWord();
+		}
 	};
 	DICT.search();
 })();

@@ -51,6 +51,8 @@ $(function(){
 			document.body.appendChild(appScript);
 			appScript.type='text/javascript';
 			appScript.src = 'http://cloud.d5dm.com/api/?callback=renderList&ap=dht&kw='+encodeURIComponent(key)+'&_='+(+new Date());
+		}else{
+			$('.page-loading').hide();
 		}
 	}).trigger('click');
 });

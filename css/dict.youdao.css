@@ -10,7 +10,7 @@
 	text-align:left;
 }
 a.youdao-close,a.youdao-close:hover{position:absolute;top:0;right:0;color:#fff;text-decoration:none;font-size:20px;text-shadow:0 0 1px #3380B5;font-weight:bold;line-height:1;padding:0 10px;background-image: linear-gradient(to bottom, #2D83D5 0%, rgba(255,255,255,0) 100%);}
-.youdao-search-form{height:60px;border-radius:3px 3px 0 0;-webkit-user-select:none;cursor:move;
+.youdao-search-form{height:60px;border-radius:3px 3px 0 0;-webkit-user-select:none;cursor:move;margin:0;
 /* IE10 Consumer Preview */ 
 background-image: -ms-linear-gradient(top, #FFFFFF 0%, #FFFFFF 100%);
 
@@ -74,7 +74,7 @@ background-image: linear-gradient(to bottom, rgba(255,255,255,.5) 0%, rgba(255,2
 	/* W3C Markup, IE10 Release Preview */ 
 	background-image: linear-gradient(to bottom, #fff 0%, #eee 100%);
 }
-.youdao-viewer{border:1px solid #7DA8C3;background:#fff;margin:0 5px 5px;min-height:40px;padding:5px;font-size:12px;max-height:100px;overflow:hidden;}
+.youdao-viewer{border:1px solid #7DA8C3;background:#fff;margin:0 5px 5px;min-height:40px;padding:5px;font-size:12px;height:100px;overflow:hidden;resize:vertical;}
 .youdao-viewer-content{margin:0;padding:0;line-height:1.5;}
 .youdao-viewer:hover{overflow-y:auto;}
 .youdao-speech{font-style:normal;color:gray;margin-left:8px;}
