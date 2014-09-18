@@ -1,10 +1,11 @@
 ﻿(function(){
 var url = 'http://open.iciba.com/huaci/dict.php?word={q}',
+	timer = 0,
 	getScrollTop = function(){
 		return document.documentElement.scrollTop || document.body.scrollTop;
 	},
 	getClientHeight = function(){
-		return document.documentElement.clientHeight || document.body.clientHeight;
+		return document.body.clientHeight || document.documentElement.clientHeight;
 	},
 	query = function(s){
 		var o ={};
@@ -14,7 +15,7 @@ var url = 'http://open.iciba.com/huaci/dict.php?word={q}',
 		});
 	},
 	getSelectText = function(){
-		return (document.selection ? document.selection.createRange().text: document.getSelection()).toString().replace(/[\s\n]+/g, " ");
+		return (document.selection ? document.selection.createRange().text: document.getSelection()).toString().replace(/[\s\n]+/g,'').replace(/^\s+|\s+$/g,'');
 	},
 	getWord = function(word){
 		var url = query(word || getSelectText()),
@@ -90,6 +91,14 @@ var url = 'http://open.iciba.com/huaci/dict.php?word={q}',
 				startx = event.pageX - box.offsetLeft;
 				starty = event.pageY - box.offsetTop;
 			}
+			document.onselectstart = function(){
+				setTimeout(function(){
+					var txt = getSelectText();
+					if (/^[a-z]+$/i.test(txt)){
+						DICT.search();
+					}
+				},100);
+			};
 			document.onmousemove = function(event){
 				if (moving){
 					box.style.left = (event.pageX - startx)+'px';
@@ -98,6 +107,9 @@ var url = 'http://open.iciba.com/huaci/dict.php?word={q}',
 			}
 			document.onmouseup = function(event){
 				moving = false;
+				if (/^[a-z]+$/i.test(getSelectText())){
+					DICT.search();
+				}
 			}
 			container.onmousewheel = function(e){
 				var k = event.wheelDelta? event.wheelDelta:-event.detail*10;
@@ -151,9 +163,15 @@ var url = 'http://open.iciba.com/huaci/dict.php?word={q}',
 			elems.box.style.top = top+'px';
 		},
 		'search':function(){
+			var top = 0;
 			elems.box.style.display = 'block';
+			top = parseInt(elems.box.style.top,10);
+			if ((top < getScrollTop()) || (top + elems.box.clientHeight > getScrollTop() + getClientHeight())){
+				elems.box.style.top = (getScrollTop() + 100)+'px';
+			}
 			elems.searchTxt.value = getSelectText();
-			getWord();
+			clearTimeout(timer);
+			timer = setTimeout(getWord,100);
 		}
 	};
 	DICT.search();
