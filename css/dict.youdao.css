@@ -37,19 +37,20 @@ background-image: linear-gradient(to bottom, rgba(255,255,255,.5) 0%, rgba(255,2
 	color:#3D4654;
 	font-weight:bold;
 }
-.youdao-search-text{
+input.youdao-search-text,input.youdao-search-text[type="text"]{
 	border:1px solid #7DA8C3;
 	padding:0 5px;
 	margin:5px 5px 5px 5px;
 	border-radius:3px;
 	width:175px;
 	height:24px;
+	background:#fff;
 }
-.youdao-search-text:focus{
+input.youdao-search-text:focus{
 	outline:none;
 	border-color:#00AAC2;
 }
-.youdao-search-btn{
+input.youdao-search-btn,youdao-search-btn[type="button"]{
 	border:1px solid #7DA8C3;
 	border-radius:3px;
 	padding:0 8px;
@@ -73,6 +74,8 @@ background-image: linear-gradient(to bottom, rgba(255,255,255,.5) 0%, rgba(255,2
 
 	/* W3C Markup, IE10 Release Preview */ 
 	background-image: linear-gradient(to bottom, #fff 0%, #eee 100%);
+	color:#333;
+	line-height:1;
 }
 .youdao-viewer{border:1px solid #7DA8C3;background:#fff;margin:0 5px 5px;min-height:40px;padding:5px;font-size:12px;height:100px;overflow:hidden;resize:vertical;}
 .youdao-viewer-content{margin:0;padding:0;line-height:1.5;}

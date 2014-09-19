@@ -15,7 +15,7 @@ var url = 'http://open.iciba.com/huaci/dict.php?word={q}',
 		});
 	},
 	getSelectText = function(){
-		return (document.selection ? document.selection.createRange().text: document.getSelection()).toString().replace(/[\s\n]+/g,'').replace(/^\s+|\s+$/g,'');
+		return (document.selection ? document.selection.createRange().text: document.getSelection()).toString().replace(/[\r\n]+/g,' ').replace(/\s+/g,' ').replace(/^\s+|\s+$/g,'');
 	},
 	getWord = function(word){
 		var url = query(word || getSelectText()),
@@ -91,10 +91,11 @@ var url = 'http://open.iciba.com/huaci/dict.php?word={q}',
 				startx = event.pageX - box.offsetLeft;
 				starty = event.pageY - box.offsetTop;
 			}
-			document.onselectstart = function(){
+			document.onselectionchange = function(){
 				setTimeout(function(){
 					var txt = getSelectText();
-					if (/^[a-z]+$/i.test(txt)){
+					console.log('selectedText',txt);
+					if (/^[a-z\s]+$/i.test(txt)){
 						DICT.search();
 					}
 				},100);
