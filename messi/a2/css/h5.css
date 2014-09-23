@@ -12,7 +12,7 @@ input,::after,::before,a,section,li,div{-webkit-box-sizing:border-box;box-sizing
 
 .page { position: relative;}
 .header{border-bottom:1px solid #38ACAF;line-height:40px;font-size:1rem;box-shadow:0 1px 3px rgba(0,0,0,.2);color:#fff;text-align:center;background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3CBEC1), color-stop(100%,#4CBEC1));background: linear-gradient(to bottom, #3CBEC1 0%,#4CBEC1 100%);}
-.topbar{height:48px;line-height:48px;background:url(../images/h5-logo.png) 10px 50% no-repeat;background-size:29px auto;position:relative;border-bottom:1px solid #D8D8D8;margin-bottom:-1px;font-size:16px;}
+.topbar{height:48px;line-height:48px;background:url(../images/h5-logo.png) 10px 50% no-repeat;background-size:29px auto;position:relative;border-bottom:1px solid #D8D8D8;margin-bottom:-1px;font-size:0.875rem;}
 .topbar-txt{margin-left:50px;margin-right:6.5em;display:block;}
 .titlebar{margin:10px;padding:0;}
 .titlebar-title{font-size:1rem;color:#333;font-weight:normal;line-height:1.25;margin:0 0 5px;padding:0;}
@@ -58,7 +58,7 @@ padding:0;background:rgba(0,0,0,0.8);color:#fff;white-space:nowrap;display:block
 .comment li { position: relative; margin: 15px 0;}
 .comment li .c-div {margin-left:41px;margin-right:30px;}
 .comment li .c-text{ color: #656565;overflow: hidden; font-size: .87rem; text-overflow: ellipsis;margin: 0 0 1px;line-height: 1.15;}
-.comment li .c-text2{ color: #989898; font-size: .8rem; margin: 0;}
+.comment li .c-text2{ color:#A6A6A6; font-size: .8rem; margin: 0;}
 .comment .c-img { position: absolute; width: 2.2rem; height: 2.2rem; }
 .comment-support{ position: absolute; width:21px;height:18px;display:block;top:3px; right:0rem;background:url(../images/h5-love.gif) no-repeat;background-size:21px auto;}
 .transparentBg { position:fixed; width:100%; height:4.3rem;line-height:4.3rem;font-size:1.3rem; color:#fff;text-align:center; bottom:0; background-color: #4E4E4E; opacity: 0.8;}
@@ -70,16 +70,16 @@ padding:0;background:rgba(0,0,0,0.8);color:#fff;white-space:nowrap;display:block
 
 .share-footer{height:50px;line-height:50px;background:#222;color:#fff;position:fixed;width:100%;left:0;bottom:0;font-size:0.9em;}
 .share-footer::before{content:'';display:block;position:absolute;left:10px;top:-27.05%;width:57px;height:57px;background:url(../images/logo.png) no-repeat #4EBCC1;background-size:100% auto;background-position:0 8px;border-radius:50%;border:2px solid #fff;}
-.share-footer-txt{margin-left:76px;display:block;font-size:1rem;}
-.share-footer-btn,.share-footer-btn:visited{line-height:30px;display:block;position:absolute;top:10px;right:0.5em;background:#4EBCC1;border-radius:5px;padding:0 0.8em;color:#fff;text-indent:0;text-decoration:none;font-size:1rem;}
+.share-footer-txt{margin-left:76px;display:block;font-size:0.875rem;}
+.share-footer-btn,.share-footer-btn:visited{line-height:30px;display:block;position:absolute;top:10px;right:0.5em;background:#4EBCC1;border-radius:5px;padding:0 0.8em;color:#fff;text-indent:0;text-decoration:none;font-size:0.875rem;}
 
 .none,.unvisible{display:none;}
 @media only screen and (max-width: 320px){
-	.share-footer-txt{font-size:0.95rem;}
+	
 }
 @media only screen and (max-width: 240px){
 	.content-result-item{margin:2rem 0;}
 	.topbar-txt{line-height:1;font-size:0.7em;padding-top:10px;margin-right:6.5rem;}
-	.share-footer-txt{line-height:1.2;margin-top:10px;}
+	.share-footer-txt{line-height:1.2;margin-top:10px;margin-right: 70px;font-size: 0.7em;}
 	.share-footer-btn,.share-footer-btn:visited{font-size:0.7rem;
 }
