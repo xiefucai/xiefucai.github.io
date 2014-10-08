@@ -1,12 +1,14 @@
 @charset "utf-8";
 html,body{margin:0;padding:0;font-size: 14px;display: block;min-height: 100%;}
-html{overflow: hidden;
+html{
+overflow: hidden;
 background-image: -ms-linear-gradient(top bottom, #f86768 0%, #e23f86 100%);
 background-image: -moz-linear-gradient(top bottom, #f86768 0%, #e23f86 100%);
 background-image: -o-linear-gradient(top bottom, #f86768 0%, #e23f86 100%);
 background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f86768), color-stop(1, #e23f86));
 background-image: -webkit-linear-gradient(top bottom, #f86768 0%, #e23f86 100%);
-background-image: linear-gradient(to bottom left, #f86768 0%, #e23f86 100%);}
+background-image: linear-gradient(to bottom left, #f86768 0%, #e23f86 100%);
+}
 body{}
 .logo{color: transparent;
 	pointer-events:none;
@@ -26,4 +28,5 @@ body{}
 .btn-android{
 	background-position: 0 -70px;
 	margin-top: 20px;
+	margin-bottom: 40px;
 }
