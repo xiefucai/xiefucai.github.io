@@ -19,6 +19,7 @@ body{filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f86768',e
 	height:189px;
 	background: url(../images/logo.pc.png) 50% 0 no-repeat;
 	margin: 80px 0 50px;
+	text-indent:-999px;
 }
 .btn-ios,.btn-android{
 	display:block;
