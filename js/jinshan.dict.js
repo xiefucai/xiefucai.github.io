@@ -87,16 +87,20 @@ var url = 'http://open.iciba.com/huaci/dict.php?word={q}',
 				return false;
 			}
 			form.onmousedown = function(event){
-				moving = true;
-				startx = event.pageX - box.offsetLeft;
-				starty = event.pageY - box.offsetTop;
+				if (event.target !== searchTxt){
+					startx = event.pageX - box.offsetLeft;
+					starty = event.pageY - box.offsetTop;
+					moving = true;
+				}
 			}
-			document.onselectionchange = function(){
+			document.onselectionchange = function(event){
 				setTimeout(function(){
-					var txt = getSelectText();
-					console.log('selectedText',txt);
-					if (/^[a-z\s]+$/i.test(txt)){
-						DICT.search();
+					var txt = getSelectText(),
+						selection = document.getSelection();
+					if (selection && (selection.focusNode!==form)){
+						if (/^[a-z\s]+$/i.test(txt)){
+							DICT.search();
+						}
 					}
 				},100);
 			};
@@ -107,9 +111,11 @@ var url = 'http://open.iciba.com/huaci/dict.php?word={q}',
 				}
 			}
 			document.onmouseup = function(event){
-				moving = false;
-				if (/^[a-z]+$/i.test(getSelectText())){
-					DICT.search();
+				if (moving){
+					moving = false;
+					if (/^[a-z]+$/i.test(getSelectText())){
+						DICT.search();
+					}
 				}
 			}
 			container.onmousewheel = function(e){
@@ -175,5 +181,19 @@ var url = 'http://open.iciba.com/huaci/dict.php?word={q}',
 			timer = setTimeout(getWord,100);
 		}
 	};
+
+	window.iCIBA_JOINWORD = function function_name () {
+		var word = elems.searchTxt.value.replace(/^\s+|\s+$/g,'').replace(/\s+/g,' '),
+			words = [],
+			btn = document.getElementById('CIBA_JOINWORD');
+		if (window.localStorage){
+			words = JSON.parse(localStorage.getItem('fucaixie_wordlist') || '[]');
+			if (words.indexOf(word) < 0) {
+				words.push(word);
+				localStorage.setItem('fucaixie_wordlist',JSON.stringify(words));
+				btn.parentNode.removeChild(btn);
+			}
+		}
+	}
 	DICT.search();
 })();
