@@ -45,6 +45,7 @@ input.youdao-search-text,input.youdao-search-text[type="text"]{
 	width:175px;
 	height:24px;
 	background:#fff;
+	display: inline-block;
 }
 input.youdao-search-text:focus{
 	outline:none;
@@ -57,6 +58,7 @@ input.youdao-search-btn,youdao-search-btn[type="button"]{
 	margin:0;
 	height:26px;
 	cursor:pointer;
+	display: inline-block;
 	/* IE10 Consumer Preview */ 
 	background-image: -ms-linear-gradient(top, #FFFFFF 0%, #FFFFFF 100%);
 
