@@ -8,6 +8,7 @@
 	border-radius:3px;
 	z-index:999999;
 	text-align:left;
+	font-size: 12px;
 }
 a.youdao-close,a.youdao-close:hover{position:absolute;top:0;right:0;color:#fff;text-decoration:none;font-size:20px;text-shadow:0 0 1px #3380B5;font-weight:bold;line-height:1;padding:0 10px;background-image: linear-gradient(to bottom, #2D83D5 0%, rgba(255,255,255,0) 100%);}
 .youdao-search-form{height:60px;border-radius:3px 3px 0 0;-webkit-user-select:none;cursor:move;margin:0;
