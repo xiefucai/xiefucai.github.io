@@ -1,0 +1,1117 @@
+﻿<!doctype html>
+<html dir="ltr" lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<title>水晶相关API</title>
+		<style type="text/css">
+		pre{display: none;background: #fefefe;border: 1px solid #eee;font-size: 10px;padding: 10px;}
+		dd{margin: 0;padding: 0;}
+		dd.opened pre{display: block;}
+		p{color: #f60;}
+		</style>
+</head>
+<body>
+	<dl>
+		<dt>查询水晶设备</dt>
+		<dd>
+			<p>
+				http://webmonitor.dcdn.sandai.net/query_device?CALLBACK=jQuery110202163592663127929_1416973190995&USERID=8968955&VERSION=1&_=1416973190996
+			</p>
+			<pre>jQuery110202163592663127929_1416973190995({
+	"LEFT_CRYST": 2643,
+	"DEVICE_NUM": 2,
+	"USER_LEFT_CRYST": 2643.4366981405,
+	"CUR_CRYST_PROCESS": 0.8998993143000062,
+	"USERID": "8968955",
+	"DEVICE_INFO": [{
+		"TODAY_CRYST": 0.0,
+		"PRODUCT_ID": 201,
+		"YESTERDAY_CRYST": 0.0,
+		"CACHE_DIR": "/tmp/dcdn_base/.dcdn_mining",
+		"NEXT_HIGH_POWER_SECS": 22812,
+		"OFFLINE_TIME": 1416969491,
+		"CACHE_UPPER_LIMIT": 10737418240,
+		"LOGIN_TIME": 1416905837,
+		"CACHE_USED_SIZE": 0,
+		"POWER": 0,
+		"CUR_UPLOAD_SPEED": 0,
+		"HOST_NAME": "Router",
+		"DCDNID": "880508F8C7FC84FA0001C3FA",
+		"HISTORY_CRYST": 0.3864581993,
+		"TOTAL_CRYST": 0,
+		"NAME": "Router",
+		"IS_SAME_NET": 0,
+		"ALIAS": "",
+		"EXTERNAL_IP": 1435574905,
+		"CUR_CRYST_PROCESS": 0.3864581993,
+		"ON_OFF_STATE": 2,
+		"CUR_DEPLOY_SPEED": 0,
+		"MAX_UPLOAD_SPEED": 0
+	}, {
+		"TODAY_CRYST": 0.0,
+		"PRODUCT_ID": 201,
+		"YESTERDAY_CRYST": 9.0089452911,
+		"CACHE_DIR": "/tmp/dcdn_base/.dcdn_mining",
+		"NEXT_HIGH_POWER_SECS": 22812,
+		"OFFLINE_TIME": 0,
+		"CACHE_UPPER_LIMIT": 10737418240,
+		"LOGIN_TIME": 1416969557,
+		"CACHE_USED_SIZE": 10721427456,
+		"POWER": 0,
+		"CUR_UPLOAD_SPEED": 0,
+		"HOST_NAME": "Router",
+		"DCDNID": "A9FED420B48FF62F00013F7F",
+		"HISTORY_CRYST": 156.513441115,
+		"TOTAL_CRYST": 0,
+		"NAME": "Router",
+		"IS_SAME_NET": 0,
+		"ALIAS": "",
+		"EXTERNAL_IP": 1435574905,
+		"CUR_CRYST_PROCESS": 0.5134411150000062,
+		"ON_OFF_STATE": 0,
+		"CUR_DEPLOY_SPEED": 0,
+		"MAX_UPLOAD_SPEED": 0
+	}]
+})</pre>
+		</dd>
+		<dt>查询水晶信息</dt>
+		<dd>
+			<p>http://webmonitor.dcdn.sandai.net/query_cryst?CALLBACK=jQuery110209418622360099107_1416972506626&USERID=8968955&VERSION=1&_=1416972506627</p>
+			<pre>jQuery110209418622360099107_1416972506626({
+	"TODAY_CRYST": 0.0,
+	"TOTAL_FLOW": 12231771686,
+	"POWER": 0,
+	"YESTERDAY_CRYST": 9.0089452911,
+	"CUR_CRYST_PROCESS": 0.43669814050008426,
+	"USED_CRYST": 374.0,
+	"HISTORY_CRYST": 3017.4366981405,
+	"NEXT_HIGH_POWER_SECS": 23496,
+	"TOTAL_CRYST": 0
+})</pre>
+		</dd>
+
+		<dt>查询挖矿速度</dt>
+		<dd>
+			<p>http://webmonitor.dcdn.sandai.net/query_speed_info?CALLBACK=jQuery110209418622360099107_1416972506628&USERID=8968955&_=1416972506629</p>
+			<pre>jQuery110209418622360099107_1416972506628({
+	"AVERAGE_SPEED": 0,
+	"ONLINE_DEVICE_NUM": 1,
+	"USERID": "8968955",
+	"OFFLINE_DEVICE_NUM": 1,
+	"TOTAL_SPEED": 0
+})</pre>
+		</dd>
+
+		<dt>挖矿日志</dt>
+		<dd>
+			<p>http://jiankong.shuijing.xunlei.com/user/produceLog.html?page=1&rp=8</p>
+			<pre>{
+	"total": 27,
+	"page": "1",
+	"rows": [{
+		"total_produce": 6.7,
+		"user_device_speed": 142574.13,
+		"user_device_produce": 6.7,
+		"total_speed": 142574.13,
+		"device_nums": 1,
+		"time": "2014-11-25"
+	}, {
+		"total_produce": 9.07,
+		"user_device_speed": 126943.92,
+		"user_device_produce": 9.07,
+		"total_speed": 126943.92,
+		"device_nums": 1,
+		"time": "2014-11-24"
+	}, {
+		"total_produce": 12.79,
+		"user_device_speed": 146387.51,
+		"user_device_produce": 12.79,
+		"total_speed": 146387.51,
+		"device_nums": 1,
+		"time": "2014-11-23"
+	}, {
+		"total_produce": 13.98,
+		"user_device_speed": 167293.75,
+		"user_device_produce": 13.98,
+		"total_speed": 167293.75,
+		"device_nums": 1,
+		"time": "2014-11-22"
+	}, {
+		"total_produce": 10.6,
+		"user_device_speed": 161782.42,
+		"user_device_produce": 10.6,
+		"total_speed": 161782.42,
+		"device_nums": 1,
+		"time": "2014-11-21"
+	}, {
+		"total_produce": 7.19,
+		"user_device_speed": 99353.95,
+		"user_device_produce": 7.19,
+		"total_speed": 99353.95,
+		"device_nums": 1,
+		"time": "2014-11-20"
+	}, {
+		"total_produce": 21.25,
+		"user_device_speed": 35240.34,
+		"user_device_produce": 1.93,
+		"total_speed": 387643.7,
+		"device_nums": 11,
+		"time": "2014-11-19"
+	}, {
+		"total_produce": 113.32,
+		"user_device_speed": 144869.75,
+		"user_device_produce": 9.44,
+		"total_speed": 1738437.01,
+		"device_nums": 12,
+		"time": "2014-11-18"
+	}]
+}</pre>
+		</dd>
+
+		<dt>兑换记录</dt>
+		<dd>
+			<p>http://jiankong.shuijing.xunlei.com/user/rewardLog.html?rp=6</p>
+			<pre>{
+	"rows": [{
+		"thunder_id": "8968955",
+		"crystal": "136",
+		"total_cash": "9.52",
+		"tax": "0.00",
+		"cash": "9.52",
+		"alipay": "lao****345@126.com",
+		"log_time": "2014-11-11 01:10",
+		"note": "\u6210\u529f"
+	}, {
+		"thunder_id": "8968955",
+		"crystal": "85",
+		"total_cash": "5.95",
+		"tax": "0.00",
+		"cash": "5.95",
+		"alipay": "lao****345@126.com",
+		"log_time": "2014-10-10 01:53",
+		"note": "\u6210\u529f"
+	}, {
+		"thunder_id": "8968955",
+		"crystal": "70",
+		"total_cash": "4.90",
+		"tax": "0.00",
+		"cash": "4.90",
+		"alipay": "lao****345@126.com",
+		"log_time": "2014-08-01 23:40",
+		"note": "\u6210\u529f"
+	}, {
+		"thunder_id": "8968955",
+		"crystal": "83",
+		"total_cash": "5.81",
+		"tax": "0.00",
+		"cash": "5.81",
+		"alipay": "lao****345@126.com",
+		"log_time": "2014-06-28 02:43",
+		"note": "\u6210\u529f"
+	}],
+	"page": 1,
+	"total": 4
+}</pre>
+		</dd>
+
+		<dt>授权信息</dt>
+		<dd>
+			<p>http://jiankong.shuijing.xunlei.com/ajax/authList</p>
+			<pre>{
+	"code": 0,
+	"message": "",
+	"data": []
+}</pre>
+		</dd>
+
+		<dt>矿机生产总趋势(一日)</dt>
+		<dd>
+			<p>http://jiankong.shuijing.xunlei.com/user/trend/type/day.html?ajax=true</p>
+			<pre>{
+	"1416880800": {
+		"total_produce": 0.12,
+		"user_device_speed": 120155.07,
+		"user_device_produce": 0.12,
+		"total_speed": 120155.07,
+		"device_nums": 1
+	},
+	"1416884400": {
+		"total_produce": 0.06,
+		"user_device_speed": 55572.08,
+		"user_device_produce": 0.06,
+		"total_speed": 55572.08,
+		"device_nums": 1
+	},
+	"1416888000": {
+		"total_produce": 0.2,
+		"user_device_speed": 194417.92,
+		"user_device_produce": 0.2,
+		"total_speed": 194417.92,
+		"device_nums": 1
+	},
+	"1416891600": {
+		"total_produce": 0.34,
+		"user_device_speed": 338183.33,
+		"user_device_produce": 0.34,
+		"total_speed": 338183.33,
+		"device_nums": 1
+	},
+	"1416895200": {
+		"total_produce": 0.55,
+		"user_device_speed": 203834.3,
+		"user_device_produce": 0.55,
+		"total_speed": 203834.3,
+		"device_nums": 1
+	},
+	"1416898800": {
+		"total_produce": 0.42,
+		"user_device_speed": 156134.53,
+		"user_device_produce": 0.42,
+		"total_speed": 156134.53,
+		"device_nums": 1
+	},
+	"1416902400": {
+		"total_produce": 0.43,
+		"user_device_speed": 160275.44,
+		"user_device_produce": 0.43,
+		"total_speed": 160275.44,
+		"device_nums": 1
+	},
+	"1416906000": {
+		"total_produce": 0.46,
+		"user_device_speed": 171408.68,
+		"user_device_produce": 0.46,
+		"total_speed": 171408.68,
+		"device_nums": 1
+	},
+	"1416909600": {
+		"total_produce": 0.97,
+		"user_device_speed": 192086.47,
+		"user_device_produce": 0.97,
+		"total_speed": 192086.47,
+		"device_nums": 1
+	},
+	"1416913200": {
+		"total_produce": 0.52,
+		"user_device_speed": 103137.67,
+		"user_device_produce": 0.52,
+		"total_speed": 103137.67,
+		"device_nums": 1
+	},
+	"1416916800": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1416920400": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1416924000": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1416927600": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1416931200": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1416934800": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1416938400": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1416942000": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1416945600": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1416949200": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1416952800": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1416956400": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1416960000": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1416963600": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	}
+}</pre>
+		</dd>
+
+		<dt>矿机生产总趋势(一周)</dt>
+		<dd>
+			<p>http://jiankong.shuijing.xunlei.com/user/trend/type/week.html?ajax=true</p>
+			<pre>{
+	"1416326400": {
+		"total_produce": 21.25,
+		"user_device_speed": 35240.34,
+		"user_device_produce": 1.93,
+		"total_speed": 387643.7,
+		"device_nums": 11
+	},
+	"1416412800": {
+		"total_produce": 7.19,
+		"user_device_speed": 99353.95,
+		"user_device_produce": 7.19,
+		"total_speed": 99353.95,
+		"device_nums": 1
+	},
+	"1416499200": {
+		"total_produce": 10.6,
+		"user_device_speed": 161782.42,
+		"user_device_produce": 10.6,
+		"total_speed": 161782.42,
+		"device_nums": 1
+	},
+	"1416585600": {
+		"total_produce": 13.98,
+		"user_device_speed": 167293.75,
+		"user_device_produce": 13.98,
+		"total_speed": 167293.75,
+		"device_nums": 1
+	},
+	"1416672000": {
+		"total_produce": 12.79,
+		"user_device_speed": 146387.51,
+		"user_device_produce": 12.79,
+		"total_speed": 146387.51,
+		"device_nums": 1
+	},
+	"1416758400": {
+		"total_produce": 9.07,
+		"user_device_speed": 126943.92,
+		"user_device_produce": 9.07,
+		"total_speed": 126943.92,
+		"device_nums": 1
+	},
+	"1416844800": {
+		"total_produce": 6.7,
+		"user_device_speed": 142574.13,
+		"user_device_produce": 6.7,
+		"total_speed": 142574.13,
+		"device_nums": 1
+	}
+}</pre>
+		</dd>
+		<dt>矿机生产总趋势(一月)</dt>
+		<dd>
+			<p>http://jiankong.shuijing.xunlei.com/user/trend/type/month.html?ajax=true</p>
+			<pre>{
+	"1414339200": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1414425600": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1414512000": {
+		"total_produce": 5.39,
+		"user_device_speed": 75930.18,
+		"user_device_produce": 5.39,
+		"total_speed": 75930.18,
+		"device_nums": 1
+	},
+	"1414598400": {
+		"total_produce": 3.69,
+		"user_device_speed": 55740.11,
+		"user_device_produce": 3.69,
+		"total_speed": 55740.11,
+		"device_nums": 1
+	},
+	"1414684800": {
+		"total_produce": 4.66,
+		"user_device_speed": 64065.11,
+		"user_device_produce": 4.66,
+		"total_speed": 64065.11,
+		"device_nums": 1
+	},
+	"1414771200": {
+		"total_produce": 8.09,
+		"user_device_speed": 78995.06,
+		"user_device_produce": 8.09,
+		"total_speed": 78995.06,
+		"device_nums": 1
+	},
+	"1414857600": {
+		"total_produce": 10.73,
+		"user_device_speed": 109324.66,
+		"user_device_produce": 10.73,
+		"total_speed": 109324.66,
+		"device_nums": 1
+	},
+	"1414944000": {
+		"total_produce": 3.15,
+		"user_device_speed": 57760,
+		"user_device_produce": 3.15,
+		"total_speed": 57760,
+		"device_nums": 1
+	},
+	"1415030400": {
+		"total_produce": 5.26,
+		"user_device_speed": 77410.39,
+		"user_device_produce": 5.26,
+		"total_speed": 77410.39,
+		"device_nums": 1
+	},
+	"1415116800": {
+		"total_produce": 4.32,
+		"user_device_speed": 72034.91,
+		"user_device_produce": 4.32,
+		"total_speed": 72034.91,
+		"device_nums": 1
+	},
+	"1415203200": {
+		"total_produce": 2.55,
+		"user_device_speed": 43036.06,
+		"user_device_produce": 2.55,
+		"total_speed": 43036.06,
+		"device_nums": 1
+	},
+	"1415289600": {
+		"total_produce": 3.31,
+		"user_device_speed": 36060.98,
+		"user_device_produce": 3.31,
+		"total_speed": 36060.98,
+		"device_nums": 1
+	},
+	"1415376000": {
+		"total_produce": 9.75,
+		"user_device_speed": 97774.03,
+		"user_device_produce": 9.75,
+		"total_speed": 97774.03,
+		"device_nums": 1
+	},
+	"1415462400": {
+		"total_produce": 11.42,
+		"user_device_speed": 116825.31,
+		"user_device_produce": 11.42,
+		"total_speed": 116825.31,
+		"device_nums": 1
+	},
+	"1415548800": {
+		"total_produce": 3.58,
+		"user_device_speed": 54221.93,
+		"user_device_produce": 3.58,
+		"total_speed": 54221.93,
+		"device_nums": 1
+	},
+	"1415635200": {
+		"total_produce": 11.42,
+		"user_device_speed": 10270.1,
+		"user_device_produce": 1.04,
+		"total_speed": 112971.15,
+		"device_nums": 11
+	},
+	"1415721600": {
+		"total_produce": 44.29,
+		"user_device_speed": 160067.13,
+		"user_device_produce": 4.03,
+		"total_speed": 1760738.47,
+		"device_nums": 11
+	},
+	"1415808000": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1415894400": {
+		"total_produce": 177.9,
+		"user_device_speed": 153898.77,
+		"user_device_produce": 16.17,
+		"total_speed": 1692886.48,
+		"device_nums": 11
+	},
+	"1415980800": {
+		"total_produce": 1183.34,
+		"user_device_speed": 997701.8,
+		"user_device_produce": 107.58,
+		"total_speed": 10974719.79,
+		"device_nums": 11
+	},
+	"1416067200": {
+		"total_produce": 713.76,
+		"user_device_speed": 709676.34,
+		"user_device_produce": 64.89,
+		"total_speed": 7806439.69,
+		"device_nums": 11
+	},
+	"1416153600": {
+		"total_produce": 112.61,
+		"user_device_speed": 73104.55,
+		"user_device_produce": 8.04,
+		"total_speed": 1023463.71,
+		"device_nums": 14
+	},
+	"1416240000": {
+		"total_produce": 113.32,
+		"user_device_speed": 144869.75,
+		"user_device_produce": 9.44,
+		"total_speed": 1738437.01,
+		"device_nums": 12
+	},
+	"1416326400": {
+		"total_produce": 21.25,
+		"user_device_speed": 35240.34,
+		"user_device_produce": 1.93,
+		"total_speed": 387643.7,
+		"device_nums": 11
+	},
+	"1416412800": {
+		"total_produce": 7.19,
+		"user_device_speed": 99353.95,
+		"user_device_produce": 7.19,
+		"total_speed": 99353.95,
+		"device_nums": 1
+	},
+	"1416499200": {
+		"total_produce": 10.6,
+		"user_device_speed": 161782.42,
+		"user_device_produce": 10.6,
+		"total_speed": 161782.42,
+		"device_nums": 1
+	},
+	"1416585600": {
+		"total_produce": 13.98,
+		"user_device_speed": 167293.75,
+		"user_device_produce": 13.98,
+		"total_speed": 167293.75,
+		"device_nums": 1
+	},
+	"1416672000": {
+		"total_produce": 12.79,
+		"user_device_speed": 146387.51,
+		"user_device_produce": 12.79,
+		"total_speed": 146387.51,
+		"device_nums": 1
+	},
+	"1416758400": {
+		"total_produce": 9.07,
+		"user_device_speed": 126943.92,
+		"user_device_produce": 9.07,
+		"total_speed": 126943.92,
+		"device_nums": 1
+	},
+	"1416844800": {
+		"total_produce": 6.7,
+		"user_device_speed": 142574.13,
+		"user_device_produce": 6.7,
+		"total_speed": 142574.13,
+		"device_nums": 1
+	}
+}</pre>
+		</dd>
+		<dt>矿机生产总趋势(二月)</dt>
+		<dd>
+			<p>http://jiankong.shuijing.xunlei.com/user/trend/type/twomonth.html?ajax=true</p>
+			<pre>{
+	"1411747200": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1411833600": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1411920000": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1412006400": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1412092800": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1412179200": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1412265600": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1412352000": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1412438400": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1412524800": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1412611200": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1412697600": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1412784000": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1412870400": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1412956800": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1413043200": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1413129600": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1413216000": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1413302400": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1413388800": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1413475200": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1413561600": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1413648000": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1413734400": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1413820800": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1413907200": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1413993600": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1414080000": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1414166400": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1414252800": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1414339200": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1414425600": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1414512000": {
+		"total_produce": 5.39,
+		"user_device_speed": 75930.18,
+		"user_device_produce": 5.39,
+		"total_speed": 75930.18,
+		"device_nums": 1
+	},
+	"1414598400": {
+		"total_produce": 3.69,
+		"user_device_speed": 55740.11,
+		"user_device_produce": 3.69,
+		"total_speed": 55740.11,
+		"device_nums": 1
+	},
+	"1414684800": {
+		"total_produce": 4.66,
+		"user_device_speed": 64065.11,
+		"user_device_produce": 4.66,
+		"total_speed": 64065.11,
+		"device_nums": 1
+	},
+	"1414771200": {
+		"total_produce": 8.09,
+		"user_device_speed": 78995.06,
+		"user_device_produce": 8.09,
+		"total_speed": 78995.06,
+		"device_nums": 1
+	},
+	"1414857600": {
+		"total_produce": 10.73,
+		"user_device_speed": 109324.66,
+		"user_device_produce": 10.73,
+		"total_speed": 109324.66,
+		"device_nums": 1
+	},
+	"1414944000": {
+		"total_produce": 3.15,
+		"user_device_speed": 57760,
+		"user_device_produce": 3.15,
+		"total_speed": 57760,
+		"device_nums": 1
+	},
+	"1415030400": {
+		"total_produce": 5.26,
+		"user_device_speed": 77410.39,
+		"user_device_produce": 5.26,
+		"total_speed": 77410.39,
+		"device_nums": 1
+	},
+	"1415116800": {
+		"total_produce": 4.32,
+		"user_device_speed": 72034.91,
+		"user_device_produce": 4.32,
+		"total_speed": 72034.91,
+		"device_nums": 1
+	},
+	"1415203200": {
+		"total_produce": 2.55,
+		"user_device_speed": 43036.06,
+		"user_device_produce": 2.55,
+		"total_speed": 43036.06,
+		"device_nums": 1
+	},
+	"1415289600": {
+		"total_produce": 3.31,
+		"user_device_speed": 36060.98,
+		"user_device_produce": 3.31,
+		"total_speed": 36060.98,
+		"device_nums": 1
+	},
+	"1415376000": {
+		"total_produce": 9.75,
+		"user_device_speed": 97774.03,
+		"user_device_produce": 9.75,
+		"total_speed": 97774.03,
+		"device_nums": 1
+	},
+	"1415462400": {
+		"total_produce": 11.42,
+		"user_device_speed": 116825.31,
+		"user_device_produce": 11.42,
+		"total_speed": 116825.31,
+		"device_nums": 1
+	},
+	"1415548800": {
+		"total_produce": 3.58,
+		"user_device_speed": 54221.93,
+		"user_device_produce": 3.58,
+		"total_speed": 54221.93,
+		"device_nums": 1
+	},
+	"1415635200": {
+		"total_produce": 11.42,
+		"user_device_speed": 10270.1,
+		"user_device_produce": 1.04,
+		"total_speed": 112971.15,
+		"device_nums": 11
+	},
+	"1415721600": {
+		"total_produce": 44.29,
+		"user_device_speed": 160067.13,
+		"user_device_produce": 4.03,
+		"total_speed": 1760738.47,
+		"device_nums": 11
+	},
+	"1415808000": {
+		"device_nums": 0,
+		"total_speed": 0,
+		"user_device_speed": 0,
+		"total_produce": 0,
+		"user_device_produce": 0
+	},
+	"1415894400": {
+		"total_produce": 177.9,
+		"user_device_speed": 153898.77,
+		"user_device_produce": 16.17,
+		"total_speed": 1692886.48,
+		"device_nums": 11
+	},
+	"1415980800": {
+		"total_produce": 1183.34,
+		"user_device_speed": 997701.8,
+		"user_device_produce": 107.58,
+		"total_speed": 10974719.79,
+		"device_nums": 11
+	},
+	"1416067200": {
+		"total_produce": 713.76,
+		"user_device_speed": 709676.34,
+		"user_device_produce": 64.89,
+		"total_speed": 7806439.69,
+		"device_nums": 11
+	},
+	"1416153600": {
+		"total_produce": 112.61,
+		"user_device_speed": 73104.55,
+		"user_device_produce": 8.04,
+		"total_speed": 1023463.71,
+		"device_nums": 14
+	},
+	"1416240000": {
+		"total_produce": 113.32,
+		"user_device_speed": 144869.75,
+		"user_device_produce": 9.44,
+		"total_speed": 1738437.01,
+		"device_nums": 12
+	},
+	"1416326400": {
+		"total_produce": 21.25,
+		"user_device_speed": 35240.34,
+		"user_device_produce": 1.93,
+		"total_speed": 387643.7,
+		"device_nums": 11
+	},
+	"1416412800": {
+		"total_produce": 7.19,
+		"user_device_speed": 99353.95,
+		"user_device_produce": 7.19,
+		"total_speed": 99353.95,
+		"device_nums": 1
+	},
+	"1416499200": {
+		"total_produce": 10.6,
+		"user_device_speed": 161782.42,
+		"user_device_produce": 10.6,
+		"total_speed": 161782.42,
+		"device_nums": 1
+	},
+	"1416585600": {
+		"total_produce": 13.98,
+		"user_device_speed": 167293.75,
+		"user_device_produce": 13.98,
+		"total_speed": 167293.75,
+		"device_nums": 1
+	},
+	"1416672000": {
+		"total_produce": 12.79,
+		"user_device_speed": 146387.51,
+		"user_device_produce": 12.79,
+		"total_speed": 146387.51,
+		"device_nums": 1
+	},
+	"1416758400": {
+		"total_produce": 9.07,
+		"user_device_speed": 126943.92,
+		"user_device_produce": 9.07,
+		"total_speed": 126943.92,
+		"device_nums": 1
+	},
+	"1416844800": {
+		"total_produce": 6.7,
+		"user_device_speed": 142574.13,
+		"user_device_produce": 6.7,
+		"total_speed": 142574.13,
+		"device_nums": 1
+	}
+}</pre>
+		</dd>
+	</dl>
+	<footer></footer>
+	<script type="text/javascript">
+	var dds = document.getElementsByTagName('dd');
+	for(var i=0,k=dds.length;i<k;i++){
+		var dd = dds[i];
+		dd.onclick =  function (event) {
+			var target = event.target;
+			if (target.tagName === 'PRE') {return false;};
+			if (this.className) {
+				this.className = '';
+			}else{
+				this.className = 'opened';
+			};
+		}
+	}
+	</script>
+</body>
+</html>
