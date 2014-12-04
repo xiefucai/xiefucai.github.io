@@ -1,0 +1,66 @@
+<!doctype html>
+<html dir="ltr" lang="zh-CN">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="pragma" content="no-cache"/>
+	<title>网络异常诊断</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0" />
+	<style type="text/css">
+		body{background: #f5f5f5;margin: 0;padding: 0;}
+		.gray{color: gray;}
+		.header{font-size: 44px;line-height: 44px;font-size: 14px;text-indent: 19px;margin: 0;padding: 0;font-weight: normal;}
+		.list{margin: 0;padding: 0;}
+		.item{margin: 1px 0 0;padding: 0;}
+		.title{font-size: 14px;line-height: 44px;text-indent: 19px;background: #fff;position: relative;}
+		.title::after{content: '';display: block;background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAnCAMAAADAWWPLAAAAA3NCSVQICAjb4U/gAAAAqFBMVEX////+/v79/f38/Pz7+/v4+Pj39/f29vb19fX09PTy8vLx8fHw8PDk5OTj4+Ph4eHX19fW1tbV1dXU1NTS0tK3t7e0tLSzs7OysrKvr6+tra2rq6upqamnp6empqakpKSjo6OioqKgoKCenp6dnZ2cnJyampqYmJiXl5eSkpKLi4uJiYmIiIiGhoaFhYWDg4OCgoKAgIB/f39+fn5sbGxra2tqampmZmaw2R42AAAAOHRSTlMA/////////////////////////////////////////////////////////////////////////7X8Y8UAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAXdEVYdENyZWF0aW9uIFRpbWUAMjAxNC4xMi40hE/IegAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAEoSURBVDiNfZLpeoIwEEUHVBAEuyAQl1arrfu+5f3frBEmQDKB+XXnnsOWDwB1GIOmGXI+bMAjLmZUi8c8m7GZWhOOM7FM+IsX800Fa8orM9UFa8aV+VEFe4797YZhblfxAttrr3fFuCgF+xe7iw/gX3D5k4K9xObsv1b/jOsyF1or3E9e7nsnLFYtsbXXuB09+TzviNW6DSCvPnTL9+0e5B0ABs8s7d3q97r7rHwORI4eIu0c9bycnSgfUZajO9929PN2tvz+ifljQzBAZ/MuYxhQDEFY4DSmQhCnocSMESGIGUv7EhPhhXPBTRgjQo4ZS8SZ9VMiSJw/gAgqJoKONYFiRTDhivBmxKXAzFgTKFYEE64IZlwIdRiFepwJTVgISSMWf762/wODA0SxcmaM2wAAAABJRU5ErkJggg==) no-repeat;background-size: auto 13px;width: 11px;height:6.5px;position: absolute;top:50%;margin-top: -4px;right: 20px;}
+		.content{padding: 10px 20px;line-height: 1.5;margin:0;font-size: 12px;display: none;}
+		.link{display: block;position: absolute;top:0;left: 0;right: 0;bottom: 0;background: #f00;opacity: 0;}
+		.opened .title::after{background-position: 0 -6.5px;}
+		.opened .content{display: block;}
+	</style>
+	<script type="text/javascript">
+		function toggle (elem) {
+			elem = elem.parentNode;
+			if (/\bopened\b/.test(elem.className)) {
+				elem.className = elem.className.replace(/\s*opened\s*/g,'');
+			}else{
+				elem.className = elem.className + ' opened';
+			};
+		}
+	</script>
+</head>
+<body>
+	<noscript data-checkDomain="false" data-checkPlatForm="false">请设置您的浏览器，启用javascript脚本！</noscript>
+	<h1 class="header">矿机未联网，可能由于以下原因：</h1>
+	<ul class="list">
+		<li class="item">
+			<div class="title">没插网线 <span class="gray">(21%的人)</span><a class="link" href="javascript:;" onclick="toggle(this.parentNode);"></a></div>
+			<p class="content">网线没有正确插入，或网口有松动，请检查网线是否插入并且牢固</p>
+		</li>
+		<li class="item">
+			<div class="title">网线坏了 <span class="gray">(21%的人)</span><a class="link" href="javascript:;" onclick="toggle(this.parentNode);"></a></div>
+			<p class="content">网线没有正确插入，或网口有松动，请检查网线是否插入并且牢固</p>
+		</li>
+		<li class="item">
+			<div class="title">网络不支持自动分配Ip <span class="gray">(21%的人)</span><a class="link" href="javascript:;" onclick="toggle(this.parentNode);"></a></div>
+			<p class="content">网线没有正确插入，或网口有松动，请检查网线是否插入并且牢固</p>
+		</li>
+		<li class="item">
+			<div class="title">网络禁止陌生设备 <span class="gray">(21%的人)</span><a class="link" href="javascript:;" onclick="toggle(this.parentNode);"></a></div>
+			<p class="content">网线没有正确插入，或网口有松动，请检查网线是否插入并且牢固</p>
+		</li>
+		<li class="item">
+			<div class="title">网络封杀迅雷域名 <span class="gray">(21%的人)</span><a class="link" href="javascript:;" onclick="toggle(this.parentNode);"></a></div>
+			<p class="content">网线没有正确插入，或网口有松动，请检查网线是否插入并且牢固</p>
+		</li>
+		<li class="item">
+			<div class="title">网络存在异常 <span class="gray">(21%的人)</span><a class="link" href="javascript:;" onclick="toggle(this.parentNode);"></a></div>
+			<p class="content">网线没有正确插入，或网口有松动，请检查网线是否插入并且牢固</p>
+		</li>
+		<li class="item">
+			<div class="title">其它原因 <span class="gray">(21%的人)</span><a class="link" href="javascript:;" onclick="toggle(this.parentNode);"></a></div>
+			<p class="content">网线没有正确插入，或网口有松动，请检查网线是否插入并且牢固</p>
+		</li>
+	</ul>
+</body>
+</html>
