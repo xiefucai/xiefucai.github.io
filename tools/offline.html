@@ -20,13 +20,24 @@
 	</style>
 	<script type="text/javascript">
 		function toggle (elem) {
-			elem = elem.parentNode;
+			elem = elem.parentNode.parentNode;
 			if (/\bopened\b/.test(elem.className)) {
 				elem.className = elem.className.replace(/\s*opened\s*/g,'');
 			}else{
 				elem.className = elem.className + ' opened';
 			};
 		}
+		(function(){
+			var elem;
+			document.addEventListener("touchstart",function(event){
+				elem = event.target;
+			},false);
+			document.addEventListener("touchend",function(event){
+				if ((event.target == elem) && (/\blink\b/.test(elem.className))) {
+					toggle(elem);
+				};
+			},false);
+		})();
 	</script>
 </head>
 <body>
@@ -34,31 +45,31 @@
 	<h1 class="header">矿机未联网，可能由于以下原因：</h1>
 	<ul class="list">
 		<li class="item">
-			<div class="title">没插网线 <span class="gray">(21%的人)</span><a class="link" href="javascript:;" onclick="toggle(this.parentNode);"></a></div>
+			<div class="title">没插网线 <span class="gray">(21%的人)</span><a class="link" href="javascript:;"></a></div>
 			<p class="content">网线没有正确插入，或网口有松动，请检查网线是否插入并且牢固</p>
 		</li>
 		<li class="item">
-			<div class="title">网线坏了 <span class="gray">(21%的人)</span><a class="link" href="javascript:;" onclick="toggle(this.parentNode);"></a></div>
+			<div class="title">网线坏了 <span class="gray">(21%的人)</span><a class="link" href="javascript:;"></a></div>
 			<p class="content">网线没有正确插入，或网口有松动，请检查网线是否插入并且牢固</p>
 		</li>
 		<li class="item">
-			<div class="title">网络不支持自动分配Ip <span class="gray">(21%的人)</span><a class="link" href="javascript:;" onclick="toggle(this.parentNode);"></a></div>
+			<div class="title">网络不支持自动分配Ip <span class="gray">(21%的人)</span><a class="link" href="javascript:;"></a></div>
 			<p class="content">网线没有正确插入，或网口有松动，请检查网线是否插入并且牢固</p>
 		</li>
 		<li class="item">
-			<div class="title">网络禁止陌生设备 <span class="gray">(21%的人)</span><a class="link" href="javascript:;" onclick="toggle(this.parentNode);"></a></div>
+			<div class="title">网络禁止陌生设备 <span class="gray">(21%的人)</span><a class="link" href="javascript:;"></a></div>
 			<p class="content">网线没有正确插入，或网口有松动，请检查网线是否插入并且牢固</p>
 		</li>
 		<li class="item">
-			<div class="title">网络封杀迅雷域名 <span class="gray">(21%的人)</span><a class="link" href="javascript:;" onclick="toggle(this.parentNode);"></a></div>
+			<div class="title">网络封杀迅雷域名 <span class="gray">(21%的人)</span><a class="link" href="javascript:;"></a></div>
 			<p class="content">网线没有正确插入，或网口有松动，请检查网线是否插入并且牢固</p>
 		</li>
 		<li class="item">
-			<div class="title">网络存在异常 <span class="gray">(21%的人)</span><a class="link" href="javascript:;" onclick="toggle(this.parentNode);"></a></div>
+			<div class="title">网络存在异常 <span class="gray">(21%的人)</span><a class="link" href="javascript:;"></a></div>
 			<p class="content">网线没有正确插入，或网口有松动，请检查网线是否插入并且牢固</p>
 		</li>
 		<li class="item">
-			<div class="title">其它原因 <span class="gray">(21%的人)</span><a class="link" href="javascript:;" onclick="toggle(this.parentNode);"></a></div>
+			<div class="title">其它原因 <span class="gray">(21%的人)</span><a class="link" href="javascript:;"></a></div>
 			<p class="content">网线没有正确插入，或网口有松动，请检查网线是否插入并且牢固</p>
 		</li>
 	</ul>
