@@ -45,10 +45,10 @@
 	onDragEnd = function() {
 		$('.slide-btn').remove();
 		$('.slide-mask').animate({
-			'backgroundColor': 'rgba(0,0,0,0.3)'
+			'backgroundColor': 'rgba(0,0,0,0.7)'
 		},
 		{
-			'duration': 800,
+			'duration': 500,
 			'complete': function() {
 				var msg;
 				var masker = $(this);
@@ -183,11 +183,10 @@
 					'margin-top': '-25px'
 				},
 				{
-					'duration': 800,
+					'duration': 400,
 					'complete': function() {
 						msg = $('<div class="maskter-msg">你有新消息</div>').appendTo(masker);
 						setTimeout(fun1, 0);
-
 					}
 				});
 			}
@@ -282,6 +281,7 @@
 				$('.slide-btn').css({
 					'bottom': dragingY - event.touches[0].screenY
 				});
+				$('.slide-mask').css({'backgroundColor':'rgba(0,0,0,'+Math.min((dragingY-event.touches[0].screenY)/100,0.8)+')'});
 			}
 			event.preventDefault();
 		},
@@ -291,6 +291,8 @@
 			if (dragingStart) {
 				if (dragedY < -100) {
 					onDragEnd();
+				}else{
+					$('.slide-mask').animate({'backgroundColor':'rgba(0,0,0,0)'});
 				}
 				$('.slide-btn').css({
 					'bottom': 0
