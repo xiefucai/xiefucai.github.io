@@ -1,23 +1,20 @@
 ﻿html,body{margin:0;padding:0;display:block;height:100%;overflow:hidden;overflow-y:hidden;}
 body{background-size:auto 100%;background-repeat:no-repeat;}
 .btn{display:block;width:145px;line-height:40px;border-radius:20px;background:#FF4978;font-size:14px;text-align:center;text-decoration:none;color:#fff;}
-.btn:focus{opacity:0.8};
-.mask{position:absolute;top:0;bottom:0;left:0;right:0;opacity:0;background:url(../images/bg1.jpg) no-repeat;background-size:100% 100%;}
+.btn:focus{opacity:0.8;}
+.flog{position:absolute;top:0;bottom:0;left:0;right:0;opacity:0;background:url(../images/bg1.jpg) no-repeat;background-size:100% 100%;}
 .mobile{background:url(../images/mobile.png) no-repeat center 100%;position:absolute;top:0;left:0;right:0;bottom:0;background-size:249px 415px;opacity:0;}
 .mobile-inner{width:214px;background:url(../images/bg0.jpg) no-repeat;background-size:590px auto;position:absolute;left:50%;margin-left:-104px;top:228px;bottom:0;opacity:0;}
 .topbar{position:absolute;top:0;left:0;right:0;height:150px;text-align:center;overflow:hidden;z-index:10;}
 .logo{width:140px;height:40px;background:url(../images/logo.png) 50% 100% no-repeat;background-size:80% 80%;margin:100px auto 0;}
 .download{margin:21px auto 15px;}
 .slide-mask{position:absolute;top:0;right:0;bottom:0;left:0;opacity:0;display:none;background-color:rgba(0,0,0,0);overflow:hidden;}
-.slide-btn{
- content:'';display:block;position:absolute;bottom:0;width:56px;left:50%;margin-left:-28px;height:55px;background:url(../images/uparrow.png) 50% 50% no-repeat;background-size:auto 16px;
-}
+.slide-btn{content:'';display:block;position:absolute;bottom:0;width:56px;left:50%;margin-left:-28px;height:55px;background:url(../images/uparrow.png) 50% 50% no-repeat;background-size:auto 16px;}
 .floating .slide-btn{-webkit-animation:animation-floating 1.5s infinite;-webkit-animation-timing-function:linear;}
 .lighting{-webkit-animation:animation-lighting 1s infinite;-webkit-animation-timing-function:linear;border-style:solid;}
 .circle1{display:block;border-radius:50%;top:50%;left:50%;position:absolute;z-index:1;}
 .circle1{width:300px;height:300px;margin-top:-150px;margin-left:-150px;background-color:#FF4978;opacity:0;text-align:center;color:#fff;font-size:2.5rem;line-height:50px;padding:5px;}
 .maskter-msg{position:absolute;top:50%;left:0;width:100%;text-align:center;font-size:12px;color:white;}
-
 .panels-viewer{display:block;width:100%;height:100%;position:absolute;top:0;left:0;opacity:0;}
 .panels{position:absolute;top:0;right:0;bottom:0;left:0;overflow:hidden;}
 .panels-list{height:100%;margin:0;padding:0;list-style:none;}
@@ -26,28 +23,20 @@ body{background-size:auto 100%;background-repeat:no-repeat;}
 .panel-1{background-image:url(../images/panel1.jpg);}
 .panel-2{background-image:url(../images/panel2.jpg);}
 .panel-3{background-image:url(../images/panel3.jpg);}
-.start{left: 50%;
-bottom: 65px;
-position: absolute;
-z-index: 2;
-margin-left: -73px;}
+.start{left:50%;bottom:65px;position:absolute;z-index:2;margin-left:-73px;}
 .panels-dotteds{width:48px;position:absolute;z-index:1;bottom:20px;left:50%;margin-left:-24px;list-style:none;padding:0;}
 .dotted{width:8px;height:8px;border-radius:50%;float:left;margin:0 2px;background:#535353;}
 .dotted-active{background:#D2D2D2;}
 .none{display:none;}
-@-webkit-keyframes animation-floating
-{
-	0%{background-position:50% 50%;}
-	50%{background-position:50% 60%;}
-	100%{background-position:50% 50%;}
+@-webkit-keyframes animation-floating{0%{background-position:50% 50%;}
+50%{background-position:50% 60%;}
+100%{background-position:50% 50%;}
 }
-@-webkit-keyframes animation-lighting
-{
-	0%{border-width:0;border-color:transparent;padding:5px;}
-	50%{border-width:5px;border-color:rgba(138, 48, 74,0.5);padding:0;}
-	100%{border-width:0;border-color:transparent;padding:5px;}
+@-webkit-keyframes animation-lighting{0%{border-width:0;border-color:transparent;padding:5px;}
+50%{border-width:5px;border-color:rgba(138, 48, 74,0.5);padding:0;}
+100%{border-width:0;border-color:transparent;padding:5px;}
 }
-@media only screen and (max-width: 240px){
-	.mobile{background-size:220px auto;}
-	.mobile-inner{background-size:443px auto;background-position:auto 100%;width:188px;margin-left:-94px;}
+@media only screen and (max-width:240px){
+.mobile{background-size:220px auto;}
+.mobile-inner{background-size:443px auto;background-position:auto 100%;width:188px;margin-left:-94px;}
 }
