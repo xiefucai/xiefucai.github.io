@@ -1,5 +1,5 @@
 (function(){
-	var 
+	var
 	config = {
 		"title": document.title || "",
 		"summary":(function(metas){
@@ -27,7 +27,7 @@
 				var a = [];
 				for(var i=0,k=list.length;i<k;i++){
 					a.push('<input type="radio" name="'+name+'" id="'+name+list[i].val+'" value="'+list[i].val+'" style="vertical-align:middle;" onchange="QSHARE.share(this);"/>');
-					a.push('<label for="'+name+list[i].val+'" style="vertical-align:middle;">'+list[i].label+'</label>');	
+					a.push('<label for="'+name+list[i].val+'" style="vertical-align:middle;">'+list[i].label+'</label>');
 				}
 				return '<label style="vertical-align:middle;color:gray;">'+title+':</label>'+a.join(" ");
 			},
@@ -50,12 +50,12 @@
 						try{
 							fun(eval('('+d+')'));
 						}catch(e){
-							
+
 						}
 					}
 				}
 			};
-		
+
 		if (!mask){
 			mask = newElement("div",document.body,"background:rgba(0,0,0,.5);width:100%;height:100%;position:fixed;top:0;left:0;z-index:2147483647;");
 			mask.id = "shareToTxWb";
@@ -105,7 +105,7 @@
 		return str.replace(new RegExp("((news|telnet|nttp|file|http|ftp|https)://){1}(([-A-Za-z0-9]+(\\.[-A-Za-z0-9]+)*(\\.[-A-Za-z]{2,5}))|([0-9]{1,3}(\\.[0-9]{1,3}){3}))(:[0-9]*)?(/[-A-Za-z0-9_\\$\\.\\+\\!\\*\\(\\),;:@&=\\?/~\\#\\%]*)*", "gi"), new Array(12).join("aa"));
 	},
 	getStrLength = function(str){
-		return str.replace(/[^\u0000-\u00ff]/g, "aa").length;	
+		return str.replace(/[^\u0000-\u00ff]/g, "aa").length;
 	},
 	getSelectText = function(){
 		return (document.selection ? document.selection.createRange().text: document.getSelection()).toString().replace(/[\s\n]+/g, " ");
@@ -149,7 +149,7 @@
 		} else {
 			s = s2;
 		}
-		return [s1, s];	
+		return [s1, s];
 	},
 	params = {
 		"c":"share",
@@ -157,7 +157,7 @@
 		"url":config.href,
 		"appkey":"801363995",//"801000271",
 		"title":document.title,
-		"summary":getSelectText()||config.summary, //ժҪ
+		"summary":getSelectText()||config.summary,
 	},
 	share = function(elem){
 		if (elem){params[elem.name] = elem.value;}
