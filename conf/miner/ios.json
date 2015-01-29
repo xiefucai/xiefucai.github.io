@@ -1,6 +1,6 @@
 {
 	"beat": {
-		"version": 1.4,
+		"version": 1.5,
 		"enable": 1,
 		"url": "itms-services://?action=download-manifest&url=http://kj.xunlei.com/guide/ios/miner.plist"
 	}
