@@ -1,7 +1,9 @@
 {
-	"beat": {
-		"version": 1.5,
-		"enable": 1,
-		"url": "itms-services://?action=download-manifest&url=http://kj.xunlei.com/guide/ios/miner.plist"
-	}
+    "beat": {
+        "version": 1.5,
+        "enable": 1,
+        "url": "http://kj.xunlei.com/guide/?action=update",
+        "appUrl": "itms-services://?action=download-manifest&url=http://kj.xunlei.com/guide/ios/miner.plist",
+        "appDes": "<ol><li>优化应用性能，解决卡顿、无法回首页的问题</li><li>解决其它bug</li></ol>"
+    }
 }
