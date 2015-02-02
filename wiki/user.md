@@ -74,18 +74,6 @@
 
 ######返回结果：
 ```
-{"code":0,"msg":"","data":{"nick":}}
-```
-##### 修改资料
-| key | value |
-| --- | ----- |
-| url | http://domain/user/modify |
-| method | post |
-| cookie | uid,token |
-| post params | nick:商家名称`(必填)`<br/>logo:商家的logo`(此处可以让用户上传图片)`<br/>legal_person:法人<br/>address:商家地址<br/>tel:联系方式<br/>website:网站主页<br/>weixin:微信公众号<br/>qq:qq号码<br/>|
-
-######返回结果：
-```
 {
     "code": 0,
     "msg": "",
@@ -99,7 +87,22 @@
         "weixin": "xxxx",
         "qq": "xxxxx"
     }
-}```
+}
+```
+##### 修改资料
+| key | value |
+| --- | ----- |
+| url | http://domain/user/modify |
+| method | post |
+| cookie | uid,token |
+| post params | nick:商家名称`(必填)`<br/>logo:商家的logo`(此处可以让用户上传图片)`<br/>legal_person:法人<br/>address:商家地址<br/>tel:联系方式<br/>website:网站主页<br/>weixin:微信公众号<br/>qq:qq号码<br/>|
+
+######返回结果：
+```
+{
+    "code": 0,
+    "msg": ""
+ }```
 
 ##### 用户列表
 `本接口需要校验登录用户权限，只要管理员才能管理访问此接口。`
