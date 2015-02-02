@@ -1,6 +1,5 @@
 ### http协议文档
 
-
 说明：
 
 1. 接口为http get或post方式；
@@ -72,7 +71,6 @@
 | url | http://domain/user/info |
 | method | get |
 | cookie | uid,token |
-| post params | nick:商家名称`(必填)`<br/>logo:商家的logo`(此处可以让用户上传图片)`<br/>legal_person:法人<br/>address:商家地址<br/>tel:联系方式<br/>website:网站主页<br/>weixin:微信公众号<br/>qq:qq号码<br/>|
 
 ######返回结果：
 ```
@@ -84,6 +82,7 @@
 | url | http://domain/user/modify |
 | method | post |
 | cookie | uid,token |
+| post params | nick:商家名称`(必填)`<br/>logo:商家的logo`(此处可以让用户上传图片)`<br/>legal_person:法人<br/>address:商家地址<br/>tel:联系方式<br/>website:网站主页<br/>weixin:微信公众号<br/>qq:qq号码<br/>|
 
 ######返回结果：
 ```
@@ -114,6 +113,7 @@
 
 ######返回结果：
 * 成功返回 
+
 ```
 {
     "code": 0,
@@ -130,9 +130,11 @@
     ]
 }
 ```
+
 返回的http头部cookie需要协带用户信息uid、token、type,用登录登录成功后，请求的所有协议后台都需要校验uid和token是否对应。
 
 * 登录失败返回
+
 ```
 {"code":错误码,"msg":"失败原因"}
 ```
