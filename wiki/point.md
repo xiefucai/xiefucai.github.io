@@ -10,7 +10,7 @@
 | url | http://domain/point/list |
 | method | get |
 | cookie | uid,token |
-| get params | search:搜索条件<br/>order:排序条件|
+| get params | search:搜索条件,示例{"id":"10\*","type":0,"address":"\*深圳市\*"}<br/>order:排序条件|
 
 ######返回结果：
 ```
@@ -28,6 +28,10 @@
         ...
     ]
 }
+```
+######请求示例：
+```
+http://domain/point/list?search=%7B%22id%22%3A%2210*%22%2C%22type%22%3A0%2C%22address%22%3A%22*%E6%B7%B1%E5%9C%B3%E5%B8%82*%22%7D&order=0_type_id
 ```
 
 ##### 设置售货点信息
