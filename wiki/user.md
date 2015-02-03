@@ -123,9 +123,9 @@
             "bank": "xxxxxxxxxxx",
             "alipay": "xxxxxxxxx",
             "tenpay": "xxxxxxx",
-            "default": "slippery"//默认的支付方式
+            "default": "alipay"//默认的支付方式
         },
-        "contact":{"name":"王五","tel":"xxxx"}
+        "contact":{"name":"王五","tel":"13576888376"}
     }
 }
 ```
@@ -143,6 +143,60 @@
     "code": 0,
     "msg": ""
  }```
+######测试：
+<iframe name="post_frame_uinfo" id="post_frame_uinfo" width="100%" height="100">
+</iframe>
+<form method="post" action="http://58.61.39.245:8000/user/modify" target="post_frame_uinfo">
+  <ul>
+    <li>
+      <label>商家名：</label>
+      <input type="text" name="nick" value="便捷神"/>
+    </li>
+    <li>
+      <label>logo：</label>
+      <input type="text" name="logo" value="http://i.xunlei.com/v2.5/img/l_logo.jpg"/>
+    </li>
+    <li>
+      <label>法人</label>
+      <input type="text" name="legal_person" value="张三"/>
+    </li>
+    <li>
+      <label>企业邮箱</label>
+      <input type="text" name="email" value="test@125.com"/>
+    </li>
+    <li>
+      <label>商家地址</label>
+      <input type="text" name="address" value="深圳市南山区高新科技园"/>
+    </li>
+    <li>
+      <label>联系方式</label>
+      <input type="text" name="tel" value="0755-12345678"/>
+    </li>
+    <li>
+      <label>网站主页</label>
+      <input type="text" name="website" value="http://www.baidu.com/"/>
+    </li>
+    <li>
+      <label>微信公众号</label>
+      <input type="text" name="weixin" value="helloworld"/>
+    </li>
+    <li>
+      <label>qq</label>
+      <input type="text" name="qq" value="421632997"/>
+    </li>
+    <li>
+      <label>支付信息</label>
+      <input type="text" name="pay" value="{&quot;bank&quot;: &quot;xxxxxxxxxxx&quot;,&quot;alipay&quot;: &quot;xxxxxxxxx&quot;,&quot;tenpay&quot;: &quot;xxxxxxx&quot;,&quot;default&quot;: &quot;alipay&quot;}"/>
+    </li>
+    <li>
+      <label>联系人信息</label>
+      <input type="text" name="contact" value="{&quot;name&quot;:&quot;王五&quot;,&quot;tel&quot;:&quot;135xxxxxxx&quot;}"/>
+    </li>
+    <li>
+      <input type="submit" value="点击修改"/>
+    </li>
+  </ul>
+</form>
 
 ##### 用户列表
 `本接口需要校验登录用户权限，只要管理员才能管理访问此接口。`

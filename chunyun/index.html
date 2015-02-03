@@ -9,79 +9,89 @@
 </head>
 <body>
 	<noscript><div>请设置您的浏览器，启用javascript脚本！</div></noscript>
-	<div  class="pages" id="sliders">
+	<div class="pages" id="sliders">
 			<div class="page page1">
+				<div class="logo">
+					<img src="images/logo.png" class="logo-img"/>
+					<div class="logo-text">
+						<img src="images/logo-text.png" class="logo-text-img" width="100%"/>
+					</div>
+				</div>
 				<a href="javascript:;" class="next"></a>
 			</div>
 			<div class="page page2 page-slide">
-				<h2 class="page-title"></h2>
 				<div class="wallpaper">
-					<span class="nail"></span>
-					<div class="pic"></div>
-					<div class="pic-des">还记得那些回家的路上</div>
+					<div class="pic">
+						<img src="images/page2.pic.jpg"/>
+					</div>
+					<div class="pic-des"></div>
 				</div>
 				<a href="javascript:;" class="next"></a>
 			</div>
 			<div class="page page3 page-slide">
-				<h2 class="page-title"></h2>
 				<div class="wallpaper">
-					<span class="nail"></span>
 					<div class="pic">
-						<div class="talk talk-1"><span class="talk-head"></span><span class="talk-text">小伙子，来跟火腿肠吧</span></div>
-						<div class="talk talk-2"><span class="talk-text">谢谢爷爷!</span><span class="talk-head"></span></div>
+						<img src="images/page3.pic.jpg"/>
+						<div class="talk talk1"></div>
+						<div class="talk talk2"></div>
 					</div>
-					<div class="pic-des">有些东西这时候吃 会隔外美味</div>
+					<div class="pic-des"></div>
 				</div>
 				<a href="javascript:;" class="next"></a>
 			</div>
 			<div class="page page4 page-slide">
-				<h2 class="page-title"></h2>
 				<div class="wallpaper">
-					<span class="nail"></span>
 					<div class="pic">
-						<div class="talk talk-3"><span class="talk-head"></span><span class="talk-text">看来要站到深圳了。</span></div>
-						<div class="talk talk-4"><span class="talk-head"></span><span class="talk-text">我也是啊，来一起坐吧!</span></div>
+						<img src="images/page4.pic.jpg"/>
+						<div class="talk talk3"></div>
+						<div class="talk talk4"></div>
 					</div>
-					<div class="pic-des">二十二小时车程 没有想象中漫长</div>
+					<div class="pic-des"></div>
 				</div>
 				<a href="javascript:;" class="next"></a>
 			</div>
 			<div class="page page5 page-slide">
-				<h2 class="page-title"></h2>
 				<div class="wallpaper">
-					<span class="nail"></span>
 					<div class="pic">
-						<div class="talk talk-5"><span class="talk-head"></span><span class="talk-text">这些不小，小家伙别着凉了。</span></div>
-						<div class="talk talk-6"><span class="talk-head"></span><span class="talk-text">谢谢您，真没想到会下雪。</span></div>
+						<img src="images/page5.pic.jpg"/>
+						<div class="talk talk5"></div>
+						<div class="talk talk6"></div>
 					</div>
-					<div class="pic-des">旅程虽不便 却有不期而遇的关怀</div>
+					<div class="pic-des"></div>
 				</div>
 				<a href="javascript:;" class="next"></a>
 			</div>
 			<div class="page page6 page-slide">
-				<h2 class="page-title"></h2>
 				<div class="wallpaper">
-					<span class="nail"></span>
 					<div class="pic">
-						<div class="talk talk-7"><span class="talk-head"></span><span class="talk-text">大王!</span></div>
-						<div class="talk talk-8"><span class="talk-head"></span><span class="talk-text">哈哈哈!</span></div>
-						<div class="talk talk-9"><span class="talk-head"></span><span class="talk-text">等着他炸你吧!</span></div>
+						<img src="images/page6.pic.jpg"/>
+						<div class="talk talk7"></div>
+						<div class="talk talk8"></div>
 					</div>
-					<div class="pic-des">有多少人是这样 学会了斗地主</div>
+					<div class="pic-des"></div>
 				</div>
 				<a href="javascript:;" class="next"></a>
 			</div>
 			<div class="page page7">
-				<h2 class="page-title"></h2>
-				<div class="wallpaper">
+				<div class="container">
 					<div class="pic">世界再大 也要回家 旅途再孤单 也会随遇温暖 漫漫归程 我在春运路上</div>
-					<a href="javascript:;" class="btn">随遇温暖，伴你回家</a>
-					<div class="des">已有<span class="highlight">3000</span>人在<a href="javascript:;" class="highlight">随遇</a>结伴回家。</div>
+				</div>
+				<form class="form">
+					<p class="form-text">写下你的春运旅程终点站<br/>看有多少小伙伴与你同行</p>
+					<div class="form-elems">
+						<input type="text" placeholder="点击输入家乡" class="form-inputer" value="" name="address"/>
+						<input type="submit" value="确认" class="form-btn"/>
+					</div>
+				</form>
+				<div class="result">
+					<p class="result-text">原来有3000个小伙伴<br/>在随遇里一起回合肥<br/>约起来吧</p>
+					<a href="javascript:;" class="btn-share">分享给小伙伴</a>
+					<a href="javascript:;" class="btn-download">下载随遇</a>
 				</div>
 			</div>
 		</div>
-		<a href="javascript:;" class="btn-music rotating" title="音乐开关" id="audio-switcher"></a>
-		<audio id="audio" src="sounds/bg.mp3" loop preload="auto" autoplay="true"></audio>
+		<a href="javascript:;" class="btn-music" title="音乐开关" id="audio-switcher"></a>
+		<!-- html5 audio-->
 		<script type="text/javascript" src="js/zepto.min.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 </body>
