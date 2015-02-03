@@ -80,12 +80,21 @@
     "data": {
         "nick": "xxx",
         "logo": "http://xxxx.png",
-        "legal_person": "张三",
+        "legal_person": "张三",//法人
+        "tax_login_certificate":"http://xxxx.jpg",//税务登记证书
+        "email":"xxxx@xxx.com",//企业邮箱
         "address": "商家地址",
         "tel": "0755-xxxxxxxx",
         "website": "http://www.xxxx.com/",
         "weixin": "xxxx",
-        "qq": "xxxxx"
+        "qq": "xxxxx",
+        "pay": {
+            "bank": "xxxxxxxxxxx",
+            "alipay": "xxxxxxxxx",
+            "tenpay": "xxxxxxx",
+            "default": "slippery"//默认的支付方式
+        },
+        "contact":{"name":"王五","tel":"xxxx"}
     }
 }
 ```
@@ -95,7 +104,7 @@
 | url | http://domain/user/modify |
 | method | post |
 | cookie | uid,token |
-| post params | nick:商家名称`(必填)`<br/>logo:商家的logo`(此处可以让用户上传图片)`<br/>legal_person:法人<br/>address:商家地址<br/>tel:联系方式<br/>website:网站主页<br/>weixin:微信公众号<br/>qq:qq号码<br/>|
+| post params | nick:商家名称`(必填)`<br/>logo:商家的logo`(此处可以让用户上传图片)`<br/>legal_person:法人<br/>tax_login_certificate:税务登记证书(http图片地址)<br/>email:企业邮箱<br/>address:商家地址<br/>tel:联系方式<br/>website:网站主页<br/>weixin:微信公众号<br/>qq:qq号码<br/>//设置支付帐号信息，json格式字符串<br/>pay:"xxxxxx"<br/>//企业联系人信息<br/>contact:"{\\"name\\":\\"王五\\",{\\"tel\\":\\"135xxxxxxx\\"}}"|
 
 ######返回结果：
 ```
