@@ -185,7 +185,7 @@
         return false;
     });
 
-    slider.slideTo(0);
+    slider.slideTo(7);
     $("#audio")[0].pause();
     setTimeout(function() {
         $('#audio-switcher').trigger('click');
