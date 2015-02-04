@@ -38,13 +38,16 @@ body{margin:0;padding:0;display:block;height:100%;}
 .page-slide{
     background-image: url(../images/page.top.png);
     background-repeat:no-repeat;
-    background-position:50% 0;
+    background-position:50% 9.52%;
     background-size: 100% auto;
 }
 .wallpaper{
     height:100%;width:100%;background:url(../images/wallpaper.png) 50% 0 no-repeat;
     background-size:92.34% auto;
     display:inline-block;
+    margin-top:17%;
+    vertical-align:bottom;
+    overflow:hidden;
 }
 .wallpaper .pic{margin-top:12.03%;position:relative;overflow:hidden;}
 .talk{position:absolute;width:78.125%;height:12.5%;background:url(../images/talk.png) no-repeat;background-size:100% auto;}
@@ -83,13 +86,13 @@ body{margin:0;padding:0;display:block;height:100%;}
 .page5 .pic-des{background-position:0 75%;}
 .page6 .pic-des{background-position:0 100%;}
 
-.page7{background:url(../images/page7.logo.png) 50% 5.65% no-repeat #FF006F;background-size:15% auto;}
+.page7{background:url(../images/page7.logo.png) 50% 5.65% no-repeat #FF1C74;background-size:15% auto;}
 .page7 .container{margin:20.14% 0 0;height:48.81%;background:url(../images/page7.bg.png) 50% 0 no-repeat;background-size:auto 100%;opacity:0;}
 .page7 .container .pic{background:url(../images/page7.text.png) 50% 700% no-repeat;background-size:auto 85.77%;height:100%;color:transparent;}
 .page7 .form{margin:5.56% 0 0;}
-.page7 .form-text{color:#DD0053;line-height:1.5;}
+.page7 .form-text{color:#ffb22b;line-height:1.5;font-size:16px;}
 .page7 .form-inputer{line-height:26px;padding:5px 10px;border:0;background:#fff;border-radius:5px;}
-.page7 .form-btn{-webkit-appearance:none;line-height:26px;padding:5px 15px;border:0;background:#FFB000;border-radius:5px;color:#fff;}
+.page7 .form-btn{-webkit-appearance:none;line-height:26px;padding:5px 15px;border:0;background:#ffb22b;border-radius:5px;color:#fff;}
 .page7 .form-inputer:focus{outline:none;box-shadow:0 0 10px rgba(0,0,0,1);}
 .page7 .result{bottom:-170px;height:160px;background:#fff;position:absolute;width:100%;}
 .page7 .result::before{content:'';display:block;width:0;height:0;position:absolute;top:0;left:50%;border:6px dashed transparent;border-top:6px solid #FF006F;}
