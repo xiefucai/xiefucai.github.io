@@ -153,17 +153,14 @@
 
     window.isAudioOn = 0;
     $('#audio-switcher').bind('click', function() {
-        if ($('#audio').length == 0) {
-            $(
-                '<audio id="audio" src="sounds/bg.mp3" loop preload="auto" autoplay="false"></audio>'
-            ).appendTo('body');
-        }
         if (window.isAudioOn == 1) {
             $(this).removeClass('rotating')
             $('#audio').get(0).pause();
         } else {
             $(this).addClass('rotating');
-            $('#audio').attr('autoplay', 'true').get(0).play();
+            setTimeout(function() {
+                $('#audio').get(0).play();
+            }, 0);
         };
         window.isAudioOn = +!window.isAudioOn;
 
@@ -189,7 +186,8 @@
     });
 
     slider.slideTo(0);
+    $("#audio")[0].pause();
     setTimeout(function() {
         $('#audio-switcher').trigger('click');
-    }, 1500);
+    }, 2500);
 })(Zepto);
