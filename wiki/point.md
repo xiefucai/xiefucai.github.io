@@ -70,3 +70,19 @@ http://domain/point/list?search=%7B%22id%22%3A%2210*%22%2C%22type%22%3A0%2C%22ad
     }
 }
 ```
+
+##### 删除售货点
+| key | value |
+| --- | ----- |
+| url | http://domain/point/delete |
+| method | post |
+| cookie | uid,token |
+| get params | id=xxxx|
+
+######返回结果：
+```
+{
+    "code": 0,
+    "msg": "xxx"
+}
+```
