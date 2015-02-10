@@ -17,7 +17,7 @@
 
 | key | value |
 | --- | ----- |
-| url | http://domain/user/get_friends |
+| url | http://domain/user/get_friends.php |
 | method | get |
 | cookie | 无 |
 | get params | userid=xxxx |
@@ -46,7 +46,7 @@
 
 | key | value |
 | --- | ----- |
-| url | http://domain/task/send |
+| url | http://domain/task/send.php |
 | method | post |
 | cookie | 无 |
 | post params | fuserid=xxxx(推送方的userid)<br/>tuserid=xxxx(接收方的userid)<br/>tasks=urlencode(url1),urlencode(url2)... |
@@ -75,7 +75,7 @@
 
 | key | value |
 | --- | ----- |
-| url | http://domain/task/get |
+| url | http://domain/task/get.php |
 | method | get |
 | cookie | 无 |
 | get params | userid=xxx&state=xxx|
@@ -106,7 +106,7 @@
 
 | key | value |
 | --- | ----- |
-| url | http://domain/task/set |
+| url | http://domain/task/set.php |
 | method | post |
 | cookie | 无 |
 | post params | userid=xxx<br/>tasks=id1,id2,...<br/>state=1|
@@ -124,7 +124,7 @@
 
 | key | value |
 | --- | ----- |
-| url | http://domain/task/update |
+| url | http://domain/task/update.php |
 | method | post |
 | cookie | 无 |
 | post params | userid=xxx<br/>tasks=urlencode(str)|
@@ -162,11 +162,11 @@ tasks的值str为如下格式json结构体转换成的字符串
 }
 ```
 
-##### 5.获取多任务详情信息
+##### 6.获取多任务详情信息
 
 | key | value |
 | --- | ----- |
-| url | http://domain/task/info |
+| url | http://domain/task/info.php |
 | method | get |
 | cookie | 无 |
 | post params | userid=xxx<br/>tasks=id1,id2,id3(如果要查看所有任务，此处填0)<br/>state=1|
