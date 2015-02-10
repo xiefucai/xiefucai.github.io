@@ -102,7 +102,7 @@
 }
 ```
 
-##### 4.批量更改某作务至某状态
+##### 4.批量更改某些任务至某状态
 
 | key | value |
 | --- | ----- |
@@ -111,6 +111,48 @@
 | cookie | 无 |
 | post params | userid=xxx<br/>tasks=id1,id2,...<br/>state=1|
 
+######返回结果：
+
+``` 
+{
+    "code": 0,
+    "msg": ""
+}
+```
+	
+##### 5.批量更新下载中的任务信息
+
+| key | value |
+| --- | ----- |
+| url | http://domain/task/update |
+| method | post |
+| cookie | 无 |
+| post params | userid=xxx<br/>tasks=urlencode(str)|
+
+tasks的值str为如下格式json结构体转换成的字符串
+
+```
+[
+    {
+        "id1": {
+            "speed": 12345678,
+            "total_size": 9987658,
+            "current_size": 0
+        },
+        "id2":{
+            "speed": 12345678,
+            "total_size": 9987658,
+            "current_size": 0
+        },
+        "id3":{
+            "speed": 12345678,
+            "total_size": 9987658,
+            "current_size": 0
+        },
+        ...
+    }
+]
+```
 ######返回结果：
 
 ``` 
@@ -138,6 +180,9 @@
     "data": [{
         "id": "xxx",
         "state":2,
+        "total_size":0, //文件大小
+        "current_size":0, //已下载
+        "download_speed":0, //下载速度
         "speed":12345,
         "fuserid":"xxx",
         "tuserid":"xxx",
@@ -145,6 +190,9 @@
     },{
         "id": "xxx",
         "state":2,
+        "total_size":0,
+        "current_size":0,
+        "download_speed":0,
         "speed":12345,
         "fuserid":"xxx",
         "tuserid":"xxx",
@@ -152,6 +200,9 @@
     },{
         "id": "xxx",
         "state":2,
+        "total_size":0,
+        "current_size":0,
+        "download_speed":0,
         "speed":12345,
         "fuserid":"xxx",
         "tuserid":"xxx",
