@@ -78,11 +78,7 @@ tasks的值str为如下格式json结构体转换成的字符串
 ``` 
 {
     "code": 0,
-    "msg": "",
-    "data": {
-        "tasks": [id1,id2,id3,...],
-        "state": 0
-    }
+    "msg": ""
 }
 ```
 
@@ -92,7 +88,8 @@ tasks的值str为如下格式json结构体转换成的字符串
  1: 对方开始下载
  2: 对方正在下载
  3: 对方已下载
- 4: 对方拒绝接收 )
+ 4: 下载失败
+ 5: 对方拒绝接收 )
 ##### 3.获取被推送任务
 
 | key | value |
@@ -102,25 +99,39 @@ tasks的值str为如下格式json结构体转换成的字符串
 | cookie | 无 |
 | get params | userid=xxx&state=xxx|
 
+如果不传state，则返回某用户的所有任务，不分状态
 ######返回结果：
 
 ``` 
 {
     "code": 0,
-    "msg": "",
-    "data": [{
-        "id": "xxx",
-        "fuserid":"xxx",
-        "url":"http://xxxx"
-    },{
-        "id": "xxx",
-        "fuserid":"xxx",
-        "url":"http://xxxx"
-    },{
-        "id": "xxx",
-        "fuserid":"xxx",
-        "url":"http://xxxx"
-    },...]
+    "msg": "success",
+    "data": [
+        {
+            "url": "http://www.66ys.cc/bd/20150209/31061.htm",
+            "size": 98456,
+            "name": "甜蜜的永远.avi",
+            "id": "8968955_1423650153_1",
+            "fuserid": "314469767",
+            "time": 1423650153,
+            "state": 1,
+            "current_size": 0,
+            "download_speed": 0,
+            "msg": ""
+        },
+        {
+            "url": "http://www.66ys.cc/ys/20150210/31064.htm",
+            "size": 98456,
+            "name": "性本恶.avi",
+            "id": "8968955_1423650153_2",
+            "fuserid": "314469767",
+            "time": 1423650153,
+            "state": 1,
+            "current_size": 0,
+            "download_speed": 0,
+            "msg": ""
+        }
+    ]
 }
 ```
 
@@ -131,7 +142,7 @@ tasks的值str为如下格式json结构体转换成的字符串
 | url | http://domain/task/set.php |
 | method | post |
 | cookie | 无 |
-| post params | userid=xxx<br/>tasks=id1,id2,...<br/>state=1|
+| post params | tasks=id1,id2,...<br/>state=1|
 
 ######返回结果：
 
@@ -157,9 +168,8 @@ tasks的值str为如下格式json结构体转换成的字符串
 [
     {
         "id1": {
-            "speed": 12345678,
-            "total_size": 9987658,
-            "current_size": 0
+            "state":4,
+            "msg":"下载失败"
         },
         "id2":{
             "speed": 12345678,
