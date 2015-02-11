@@ -1,4 +1,4 @@
-### 推盘http协议文档
+# 推盘http协议文档
 
 说明：
 
@@ -165,25 +165,22 @@ tasks的值str为如下格式json结构体转换成的字符串
 tasks的值str为如下格式json结构体转换成的字符串
 
 ```
-[
-    {
-        "id1": {
-            "state":4,
-            "msg":"下载失败"
-        },
-        "id2":{
-            "speed": 12345678,
-            "total_size": 9987658,
-            "current_size": 0
-        },
-        "id3":{
-            "speed": 12345678,
-            "total_size": 9987658,
-            "current_size": 0
-        },
-        ...
+{
+    "id1": {
+        "state": 4,
+        "msg": "下载失败"
+    },
+    "id2": {
+        "speed": 12345678,
+        "total_size": 9987658,
+        "current_size": 0
+    },
+    "id3": {
+        "speed": 12345678,
+        "total_size": 9987658,
+        "current_size": 0
     }
-]
+}
 ```
 ######返回结果：
 
@@ -193,52 +190,3 @@ tasks的值str为如下格式json结构体转换成的字符串
     "msg": ""
 }
 ```
-
-##### 6.获取多任务详情信息
-
-| key | value |
-| --- | ----- |
-| url | http://domain/task/info.php |
-| method | get |
-| cookie | 无 |
-| post params | userid=xxx<br/>tasks=id1,id2,id3(如果要查看所有任务，此处填0)<br/>state=1|
-
-######返回结果：
-
-``` 
-{
-    "code": 0,
-    "msg": "",
-    "data": [{
-        "id": "xxx",
-        "state":2,
-        "total_size":0, //文件大小
-        "current_size":0, //已下载
-        "download_speed":0, //下载速度
-        "speed":12345,
-        "fuserid":"xxx",
-        "tuserid":"xxx",
-        "tasks":"http://xxxxx"
-    },{
-        "id": "xxx",
-        "state":2,
-        "total_size":0,
-        "current_size":0,
-        "download_speed":0,
-        "speed":12345,
-        "fuserid":"xxx",
-        "tuserid":"xxx",
-        "tasks":"http://xxxxx"
-    },{
-        "id": "xxx",
-        "state":2,
-        "total_size":0,
-        "current_size":0,
-        "download_speed":0,
-        "speed":12345,
-        "fuserid":"xxx",
-        "tuserid":"xxx",
-        "tasks":"http://xxxxx"
-    },...]
-}
-```
