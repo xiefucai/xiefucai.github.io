@@ -49,8 +49,30 @@
 | url | http://domain/task/send.php |
 | method | post |
 | cookie | 无 |
-| post params | fuserid=xxxx(推送方的userid)<br/>tuserid=xxxx(接收方的userid)<br/>tasks=urlencode(url1),urlencode(url2)... |
+| post params | fuserid=xxxx(推送方的userid)<br/>tuserid=id1,id2,id3,...(接收方的userid)<br/>tasks=urlencode(str)|
 
+tasks的值str为如下格式json结构体转换成的字符串
+
+```
+[
+    {
+        "url": "http://xxxx",
+        "size": 98456,
+        "name": "xxxxxx.avi"
+    },
+    {
+        "url": "http://xxxx",
+        "size": 98456,
+        "name": "xxxxxx.avi"
+    },
+    {
+        "url": "http://xxxx",
+        "size": 98456,
+        "name": "xxxxxx.avi"
+    },
+    ...
+]
+```
 ######返回结果：
 
 ``` 
