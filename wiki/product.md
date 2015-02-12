@@ -1,6 +1,6 @@
 ---
 
-####  商品管理
+####  商品分类
 
 ---
 ##### 分类列表
@@ -63,16 +63,53 @@
 {"code":0,"msg":"xxx"}
 ```
 
+---
 
+商品相关
 
+---
+##### 商品列表
+| key | value |
+| --- | ----- |
+| url | http://domain/product/list |
+| method | get |
+| cookie | uid,token |
+| get params |index=0&limit=10<span style="color:red">&category=xx&subcategory=&id=xx&name=xx</span>(红色的参数为可选参数)<br/><span style="color:green">一级分类或二级分类不限时，则category或subcategory为0<br/>id和name则为模糊匹配</span>|
 
-
-
-
-
-
-
-
+######返回结果：
+```
+{
+    "code": 0,
+    "msg": "xxx",
+    "data": [
+        {
+            "id": "JS000030",
+            "name": "加多宝凉茶",
+            "category": "1_3,2_5",
+            "sell_area": "12_23_45<13_34_78",
+            "sell_price": 17.8,
+            "cost_price": 12,
+            "score": 40,
+            "stock": 34,
+            "weight": "500g",
+            "is_selling": 1
+        },
+        {
+            "id": "JS000030",
+            "name": "加多宝凉茶",
+            "category": "1_3,2_5",
+            "sell_area": "12_23_45<13_34_78",
+            "sell_price": 17.8,
+            "cost_price": 12,
+            "score": 40,
+            "stock": 34,
+            "weight": "500g",
+            "is_selling": 1
+        },
+        ...
+    ]
+}
+```
 
 ##### 新增、修改商品
 | key | value |
@@ -80,9 +117,65 @@
 | url | http://domain/product/set |
 | method | post |
 | cookie | uid,token |
-| post params | name:商品名称<br/>categorys:1_3,2_5(商品分类，多组分类用“,”分隔，每组分类级数间用“_”分隔)<br/>sellarea:str1(销售区域)|
+| post params | id:商品索引(没有此字段或者此字段值为空表示新增)<br/>name:商品名称<br/>categorys:1_3,2_5(商品分类，多组分类用“,”分隔，每组分类级数间用“_”分隔)<br/>sell_area:12_23_45,13_34_78(多个销售地区间用“,”分隔，每个销售地区间的省市区编号间用“_”分隔)<br/>sell_price:商品售价<br/>cost_price:商品进价<br/>score:商品积分<br/>stock:库存<br/>weight:商品重量<br/>is_selling:上架状态(0-不上架，1-上架)|keywords:关键词，多个关键词用空格分隔<br/>pic:上传图片<br/>des:商品描述|
 
 ######返回结果：
 ```
 {"code":0,"msg":"xxx"}
+```
+
+##### 获取商品详情
+| key | value |
+| --- | ----- |
+| url | http://domain/product/info |
+| method | get |
+| cookie | uid,token |
+| post params | id:商品索引|
+
+######返回结果：
+```
+{
+    "code": 0,
+    "msg": "xxx",
+    "data": {
+        "id": "JS000030",
+        "name": "加多宝凉茶",
+        "category": "1_3,2_5",
+        "sell_area": "12_23_45<13_34_78",
+        "sell_price": 17.8,
+        "cost_price": 12,
+        "score": 40,
+        "stock": 34,
+        "weight": "500g",
+        "is_selling": 1
+    }
+}
+```
+
+##### 修改商品属性
+| key | value |
+| --- | ----- |
+| url | http://domain/product/update |
+| method | post |
+| cookie | uid,token |
+| post params | <div style="color:red;font-size:12px;">除id外作何属性都可以修改，可以支持同时修改多个属性</div>name=xxx<br/>is_selling:0<br/>...|
+
+######返回结果：
+```
+{
+    "code": 0,
+    "msg": "xxx",
+    "data": {
+        "id": "JS000030",
+        "name": "加多宝凉茶",
+        "category": "1_3,2_5",
+        "sell_area": "12_23_45<13_34_78",
+        "sell_price": 17.8,
+        "cost_price": 12,
+        "score": 40,
+        "stock": 34,
+        "weight": "500g",
+        "is_selling": 1
+    }
+}
 ```
