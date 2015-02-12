@@ -50,7 +50,7 @@
 }
 ```
 
-##### 新增/修改商品
+##### 新增、修改商品
 | key | value |
 | --- | ----- |
 | url | http://domain/product_category/set |
