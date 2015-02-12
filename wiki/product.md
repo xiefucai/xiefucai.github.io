@@ -56,47 +56,33 @@
 | url | http://domain/product_category/set |
 | method | post |
 | cookie | uid,token |
-| post params | name:商品名称<br/>categorys:1_3,2_5(商品分类，多组分类用“,”分隔，每组分类级数间用“_”分隔)<br/>sellarea:str1(销售区域)|
+| post params | id:分类索引(无此字段或字段值为空表示新增分类)<br/>name:分类名称<br/>index:排序<br/>pid:父级分类的id，无父级填0<br/>visible:是否显示,0隐藏,1显示|
 
 ######返回结果：
 ```
 {"code":0,"msg":"xxx"}
 ```
 
-##### 获取售货点信息
+
+
+
+
+
+
+
+
+
+
+
+##### 新增、修改商品
 | key | value |
 | --- | ----- |
-| url | http://domain/point/get |
-| method | get |
-| cookie | uid,token |
-| get params | id=xxxx|
-
-######返回结果：
-```
-{
-    "code": 0,
-    "msg": "xxx",
-    "data": {
-        "id": "xxxx",
-        "type": 0,
-        "address": "xxxx",
-        "lbs": "xxxxx"
-    }
-}
-```
-
-##### 删除售货点
-| key | value |
-| --- | ----- |
-| url | http://domain/point/delete |
+| url | http://domain/product/set |
 | method | post |
 | cookie | uid,token |
-| get params | id=xxxx|
+| post params | name:商品名称<br/>categorys:1_3,2_5(商品分类，多组分类用“,”分隔，每组分类级数间用“_”分隔)<br/>sellarea:str1(销售区域)|
 
 ######返回结果：
 ```
-{
-    "code": 0,
-    "msg": "xxx"
-}
+{"code":0,"msg":"xxx"}
 ```
