@@ -56,7 +56,7 @@ tasks的值str为如下格式json结构体转换成的字符串
 ```
 [
     {
-        "url": "http://http://www.6vhao.net/",
+        "url": "http://www.6vhao.net/",
         "size": 98456,
         "name": "地球防卫遗孀.avi"
     },
@@ -222,31 +222,43 @@ tasks的值str为如下格式json结构体转换成的字符串
 {
     "code": 0,
     "msg": "success",
-    "data": [
-        {
+    "data": {
+        "297752445_1423729596_1": {
             "url": "http://www.66ys.cc/bd/20150209/31061.htm",
-            "size": "98456",
+            "size": 98456,
             "name": "甜蜜的永远.avi",
-            "id": "8968955_1423650153_1",
+            "id": "297752445_1423729596_1",
             "fuserid": "314469767",
-            "time": 1423650153,
-            "state": 1,
-            "current_size": "98456",
-            "download_speed": 0,
-            "msg": ""
+            "time": 1423729596,
+            "state": 0
         },
-        {
-            "url": "http://www.66ys.cc/ys/20150210/31064.htm",
-            "size": "98456",
-            "name": "性本恶.avi",
-            "id": "8968955_1423650153_2",
+        "408948711_1423729596_0": {
+            "url": "http://http://www.6vhao.net/",
+            "size": 98456,
+            "name": "地球防卫遗孀.avi",
+            "id": "408948711_1423729596_0",
             "fuserid": "314469767",
-            "time": 1423650153,
-            "state": 1,
-            "current_size": "98456",
-            "download_speed": 0,
-            "msg": ""
+            "time": 1423729596,
+            "state": 0
+        },
+        "8968955_1423729596_0": {
+            "url": "http://http://www.6vhao.net/",
+            "size": 98456,
+            "name": "地球防卫遗孀.avi",
+            "id": "8968955_1423729596_0",
+            "fuserid": "314469767",
+            "time": 1423729596,
+            "state": 0
+        },
+        "8968955_1423729596_2": {
+            "url": "http://www.66ys.cc/ys/20150210/31064.htm",
+            "size": 98456,
+            "name": "性本恶.avi",
+            "id": "8968955_1423729596_2",
+            "fuserid": "314469767",
+            "time": 1423729596,
+            "state": 0
         }
-    ]
+    }
 }
 ```
