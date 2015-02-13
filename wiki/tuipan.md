@@ -56,21 +56,20 @@ tasks的值str为如下格式json结构体转换成的字符串
 ```
 [
     {
-        "url": "http://xxxx",
+        "url": "http://http://www.6vhao.net/",
         "size": 98456,
-        "name": "xxxxxx.avi"
+        "name": "地球防卫遗孀.avi"
     },
     {
-        "url": "http://xxxx",
+        "url": "http://www.66ys.cc/bd/20150209/31061.htm",
         "size": 98456,
-        "name": "xxxxxx.avi"
+        "name": "甜蜜的永远.avi"
     },
     {
-        "url": "http://xxxx",
+        "url": "http://www.66ys.cc/ys/20150210/31064.htm",
         "size": 98456,
-        "name": "xxxxxx.avi"
-    },
-    ...
+        "name": "性本恶.avi"
+    }
 ]
 ```
 ######返回结果：
@@ -78,7 +77,24 @@ tasks的值str为如下格式json结构体转换成的字符串
 ``` 
 {
     "code": 0,
-    "msg": ""
+    "msg": "success",
+    "data": {
+        "8968955": [
+            "8968955_1423729596_0",
+            "8968955_1423729596_1",
+            "8968955_1423729596_2"
+        ],
+        "297752445": [
+            "297752445_1423729596_0",
+            "297752445_1423729596_1",
+            "297752445_1423729596_2"
+        ],
+        "408948711": [
+            "408948711_1423729596_0",
+            "408948711_1423729596_1",
+            "408948711_1423729596_2"
+        ]
+    }
 }
 ```
 
@@ -109,25 +125,25 @@ tasks的值str为如下格式json结构体转换成的字符串
     "data": [
         {
             "url": "http://www.66ys.cc/bd/20150209/31061.htm",
-            "size": 98456,
+            "size": "98456",
             "name": "甜蜜的永远.avi",
             "id": "8968955_1423650153_1",
             "fuserid": "314469767",
             "time": 1423650153,
             "state": 1,
-            "current_size": 0,
+            "current_size": "98456",
             "download_speed": 0,
             "msg": ""
         },
         {
             "url": "http://www.66ys.cc/ys/20150210/31064.htm",
-            "size": 98456,
+            "size": "98456",
             "name": "性本恶.avi",
             "id": "8968955_1423650153_2",
             "fuserid": "314469767",
             "time": 1423650153,
             "state": 1,
-            "current_size": 0,
+            "current_size": "98456",
             "download_speed": 0,
             "msg": ""
         }
@@ -152,7 +168,7 @@ tasks的值str为如下格式json结构体转换成的字符串
     "msg": ""
 }
 ```
-	
+    
 ##### 5.批量更新下载中的任务信息
 
 | key | value |
@@ -172,13 +188,13 @@ tasks的值str为如下格式json结构体转换成的字符串
     },
     "id2": {
         "speed": 12345678,
-        "total_size": 9987658,
-        "current_size": 0
+        "total_size": "98456",
+        "current_size": "0"
     },
     "id3": {
         "speed": 12345678,
-        "total_size": 9987658,
-        "current_size": 0
+        "total_size": "98456",
+        "current_size": "0"
     }
 }
 ```

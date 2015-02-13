@@ -117,7 +117,7 @@
 | url | http://domain/product/set |
 | method | post |
 | cookie | uid,token |
-| post params | id:商品索引(没有此字段或者此字段值为空表示新增)<br/>name:商品名称<br/>categorys:1_3,2_5(商品分类，多组分类用“,”分隔，每组分类级数间用“_”分隔)<br/>sell_area:12_23_45,13_34_78(多个销售地区间用“,”分隔，每个销售地区间的省市区编号间用“_”分隔)<br/>sell_price:商品售价<br/>cost_price:商品进价<br/>score:商品积分<br/>stock:库存<br/>weight:商品重量<br/>is_selling:上架状态(0-不上架，1-上架)|keywords:关键词，多个关键词用空格分隔<br/>pic:上传图片<br/>des:商品描述|
+| post params | id:商品索引(没有此字段或者此字段值为空表示新增)<br/>name:商品名称<br/>categorys:1_3,2_5(商品分类，多组分类用“,”分隔，每组分类级数间用“_”分隔)<br/>sell_area:12_23_45,13_34_78(多个销售地区间用“,”分隔，每个销售地区间的省市区编号间用“_”分隔)<br/>sell_price:商品售价<br/>cost_price:商品进价<br/>score:商品积分<br/>stock:库存<br/>weight:商品重量<br/>is_selling:上架状态(0-不上架，1-上架)<br/>keywords:关键词，多个关键词用空格分隔<br/>pic:上传图片<br/>des:商品描述|
 
 ######返回结果：
 ```
