@@ -206,3 +206,47 @@ tasks的值str为如下格式json结构体转换成的字符串
     "msg": ""
 }
 ```
+
+##### 6.根据任务id获取作务详情
+
+| key | value |
+| --- | ----- |
+| url | http://domain/task/get.php |
+| method | get |
+| cookie | 无 |
+| get params | tasks=id1,id2,...|
+
+######返回结果：
+
+``` 
+{
+    "code": 0,
+    "msg": "success",
+    "data": [
+        {
+            "url": "http://www.66ys.cc/bd/20150209/31061.htm",
+            "size": "98456",
+            "name": "甜蜜的永远.avi",
+            "id": "8968955_1423650153_1",
+            "fuserid": "314469767",
+            "time": 1423650153,
+            "state": 1,
+            "current_size": "98456",
+            "download_speed": 0,
+            "msg": ""
+        },
+        {
+            "url": "http://www.66ys.cc/ys/20150210/31064.htm",
+            "size": "98456",
+            "name": "性本恶.avi",
+            "id": "8968955_1423650153_2",
+            "fuserid": "314469767",
+            "time": 1423650153,
+            "state": 1,
+            "current_size": "98456",
+            "download_speed": 0,
+            "msg": ""
+        }
+    ]
+}
+```
