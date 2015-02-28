@@ -151,7 +151,9 @@
         "stock": 34,
         "weight": "500g",
         "is_selling": 1,
-        "pic":"http://xxxxx"
+        "pic":"http://xxxxx",
+        "keywords":"aaa,bbb",
+        "des":"xxxxxx"
     }
 }
 ```
