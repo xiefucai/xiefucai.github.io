@@ -92,7 +92,8 @@
             "score": 40,
             "stock": 34,
             "weight": "500g",
-            "is_selling": 1
+            "is_selling": 1,
+            "pic":"http://xxxxx"
         },
         {
             "id": "JS000030",
@@ -104,7 +105,8 @@
             "score": 40,
             "stock": 34,
             "weight": "500g",
-            "is_selling": 1
+            "is_selling": 1,
+            "pic":"http://xxxxx"
         },
         ...
     ]
@@ -147,7 +149,8 @@
         "score": 40,
         "stock": 34,
         "weight": "500g",
-        "is_selling": 1
+        "is_selling": 1,
+        "pic":"http://xxxxx"
     }
 }
 ```
