@@ -183,3 +183,19 @@
     }
 }
 ```
+
+##### 删除商品
+| key | value |
+| --- | ----- |
+| url | http://domain/product/delete |
+| method | post |
+| cookie | uid,token |
+| post params | id=xxx|
+
+######返回结果：
+```
+{
+    "code": 0,
+    "msg": "xxx"
+ }
+```
