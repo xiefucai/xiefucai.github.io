@@ -10,7 +10,7 @@
 | url | http://domain/point/list |
 | method | get |
 | cookie | uid,token |
-| get params | index=0&limit=10<span style="color:red">&line_id=xxxx&id=xxx&name=xxxx&lbs=xxx,yyy</span><br/>order:排序条件(如：0_type_id，这里的order值的第一位0，表示升序，如果是1,表示降序，第一位后面的值为组合字段排序,可以达到先分组后排序的效果)|
+| get params | index=0&limit=10<span style="color:red">&line_id=xxxx&id=xxx&name=xxxx&lbs=xxx,yyy&order=0_type_id</span><br/>order:排序条件(如：0_type_id，这里的order值的第一位0，表示升序，如果是1,表示降序，第一位后面的值为组合字段排序,可以达到先分组后排序的效果)|
 
 ######返回结果：
 ```
