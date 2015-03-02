@@ -1,0 +1,67 @@
+<!doctype html>
+<html dir="ltr" lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <title>便利超人管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0" />
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <link rel="stylesheet" href="css/index.css?__VERSION__" type="text/css" />
+</head>
+
+<body>
+    <div class="header">
+        <h1 class="site-name">便利超人后台管理系统v1.0</h1>
+        <div class="site-info"></div>
+    </div>
+    <div class="sidebar">
+        <!--[if lt IE 8]>
+        <a style="position:absolute;left:0;right:0;top:0;line-height:40px;font-size:14px;color:#ff0;background:#f00;text-decoration:none;" href="http://windows.microsoft.com/zh-cn/internet-explorer/download-ie" target="_blank">请升级您的浏览器</a>
+        <![endif]-->
+        <dl class="menu" id="menu">
+            <dt class="menu-title"><a href="javascript:;" class="menu-title-link" target="main-frame">点位相关</a></dt>
+            <dd class="submenu">
+                <ul class="submenu-list">
+                    <li class="submenu-item"><a href="point/list.html" class="submenu-item-link" target="main-frame">点位相关</a></li>
+                </ul>
+            </dd>
+            <dt class="menu-title"><a href="javascript:;" class="menu-title-link" target="main-frame">商品管理</a></dt>
+            <dd class="submenu">
+                <ul class="submenu-list">
+                    <li class="submenu-item"><a href="product/list.html" class="submenu-item-link" target="main-frame">所有商品</a></li>
+                    <li class="submenu-item"><a href="product_category/list.html" class="submenu-item-link" target="main-frame">分类管理</a></li>
+                </ul>
+            </dd>
+            <dt class="menu-title"><a href="javascript:;" class="menu-title-link" target="main-frame">基本信息管理</a></dt>
+            <dd class="submenu">
+                <ul class="submenu-list">
+                    <li class="submenu-item"><a href="line/list.html" class="submenu-item-link" target="main-frame">线路管理</a></li>
+                    <li class="submenu-item"><a href="line/list.html" class="submenu-item-link" target="main-frame">线路授权</a></li>
+                    <li class="submenu-item"><a href="line/list.html" class="submenu-item-link" target="main-frame">点位管理</a></li>
+                    <li class="submenu-item"><a href="line/list.html" class="submenu-item-link" target="main-frame">线路授权</a></li>
+                </ul>
+            </dd>
+        </dl>
+    </div>
+    <div class="main">
+        <iframe width="100%" height="100%" frameborder="0" id="main-frame" name="main-frame" src="about:blank"></iframe>
+    </div>
+    <noscript>您的浏览器需要开启Javascript</noscript>
+    <script type="text/javascript" src="./js/lib/jquery-1.7.2.min.js?__VERSION__"></script>
+    <script src="./js/index.js?__VERSION__" type="text/javascript"></script>
+</body>
+<!--[if lt IE 8]>
+<script>
+    (function(){
+    var resize = function(){
+        var m = document.getElementById('main-frame'),
+            h = m.parentNode.clientHeight;
+            m.height = h;
+    };
+    window.onresize = resize;
+    resize();
+    })();
+</script>
+<![endif]-->
+</html>

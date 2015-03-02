@@ -1,0 +1,94 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background: #B2B2B2;
+}
+small {
+    font-size: 12px;
+}
+.login-form {
+    position: absolute;
+    width: 380px;
+    height: 284px;
+    left: 50%;
+    top: 50%;
+    margin-top: -142px;
+    margin-left: -190px;
+    background: #fff;
+    border-radius: 5px;
+}
+.login-form-title {
+    line-height: 60px;
+    font-size: 16px;
+    font-weight: normal;
+    text-indent: 22px;
+    margin: 0 0 20px;
+    padding: 0;
+    color: #35A0B5;
+}
+.login-form-msg {
+    color: red;
+    line-height: 20px;
+    margin: -30px 35px 10px;
+    height: 20px;
+}
+.login-form-elems {
+    margin: 0 43px;
+    padding: 0;
+    list-style: none;
+}
+.login-form-elem {
+    margin: 0 0 18px;
+    padding: 0;
+    font-size: 14px;
+}
+.login-form-elem2 {
+    margin-top: 26px;
+    overflow: hidden;
+    margin-right: -9px;
+    text-align: right;
+}
+.login-form-input {
+    padding: 9px 8px;
+    margin-left: -9px;
+    border: 1px solid #E2E2E2;
+    width: 100%;
+    border-radius: 3px;
+}
+.login-form-input:focus {
+    border-color: #1BB0CD;
+    outline: none;
+    box-shadow: 0 0 10px rgba(27, 176, 205, 0.5);
+}
+.login-form-btn {
+    padding: 7px 20px;
+    border: 0;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.login-ok {
+    background: #3BB4CC;
+    border: 1px solid #3BB4CC;
+    color: #fff;
+}
+.login-ok:hover, .login-ok:focus {
+    background: #5DD6EE;
+}
+.login-cancel {
+    background: #fff;
+    border: 1px solid #E2E2E2;
+}
+.login-cancel:hover {
+    background: #fafafa;
+}
+.reg, .reg:visited {
+    color: #35A0B5;
+    font-size: 12px;
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    text-decoration: none;
+}
+.reg:hover {
+    text-decoration: underline;
+}
