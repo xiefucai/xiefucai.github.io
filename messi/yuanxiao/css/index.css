@@ -37,12 +37,21 @@ body{margin:0;padding:0;display:block;height:100%;overflow:hidden;}
 
 .result{position:absolute;top:0;left:0;right:0;bottom:0;background:url(../images/result.jpg) no-repeat;background-size:100% 100%;}
 .result-icon{background:url(../images/result_error_icon.png) no-repeat;background-size:92.1875% auto;background-position:50% 28.16%;width:100%;height:100%;}
-.result-info{position:absolute;bottom:0;left:0;right:0;background:url(../images/result_ok_layer.png) no-repeat;background-size:100% 100%;}
+.result-info{position:absolute;bottom:0;left:0;right:0;background:url(../images/result_error_layer.png) no-repeat;background-size:100% 100%;}
 .btn-again,.btn-follow{position:absolute;display:block;width:35.625%;height:17.07%;top:74%;}
 .btn-again{left:12.65625%;}
 .btn-follow{left:52.65625%;}
-.result-ok .result-icon{background-image:url(../images/result_ok_icon.png);}
-.result-ok .result-info{background-image:url(../images/result_error_layer.png);}
+/*.result-ok .result-icon{background-image:url(../images/result_ok_icon.png);}*/
+.result-ok .result-info{background-image:url(../images/result_ok_layer.png);}
+.result-ok-1 .result-icon{background-image:url(../images/result_ok_icon_1.png);}
+.result-ok-2 .result-icon{background-image:url(../images/result_ok_icon_2.png);}
+.result-ok-3 .result-icon{background-image:url(../images/result_ok_icon_3.png);}
+.result-ok-4 .result-icon{background-image:url(../images/result_ok_icon_4.png);}
+.result-ok-5 .result-icon{background-image:url(../images/result_ok_icon_5.png);}
+.result-ok-6 .result-icon{background-image:url(../images/result_ok_icon_6.png);}
+.result-ok-7 .result-icon{background-image:url(../images/result_ok_icon_7.png);}
+.result-ok-8 .result-icon{background-image:url(../images/result_ok_icon_8.png);}
+.result-ok-9 .result-icon{background-image:url(../images/result_ok_icon_9.png);}
 .share{background:url(../images/share.png) 87.5% 12.59% no-repeat rgba(0,0,0,0.9);background-size:60.46875% auto;position:absolute;top:0;bottom:0;right:0;left:0;}
 .none{display:none;}
 .swing{-webkit-animation:swing 2.5s infinite;-webkit-animation-timing-function:linear;-webkit-transform-origin: top center;}

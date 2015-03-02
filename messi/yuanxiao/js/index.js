@@ -105,7 +105,10 @@
         },
         showResult = function(i, k) {
             var result = $('#result');
-            result.removeClass('none').removeClass('result-ok result-error').addClass(k?'result-ok':'result-error').css('opacity',0).animate({'opacity':1});
+            result.attr('data-index',i).removeClass('none')
+                  .attr('class','result')
+                  .addClass(k?'result-ok result-ok-'+i:'result-error')
+                  .css('opacity',0).animate({'opacity':1});
         };
 
     $('#sliders').bind({
@@ -202,8 +205,12 @@
     });
 
     $('.btn-again').bind('doClick',function(event){
-        var isError = $('#result').hasClass('result-ok');
-        if (isError) {
+        var isOk = $('#result').hasClass('result-ok');
+        if (isOk) {
+            $('#share').removeClass('none').css('opacity',0).animate({'opacity':1},800,'ease-in-out',function(){
+                $(this).attr('data-visible',1);
+            });
+        }else{
             if (questionArray.length > 0) {
                 $('.questions').addClass('none').find('.question').addClass('none');
                 $('#result').animate({'opacity':0},800,'ease-in-out',function(){
@@ -213,10 +220,6 @@
             }else{
                 alert('没有题目了');
             }
-        }else{
-            $('#share').removeClass('none').css('opacity',0).animate({'opacity':1},800,'ease-in-out',function(){
-                $(this).attr('data-visible',1);
-            });
             //分享朋友圈
         }
 
