@@ -36,7 +36,7 @@ body{margin:0;padding:0;display:block;height:100%;overflow:hidden;}
 .active .next::after{position:relative;-webkit-animation:next 0.8s infinite;-webkit-animation-timing-function:linear;}
 
 .result{position:absolute;top:0;left:0;right:0;bottom:0;background:url(../images/result.jpg) no-repeat;background-size:100% 100%;}
-.result-icon{background:url(../images/result_error_icon.png) no-repeat;background-size:92.1875% auto;background-position:50% 28.16%;width:100%;height:100%;}
+.result-icon{background:url(../images/result_error_icon.png) no-repeat;background-size:auto 40%;background-position:50% 28.16%;width:100%;height:100%;}
 .result-info{position:absolute;bottom:0;left:0;right:0;background:url(../images/result_error_layer.png) no-repeat;background-size:100% 100%;}
 .btn-again,.btn-follow{position:absolute;display:block;width:35.625%;height:17.07%;top:74%;}
 .btn-again{left:12.65625%;}
