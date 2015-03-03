@@ -44,6 +44,44 @@
 }
 ```
 
+##### 线路详情
+
+| key | value |
+| --- | ----- |
+| url | http://domain/line/info |
+| method | get |
+| cookie | uid,token |
+| get params | id＝xxx|
+
+######返回结果：
+```
+{
+    "code": 0,
+    "msg": "",
+    "total":23,
+    "data": {
+        "id": 1,
+        "area": "伦教",
+        "province": 1,
+        "city": 123,
+        "des": "xxxx",
+        "time": 1425266161,
+        "member":[
+            {
+                "id":1,
+                "name":"张三",
+                "rank"：0
+            },{
+                "id":2,
+                "name":"王五",
+                "rank"：1
+            },
+            ...
+        ]
+    }
+}
+```
+
 ##### 新增、修改线路
 | key | value |
 | --- | ----- |
