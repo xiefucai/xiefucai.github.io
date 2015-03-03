@@ -58,7 +58,6 @@
 {
     "code": 0,
     "msg": "",
-    "total":23,
     "data": {
         "id": 1,
         "area": "伦教",
@@ -128,5 +127,21 @@
             ...
         ]
     }
+}
+```
+
+##### 删除线路
+| key | value |
+| --- | ----- |
+| url | http://domain/line/delete |
+| method | post |
+| cookie | uid,token |
+| post params | id:xxx|
+
+######返回结果：
+```
+{
+    "code": 0,
+    "msg": "xxx"
 }
 ```
