@@ -159,11 +159,13 @@
         {
             "id":1,
             "name":"张三",
-            "rank"：0
+            "rank"：0,
+            "department":1
         },{
             "id":2,
             "name":"王五",
-            "rank"：1
+            "rank"：1,
+            "department":2
         },
         ...
     ]
@@ -176,7 +178,7 @@
 | url | http://domain/member/set |
 | method | post |
 | cookie | uid,token |
-| post params | id:分类索引(无此字段或字段值为空表示新增线路)<br/>name:姓名<br/>rank:1(职级)|
+| post params | id:分类索引(无此字段或字段值为空表示新增线路)<br/>name:姓名<br/>rank:1(职级)<br/>department:2(部门)|
 
 ######返回结果：
 ```
