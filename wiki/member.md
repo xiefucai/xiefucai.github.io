@@ -21,11 +21,13 @@
     "data": [
         {
             "id": 1,
-            "name": "总办"
+            "name": "总办",
+            "index": 1
         },
         {
             "id": 2,
-            "name": "事场部"
+            "name": "事场部",
+            "index": 2
         },
         ...
     ]
@@ -39,7 +41,7 @@
 | url | http://domain/department/set |
 | method | post |
 | cookie | uid,token |
-| post params | id:xxx(索引,没有此字段或空值表示新增)<br/>name:xxxx(部门名称)|
+| post params | id:xxx(索引,没有此字段或空值表示新增)<br/>name:xxxx(部门名称)<br/>index:1(排序值)|
 
 ######返回结果：
 ```
@@ -90,11 +92,13 @@
     "data": [
         {
             "id": 1,
-            "name": "普通员工"
+            "name": "普通员工",
+            "index": 1
         },
         {
             "id": 2,
-            "name": "组长"
+            "name": "组长",
+            "index": 2
         },
         ...
     ]
@@ -108,7 +112,7 @@
 | url | http://domain/member_rank/set |
 | method | post |
 | cookie | uid,token |
-| post params | id:xxx(索引,没有此字段或空值表示新增)<br/>name:xxxx(职级名称)|
+| post params | id:xxx(索引,没有此字段或空值表示新增)<br/>name:xxxx(职级名称)<br/>index:1(排序值)|
 
 ######返回结果：
 ```
