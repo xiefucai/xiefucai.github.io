@@ -151,7 +151,7 @@
 | url | http://domain/member/list |
 | method | get |
 | cookie | uid,token |
-| post params | index=0&limit=10|
+| post params | index=0&limit=10<span style="color:red">&department=xx&rank=&name=xx</span>(红色的参数为可选参数)<br/><span style="color:green">部门或职级不限时，则department或rank为0<br/>name则为模糊匹配</span>|
 
 ######返回结果：
 ```
