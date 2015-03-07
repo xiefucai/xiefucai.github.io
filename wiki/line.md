@@ -10,7 +10,7 @@
 | url | http://domain/line/list |
 | method | get |
 | cookie | uid,token |
-| get params | index=0&limit=10<span style="color:red">&province=xx&city=xx&area=xx&des=xx&id=xx</span><br/>红色部分为可选参数，<small>返回从第index条开始数limit条记录,用于分页</small>|
+| get params | index=0&limit=10<span style="color:red">&province=xx&city=xx&area=xx&des=xx&id=xx&uid=xxx</span><br/>红色部分为可选参数，<small>返回从第index条开始数limit条记录,用于分页</small>|
 
 ######返回结果：
 ```
@@ -100,7 +100,7 @@
 | url | http://domain/line/update |
 | method | post |
 | cookie | uid,token |
-| post params | <div style="color:red;font-size:12px;">除id外作何属性都可以修改，可以支持同时修改多个属性</div>area=xxx<br/>member:1,2,...<br/>...|
+| post params | id=xxxx<br/><div style="color:red;font-size:12px;">除id外作何属性都可以修改，可以支持同时修改多个属性</div>area=xxx<br/>member:1,2,...<br/>...|
 
 ######返回结果：
 ```
