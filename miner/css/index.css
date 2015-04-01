@@ -20,13 +20,13 @@ a{text-decoration:none;}
 .navigation-active{background:#E5E5E5;background:url(http://red.xunlei.com/img/indexv2/spr.png) -300px 0 no-repeat\9;}
 .container{position:absolute;top:90px;bottom:0;left:0;right:0;background:url(../images/p1.bg.jpg) repeat-x;background-size:auto 100%;}
 .container-wrap{margin:0 auto;height:100%;position:relative;max-width:1000px;}
-.container .h1,.container .h2{display:block;color:#333;margin:0;padding:0;background:url(../images/p1.txt.png) no-repeat;font-size:1px;position:absolute;}
+.container .h1,.container .h2{display:block;color:transparent;margin:0;padding:0;background:url(../images/p1.txt.png) no-repeat;font-size:0;position:absolute;}
 .container .h1{height:76px;top:197px;left:0;opacity:0;width:404px;-webkit-transition:all 0.5s linear 0s;}
 .container .h2{height:20px;top:290px;left:138px;width:225px;opacity:0;background-position:-80px -94px;-webkit-transition:all 0.5s linear 0.5s;}
 .container .miner{display:block;width:669px;height:641px;background:url(../images/p1.miner.png) no-repeat;position:absolute;top:192px;left:435px;opacity:0;-webkit-transition:all 0.8s linear 1.5s;}
 .container .prebuy{width:230px;height:70px;display:block;color:#fff;background:#FF3700;border-radius:35px;position:absolute;top:422px;left:100px;-webkit-font-smoothing: antialiased;box-shadow:0 0 0 #FF3700;-webkit-transition:all 0.2s ease-in 0s;font:29px/70px arial,"Microsoft Yahei","Hiragino Sans GB",sans-serif;}
 .prebuy:hover{box-shadow:0 0 10px #FF3700;background:#f50;}
-.page2{background:url(../images/p2.miner.jpg) 50% 10% no-repeat;background-size:auto 100%;opacity:0;-webkit-transition:all 1s linear 0s;}
+.page2{background:url(../images/p2.miner.png) 50% 10% no-repeat;background-size:auto 100%;opacity:0;-webkit-transition:all 1s linear 0s;}
 .page2 .txt{position:absolute;bottom:25px;height:77px;background:url(../images/p2.txt.png) 50% 0 no-repeat;width:100%;left:0;color:transparent;opacity:0;-webkit-transition:all 0.8s linear 1s;font-size:0;}
 
 .page3 .pic{width:827px;height:353px;position:absolute;top:50%;left:50%;margin:-177px 0 0 -414px;background:url(../images/p3.pic.png) no-repeat;
