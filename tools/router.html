@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>迅雷路由问题诊断指南.html</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<style type="text/css">
+body{line-height:1.75;}
+pre{background:#eeeeee;border:1px solid #ccc;padding:5px;border-radius:3px;}
+</style>
+</head>
+
+<body>
+
+<h1>迅雷路由问题诊断指南</h1>
+<form id="form">
+
+	<ol>
+	<li><p>用户提供迅雷路由SN.</p></li>
+	<li><p>通过网页查询迅雷路由SN对应的设备ID.</p>
+
+	<p><a href="http://luyou.xunlei.com/plugin.php?id=xunlei_quick_register%3Axunlei_query_routerinfo" target="_blank">迅雷路由信息在线查询</a></p>
+	<p>查到的路由器Id为 <input type="text" value="" placeholder="请输入routerId" name="routerid"/></p>
+	</li>
+	<li><p>通过后台命令行查询迅雷路由详细信息.</p>
+
+	<ul>
+	<li><p>通过essh.sandai.net跳转登录到tangxinfa@twin13033.sandai.net</p></li>
+	<li><p>在tangxinfa@twin13033.sandai.net上执行命令获取设备信息.</p>
+	<li><p>如，对于设备ID（<span id="routerid" class="routerid">1000000000006</span>），使用下面的命令查询：</p>
+
+	<pre id="code1">/usr/local/redis-2.8.6/bin/redis-cli -p 6379 -n 6 "hgetall" "router:1000000000006"</pre></li>
+	<li><p>如果用户的迅雷路由版本过低，建议先让用户升级到最新版，避免去跟踪已修复过的问题</p>
+
+	<p>上面的输出中appversion为固件版本号<span style="color:red;display:none" id="version"></span>，可以通过<a href="http://update.peiluyou.com/conf/update_router.conf">升级配置文件</a>获取最新的版本号。</p></li>
+	</ul></li>
+	<li><p>通过curl.sh查询设备的挖矿状态.</p>
+
+	<ul>
+	<li><p>这一步需要用到前面查询到的迅雷路由帐号ID（uid字段）及密码（password字段）。</p>
+
+	<p>USERID=迅雷路由帐号ID ROUTERID=迅雷路由ID PASSWORD=迅雷路由帐号密码 ./tests/curl.sh</p></li>
+	<li><p>如，对于设备ID（1000000000006）、迅雷路由帐号ID（123）及密码（aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa），使用下面的命令查询：<br/>
+		<input type="text" placeholder="请输入userId" onchange="document.getElementById('userid').innerHTML=this.value;" id="userId" name="userid"/><br/>
+		<input type="text" placeholder="请输入password" onchange="document.getElementById('password').innerHTML=this.value;" name="password"/><br/>
+	</p>
+	<pre>K:cd<br/>xunleirouter</pre>
+	<pre>USERID=<span style="color:red;" id="userid">123</span> ROUTERID=<span style="color:red;" id="routerid2" class="routerid">1000000000006</span> PASSWORD=<span style="color:red;" id="password">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</span> ./curl.sh</pre></li>
+	<li><p>上面的命令主要是调用dcdngetstat接口获取挖矿信息，示例输出如下：</p>
+
+	<p>{
+	   "dcdn<em>id": "AAAAAAAAAAAAAAAAAAAAAAAA",
+	   "login</em>error": 0,
+	   "login<em>state": 2,
+	   "mining</em>base": "\/tmp\/dcdn<em>base\/.dcdn</em>mining",
+	   "used<em>diskspace": "9791340544",
+	   "max</em>diskspace": "32212254720",
+	   "history<em>max</em>upspeed": 1596850,
+	   "upspeed": 0,
+	   "upspeed<em>limit": 681984,
+	   "dpspeed": 0,
+	   "dpspeed</em>limit": 0,
+	   "running": 1,
+	   "applystat": 1,
+	   "errorCode": 0
+	 }</p></li>
+	<li><p>如果上面的dcdn_id为000000000000000000000000，则表示挖矿未初始化，可能是磁盘未挂载</p></li>
+	<li><p>如果上面的login<em>error不为0或login</em>state不为2，则表示dcdn登录失败</p></li>
+	<li><p>如果是running为0表示用户未开启挖矿功能</p></li>
+	<li><p>如果是upspeed或dpspeed不为0，但是其值一直保持不变，则可能是遇到挖矿假死问题，需要重启路由器方可恢复挖矿</p></li>
+	</ul></li>
+	<li><p>其它问题使用水晶团队提供的文档进行定位</p>
+
+	<p><a href="svn://192.168.226.120/Hammer/resources/dcdn%E9%97%AE%E9%A2%98%E5%AE%9A%E4%BD%8D%E5%B7%A5%E5%85%B7/%E7%B3%BB%E7%BB%9F%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E5%92%8C%E5%AE%9A%E4%BD%8D.docx" targt="_blank">系统问题排查和定位.docx</a></p></li>
+	</ol>
+
+	<input type="text" placeholder="请输入dcdn_id" name="dcdnid"/>
+	<ol id="result">
+
+	</ol>
+</form>
+<script src="http://mat1.gtimg.com/app/appt/js/jquery-1.7.1.min.js"></script>
+<script src="http://mat1.gtimg.com/app/vt/js/template.js"></script>
+
+<script type="text/html" id="tmpl">
+	<li>
+		<h6>客户端不能登录？</h6>
+		<ul><li>用户在其他地方登录</li><li>客户端没有完全退出</li></ul>
+		<a href="http://tw07059.sandai.net:8080/userid=<%=userId%>" target="_blank">uid最近48个小时的登录信息</a>
+		<a href="http://tw07059.sandai.net:8080/dcdnid=<%=dcdnId%>" target="_blank">dcdnid最近48个小时的登录信息</a>
+	</li>
+	<li>
+		<h6>客户端没有下载（部署）速度?</h6>
+		如果已经登录，则查看 <a href="http://tw07047.sandai.net:8080/<%=dcdnId%>" target="_blank">用户12个小时内的资源部署情况</a>
+	</li>
+	<li>
+		<h6>客户端没有上传速度?</h6>
+		<p>首先确定用户是否已经登录，如果已经登录。</p>
+		<ol>
+			<li><a href="http://tw07049.sandai.net:8080/<%=dcdnId%>" target="_blank">查看客户端部署的所有文件的gcid</a>，如果没有gcid或者比较少的话可能是导致没上传速度。</li>
+			<li><a href="http://tw07047.sandai.net:8080/<%=dcdnId%>" target="_blank">查看用户的部署和空间使用情况</a>如果空间已经使用完了，gcid还很少，那就是存在的删除文件的bug，更新用户的程序到最新版本，并清除所有的缓存文件。</li>
+
+			<li><a href="http://tw07049.sandai.net:8081/<%=dcdnId%>" target="_blank">链接一</a> <a href="http://tw07090.sandai.net:8081/<%=dcdnId%>" target="_blank">链接二</a> <a href="http://tw07091.sandai.net:8081/<%=dcdnId%>" target="_blank">链接三</a>通过这三个网页可以这个dcdn_id每分钟被返回给迅雷7的次数（三个网页的总和），如果有正常被返回的话，下一步。</li>
+			<li><a href="http://webmonitor.dcdn.sandai.net/get_monitor_info?USERID=<%=userId%>&DCDNID=<%=dcdnId%>" target="_blank">获取客户端的monitor info信息</a>
+		</ol>
+
+		<p>如果上述步骤还不能发现问题，需要p2p 监控工具查看客户端的情况。监控工具的使用方法在文档最后。</p>
+
+	</li>
+	<li>
+		<dl><dt>工具使用</dt>
+		<dd>Seafile\DCDN\版本发布\Debug\monitor\dcdn_monitor_client.local.exe
+PC运行，一般用来查看独立水晶客户端的运行情况。</dd>
+<dd>Seafile\DCDN\版本发布\Debug\monitor\<strong style="color:red">dcdn_monitor_client.public.args.exe</strong>
+PC运行，一般用来查看水晶路由器上挖矿情况。</dd>
+<dd>打开命令行，输入：<pre>dcdn_monitor_client.public.args.exe <strong>0123456789123456</strong>  192.168.111.1 4593 4693 111</pre>
+参数中的192.168.111.1也可以替换成其他ip。</dd>
+		</dl>
+		<dl>
+			<dt>结果分析</dt>
+			<dd>
+				<ol><li><h4>与服务器连接是否正常</h4>
+						"is_gateway_login_ok":	1,	   1表示与gateway连接正常，其他表示异常<br/>
+						"dmgr_state":	2,只有2表示正常，其他值都不正常<br/>
+						"dmgr_errcode":	0,		不正常的时候这个值表示错误类型</li>
+					<li><h4>上传没速度</h4>
+						看用户是否点击暂停按钮"upload_switch":	1,    1表示允许上传， 0表示用户点击暂停按钮。<br/>
+						看是否有连接"upload_cur_pipes":	52<br/>
+						看缓存数据是否足够多"disk-srv-used":"5810155520-20937965568-20608712704"
+					</li>
+					<li><h4>部署是否正常</h4>
+						看用户是否点击暂停按钮"deploy_switch":	1,    1表示允许部署，0表示用户点击暂停<br/>
+						看部署限速值是否太小"deploy_speed_limit":	-1,   -1表示不限速<br/>
+						看磁盘是否允许部署"is_fs_available":	1,    1表示允许部署， 0表示磁盘满不允许部署<br/>
+					</li>
+				</pre>
+
+			</dd>
+		</dl>
+	</li>
+</script>
+<script>
+$(function(){
+	var data = {},
+		form = $('#form')[0];
+	$('#form').find('input[type="text"]').bind('change',function(){
+		var input = this;
+			data[input.name] = input.value;
+			localStorage.setItem(input.name,input.value);
+			switch(input.name){
+				case 'routerid':
+					$('#code1').html('/usr/local/redis-2.8.6/bin/redis-cli -p 6379 -n <span style="color:red;" title="设备ID的末位数字">'+input.value.slice(-1)+'</span> "hgetall" "router:'+input.value+'"');
+					$('.routerid').html(input.value);
+					break;
+				case 'dcdnid':
+					$('#result').html(tmpl($('#tmpl').html(),{'dcdnId':input.value,'userId':form['userid'].value}));
+					break;
+				case 'userid':
+					$(form['dcdnid']).trigger('change');
+					break;
+			}
+	});
+
+	for(var i in window.localStorage){
+		if (form[i]) {
+			$(form[i]).val(localStorage.getItem(i)).trigger('change');
+		}
+	}
+});
+
+function callback(conf){
+	var elem = document.getElementById('version');
+	elem.style.display='';
+	elem.innerHTML = '当前最新版本：<strong>'+conf['version']+'</strong>';
+}
+</script>
+<script type="text/javascript" src="http://update.peiluyou.com/conf/update_router.conf"></script>
+</body>
+</html>
