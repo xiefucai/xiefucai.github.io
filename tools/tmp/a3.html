@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<title>
+			判断是否是webview浏览器
+		</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+		
+	</head>
+	<body>
+		<div id="content"></div>
+		<a href="javascript:void(0);" onclick="alert(isSupportFullScreen());return false;">
+			是否支持全屏
+		</a>
+		
+		<a href="javascript:void(0);" onclick="alert(isWebview());return false;">
+			是否是webview？
+		</a>
+	</body>
+	<script>
+			var	isSupportFullScreen = function(){
+				return document.fullscreenEnabled || document.mozFullscreenEnabled || document.webkitFullscreenEnabled;
+			};
+			var isWebview = function() { //webview不支持全屏，不支持新开窗口或新开标签页
+				var win, flag = isSupportFullScreen();
+				if ( flag === undefined) {
+					win = window.open("javascript:void(0);","_blank");
+					flag = (win === window);
+					if (!flag){
+						win.close();
+						win.document.write("请手动<a href=\"javascript:;\" onclick=\"window.opener='';window.close()\">关闭本页面</a>");
+					}
+				}else if(flag === true){
+					flag = false;
+				}
+				return flag;
+			};
+			document.getElementById("content").innerHTML = +new Date();
+		</script>
+</html>

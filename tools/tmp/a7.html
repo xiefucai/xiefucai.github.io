@@ -1,0 +1,800 @@
+﻿
+<!doctype html>
+<html>
+<head>
+<meta charset = "utf-8">
+<title>粉丝会前后端接口</title>
+<style type="text/css">
+body{font-size:14px;}
+table,pre{margin-left:2em;border-collapse:collapse;border-color:#ccc;}
+table,th,td{border-color:#ccc;}
+.red{color:red;}
+</style>
+</head>
+<body>
+<p>
+    1、拉取帖子列表，get_article_list，需要包含以下字段<br/>
+</p>
+<pre class="red">请求方式：http get<br/>返回结果: {"ret":0,"msg":"成功","data":{...}}</pre>
+<table border="1" cellpadding="7" align="center">
+    <tbody>
+        <tr>
+            <td width="299" valign="top">
+                author_name<br />
+            </td>
+            <td width="299" valign="top">
+                按楼主用户名过滤，可拉取只看陈坤
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                sort<br />
+            </td>
+            <td width="299" valign="top">
+                排序，0-更新时间，1-按浏览次数，2-按被赞次数，3-按评论数
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                start_time
+            </td>
+            <td width="299" valign="top">
+                分页时间戳，第一页填0，其它页填上一页最后一条记录的返回时间戳
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                page
+            </td>
+            <td width="299" valign="top">
+                页码
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                page_size
+            </td>
+            <td width="299" valign="top">
+                每页记录数
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p>
+    回包
+</p>
+<table border="1" cellpadding="7" align="center">
+    <tbody>
+        <tr>
+            <td width="299" valign="top">
+                id
+            </td>
+            <td width="299" valign="top">
+                帖子id
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                title
+            </td>
+            <td width="299" valign="top">
+                帖子标题
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                summary
+            </td>
+            <td width="299" valign="top">
+                摘要
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                is_good
+            </td>
+            <td width="299" valign="top">
+                加精
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                is_new
+            </td>
+            <td width="299" valign="top">
+                加新
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                is_top
+            </td>
+            <td width="299" valign="top">
+                置顶
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                is_recommand
+            </td>
+            <td width="299" valign="top">
+                吧主推荐
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                is_hot
+            </td>
+            <td width="299" valign="top">
+                热帖标志
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                praise_num
+            </td>
+            <td width="299" valign="top">
+                被赞次数
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                comment_num
+            </td>
+            <td width="299" valign="top">
+                评论条数
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                view_num
+            </td>
+            <td width="299" valign="top">
+                浏览次数
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                author_name
+            </td>
+            <td width="299" valign="top">
+                楼主用户名或id
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                author_nick
+            </td>
+            <td width="299" valign="top">
+                楼主昵称
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                author_head
+            </td>
+            <td width="299" valign="top">
+                楼主头像
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                update_time
+            </td>
+            <td width="299" valign="top">
+                编辑时间
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                order_time
+            </td>
+            <td width="299" valign="top">
+                显示的排序时间
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                pic
+            </td>
+            <td width="299" valign="top">
+                帖子中带的缩略图，多个图片用“|”分隔
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p>
+    2、查看帖子详情,get_article<span class="red">(直接向模板吐返回数据)</span>
+</p>
+
+<table border="1" cellpadding="7" align="center">
+    <tbody>
+        <tr>
+            <td width="299" valign="top">
+                id
+            </td>
+            <td width="299" valign="top">
+                帖子id
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p>回包</p>
+<table border="1" cellpadding="7" align="center">
+    <tbody>
+        <tr>
+            <td width="299" valign="top">
+                title
+            </td>
+            <td width="299" valign="top">
+                帖子标题
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                content
+            </td>
+            <td width="299" valign="top">
+                <span style="background-color:#ffffff;">帖子内容</span>
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                author_name
+            </td>
+            <td width="299" valign="top">
+                作者用户名
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                author_nick
+            </td>
+            <td width="299" valign="top">
+                作者昵称
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                author_head
+            </td>
+            <td width="299" valign="top">
+                作者头像
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                <span style="background-color:#ffffff;">update_time</span>
+            </td>
+            <td width="299" valign="top">
+                更新时间
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                has_collect
+            </td>
+            <td width="299" valign="top">
+                是否已收藏
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                <span style="background-color:#ffffff;">praise_num</span>
+            </td>
+            <td width="299" valign="top">
+                赞数
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                <span style="background-color:#ffffff;">comment_num</span>
+            </td>
+            <td width="299" valign="top">
+                评论数
+            </td>
+            <td width="299" valign="top">
+                感觉没有必要
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p>
+    3、拉取评论
+</p>
+<pre class="red">请求方式：http get<br/>返回结果: {"ret":0,"msg":"成功","data":{...}}</pre>
+<table border="1" cellpadding="7" align="center">
+    <tbody>
+        <tr>
+            <td width="299" valign="top">
+                id
+            </td>
+            <td width="299" valign="top">
+                <span style="background-color:#ffffff;">帖子id</span>
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                start_time
+            </td>
+            <td width="299" valign="top">
+                分页时间戳，第一页填0，其它页填上一页最后一条记录的返回时间戳
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                start_time
+            </td>
+            <td width="299" valign="top">
+                分页时间戳，第一页填0，其它页填上一页最后一条记录的返回时间戳
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                page
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                page_num
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p>回包</p>
+<table border="1" cellpadding="7" align="center">
+    <tbody>
+        <tr>
+            <td width="299" valign="top">
+                id
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                author_name
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                <span style="background-color:#ffffff;">author_nick</span>
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                <span style="background-color:#ffffff;">author_head</span>
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                update_time
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                content
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                reply_list
+            </td>
+            <td width="299" valign="top">
+                被回复的内容
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        </tbody>
+  </table>
+<p>4、发表评论</p>
+<pre class="red">请求方式：http post<br/>返回结果: {"ret":0,"msg":"成功","data":{...}}</pre>
+<table border="1" cellpadding="7" align="center">      
+        <tbody>
+        <tr>
+            <td width="299" valign="top">
+                article_id
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                comment_id
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                content
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p>回包</p>
+<pre>{"ret":0,"msg":"成功","data":{...}}<br/>data内的内容为评论成功后的评论内容</pre>
+<p>5、删除评论</p>
+<pre class="red">请求方式：http post<br/>返回结果: {"ret":0,"msg":"成功","data":{...}}</pre>
+<table border="1" cellpadding="7" align="center">      
+        <tbody>
+        <tr>
+            <td width="299" valign="top">
+                comment_id
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+            <td width="299" valign="top">
+                删除评论，是否也删除关于它的回复，删除完后楼数要变吗？
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p>回包</p>
+<pre>{"ret":0,"msg":"成功","data":null}</pre>
+<p>6、收藏帖子和取消收藏帖子</p>
+<pre class="red">请求方式：http post<br/>返回结果: {"ret":0,"msg":"成功","data":{...}}</pre>
+<table border="1" cellpadding="7" align="center">      
+        <tbody>
+        <tr>
+            <td width="299" valign="top">
+                article_id
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                type
+            </td>
+            <td width="299" valign="top">
+                0-收藏,1-取消收藏
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p>回包</p>
+<pre>{"ret":0,"msg":"成功","data":null}</pre>
+<p>7、赞一个帖子，取消赞一下帖子</p>
+<pre class="red">请求方式：http post<br/>返回结果: {"ret":0,"msg":"成功","data":{...}}</pre>
+<table border="1" cellpadding="7" align="center">      
+        <tbody>
+        <tr>
+            <td width="299" valign="top">
+                id
+            </td>
+            <td width="299" valign="top">
+                帖子id
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                type
+            </td>
+            <td width="299" valign="top">
+                操作类型,0-赞,1-取消赞
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p>回包</p>
+<pre>{"ret":0,"msg":"成功","data":null}</pre>
+<p>8、发表、编辑帖子</p>
+<pre class="red">请求方式：http post<br/>返回结果: {"ret":0,"msg":"成功","data":{...}}</pre>
+<table border="1" cellpadding="7" align="center">      
+        <tbody>
+        <tr>
+            <td width="299" valign="top">
+                id
+            </td>
+            <td width="299" valign="top">
+                无，表示新增
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                title
+            </td>
+            <td width="299" valign="top">
+                帖子标题
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                content
+            </td>
+            <td width="299" valign="top">
+                帖子内容
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                summary
+            </td>
+            <td width="299" valign="top">
+                帖子摘要
+            </td>
+            <td width="299" valign="top">
+                前端自动提取或后台自动提取
+            </td>
+        </tr>
+        <tr>
+            <td width="299" valign="top">
+                pics
+            </td>
+            <td width="299" valign="top">
+                帖子内容中的图片提取缩略图
+            </td>
+            <td width="299" valign="top">
+                前端自动提取或后台自动提取
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p>回包</p>
+<pre>{"ret":0,"msg":"成功","data":null}</pre>
+
+<p>9、删除帖子</p>
+<pre class="red">请求方式：http post<br/>返回结果: {"ret":0,"msg":"成功","data":{...}}</pre>
+<table border="1" cellpadding="7" align="center">      
+        <tbody>
+        <tr>
+            <td width="299" valign="top">
+                id
+            </td>
+            <td width="299" valign="top">
+                帖子id
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p>回包</p>
+<pre>{"ret":0,"msg":"成功","data":null}</pre>
+
+<p>10、上传图片</p>
+<pre class="red">请求方式：http post<br/>返回结果: &lt;script&gt;frameElement.callback({"ret":0,"msg":"成功","data":{"pic":"http://..."}});&lt;/script&gt;</pre>
+<table border="1" cellpadding="7" align="center">      
+        <tbody>
+        <tr>
+            <td width="299" valign="top">
+               	pic
+            </td>
+            <td width="299" valign="top">
+                input="file"控件
+            </td>
+            <td width="299" valign="top">
+                <br />
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p>回包</p>
+<pre>请求方式：http post<br/>返回结果: &lt;script&gt;frameElement.callback({"ret":0,"msg":"成功","data":{"pic":"http://..."}});&lt;/script&gt;</pre>
+
+<p>11、根据用户名查看用户的发帖和评论记录</p>
+<pre class="red">请求方式：http get<br/>返回结果: {"ret":0,"msg":"成功","data":{...}}</pre>
+<table border="1" cellpadding="7" align="center">
+        <tbody>
+        <tr>
+            <td width="299" valign="top">
+               	openid
+            </td>
+            <td width="299" valign="top">
+                区分用户唯一标志的openid
+            </td>
+            <td width="299" valign="top"></td>
+        </tr>
+    </tbody>
+</table>
+<p>回包</p>
+<pre>{
+	"ret": 0,
+	"msg": "成功",
+	"data": {
+		"user": {
+			"name": "laozi12345",
+			"nick": "我替上帝收尸",
+			"head": "http://...",//用户头像
+			"is_vip": 1,
+		},
+		"list": [{
+			"title": "帖子标题",
+			"summary": "概要",
+			"pics":"...",//缩略图
+			"update_time": "更新时间",
+			"comment_num": 15 //评论数量
+		}]
+	}
+}</pre>
+</body>
+</html>

@@ -1,0 +1,39 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<title>ajax文件上传测试</title>
+	<script type="text/javascript" src="jquery-latest.js"></script>
+</head>
+<body>
+<input type="file" name="fileToUpload" id="fileToUpload" />
+<input type="button" value="Save" onclick="savepic()" /> 
+<div id="preview"></div>you can also use event listeners instead of onclick here
+<a href="http://www.scriptiny.com/2013/02/simple-file-upload-using-ajax/" target="_blank">Simple file upload using ajax</a>
+</body>
+<script type="text/javascript" src="ajaxfileupload.js"></script>
+<script type="text/javascript">
+function savepic() {
+	//can perform client side field required checking for "fileToUpload" field
+	$.ajaxFileUpload({
+		url: 'doajaxfileupload.php',
+		secureuri: false,
+		fileElementId: 'fileToUpload',
+		dataType: 'json',
+		success: function(data, status) {
+			if (typeof(data.error) != 'undefined') {
+				if (data.error != '') {
+					alert(data.error); 
+				} else {
+					//alert(data.msg); // returns location of uploaded file
+					document.getElementById('preview').innerHTML = '<img src="'+data.msg+'"/>';
+				}
+			}
+		},
+		error: function(data, status, e) {
+			alert(e);
+		}
+	})
+	return false;
+}
+</script>
+</html>

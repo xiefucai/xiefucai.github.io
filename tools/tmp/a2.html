@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>分享到腾讯微博_你的心声，世界的回声</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+<script>
+function alert(str){
+	document.getElementById("content").innerHTML = str;
+}
+
+function setStorage(){
+	if (window.sessionStorage){
+		try{
+			sessionStorage.setItem("share_url",location.href);
+		}catch(e){
+			alert(e);
+		}
+	}else{
+		alert("not support sessionStorage");
+	}
+}
+
+function showStorage(){
+	var storage = window.sessionStorage,
+	    i,
+	    len = storage.length
+	    arr=[];
+	for(i=0;i<len;i++){
+	   var key = storage.key(i);
+	   var value = storage.getItem(key);
+	   arr.push(key + '=' +value);
+	}
+	alert(arr.join("\n") || ("sessionStorage内容为空<br/>"+navigator.userAgent));
+}
+
+function clearStorage(){
+	sessionStorage.clear();
+	alert("");
+}
+
+window.onload = showStorage;
+</script>
+</head>
+<body>
+<div id="content" style="background:#eee;border:1px solid #ccc;padding:5px;margin:10px;"></div>
+<div style="text-align:center;">
+<a href="javascript:setStorage();">设置</a>
+<a href="javascript:showStorage();">查看</a>
+<a href="javascript:clearStorage();">清除</a>
+<a href="a1.html">切换页面查看</a>
+</div>
+</body>
+</html>

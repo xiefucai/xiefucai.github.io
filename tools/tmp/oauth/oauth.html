@@ -1,0 +1,52 @@
+﻿<!doctype html>
+<html class="tv">
+	<head>
+		<meta charset="utf8">
+		<title>授权使用腾讯微博帐号</title>
+		<meta name="keywords" content="授权,微博登录,腾讯微博登录"/>
+		<meta name="description" content="授权微博API在线测试工具使用我的腾讯微博帐号" />
+		<meta name="viewport" content="width=device-width, initial-scale=2, minimum-scale=2, maximum-scale=2" />
+		<link rel="stylesheet" href="oauth2.css" type="text/css"/>
+		<link rel="apple-touch-icon-precomposed" href="https://open.t.qq.com/oauth2/images/pc/microblog_72_72.png" />
+		<link rel="shortcut icon" href="https://open.t.qq.com/oauth2/images/pc/favicon.ico"/>
+	</head>
+	<body>
+		<noscript data-redirect="https://open.t.qq.com/cgi-bin/oauth2/authorize?client_id=801058005&response_type=code&redirect_uri=http%3A%2F%2Ftest.open.t.qq.com%2Foauth_v2%2Fdemo.php&checkStatus=yes&appfrom=&g_tk=&sessionKey=fac6c93fd47f49428741d0c59dd3aef1&checkType=showAuth&state=" data-proxy="https://open.t.qq.com/cgi-bin/oauth2/proxy?callback=onFrameResize">
+		你的浏览器不支持javascript，请设置您的浏览器开启javascript支持!
+		</noscript>
+		<div class="header">
+			<h1 class="header-logo"><a href="http://t.qq.com/" title="腾讯微博" target="_blank">腾讯微博</a></h1>
+			<a href="http://reg.t.qq.com/?pref=app.oauth2.pc_login_one_step" title="立即注册微博帐号" class="header-reg" target="_blank">立即注册微博帐号</a>
+		</div>
+		
+		<div class="main">
+			<iframe width="370" height="316" class="main-left" frameborder="0" id="login_frame"></iframe>
+			<div class="main-right">
+				<dl class="list">
+					<dt class="list-tit">
+						<img data-src="https://open.t.qq.com/oauth2/image/opentpic/801058005_75_1341482722.png" data-default="/oauth2/images/pc/microblog_72_72.png" alt="微博API在线测试工具" width="16" height="16" class="app-icon" id="appicon"/>
+						<a href="http://test.open.t.qq.com/" class="app-name valign" id="appName" target="_blank" title="微博API在线测试工具">微博API在线测试工具</a>
+						<label>将获取以下权限：</label>
+					</dt>
+					<dd class="list-li list-li1"><input type="checkbox" class="checkbox" checked disabled/> <label>获取个人资料以及好友关系</label></dd>
+					<dd class="list-li list-li2"><input type="checkbox" class="checkbox" checked disabled/> <label>分享内容到你的微博</label></dd>
+					<dd class="list-li list-li3"><input type="checkbox" class="checkbox" checked disabled/> <label>获取你的评论</label></dd>
+					
+					<!--
+					<dd class="list-li list-li4">
+						<input type="checkbox" class="checkbox" checked id="follow"/> 
+						<label for="follow">收听</label><a href="http://t.qq.com/laozi12345" target="_blank" class="app-developer valign" title="我替上帝收尸(@laozi12345)">我替上帝收尸</a>
+					</dd>
+					-->
+					<dd class="list-li list-li5">
+						&nbsp;&nbsp;&nbsp;&nbsp;已有<strong class="main_head_app_count">11457</strong>人授权
+					</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="footer" id="footer">https://open.t.qq.com/为腾讯微博登录官方域名 谨防假冒</div>
+	</body>
+	<script type="text/javascript" src="https://open.t.qq.com/oauth2/js/oauth2.js" charset="utf-8"></script>
+	<!-- 授权方式 oauth2 -->
+	<!-- pc_login_one_step.htm -->
+</html>

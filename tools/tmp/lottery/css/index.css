@@ -1,0 +1,68 @@
+﻿body{margin:0;padding:0;background:#ECECEF;}
+.header{height:44px;line-height:44px;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAABYCAYAAADSvVbyAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMTEvMjcvMTMTBedoAAABF0lEQVQ4jc2UwXLDIAxEn2T+/3tTDGwPRhictMlk2pn4xFhopV2tsNqa3AxJACQkmgRmx4/aGgC1VgAcwN0xM8yMVPYdgC2lI8XcASBAzQx3Z+83E0BrDYsqpZTjEBhRQTPG3MdxD1YMd8f7D498AQpQgFENCXMnAqnUCrWybdtaNr7R2OAiCUmj7GMubrbqoZe42JXL2UePRDUXYMtc7vroKaemnXrOeZ3LqUfHWPSI6MlF+jwu0dTgUoPL7NM35jJL4Hf+sCsXuO5LcLl6LBR512OP92X2Ol3XA6PWJ1z+x2MSbZ5L6Wr/hccGaBx+fD9+mctTLvt1X+z1fbl7gwJ9rEfOeUQX+qOPr9vtwAg91PPdHSS+ASKI+tYf/HZfAAAAAElFTkSuQmCC) repeat-x;background-size:2px 44px;color:#333;overflow:hidden;position:relative;}
+.header-title{margin:0;padding:0;text-align:center;font-size:16px;}
+.icon-share{display:inline-block;width:20px;height:20px;background:url(../images/reply.gif) no-repeat;background-size:20px 17px;position:absolute;top:12px;right:12px;overflow:hidden;text-indent:30px;}
+.banner{margin:0;padding:0;overflow:hidden;position:relative;}
+.banner-img{width:100%;vertical-align:bottom;}
+.banner:before{display:block;content:"";background:rgba(0,0,0,0);position:absolute;width:100%;height:100%;}
+.helper,.app-list,.lottery{background:#fff;border-top:1px solid #E0E0E0;border-bottom:1px solid #E0E0E0;margin:10px 0 0;clear:both;}
+.helper-title,.app-list-title,.lottery-title{height:42px;line-height:42px;color:#666;margin:0 10px;font-size:16px;border-bottom:1px solid #ECECEF;font-weight:normal;}
+.helper-content{margin:10px 10px;font-size:0.86rem;color:#666;}
+.lottery-tip{font-weight:normal;}
+.app-list{overflow:hidden;width:100%;display:inline-block;}
+.app{width:25%;float:left;margin:10px 0;padding:0;text-align:center;}
+.app-name{display:block;margin:8px;white-space:nowrap;text-overflow:ellipsis;font-size:0.86rem;color:#666;}
+.app-icon{border-radius:5px;max-width:50px;}
+.app-download{display:inline-block;text-decoration:none;color:#666;width:60px;height:28px;line-height:28px;border-radius:3px;border:1px solid #E2E2E2;background:#fff;font-size:0.86rem;}
+.app-download:visited{color:#666;}
+.app-download:hover,.app-download:active{background:#f50;color:#fff;border-color:#f50;}
+
+.helper-items{color:#666;line-height:1.5;margin:10px 10px 10px 0;}
+.helper-item{margin-bottom:10px;word-break:break-word;}
+.helper-time,.lottery-num{color:#DB402B;font-weight:normal;font-style:normal;}
+.lottery-tip{color:#bbb;margin-left:10px;}
+.lottery-gifts{margin:0 0 0 1%;padding:0 0 10px;list-style:none;overflow:hidden;}
+.lottery-gift,.lottery-gift-btn{width:32%;height:70px;background-color:#F1D29B;float:left;margin:10px 0.5% 0;}
+.lottery-gift{position:relative;background-image:url(../images/lottery.gif);background-repeat:no-repeat;background-position:50% 0;background-size:99px 350px;}
+.lottery-gift:after{display:block;background-color:#F4E0B2;height:20px;line-height:20px;text-align:center;content:attr(data-name);color:#C8854A;margin-top:50px;font-size:0.85rem;white-space:nowrap;}
+.lottery-gift-btn{background-color:#F08300;color:#FFF3BD;font-size:1.3rem;}
+.lottery-gift-btn:after{content:attr(data-name);text-align:center;line-height:70px;width:100%;display:block;}
+.lottery-gift-active:before{border:2px solid #FFAD1D;content:'';display:block;height:66px;margin:0 0 0;z-index:1;position:relative;}
+.lottery-gift-active{background-color:#FFEBA4;}
+.lottery-gift-active:after{background:#FFEBA4;margin:-22px 2px 0;}
+.lottery-gift-1{background-position:50% -50px;}
+.lottery-gift-2{background-position:50% -100px;}
+.lottery-gift-3{background-position:50% -150px;}
+.lottery-gift-4{background-position:50% -200px;}
+.lottery-gift-5{background-position:50% -250px;}
+.lottery-gift-6{background-position:50% -300px;}
+.lottery-gift-7{background-image:none;}
+.lottery-gift-7:after{height:70px;line-height:70px;margin-top:0;}
+.lottery-gift-7.lottery-gift-active:after{z-index:1;margin-top:-68px;}
+.gifts-list{margin:10px 10px 40px;padding:0;list-style:none;position:relative;}
+.gifts-item{display:block;margin:10px 0 20px 0;position:relative;padding-left:55px;}
+.gifts-item:before{content:"";display:block;width:45px;height:55px;background:url(../images/gifts.gif) no-repeat;position:absolute;top:0;left:0;background-size:137px 54px;}
+.gifts-item-name{font-size:1rem;margin:0 85px 0 0;padding:0;color:#333;}
+.gifts-item-detail{color:#666;font-size:0.86rem;margin:4px 85px 4px 0;line-height:1.5;white-space:nowrap;}
+.gifts-item-summary{color:#BCBCBC;font-size:0.86rem;margin:0 85px 0 0;white-space:nowrap;}
+.gifts-item-2:before{background-position:-45px 0;}
+.gifts-item-3:before{background-position:-91px 0;}
+.gifts-item-btn{width:70px;height:30px;line-height:30px;display:inline-block;position:absolute;top:0;right:0;border-radius:3px;color:#fff;text-align:center;text-decoration:none;
+/* IE10 Consumer Preview */ 
+background-image: -ms-linear-gradient(top, #FF9600 0%, #EE8100 100%);
+
+/* Mozilla Firefox */ 
+background-image: -moz-linear-gradient(top, #FF9600 0%, #EE8100 100%);
+
+/* Opera */ 
+background-image: -o-linear-gradient(top, #FF9600 0%, #EE8100 100%);
+
+/* Webkit (Safari/Chrome 10) */ 
+background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FF9600), color-stop(1, #EE8100));
+
+/* Webkit (Chrome 11+) */ 
+background-image: -webkit-linear-gradient(top, #FF9600 0%, #EE8100 100%);
+
+/* W3C Markup, IE10 Release Preview */ 
+background-image: linear-gradient(to bottom, #FF9600 0%, #EE8100 100%);
+}
