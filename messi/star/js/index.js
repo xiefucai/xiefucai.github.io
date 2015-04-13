@@ -1,5 +1,4 @@
-﻿;
-(function($) {
+﻿(function($) {
     var resize = function(){
     	var w = document.documentElement.clientWidth || document.body.clientWidth,
     		h = document.body.clientHeight || document.body.clientHeight,
@@ -17,7 +16,7 @@
     },
     slider = (function(views){
     	var w = document.documentElement.clientWidth || document.body.clientWidth;
-    	
+
     	return {
     		'index':0,
     		'count':views.find('.view').length,
@@ -33,13 +32,21 @@
     		}
     	};
     })($('.views'));
-    
+
     $('.views').swipeLeft(function(){
+        console.log('swipeLeft');
     	slider.slideTo(slider.index+1);
     });
     $('.views').swipeRight(function(){
     	console.log('swipeRight');
     	slider.slideTo(slider.index-1);
+    }).swipe(function(){
+        console.log('swipe');
     });
+    
+    /*
+    document.addEventListener('touchmove', function (event) {
+        event.preventDefault();
+    }, false);*/
     resize();
 })(Zepto);
