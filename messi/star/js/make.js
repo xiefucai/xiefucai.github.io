@@ -45,4 +45,9 @@ $(function(){
 		}
 		return false;
 	});
+
+	$('#form').find('select').bind('change',function(){
+		var name = this.name;
+		data[name] = this.value
+	});
 });

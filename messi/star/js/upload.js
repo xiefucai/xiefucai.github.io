@@ -104,7 +104,7 @@
 		'text': '我喜欢追逐梦想，不喜欢别人纷繁叨扰，别跟我说什么不切实际。'
 	}],
 	format = function(str) {
-		return str.replace(/(我喜欢)([^，,]+)(，不喜欢)([^，,]+)(，别跟我说什么)([^，,]+)(。)/g, '$1<a class="upload-msg-link" href="javascript:;">$2</a>$3<a class="upload-msg-link" href="javascript:;">$4</a>$5<a class="upload-msg-link" href="javascript:;">$6</a>$7');
+		return str.replace(/(我喜欢)([^，,]+)(，不喜欢)([^，,]+)(，别跟我说什么)([^，,]+)(。)/g, '$1<a contenteditable="true">$2</a>$3<a contenteditable="true">$4</a>$5<a  contenteditable="true">$6</a>$7');
 	},
 	getConfig = function(){
 		var m = parseInt(paras['m'],10),
@@ -126,7 +126,7 @@
 	},
 	info = getConfig();
 
-	$('.upload-msg').html('<p class="upload-text">'+format(info['text'])+'</p><div class="upload-info">---因为我是<a class="upload-msg-link" href="javascript:;">'+info['name']+'</a></div>').bind('click',function(event){
+	$('.upload-msg').html('<p class="upload-text">'+format(info['text'])+'</p><div class="upload-info">---因为我是<a class="upload-msg-link" href="javascript:;">'+info['name']+'</a></div>')/*.bind('click',function(event){
 		var t = $(event.target);
 		if (event.target.tagName === 'A'){
 			var s = window.prompt('',t.text());
@@ -134,9 +134,13 @@
 				t.text(s);
 			}
 		}
-	});
+	})*/;
 
 	$('#public').bind('click',function(){
 		location.href = 'public.html';
+	});
+
+	$('#upload-file').bind('change',function(){
+		$(this).parent().html('<img src=""/>')
 	});
 });
