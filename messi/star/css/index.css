@@ -26,8 +26,9 @@ body{
 .view-img{margin:0 auto 0;width:78%;position:relative;}
 .view-img::before{content:'';display:block;position:absolute;top:10px;right:10px;width:105px;height:42px;background:url(../images/watermaker.png) no-repeat;background-size:100% auto;}
 .view-img img{width:100%;}
-.view-text{width:78%;margin:10px auto;font-size:16px;color:#847C65;line-height:1.5;font-weight:bold;}
+.view-text{width:78%;margin:4px auto;font-size:16px;color:#847C65;line-height:1.5;font-weight:bold;}
 .view-text a{font-weight:normal;}
+.view-text span{font-weight:normal;}
 .view-info{text-align:right;width:78%;margin:0 auto 0;color:#847C65;font-size:14px;}
 .pagination{position:absolute;left:0;width:100%;text-align:center;}
 .pagination-list{display:inline-block;margin:0 auto;padding:0;list-style:none;}
