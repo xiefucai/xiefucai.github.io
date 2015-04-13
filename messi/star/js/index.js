@@ -47,7 +47,7 @@
                 y1 = event.touches[0].pageY;
 
                 if (self.swiping) {
-                    self.swiping({
+                    self.swiping(event,{
                         'x':x1-x0,
                         'y':y1-y0
                     })
@@ -86,5 +86,8 @@
     swipe.swipeRight = function(){
         slider.slideTo(slider.index-1);
     };
+    swipe.swiping = function(event){
+        event.preventDefault();
+    }
     resize();
 })(Zepto);
