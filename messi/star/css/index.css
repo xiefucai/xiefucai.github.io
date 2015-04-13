@@ -35,7 +35,7 @@ body{
 .pagination-list li{display:inline-block;width:6px;height:6px;border-radius:50%;background:#898989;margin:0 3px;}
 .pagination-list li.active{background:#575757;}
 .fingerprint{display:block;width:188px;height:49px;margin:17px auto 0;background:url(../images/fingerprint.gif) no-repeat;background-size:100% auto;}
-.fingerprint:hover{background-image:url(../images/fingerprint2.gif);}
+.fingerprint:hover{background-position:0 100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
 
 .make::before{}
 .make-logo{background:url(../images/logo.gif) 50% 50% no-repeat;background-size:215px auto;}
