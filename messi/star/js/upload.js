@@ -126,7 +126,7 @@
 	},
 	info = getConfig();
 
-	$('.upload-msg').html('<p class="upload-text">'+format(info['text'])+'</p><div class="upload-info">---因为我是<a class="upload-msg-link" href="javascript:;">'+info['name']+'</a></div>')/*.bind('click',function(event){
+	$('.upload-msg').html('<p class="upload-text">'+format(info['text'])+'</p><div class="upload-info">---因为我是<a contenteditable="true">'+info['name']+'</a></div>')/*.bind('click',function(event){
 		var t = $(event.target);
 		if (event.target.tagName === 'A'){
 			var s = window.prompt('',t.text());
