@@ -65,5 +65,5 @@ body{
 .masker-dl dd{margin:0 0 15px;padding:0;}
 .masker-dl a{display:inline-block;width:50px;line-height:24px;border:1px solid #eee;col:#999;text-align:center;margin:5px;text-decoration:none;color:#333;}
 .masker-dl a.active{background:#FEA734;color:#fff;}
-.ok{display:block;width:100px;line-height:34px;background:#FEA734;color:#fff;border:0;margin:15px auto;}
+.ok{display:block;-webkit-appearance:none;width:100px;line-height:34px;background:#FEA734;color:#fff;border:0;margin:15px auto;}
 .none{display:none;}
