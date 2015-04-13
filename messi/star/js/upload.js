@@ -125,12 +125,18 @@
 		return config[10];
 	},
 	info = getConfig();
-	
+
 	$('.upload-msg').html('<p class="upload-text">'+format(info['text'])+'</p><div class="upload-info">---因为我是<a class="upload-msg-link" href="javascript:;">'+info['name']+'</a></div>').bind('click',function(event){
 		var t = $(event.target);
 		if (event.target.tagName === 'A'){
 			var s = window.prompt('',t.text());
-			t.text(s);
+			if (s) {
+				t.text(s);
+			}
 		}
+	});
+
+	$('#public').bind('click',function(){
+		location.href = 'public.html';
 	});
 });
