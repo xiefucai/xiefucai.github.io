@@ -55,7 +55,7 @@ body{
 
 .description{width:78%;margin:0 auto;text-align:left;line-height:1.75;}
 .decoration dt,.description dd{margin:0;padding:0;}
-.share{width:78%;margin:10px auto 0;text-align:left;position:relative;}
+.share{width:78%;margin:10px auto 30px;text-align:left;position:relative;}
 .share-btn1,.share-btn2{display:inline-block;width:137px;height:35px;background:url(../images/share.png) no-repeat;background-size:277px auto;color:transparent;}
 .share-btn2{background-position:100% 0;position:absolute;top:0;right:0;}
 .launch-btn{display:block;margin:0 auto;width:125px;height:32px;background:url(../images/launch.btn.png) no-repeat;background-size:100% auto;color:transparent;}
