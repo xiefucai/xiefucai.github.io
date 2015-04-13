@@ -1,4 +1,4 @@
-﻿(function($) {
+(function($) {
     var resize = function(){
     	var w = document.documentElement.clientWidth || document.body.clientWidth,
     		h = document.body.clientHeight || document.body.clientHeight,
@@ -31,22 +31,60 @@
     			$($('.pagination').find('li')[i]).addClass('active').siblings().removeClass('active');
     		}
     	};
-    })($('.views'));
+    })($('.views')),
+    Swipe = function(elem){
+        var x0,y0,x1,y1,self;
+        self = this;
+        this.slideElement = elem;
 
-    $('.views').swipeLeft(function(){
-        console.log('swipeLeft');
-    	slider.slideTo(slider.index+1);
-    });
-    $('.views').swipeRight(function(){
-    	console.log('swipeRight');
-    	slider.slideTo(slider.index-1);
-    }).swipe(function(){
-        console.log('swipe');
-    });
-    
-    /*
-    document.addEventListener('touchmove', function (event) {
-        event.preventDefault();
-    }, false);*/
+        elem.bind({
+            'touchstart':function(event){
+                x0 = event.touches[0].pageX;
+                y0 = event.touches[0].pageY;
+            },
+            'touchmove':function(event){
+                x1 = event.touches[0].pageX;
+                y1 = event.touches[0].pageY;
+
+                if (self.swiping) {
+                    self.swiping({
+                        'x':x1-x0,
+                        'y':y1-y0
+                    })
+                }
+            },
+            'touchend':function(event){
+                if (self.swipeLeft) {
+                    if (x1 - x0 < 0) {
+                        self.swipeLeft(x0-x1);
+                    }
+                }
+                if (self.swipeRight) {
+                    if (x1 - x0 > 0) {
+                        self.swipeRight(x1-x0);
+                    }
+                }
+                if (self.swipeUp) {
+                    if (y1 - y0 > 0) {
+                        self.swipeUp(y1-y0);
+                    }
+                }
+                if (self.swipeDown){
+                    if (y1 -y0 < 0) {
+                        self.swipeDown(y0-y1);
+                    }
+                }
+            }
+        });
+        return this;
+    },
+    swipe = new Swipe($('.views'));
+
+    swipe.swipeLeft = function(){
+        slider.slideTo(slider.index+1);
+    };
+    swipe.swipeRight = function(){
+        slider.slideTo(slider.index-1);
+    };
     resize();
 })(Zepto);
