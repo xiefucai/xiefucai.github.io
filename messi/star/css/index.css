@@ -55,7 +55,7 @@ body{
 .upload-text{font-size:16px;line-height:1.5;}
 .upload-msg a{color:#FF5454;text-decoration:underline;}
 .upload-info{font-size:12px;text-align:right;margin-top:10px;}
-.upload-public{display:block;width:177px;height:43px;background:url(../images/public.png) no-repeat;background-size:100% auto;margin:50px auto 0;color:transparent;}
+.upload-public{display:block;width:177px;height:43px;background:url(../images/public.png) no-repeat;background-size:100% auto;margin:50px auto 30px;color:transparent;}
 
 .description{width:78%;margin:0 auto;text-align:left;line-height:1.75;}
 .decoration dt,.description dd{margin:0;padding:0;}
@@ -71,3 +71,13 @@ body{
 .masker-dl a.active{background:#FEA734;color:#fff;}
 .ok{display:block;-webkit-appearance:none;width:100px;line-height:34px;background:#FEA734;color:#fff;border:0;margin:15px auto;}
 .none{display:none;}
+
+@media only screen and (max-width:320px){
+	.share{width:90%;}
+}
+@media only screen and (max-width:240px){
+	.view-text{font-size:12px;}
+	.share{text-align:center;}
+	.share-btn1,.share-btn2{margin:5px auto 0;}
+	.share-btn2{position:static;}
+}
