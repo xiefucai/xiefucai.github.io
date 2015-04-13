@@ -133,11 +133,13 @@
 	    var img = new Image();
 	    img.onload = function() {
 			var a = Math.min(img.width,img.height);
-
+			console.log(a);
 	        var ctx = canvas.getContext("2d");
 	        ctx.clearRect(0, 0, a, a); // canvas清屏
-	        //重置canvans宽高 canvas.width = img.width; canvas.height = img.height;
-	        ctx.drawImage(img, 0, 0, a, a); // 将图像绘制到canvas上
+	        //重置canvans宽高
+			canvas.width = a;
+			canvas.height = a;
+	        ctx.drawImage(img, 0, 0, img.width, img.height); // 将图像绘制到canvas上
 	        onCompress(canvas.toDataURL("image/jpeg")); //必须等压缩完才读取canvas值，否则canvas内容是黑帆布
 	    };
 	    // 记住必须先绑定事件，才能设置src属性，否则img没内容可以画到canvas
