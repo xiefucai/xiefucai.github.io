@@ -78,7 +78,7 @@
         });
         return this;
     },
-    swipe = new Swipe($('.views'));
+    swipe = new Swipe($('#views'));
 
     swipe.swipeLeft = function(){
         slider.slideTo(slider.index+1);
