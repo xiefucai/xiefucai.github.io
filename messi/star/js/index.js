@@ -31,7 +31,7 @@
     			$($('.pagination').find('li')[i]).addClass('active').siblings().removeClass('active');
     		}
     	};
-    })($('.views')),
+    })($('#views')),
     Swipe = function(elem){
         var x0,y0,x1,y1,self;
         self = this;
