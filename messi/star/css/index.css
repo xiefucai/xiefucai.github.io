@@ -42,7 +42,7 @@ body{
 .make-des{width:79.375%;margin:0 auto;box-shadow:0 0 15px rgba(100,100,100,.5);}
 .select-title{width:74.6875%;height:74px;background:url(../images/select-title.gif) 50% 0 no-repeat;margin:40px auto 0;text-align:center;overflow:hidden;padding:35px 0 0;}
 .select{width:78%;border:0;border-bottom:1px solid #787878;text-align:center;padding:7px 0;margin:35px auto 0;display:block;}
-.make-info{margin:54px 0 0;text-align:center;}
+.make-info{margin:27px 0 20px;text-align:center;}
 .make-btn{display:inline-block;width:177px;height:43px;background:url(../images/make-btn.gif) no-repeat;background-size:100% auto;margin:0 auto;text-decoration:none;color:transparent;}
 
 .upload-btn{position:relative;}
