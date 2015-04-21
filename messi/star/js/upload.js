@@ -7,6 +7,10 @@
 		}),
 		n;
 	})(location.search.slice(1)),
+	options = {
+        maxWidth: document.documentElement.clientWidth,
+        canvas: true
+    },
 	config = [{
 		'fm': 3,
 		'fd': 21,
@@ -113,7 +117,7 @@
 			f,
 			t,
 			e = m * 100 + d;
-		console.log(m,d,c);
+		
 		for(var i=0,k=config.length;i<k;i++){
 			c = config[i];
 			f = c['fm'] * 100 + c['fd'],
@@ -164,6 +168,7 @@
 		var input = this,
 			form = input.form;
 		var f = input.files[0];//一次只上传1个文件，其实可以上传多个的
+		/*
 		var FR = new FileReader();
 		FR.onload = function(f){
 			compressImg(this.result,600,function(data){//压缩完成后执行的callback
@@ -172,5 +177,19 @@
 			});
 		};
 		FR.readAsDataURL(f);//先注册onload，再读取文件内容，否则读取内容是空的
+		*/
+		
+		loadImage.parseMetaData(f, function (data) {
+			var exif;
+            if (data.exif) {
+                options.orientation = data.exif.get('Orientation');
+                exif = data.exif;
+            }
+			loadImage(exif.get('Thumbnail'), function (img) {
+				var data = img.toDataURL('image/jpeg');
+                    $(form).find('img')[0].src = data;
+                    form['imgData'].value = data;//写到form元素待提交服务器
+                }, {orientation: exif.get('Orientation')});
+        },{maxMetaDataSize: 262144});
 	});
 });
