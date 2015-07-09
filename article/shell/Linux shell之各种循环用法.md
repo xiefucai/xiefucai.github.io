@@ -3,12 +3,42 @@
 2. for i in $(seq 10)
 3. for i in &#96;ls&#96;
 4. for i in ${arr[@]}
-5. for i in $* ; do
-6. for File in /proc/sys/net/ipv4/confaccept_redirects：'
+5. for f in *.pdf;do echo $f;done
+>However, there is one problem with the above syntax. If there are no pdf files in current directory it will expand to *.pdf (i.e. f will be set to *.pdf"). To avoid this problem add the following statement before the for loop:
+``` bash
+#!/bin/bash
+# Usage: remove all utility bills pdf file password
+shopt -s nullglob
+for f in *.pdf
+do
+	echo "Removing password for pdf file - $f"
+        pdftk "$f" output "output.$f" user_pw "YOURPASSWORD-HERE"
+done
+```
+6. for f in ~/*;do echo $f;done;
 7. for File in /proc/sys/net/ipv4/conf/*/accept_redirects; do echo $File;done
 8. for i in f1 f2 f3 ;do echo $i;done #直接指定循环内容
 9. for (( i=0; i<10; i++)); do echo $i;done #C 语法for 循环
 10. for i in {1..10};do echo $i;done
+11. for f in $*或for f in $@
+``` bash
+#!/bin/bash
+# make sure you always put $f in double quotes to avoid any nasty surprises i.e. "$f"
+for f in $*
+do
+  echo "Processing $f file..."
+  # rm "$f"
+done
+```
+``` bash
+#!/bin/bash
+# make sure you always put $f in double quotes to avoid any nasty surprises i.e. "$f"
+for f in $@
+do
+  echo "Processing $f file..."
+  # rm "$f"
+done
+```
 ---
 实例：不同的方法来实现输出1－100间可以被3整除的数
 
@@ -130,4 +160,14 @@ echo "test_for..."
 test_for
 echo "test_continue..."
 test_continu
+```
+
+
+## while循环
+``` bash
+#!/bin/bash
+    while IFS= read -r file
+    do
+        [ -f "$file" ] && rm -f "$file"
+    done < "/tmp/data.txt"
 ```
