@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head>
+<body>
+
+<p>要使用的图像：</p>
+<img id="tulip" src="../messi/a2/images/test.jpg" alt="The Tulip" />
+
+<p>画布：</p>
+<canvas id="myCanvas" width="120" height="180" style="border:1px solid #d3d3d3;background:#ffffff;">
+  
+</canvas>
+<img id="result"/>
+<script>
+var mysize = 120,
+    rotation = 2;
+function getImgData(src,callback) {
+    var img = new Image(),
+        canvas = document.createElement('canvas'),
+        ctx = canvas.getContext('2d');
+        canvas.width = mysize;
+        canvas.height = mysize;
+        img.onload = function() {
+            var ww = img.width,
+                hh = img.height,
+                w = ww > hh?ww/hh*mysize:mysize,
+                h = ww > hh?mysize:hh/ww*mysize,
+                data
+                ;
+            if (rotation === 1) {
+                ctx.drawImage(img,(mysize - w)/2,0,w,h);
+                ctx.save();
+                callback(canvas.toDataURL('image/png'));return;
+            }else if(rotation === 2) {
+                ctx.translate(h, 0);
+                ctx.rotate(90 * Math.PI / 180);
+                ctx.drawImage(img, 0, 0, w, h);
+                ctx.save();
+                callback(canvas.toDataURL('image/png'));return;
+            }
+            
+            
+        };
+        
+        img.src = src;
+        document.getElementById('tulip').src = src;
+    /*
+    var w = 400,
+        h = 266;
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    var img = document.getElementById("tulip");
+    //ctx.drawImage(img,0,0,400,266,0,0,180,120);
+    ctx.save();
+    ctx.translate(120, 0);
+    ctx.rotate(90 * Math.PI / 180);
+    ctx.drawImage(img, 0, 0, 180, 120);
+    ctx.restore();
+    */
+}
+
+getImgData('../messi/a2/images/test.jpg',function(src){
+  document.getElementById('result').src = src;
+});
+/*getImgData('../messi/pingo/images/screen.jpg',function(src){
+  document.getElementById('result').src = src;
+});*/
+</script>
+
+</body>
+</html>
