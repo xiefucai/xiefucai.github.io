@@ -1,4 +1,3 @@
-wget http://www.xiefucai.com/tools/zqb2/hosts -O /tmp 2>&1
-cat /tmp/hosts > /etc/hosts
+wget http://www.xiefucai.com/tools/zqb2/hosts -O /etc/hosts 2>&1
 /etc/init.d/dnsmasq restart
 killall remote
