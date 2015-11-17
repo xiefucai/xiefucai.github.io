@@ -18,12 +18,16 @@ blink_led()
 dump_diag()
 {
     echo "dumping..."
-    
+
     date '+%Y/%m/%d %H:%M:%S' > $1/$SN.use 2>&1
 
     echo "========== df -h" >> $1/$SN.use
 
     df -h >> $1/$SN.use 2>&1
+
+    echo "========== du -h -d 1" >> $1/$SN.use
+
+    du -h -d 1 >> $1/$SN.use 2>&1
 
     echo "========== mount info" >> $1/$SN.use 2>&1
     mount >> $1/$SN.use 2>&1
