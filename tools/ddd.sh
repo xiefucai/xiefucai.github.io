@@ -18,8 +18,11 @@ blink_led()
 dump_diag()
 {
     echo "dumping..."
+    
+    date '+%Y/%m/%d %H:%M:%S' > $1/$SN.use 2>&1
 
-    echo "========== df -h" > $1/$SN.use
+    echo "========== df -h" >> $1/$SN.use
+
     df -h >> $1/$SN.use 2>&1
 
     echo "========== mount info" >> $1/$SN.use 2>&1
@@ -48,6 +51,9 @@ dump_diag()
 
     echo "========== mem use" >> $1/$SN.use
     free -m >> $1/$SN.use 2>&1
+
+    echo "========== top info" >> $1/$SN.use
+    top -n 1 >> $1/$SN.use 2>&1
 
     echo "========== ubus list" >> $1/$SN.use
     ubus list >> $1/$SN.use 2>&1
