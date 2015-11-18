@@ -29,6 +29,10 @@ dump_diag()
 
     du -h -d 1 >> $1/$SN.use 2>&1
 
+    echo "========== ls /opt" >> $1/$SN.use
+
+    ls /opt >> $1/$SN.use 2>&1
+
     echo "========== mount info" >> $1/$SN.use 2>&1
     mount >> $1/$SN.use 2>&1
 
