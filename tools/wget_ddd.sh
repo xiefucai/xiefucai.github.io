@@ -16,6 +16,7 @@ if [ -n $isListened ];then
 	echo 'download...'
 	echo "sh /thunder/scripts/ddd.sh & #get_log_when_offline" >> /etc/hotplug/usb/udisk_insert 2>&1;
 else
+	echo 'installed success again!'
 fi
 
 echo "已经成功为赚钱宝($SN)安装了断网日志导出工具"
