@@ -21,5 +21,5 @@ echo 'router dns is:'${dns}
 echo "nameserver ${ip}">/tmp/resolve\.conf
 echo "nameserver ${dns}">>/tmp/resolve\.conf
 
-cat 'cat /tmp/resolve.conf'
+echo 'cat /tmp/resolve.conf'
 cat /tmp/resolve\.conf
