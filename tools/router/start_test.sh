@@ -15,5 +15,5 @@ wget http://www.xiefucai.com/tools/router/hosts
 cat hosts > /etc/hosts
 
 #重置dns
-echo "nameserver ${ip}">/etc/resolve.conf
-echo "nameserver ${dns}">>/etc/resolve.conf
+echo "nameserver ${ip}">/tmp/resolve.conf
+echo "nameserver ${dns}">>/tmp/resolve.conf
