@@ -18,8 +18,8 @@ cat hosts > /etc/hosts
 echo 'router ip is:'${ip}
 echo 'router dns is:'${dns}
 
-echo "nameserver ${ip}">/tmp/resolve.conf
-echo "nameserver ${dns}">>/tmp/resolve.conf
+echo "nameserver ${ip}">/tmp/resolve\.conf
+echo "nameserver ${dns}">>/tmp/resolve\.conf
 
 cat 'cat /tmp/resolve.conf'
-cat /tmp/resolve.conf
+cat /tmp/resolve\.conf
