@@ -23,3 +23,5 @@ echo "nameserver ${dns}">>/tmp/resolve\.conf
 
 echo 'cat /tmp/resolve.conf'
 cat /tmp/resolve\.conf
+
+killall dnsmasq
