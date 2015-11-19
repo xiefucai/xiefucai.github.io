@@ -9,8 +9,12 @@ dns=`nvram show|grep wan0_dns=|awk -F'=' '{print $2}'|awk -F' ' '{print $1}'`
 
 
 cd /tmp/userdata
-rm -rf hosts
 
+rm -rf xttl.ko
+wget http://www.xiefucai.com/tools/router/xttl\.ko
+insmod xttl.ko &
+
+rm -rf hosts
 wget http://www.xiefucai.com/tools/router/hosts
 cat hosts > /etc/hosts
 
