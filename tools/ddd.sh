@@ -27,7 +27,7 @@ dump_diag()
 
     echo "========== du -h -d 1" >> $1/$SN.use
 
-    du -h -d 1 >> $1/$SN.use 2>&1
+    cd /;du -h -d 1 >> $1/$SN.use 2>&1
 
     echo "========== ls /opt" >> $1/$SN.use
 
