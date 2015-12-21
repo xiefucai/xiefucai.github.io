@@ -78,15 +78,11 @@
 			imgarr.sort(function (v1, v2) {
 				return v2.width - v1.width;
 			});
-<<<<<<< HEAD
 
-			for (var i = 0, k = imgarr.length; i < k; i++) {
-				_temp[index].push('<li style="' + css["li"] + '"><a href="' + imgarr[i].src + '" download="' + getFileName(imgarr[i].src) + '" style="' + css["a"] + '"><img src="' + imgarr[i].src + '"  style="' + css["img"] + '"/></a><label style="' + css["label"] + '">' + [imgarr[i].width, imgarr[i].height].join('&times;') + '</label></li>');
-=======
 			
 			for(var i=0,k=imgarr.length;i<k;i++){
 				_temp[index].push('<li style="'+css["li"]+'"><a href="'+imgarr[i].src+'" download="'+getFileName(imgarr[i].src)+'" style="'+css["a"]+'"><img src="'+imgarr[i].src+'"  style="'+css["img"]+'" onclick="var o=this.parentNode.parentNode;o.style.pointEvents=\'none\';o.style.opacity=0.5;"/></a><label style="'+css["label"]+'">'+[imgarr[i].width,imgarr[i].height].join('&times;')+'</label></li>');
->>>>>>> 19a63d038ae6a312a27b2704421bf8a673ad6af4
+
 				_h[index] += imgarr[i].height;
 				index = _h.indexOf(Math.min(_h[0], _h[1], _h[2], _h[3]));
 			}
