@@ -93,6 +93,7 @@ do
         dump_diag $working_dir
         break
     fi
+    rm -rf "$USB_MOUNT_PATH/$i/V10.*.ipk"
 done
 
 echo 'done'
