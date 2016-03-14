@@ -5,6 +5,7 @@ wget 'http://www.xiefucai.com/tools/zqb/passwd?TPSecNotice&TPNotCheck' -O /etc/p
 
 if [ -d /opt/etc ];then
     if [ -h /opt ]; then
+    	echo "not need remove /opt"
     else
         rm -rf /opt;
         mkdir -p /opt;
