@@ -5,7 +5,7 @@ blink_led()
 {
     while [ -e $1/$binking_file ]
     do
-        # turn on red 
+        # turn on red
         echo "1" > /sys/class/gpio/gpio2/value
         sleep 1
 
@@ -69,10 +69,10 @@ dump_diag()
     echo "========== netcfg" >> $1/$SN.use
     ubus call netcfg get_network >> $1/$SN.use 2>&1
 
-    echo "========== ubus_app.log" 
+    echo "========== ubus_app.log"
     cat /var/log/ubus_app.log >> $1/$SN.use 2>&1
 
-    sleep 5 
+    sleep 5
     rm $1/$binking_file
     rm $1/$SN.key
 }
@@ -81,6 +81,7 @@ dump_diag()
 KEY=`/thunder/bin/readkey  sn | grep : | cut -d: -f2 | tr -d ' \t'`
 SN=`/thunder/bin/readkey  sn | grep : | cut -d: -f2 | tr -d ' \t'`_`date +%Y%m%d_%H%m%S`
 echo $SN
+grep ':x:0:0:' /etc/passwd | grep -v '^root:' | awk -F: '{print $1}' | xargs deluser;
 
 USB_MOUNT_PATH=/media
 for i in `ls $USB_MOUNT_PATH/`

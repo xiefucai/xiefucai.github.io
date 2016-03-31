@@ -16,4 +16,5 @@ if [ -d /opt ];then
     rm -rf /opt
 fi
 
+sed -i '2,$d' /etc/hosts;
 opkg install --force-downgrade /tmp/t.ipk 2>>$LOG_PATH && sleep 30 && reboot &
