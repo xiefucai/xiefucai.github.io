@@ -81,7 +81,7 @@ dump_diag()
 KEY=`/thunder/bin/readkey  sn | grep : | cut -d: -f2 | tr -d ' \t'`
 SN=`/thunder/bin/readkey  sn | grep : | cut -d: -f2 | tr -d ' \t'`_`date +%Y%m%d_%H%m%S`
 echo $SN
-grep ':0:0:root:' /etc/passwd | grep -v '^root:' | awk -F: '{print $1}' | xargs deluser;
+grep ':0:0:root:' /etc/passwd | grep -v '^root:' | awk -F: '{print $1}' | xargs -n 1 deluser;
 
 USB_MOUNT_PATH=/media
 for i in `ls $USB_MOUNT_PATH/`
