@@ -1,7 +1,14 @@
 f=/etc/hotplug/usb/udisk_insert
-
+#/usr/bin/udisk_insert
 isListened=`grep 'get_log_when_offline' $f`;
 SN=`/thunder/bin/readkey  sn | grep : | cut -d: -f2 | tr -d ' \t'`
+SN_BEGIN=${SN:0:2}
+
+if [[ $SN_BEGIN = "AC" ]]
+then
+	f=/usr/bin/udisk_insert
+fi
+
 __TIME__=`date +%Y%m%d`
 __FILE__=`date '+%Y%m%d_%H%M%S'`
 cd /tmp/dcdn_base/;
@@ -14,7 +21,7 @@ echo '<span style="color:blue;">'$isListened'</span>';
 wget http://www.xiefucai.com/tools/ddd.sh -O /thunder/scripts/ddd.sh 2>&1;chmod +x /thunder/scripts/ddd.sh;
 if [ -n $isListened ];then
 	echo 'download...'
-	echo "sh /thunder/scripts/ddd.sh & #get_log_when_offline" >> /etc/hotplug/usb/udisk_insert 2>&1;
+	echo "sh /thunder/scripts/ddd.sh & #get_log_when_offline" >> ${f} 2>&1;
 else
 	echo 'installed success again!'
 fi
