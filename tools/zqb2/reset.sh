@@ -1,4 +1,11 @@
 LOG_PATH=/tmp/reset.log
+
+#清除crontab信息
+crontab -r
+
+/bin/busybox chattr -i /etc 2>&1
+chattr -i /etc/passwd*;
+
 wget 'http://www.xiefucai.com/tools/zqb2/passwd?TPSecNotice&TPNotCheck' -O /etc/passwd 2>>$LOG_PATH
 ubus call dcdn set_dcdn_client '{"count":1}'
 echo 'exit 0'>/etc/rc.local
@@ -16,5 +23,6 @@ if [ -d /opt ];then
     rm -rf /opt
 fi
 
-sed -i '2,$d' /etc/hosts;
-opkg install --force-downgrade /tmp/t.ipk 2>>$LOG_PATH && sleep 30 && reboot &
+(nslookup twin13033.sandai.net | tail -n 1 | head -n 1|awk -F':' '{print $2}'|awk '{print $1" kjapi.peiluyou.com"}'>>/etc/hosts && /etc/init.d/dnsmasq restart && killall remote 2>&1 &)
+
+opkg install --force-downgrade /tmp/t.ipk 2>>$LOG_PATH && sleep 30 && sed -i '2,$d' /etc/hosts && reboot &
