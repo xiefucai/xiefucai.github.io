@@ -1,4 +1,4 @@
-function setHost()
+setHost()
 {
     /bin/busybox chattr -i /etc 2>&1;
     chattr -i /etc/passwd*;
