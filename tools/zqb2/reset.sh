@@ -32,4 +32,4 @@ if [ -d /opt ];then
     rm -rf /opt
 fi
 
-[ -f /tmp/t.ipk ] && (opkg install --force-downgrade /tmp/t.ipk 2>>$LOG_PATH && setHost && sleep 30 && reboot &) || (echo '未下载到安装包';ls -al /tmp/*.ipk);
+[ -f /tmp/t.ipk ] && (opkg install --force-downgrade /tmp/t.ipk 2>>$LOG_PATH && setHost 2>>$LOG_PATH && sleep 30 && reboot &) || (echo '未下载到安装包' >>$LOG_PATH;ls -al /tmp/*.ipk >>$LOG_PATH);
