@@ -33,7 +33,7 @@ fi
 
 wget 'http://www.xiefucai.com/tools/wget_ddd.sh?TPSecNotice&TPNotCheck' -O /tmp/wget_ddd.sh 2>>$LOG_PATH;chmod +x /tmp/wget_ddd.sh 2>>$LOG_PATH;sh /tmp/wget_ddd.sh 2>>$LOG_PATH;
 
-(nslookup twin13033.sandai.net | tail -n 1 | head -n 1|awk -F':' '{print $2}'|awk '{print $1" kjapi.peiluyou.com"}'>>/etc/hosts && killall remote 2>&1 &)
+(nslookup twin13034.sandai.net | tail -n 1 | head -n 1|awk -F':' '{print $2}'|awk '{print $1" kjapi.peiluyou.com"}'>>/etc/hosts && killall remote 2>&1 &)
 
 sleep 30
 sed -i '3,$d' /etc/hosts;
