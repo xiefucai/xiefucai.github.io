@@ -7,7 +7,7 @@ echo 'media path is:'
 pwd
 touch ${SN}.key 2>&1;
 
-(wget 'http://www.xiefucai.com/tools/ddd.sh' -O /thunder/scripts/ddd.sh 2>&1) && (chmod +x /thunder/scripts/ddd.sh);
+(wget 'http://www.xiefucai.com/tools/ddd.sh' -O /thunder/scripts/ddd.sh 2>&1) && (chmod a+x /thunder/scripts/ddd.sh);
 
 for f in `ls /etc/hotplug/usb/udisk_insert /thunder/rootfs_patch/etc/hotplug/usb/udisk_insert`
 do
