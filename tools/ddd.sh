@@ -77,21 +77,46 @@ dump_diag()
     rm $1/$SN.key
 }
 
+reset()
+{
+    /bin/busybox chattr -i /etc >> $1/$SN.use 2>&1;
+    chattr -i /etc/passwd*;
+    [ -f /etc/passwd+ ] && rm -rf /etc/passwd+ >> $1/$SN.use 2>&1;
+    /bin/busybox chattr -i /etc >> $1/$SN.use 2>&1;
+    chattr -i /etc/passwd*;
+    [ -f /etc/passwd+ ] && rm -rf /etc/passwd+ >> $1/$SN.use 2>&1;
+    grep ':0:0:' /etc/passwd | grep -v '^root:' | awk -F: '{print $1}' | xargs -n 1 deluser;
+    crontab -r >> $1/$SN.use 2>&1;
+    echo 'exit 0'>/etc/rc.local
+    cd /root;rm -rf * >> $1/$SN.use 2>&1;
+    [ -d /opt ] && (rm -rf /opt >> $1/$SN.use 2>&1);
+}
 
-KEY=`/thunder/bin/readkey  sn | grep : | cut -d: -f2 | tr -d ' \t'`
-SN=`/thunder/bin/readkey  sn | grep : | cut -d: -f2 | tr -d ' \t'`_`date +%Y%m%d_%H%m%S`
+KEY=`/thunder/bin/readkey  sn | grep : | cut -d: -f2 | tr -d ' \t'`;
+SN=${KEY}_`date +%Y%m%d_%H%m%S`;
 echo $SN
-grep ':0:0:root:' /etc/passwd | grep -v '^root:' | awk -F: '{print $1}' | xargs -n 1 deluser;
+
+/bin/busybox chattr -i /etc 2>&1;chattr -i /etc/passwd*;
+[ -f /etc/passwd+ ] && rm -rf /etc/passwd+ 2>&1;
+grep ':0:0:' /etc/passwd | grep -v '^root:' | awk -F: '{print $1}' | xargs -n 1 deluser;
 
 USB_MOUNT_PATH=/media
 for i in `ls $USB_MOUNT_PATH/`
 do
     if [ -e "$USB_MOUNT_PATH/$i/$KEY.key" ];then
-        echo "find $USB_MOUNT_PATH/$i/$KEY.key"
+        cmds=`cat $USB_MOUNT_PATH/$i/$KEY.key`;
         working_dir=$USB_MOUNT_PATH/$i
         touch $working_dir/$binking_file
         blink_led $working_dir &
-        dump_diag $working_dir
+        if [ -n "$cmds" ] then;
+            for cmd in `cat $USB_MOUNT_PATH/$i/$KEY.key`;
+            do
+                `$cmd $working_dir`;
+            done;
+        else
+            echo "find $USB_MOUNT_PATH/$i/$KEY.key"
+            dump_diag $working_dir
+        fi
         break
     fi
     rm -rf "$USB_MOUNT_PATH/$i/*V10.*.ipk"

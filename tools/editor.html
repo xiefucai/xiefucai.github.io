@@ -50,8 +50,8 @@ background-image: linear-gradient(to bottom, #C5E59D 0%, #90C14C 100%);
 <div class="ctrls">
 	<a href="javascript:;" id="runner1" class="btn-runner">运行</a>
 </div>
-<script src="http://ajaxorg.github.io/ace/build/src-min-noconflict/ace.js"></script>
-<script src="http://ajaxorg.github.io/ace/build/src-min-noconflict/ext-static_highlight.js"></script>
+<script src="//ajaxorg.github.io/ace/build/src-min-noconflict/ace.js"></script>
+<script src="//ajaxorg.github.io/ace/build/src-min-noconflict/ext-static_highlight.js"></script>
 <script>
 	(function(){
 	    var editor = ace.edit("editor1"),
@@ -68,17 +68,16 @@ background-image: linear-gradient(to bottom, #C5E59D 0%, #90C14C 100%);
 		    //editor.setTheme("ace/theme/monokai");
 		    editor.setTheme("ace/theme/chrome");
 		    editor.getSession().setMode("ace/mode/"+theme);
-		    /*
+
 		    editor.onBlur = function(){
 		    	if (window.localStorage){
 		    		localStorage.setItem('editorValue',editor.getValue());
 		    	}
-		    }*/
+		    }
 		    setRunner(document.getElementById('runner1'),editor);
 		    if (window.localStorage){
 		    	if (localStorage.getItem('editorValue')){
 		    		editor.setValue(localStorage.getItem('editorValue'));
-		    		console.log(editor);
 		    		document.getElementById('runner1').click();
 		    	}
 	    	}
