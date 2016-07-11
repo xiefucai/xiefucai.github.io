@@ -58,6 +58,7 @@ background-image: linear-gradient(to bottom, #C5E59D 0%, #90C14C 100%);
 <script>
 	(function(){
 	    var editor = ace.edit("editor1"),
+            timer = 0,
 	    	run = function(editor){
 				var  winname = document.getElementById('frame').contentWindow;
 				 winname.document.open('text/html', 'replace');
@@ -70,7 +71,10 @@ background-image: linear-gradient(to bottom, #C5E59D 0%, #90C14C 100%);
 		    editor.setTheme("ace/theme/chrome");
 		    editor.getSession().setMode("ace/mode/"+theme);
 			editor.on('change', function(){
-				run(editor);
+				clearTimeout(timer);
+                timer = setTimeout(function(){
+                    run(editor);
+                },1000);
 			});
 		    if (window.localStorage){
 		    	if (localStorage.getItem('editorValue')){
