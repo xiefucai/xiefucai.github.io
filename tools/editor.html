@@ -64,6 +64,7 @@ background-image: linear-gradient(to bottom, #C5E59D 0%, #90C14C 100%);
 				 winname.document.open('text/html', 'replace');
 				 winname.document.write(editor.getValue());
 				 winname.document.close();
+                 localStorage.setItem('editorValue',editor.getValue());
 	    	},
 	    	ext = "html",
 	    	theme = {"js":"javascript","php":"php","html":"html"}[ext] || ext;
