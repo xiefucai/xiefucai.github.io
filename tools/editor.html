@@ -2,20 +2,22 @@
 <html>
 <head>
 <meta charset="UTF-8"/>
-<title>javascript在线代码编辑器</title>
+<title>代码编辑器</title>
 <meta name="Description" content="这里填写本网页的摘要内容" />
 <meta name="Keywords" content="seo关键词" />
 <style>
-body{max-width:95%;margin:0 auto;}
+html,body{margin:0;padding: 0;display: block;height: 100%;}
 h2{font-size:18px;border-bottom:1px solid #ccc;padding:10px 0;}
 a{color:#090;text-decoration:underline;margin:0 3px;}
 p{font-size:14px;line-height:1.75;text-indent:2em;}
-.main{height:500px;width:100%;}
-.frame{float:right;margin:11px -10px 0 0;border:1px solid #999;}
+.sidebar{width: 50px;background: #09b1b9;}
+.main{display: -webkit-box;
+    -webkit-box-orient: horizontal;height: 100%;}
+.frame{display: block;margin:0;border:none;-webkit-box-flex:1;}
 .paratable{border-collapse:collapse;border:1px solid #eee;color:#333;font-size:12px;margin-bottom:15px;}
 .paratable th,.paratable td{border-color:#eee;}
 .paratable .s2{display:none;}
-.ace_editor{width:50%;height:100%;border:1px solid #999;margin-left:-10px;float:left;}
+.ace_editor{border-right:1px solid #999;margin:0;-webkit-box-flex:1;width: 50%;}
 .btn-runner{
 display:inline-block;width:100px;height:30px;line-height:30px;text-align:center;border-radius:3px;text-decoration:none;
 color:#fff;border:1px solid #81BA2F;clear:both;
@@ -26,20 +28,21 @@ background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, 
 background-image: -webkit-linear-gradient(top, #C5E59D 0%, #90C14C 100%);
 background-image: linear-gradient(to bottom, #C5E59D 0%, #90C14C 100%);
 }
-.ctrls{clear:both;margin-left:-10px;}
+.ctrls{clear:both;margin-left:-10px;display: none;}
 .footer{margin:20px auto;font-size:12px;}
 </style>
 <script type="text/javascript" src="http://mat1.gtimg.com/app/vt/js/read/import.js" charset="utf-8"></script>
 </head>
 <body>
 <div class="main">
+	<div class="sidebar"></div>
 	<pre id="editor1" class="editor">&lt;!doctype html&gt;
 &lt;html&gt;
 &lt;head&gt;
 	&lt;meta charset="UTF-8"/&gt;
-	&lt;title&gt;test&lt;/title&gt;
-	&lt;meta name="Keywords" content="seo关键词" /&gt;
-	&lt;meta name="Description" content="这里填写本网页的摘要内容" /&gt;
+	&lt;title&gt;网页标题&lt;/title&gt;
+	&lt;meta name="Keywords" content="" /&gt;
+	&lt;meta name="Description" content="" /&gt;
 &lt;/head&gt;
 &lt;body&gt;
 &lt;/body&gt;
@@ -55,30 +58,23 @@ background-image: linear-gradient(to bottom, #C5E59D 0%, #90C14C 100%);
 <script>
 	(function(){
 	    var editor = ace.edit("editor1"),
-	    	setRunner = function(btn,elem){
-	    		btn.onclick = function(){
-	    			var  winname = document.getElementById('frame').contentWindow;
-				     winname.document.open('text/html', 'replace');
-				     winname.document.write(elem.getValue());
-				     winname.document.close();
-	    		}
+	    	run = function(editor){
+				var  winname = document.getElementById('frame').contentWindow;
+				 winname.document.open('text/html', 'replace');
+				 winname.document.write(editor.getValue());
+				 winname.document.close();
 	    	},
 	    	ext = "html",
 	    	theme = {"js":"javascript","php":"php","html":"html"}[ext] || ext;
 		    //editor.setTheme("ace/theme/monokai");
 		    editor.setTheme("ace/theme/chrome");
 		    editor.getSession().setMode("ace/mode/"+theme);
-
-		    editor.onBlur = function(){
-		    	if (window.localStorage){
-		    		localStorage.setItem('editorValue',editor.getValue());
-		    	}
-		    }
-		    setRunner(document.getElementById('runner1'),editor);
+			editor.on('change', function(){
+				run(editor);
+			});
 		    if (window.localStorage){
 		    	if (localStorage.getItem('editorValue')){
 		    		editor.setValue(localStorage.getItem('editorValue'));
-		    		document.getElementById('runner1').click();
 		    	}
 	    	}
 	})();
