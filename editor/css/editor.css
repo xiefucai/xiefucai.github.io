@@ -1,0 +1,29 @@
+@import "font.css";
+html,body{margin:0;padding: 0;display: block;height: 100%;}
+h2{font-size:18px;border-bottom:1px solid #ccc;padding:10px 0;}
+a{color:#090;text-decoration:underline;margin:0 3px;}
+p{font-size:14px;line-height:1.75;text-indent:2em;}
+.sidebar{width: 50px;background: #2C3E50;}
+.sidebar-menu{display:block;color:#fff;line-height: 50px;height:50px;text-align: center;border-bottom:1px solid #314D5D;overflow: hidden;cursor: pointer;}
+.sidebar-menu::before{content: '';display: block;border-top: 2px solid #fff;border-bottom: 2px solid #fff;width:16px;height: 8px;margin:19px;}
+.sidebar-menu::after{content: '';display: block;width: 16px;height: 2px;position: absolute;top:24px;left:19px;background: #fff;}
+.sidebar-menu:hover{background-color: #314D5D;}
+.main{display: -webkit-box;
+    -webkit-box-orient: horizontal;height: 100%;}
+.frame{display: block;margin:0;border:none;-webkit-box-flex:1;}
+.paratable{border-collapse:collapse;border:1px solid #eee;color:#333;font-size:12px;margin-bottom:15px;}
+.paratable th,.paratable td{border-color:#eee;}
+.paratable .s2{display:none;}
+.ace_editor{border-right:1px solid #999;margin:0;-webkit-box-flex:1;width: 50%;}
+.btn-runner{
+display:inline-block;width:100px;height:30px;line-height:30px;text-align:center;border-radius:3px;text-decoration:none;
+color:#fff;border:1px solid #81BA2F;clear:both;
+background-image: -ms-linear-gradient(top, #C5E59D 0%, #90C14C 100%);
+background-image: -moz-linear-gradient(top, #C5E59D 0%, #90C14C 100%);
+background-image: -o-linear-gradient(top, #C5E59D 0%, #90C14C 100%);
+background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #C5E59D), color-stop(1, #90C14C));
+background-image: -webkit-linear-gradient(top, #C5E59D 0%, #90C14C 100%);
+background-image: linear-gradient(to bottom, #C5E59D 0%, #90C14C 100%);
+}
+.ctrls{clear:both;margin-left:-10px;display: none;}
+.footer{margin:20px auto;font-size:12px;}

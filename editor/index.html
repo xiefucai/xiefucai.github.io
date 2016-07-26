@@ -1,0 +1,68 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>代码编辑器</title>
+<meta name="Description" content="这里填写本网页的摘要内容" />
+<meta name="Keywords" content="seo关键词" />
+<link rel="stylesheet" href="css/editor.css"/>
+</head>
+<body>
+<div class="main">
+	<div class="sidebar">
+    <label class="sidebar-menu"></label>
+  </div>
+	<pre id="editor1" class="editor">&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+	&lt;meta charset="UTF-8"/&gt;
+	&lt;title&gt;网页标题&lt;/title&gt;
+	&lt;meta name="Keywords" content="" /&gt;
+	&lt;meta name="Description" content="" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+	<iframe id="frame" name="frame" class="frame" frameborder="0" width="50%" height="100%"></iframe>
+</div>
+
+<div class="ctrls">
+	<a href="javascript:;" id="runner1" class="btn-runner">运行</a>
+</div>
+<script src="//ace.xiefucai.com/ace.js"></script>
+<script src="//ace.xiefucai.com/ext-static_highlight.js"></script>
+<!--
+<script src="//ajaxorg.github.io/ace/build/src-min-noconflict/ace.js"></script>
+<script src="//ajaxorg.github.io/ace/build/src-min-noconflict/ext-static_highlight.js"></script>
+-->
+<script>
+(function(){
+		var editor = ace.edit("editor1"),
+				timer = 0,
+		run = function(editor){
+				var  winname = document.getElementById('frame').contentWindow;
+				winname.document.open('text/html', 'replace');
+				winname.document.write(editor.getValue());
+				winname.document.close();
+				localStorage.setItem('editorValue',editor.getValue());
+		},
+		ext = "html",
+		theme = {"js":"javascript","php":"php","html":"html"}[ext] || ext;
+		//editor.setTheme("ace/theme/monokai");
+		editor.setTheme("ace/theme/chrome");
+		editor.getSession().setMode("ace/mode/"+theme);
+		editor.on('change', function(){
+				clearTimeout(timer);
+				timer = setTimeout(function(){
+						run(editor);
+				},1000);
+		});
+		if (window.localStorage){
+				if (localStorage.getItem('editorValue')){
+						editor.setValue(localStorage.getItem('editorValue'));
+				}
+		}
+})();
+</script>
+</body>
+</html>
