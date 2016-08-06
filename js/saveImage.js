@@ -1,8 +1,9 @@
-﻿(function (d) {
-	var g = function (name) {
-		return d.getElementById(name);
-	},
-		gs = function (xml, name, i) {
+﻿
+(function(d) {
+	var g = function(name) {
+			return d.getElementById(name);
+		},
+		gs = function(xml, name, i) {
 			var elms = xml.getElementsByTagName(name);
 			if (i !== undefined) {
 				return elms[i];
@@ -21,7 +22,7 @@
 			"li": "margin:0 0 5px 0;line-height:1;position:relative;",
 			"img": "vertical-align:bottom;width:240px;"
 		},
-		dom = (function (d) {
+		dom = (function(d) {
 			if (g("fucaixie")) {
 				return g("fucaixie");
 			} else {
@@ -34,7 +35,7 @@
 				close.setAttribute("style", css["fucaixie-close"]);
 				close.innerHTML = "&times;";
 				close.href = "javascript:;";
-				close.onclick = function () {
+				close.onclick = function() {
 					this.parentNode.style.display = "none";
 				};
 				var elm = d.createElement("div");
@@ -51,80 +52,110 @@
 				elm.appendChild(win);
 				win.setAttribute("style", css["fucaixie-win"]);
 				win.style.height = (document.documentElement.clientHeight - 60) + "px";
-				bg.onmousewheel = function (event) {
+				bg.onmousewheel = function(event) {
 					k = event.wheelDelta ? event.wheelDelta : -event.detail * 10;
 					win.scrollTop = win.scrollTop - k;
 					return false;
 				};
-				window.showPlugin = function () {
+				window.showPlugin = function() {
 					bg.style.display = "block";
 				}
-				return { "win": elm, "tit": title, "win": win };
+				return {
+					"win": elm,
+					"tit": title,
+					"win": win
+				};
 			}
 		})(d),
-		showImages = function (imgarr) {
-			var getFileName = function (filename) {
-				var name = /\/([^\/]+)$/.exec(filename.replace(/[#\?].*$/, ""));
-				return name && name[1];
-			},
+		showImages = function(imgarr) {
+			var getFileName = function(filename, index) {
+					var name = document.title.replace(/[\-\s\|\[\(]+.*/g, ''),
+						ext = filename.split('?').shift().split('.').pop();
+					return [name, index, ext].join('.');
+					/*
+					var name = /\/([^\/]+)$/.exec(filename.replace(/[#\?].*$/, ""));
+					return name && name[1];
+					*/
+				},
 				_temp = [
-					[], [], [], []
+					[],
+					[],
+					[],
+					[]
 				],
 				_h = [0, 0, 0, 0],
 				index = 0,
-				arr = []
-
-				;
-			imgarr.sort(function (v1, v2) {
+				arr = [];
+			imgarr.sort(function(v1, v2) {
 				return v2.width - v1.width;
 			});
 
-			
-			for(var i=0,k=imgarr.length;i<k;i++){
-				_temp[index].push('<li style="'+css["li"]+'"><a href="'+imgarr[i].src+'" download="'+getFileName(imgarr[i].src)+'" style="'+css["a"]+'"><img src="'+imgarr[i].src+'"  style="'+css["img"]+'" onclick="var o=this.parentNode.parentNode;o.style.pointEvents=\'none\';o.style.opacity=0.5;"/></a><label style="'+css["label"]+'">'+[imgarr[i].width,imgarr[i].height].join('&times;')+'</label></li>');
+
+			for (var i = 0, k = imgarr.length; i < k; i++) {
+				_temp[index].push('<li style="' + css["li"] + '"><a href="' + imgarr[i].src +
+					'" download="' + getFileName(imgarr[i].src, i) + '" style="' + css["a"] +
+					'"><img src="' + imgarr[i].src + '"  style="' + css["img"] +
+					'" onclick="var o=this.parentNode.parentNode;o.style.pointEvents=\'none\';o.style.opacity=0.5;"/></a><label style="' +
+					css["label"] + '">' + [imgarr[i].width, imgarr[i].height].join('&times;') +
+					'</label></li>');
 
 				_h[index] += imgarr[i].height;
 				index = _h.indexOf(Math.min(_h[0], _h[1], _h[2], _h[3]));
 			}
 			index = _h.indexOf(Math.max(_h[0], _h[1], _h[2], _h[3]));
-			arr.push('<ul style="' + css["ul"] + '">' + _temp[index].join("\n") + '</ul>');
+			arr.push('<ul style="' + css["ul"] + '">' + _temp[index].join("\n") +
+				'</ul>');
 			_h[index] = 0;
 			index = _h.indexOf(Math.max(_h[0], _h[1], _h[2], _h[3]));
-			arr.push('<ul style="' + css["ul"] + '">' + _temp[index].join("\n") + '</ul>');
+			arr.push('<ul style="' + css["ul"] + '">' + _temp[index].join("\n") +
+				'</ul>');
 			_h[index] = 0;
 			index = _h.indexOf(Math.max(_h[0], _h[1], _h[2], _h[3]));
-			arr.push('<ul style="' + css["ul"] + '">' + _temp[index].join("\n") + '</ul>');
+			arr.push('<ul style="' + css["ul"] + '">' + _temp[index].join("\n") +
+				'</ul>');
 			_h[index] = 0;
 			index = _h.indexOf(Math.max(_h[0], _h[1], _h[2], _h[3]));
-			arr.push('<ul style="' + css["ul"] + '">' + _temp[index].join("\n") + '</ul>');
+			arr.push('<ul style="' + css["ul"] + '">' + _temp[index].join("\n") +
+				'</ul>');
 			_h[index] = 0;
 			dom.win.innerHTML = arr.join("\n");
 		},
-		imgarr = (function (d) {
-			var imgs = d.images, arr = [];
+		imgarr = (function(d) {
+			var imgs = d.images,
+				arr = [];
 			for (var i = 0, k = imgs.length; i < k; i++) {
 				var img = new Image();
 				img.index = i;
-				img.onload = function () {
-					var w = this.width, h = this.height, src = this.src;
+				img.onload = function() {
+					var w = this.width,
+						h = this.height,
+						src = this.src;
 					if (w >= 90 && h >= 90) {
 						if (Math.max(w / h, h / w) < 6) {
-							arr.push({ "src": src, "width": w, "height": h });
+							arr.push({
+								"src": src,
+								"width": w,
+								"height": h
+							});
 						} else if (Math.min(w, h) >= 280) {
-							arr.push({ "src": src, "width": w, "height": h });
+							arr.push({
+								"src": src,
+								"width": w,
+								"height": h
+							});
 						} else {
-							delete (imgs[this.index]);
+							delete(imgs[this.index]);
 						}
 					} else {
-						delete (imgs[this.index]);
+						delete(imgs[this.index]);
 					}
 
 					if (imgs.length = arr.length) {
 						showImages(arr);
 					}
 				}
-				img.onerror = function () {
-					delete (imgs[this.index]);
+				img.onerror = function() {
+					delete(imgs[this.index]);
 					if (imgs.length = arr.length) {
 						showImages(arr);
 					}
