@@ -21,13 +21,13 @@ function onSelect(event, selector) {
 // window.addEventListener('paste', ... or
 document.onpaste = function(event) {
     var items = (event.clipboardData || event.originalEvent.clipboardData).items;
-    var blob = items[0].getAsFile();
+    var blob = items.length && items[0].getAsFile();
     var reader = new FileReader();
     reader.onload = function(event) {
         document.getElementById('preview_img').src = event.target.result;
         document.getElementById('img-data').value = event.target.result;
     }
-    reader.readAsDataURL(blob);
+    blob && reader.readAsDataURL(blob);
 }
 </script>
 <input type="file" onchange="onSelect(event,this)" />

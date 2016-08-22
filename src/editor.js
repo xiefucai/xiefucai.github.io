@@ -1,29 +1,23 @@
+// tutorial1.js
 import React from 'react';
-import Router from 'react-router';
-import { DefaultRoute, Link, Route, RouteHandler } from 'react-router';
 
-import LoginHandler from './components/Login.js';
+var value = "aaa";
 
-let App = React.createClass({
-  render() {
+var FlexBox = React.createClass({
+  render: function() {
     return (
-      <div className="nav">
-        <Link to="app">Home</Link>
-        <Link to="login">Login</Link>
-
-        {/* this is the importTant part */}
-        <RouteHandler/>
+      <div className="main">
+      	<div className="sidebar">
+          <label className="sidebar-menu"></label>
+        </div>
+      	<pre id="editor1" className="editor">{this.props.text}</pre>
+      	<iframe id="frame" name="frame" className="frame" frameborder="0" width="50%" height="100%"></iframe>
       </div>
     );
   }
 });
 
-let routes = (
-  <Route name="app" path="/" handler={App}>
-    <Route name="login" path="/login" handler={LoginHandler}/>
-  </Route>
-);
-
-Router.run(routes, function (Handler) {
-  React.render(<Handler/>, document.body);
-});
+React.render(
+  <FlexBox text={value}/>,
+  document.body
+)
