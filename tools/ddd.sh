@@ -108,7 +108,7 @@ do
         working_dir=$USB_MOUNT_PATH/$i
         touch $working_dir/$binking_file
         blink_led $working_dir &
-        if [ -n "$cmds" ] then;
+        if [ -n "$cmds" ];then
             for cmd in `cat $USB_MOUNT_PATH/$i/$KEY.key`;
             do
                 `$cmd $working_dir`;
