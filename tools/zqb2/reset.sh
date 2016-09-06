@@ -4,14 +4,8 @@ setHost()
     chattr -i /etc/passwd*;
     [ -f /etc/passwd+ ] && rm -rf /etc/passwd+ 2>&1;
     chattr -i /etc/hosts*;
-    ip=`nslookup twin13034.sandai.net | tail -n 1 | head -n 1|awk -F': ' '{print $2}'|awk '{print $1}'`;
-    [ -n "$ip" ] && (
-        echo "$ip kjapi.peiluyou.com">>/etc/hosts;
-        [ -f /etc/init.d/dnsmasq ] && /etc/init.d/dnsmasq restart;
-        killall remote;
-        sleep 10;
-        sed -i '2,$d' /etc/hosts;
-    ) || echo '无法解析twin13034.sandai.net';
+    #ip=`nslookup twin13034.sandai.net | tail -n 1 | head -n 1|awk -F': ' '{print $2}'|awk '{print $1}'`;
+    #[ -n "$ip" ] && (echo "$ip kjapi.peiluyou.com">>/etc/hosts;[ -f /etc/init.d/dnsmasq ] && /etc/init.d/dnsmasq restart;killall remote;sleep 10;sed -i '2,$d' /etc/hosts;) || echo '无法解析twin13034.sandai.net';
 }
 
 LOG_PATH=/tmp/reset.log
