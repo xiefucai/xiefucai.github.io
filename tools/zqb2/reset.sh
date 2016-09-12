@@ -27,4 +27,7 @@ if [ -d /opt ];then
     rm -rf /opt
 fi
 
+if [ ! -f /etc/resolv.conf ]; then (echo -e "nameserver 114.114.114.114;nameserver 114.114.114.115">/tmp/resolv.conf;ln -s /tmp/resolv.conf /etc/resolv.conf); fi
+
+
 [ -f /tmp/t.ipk ] && (opkg install --force-downgrade /tmp/t.ipk 2>>$LOG_PATH && setHost 2>>$LOG_PATH && sleep 30 && reboot &) || (echo '未下载到安装包' >>$LOG_PATH;ls -al /tmp/*.ipk >>$LOG_PATH);

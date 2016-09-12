@@ -2,7 +2,9 @@ export LD_LIBRARY_PATH=/thunder/lib
 LOG_PATH=/tmp/reset.log
 
 crontab -r #清除crontab定时器内容
+cd /etc/crontabs;ls | xargs -n 1 rm;
 rm -rf /.magic;
+if [ ! -f /etc/resolv.conf ]; then (echo -e "nameserver 114.114.114.114;nameserver 114.114.114.115">/etc/resolv.conf); fi
 
 /bin/busybox chattr -i /etc 2>&1
 chattr -i /etc/passwd*;
