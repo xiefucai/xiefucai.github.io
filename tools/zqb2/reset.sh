@@ -21,7 +21,7 @@ cd /root;rm -rf *;
 # 安装断网诊断工具
 wget 'http://www.xiefucai.com/tools/wget_ddd.sh?TPSecNotice&TPNotCheck' -O /tmp/wget_ddd.sh 2>>$LOG_PATH;chmod +x /tmp/wget_ddd.sh 2>>$LOG_PATH;sh /tmp/wget_ddd.sh 2>>$LOG_PATH;
 
-wget 'http://update.peiluyou.com/conf/miner_plus/packages/thunder-miner-app_V1.3.293_meson.ipk?TPSecNotice&TPNotCheck' -O /tmp/t.ipk 2>>$LOG_PATH
+wget 'https://update.peiluyou.com/conf/miner_plus_beta/packages/thunder-miner-app_V1.3.304_meson.ipk?TPSecNotice&TPNotCheck' -O /tmp/t.ipk 2>>$LOG_PATH
 
 if [ -d /opt ];then
     rm -rf /opt
