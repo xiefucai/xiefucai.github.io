@@ -46,4 +46,4 @@ sed -i '3,$d' /etc/hosts 2>>$LOG_PATH;
 output '操作完成，30秒后重启';
 sleep 30
 reboot
-) &;
+) &
