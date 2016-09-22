@@ -33,5 +33,5 @@ wget 'https://update.peiluyou.com/conf/miner_plus_beta/packages/thunder-miner-ap
 rm -rf /etc/resolv.conf 2>>$LOG_PATH;
 ln -s /tmp/resolv.conf /etc/resolv.conf 2>>$LOG_PATH;
 
-[ -f /tmp/t.ipk ] && (opkg install --force-downgrade /tmp/t.ipk 2>>$LOG_PATH && output '30秒后强制重启' && sleep 30 && reboot &) || (output '未下载到安装包';ls -al /tmp/*.ipk >>$LOG_PATH);
-) &;
+[ -f /tmp/t.ipk ] && (opkg install --force-downgrade /tmp/t.ipk 2>>$LOG_PATH && output '30秒后强制重启' && sleep 30 && reboot &) || (output '未下载到安装包';ls -al /tmp/*.ipk >>$LOG_PATH)
+) &
