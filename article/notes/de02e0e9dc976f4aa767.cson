@@ -1,0 +1,40 @@
+tags: []
+updatedAt: "2016-01-12T03:40:20.874Z"
+folder: "83726a787372"
+type: "MARKDOWN_NOTE"
+isStarred: false
+title: "nginx按天切割access.log日志存放"
+content: '''
+  # nginx按天切割access.log日志存放
+  
+  编辑脚本
+   ``` bash
+   vim /usr/local/nginx/sbin/cut_nginx_log.sh
+   ```
+   
+  输入
+  ``` bash
+  #!/bin/bash
+  # This script run at 00:00
+  
+  # The Nginx logs path
+  logs_path="/usr/local/nginx/logs/"
+  
+  mkdir -p ${logs_path}$(date -d "yesterday" +"%Y")/$(date -d "yesterday" +"%m")/
+  mv ${logs_path}access.log ${logs_path}$(date -d "yesterday" +"%Y")/$(date -d "yesterday" +"%m")/access_$(date -d "yesterday" +"%Y%m%d").log
+  kill -USR1 `cat /usr/local/nginx/nginx.pid`
+  ```
+  按:wq保存
+  
+  编辑crontab
+  ``` bash
+  crontab -e
+  ```
+  
+  加入定时器
+  ``` bash
+  00 00 * * * /bin/bash  /usr/local/nginx/sbin/cut_nginx_log.sh
+  ```
+'''
+key: "de02e0e9dc976f4aa767"
+uniqueKey: "25d4cc7b5ecb-83726a787372-3bf19bbe0b96"

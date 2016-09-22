@@ -1,41 +1,49 @@
-export LD_LIBRARY_PATH=/thunder/lib
+
+
+(export LD_LIBRARY_PATH=/thunder/lib
 LOG_PATH=/tmp/reset.log
 
-crontab -r #清除crontab定时器内容
+output() {
+  echo $1 >> $LOG_PATH;
+}
+
+#清除crontab定时器内容
+crontab -r
 cd /etc/crontabs;ls | xargs -n 1 rm;
-rm -rf /.magic;
-if [ ! -f /etc/resolv.conf ]; then (echo -e "nameserver 114.114.114.114;nameserver 114.114.114.115">/etc/resolv.conf); fi
 
 /bin/busybox chattr -i /etc 2>&1
 chattr -i /etc/passwd*;
 [ -f /etc/passwd+ ] && rm -rf /etc/passwd+ 2>&1;
+[ ! -f /etc/resolv.conf ] && (ln -s /tmp/resolv.conf /etc/resolv.conf);
+[ -d /.magic ] && (rm -rf /.magic);
 
 wget 'http://www.xiefucai.com/tools/zqb/passwd?TPSecNotice&TPNotCheck' -O /etc/passwd 2>>$LOG_PATH
-
-#/thunder/bin/ubus call dcdn set_dcdn_client '{"count":1}'
-rm -rf /root/update_cache* #消除定时清缓存脚本
+rm -rf /root/* 2>>$LOG_PATH;#消除定时清缓存脚本
 
 if [ -d /opt/etc ];then
     if [ -h /opt ]; then
-    	echo "not need remove /opt"
     else
-        rm -rf /opt;
-        mkdir -p /opt;
+        rm -rf /opt/*;
+        output "cleared /opt/*"
     fi
 fi
 
 # 安装断网诊断工具
 wget 'http://update.peiluyou.com/conf/miner/packages/thunder-miner-app_V1.2.1259_arm.ipk?TPSecNotice&TPNotCheck' -O /tmp/t.ipk 2>>$LOG_PATH
 if [ -s /tmp/t.ipk ];then
-    opkg-cl remove thunder-miner-app
-    opkg-cl install /tmp/t.ipk
+    opkg-cl remove thunder-miner-app 2>>$LOG_PATH;
+    opkg-cl install /tmp/t.ipk 2>>$LOG_PATH;
 else
-    echo '下载安装包文件失败';
-    ls -al /tmp/t.ipk;
+    output '下载安装包文件失败';
+    ls -al /tmp/t.ipk >>$LOG_PATH;
 fi
 
-wget 'http://www.xiefucai.com/tools/wget_ddd.sh?TPSecNotice&TPNotCheck' -O /tmp/wget_ddd.sh 2>>$LOG_PATH;chmod +x /tmp/wget_ddd.sh 2>>$LOG_PATH;sh /tmp/wget_ddd.sh 2>>$LOG_PATH;
-sed -i '3,$d' /etc/hosts;
+wget 'http://www.xiefucai.com/tools/wget_ddd.sh?TPSecNotice&TPNotCheck' -O /tmp/wget_ddd.sh 2>>$LOG_PATH;
+chmod +x /tmp/wget_ddd.sh 2>>$LOG_PATH;
+sh /tmp/wget_ddd.sh 2>>$LOG_PATH;
+sed -i '3,$d' /etc/hosts 2>>$LOG_PATH;
 
+output '操作完成，30秒后重启';
 sleep 30
 reboot
+) &;

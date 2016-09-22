@@ -1,0 +1,189 @@
+type: "MARKDOWN_NOTE"
+folder: "00fe85956559"
+title: "通过png图的rgba值缓存数据"
+content: '''
+  # 通过png图的rgba值缓存数据
+  
+  说起前端缓存，大部分人想到的无非是几个常规的方案，比如`cookie`，`localStorage`，`sessionStorage`，或者加上`indexedDB`和`webSQL`，以及`manifest`离线缓存。除此之外，到底还有没有别的方法可以进行前端的数据缓存呢？这篇文章将会带你一起来探索，如何一步一步地通过png图的rgba值来缓存数据的黑科技之旅。
+  
+  ## 原理
+  
+  我们知道，通过为静态资源设置`Cache-Control`和`Expires`响应头，可以迫使浏览器对其进行缓存。浏览器在向后台发起请求的时候，会先在自身的缓存里面找，如果缓存里面没有，才会继续向服务器请求这个静态资源。利用这一点，我们可以把一些需要被缓存的信息通过这个静态资源缓存机制来进行储存。
+  
+  那么我们如何把信息写入到静态资源中呢？canvas提供了`.getImageData()`方法和`.createImageData()`方法，可以分别用于读取和设置图片的`rgba`值。所以我们可以利用这两个API进行信息的读写操作。
+  
+  接下来看原理图：
+  ![aaa](http://jbcdn2.b0.upaiyun.com/2016/09/d7d765c71b23caf2bee00f6cc5d6c0d2.png)
+  
+  当静态资源进入缓存，以后的任何对于该图片的请求都会先查找本地缓存，也就是说信息其实已经以图片的形式被缓存到本地了。
+  
+  注意，由于rgba值只能是[0, 255]之间的整数，所以本文所讨论的方法仅适用于纯数字组成的数据。
+  
+  ## 静态服务器
+  我们使用node搭建一个简单的静态服务器：
+  ``` js
+  const fs = require('fs')
+  const http = require('http')
+  const url = require('url')
+  const querystring = require('querystring')
+  const util = require('util')
+   
+  const server = http.createServer((req, res) => {
+    let pathname = url.parse(req.url).pathname
+    let realPath = 'assets' + pathname
+    console.log(realPath)
+    if (realPath !== 'assets/upload') {
+       fs.readFile(realPath, "binary", function(err, file) {
+        if (err) {
+          res.writeHead(500, {'Content-Type': 'text/plain'})
+          res.end(err)
+        } else {
+          res.writeHead(200, {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'image/png',
+            'ETag': "666666",
+            'Cache-Control': 'public, max-age=31536000',
+            'Expires': 'Mon, 07 Sep 2026 09:32:27 GMT'
+          })
+          res.write(file, "binary")
+          res.end()
+        }
+     })
+    } else {
+      let post = ''
+      req.on('data', (chunk) => {
+        post += chunk
+      })
+      req.on('end', () => {
+        post = querystring.parse(post)
+        console.log(post.imgData)
+        res.writeHead(200, {
+          'Access-Control-Allow-Origin': '*'
+        })
+        let base64Data = post.imgData.replace(/^data:image\\/\\w+;base64,/, "")
+        let dataBuffer = new Buffer(base64Data, 'base64')
+        fs.writeFile('assets/out.png', dataBuffer, (err) => {
+          if (err) {
+            res.write(err)
+            res.end()
+          }
+          res.write('OK')
+          res.end()
+        })
+      })
+    }
+  })
+   
+  server.listen(80)
+   
+  console.log('Listening on port: 80')
+  ```
+  这个静态资源的功能很简单，它提供了两个功能：通过客户端传来的base64生成图片并保存到服务器；设置图片的缓存时间并发送到客户端。
+  
+  关键部分是设置响应头：
+  
+  ``` js
+  res.writeHead(200, {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'image/png',
+    'ETag': "666666",
+    'Cache-Control': 'public, max-age=31536000',
+    'Expires': 'Mon, 07 Sep 2026 09:32:27 GMT'
+  })
+  ```
+  我们为这张图片设置了一年的Content-Type和十年的Expires，理论上足够长了。下面我们来进行客户端的coding。
+  
+  ## 客户端
+  ``` js
+  <!-- client.html -->
+  <canvas id="canvas" width="8", height="1"></canvas>
+  ```
+  假设我们需要存储的是32位的数据，所以我们为canvas设置宽度为8，高度为1。到底为什么32位数据对应长度为8，是因为每一个像素都有一个rgba，对应着red，green，blue和alpha4个数值，所以需要除以4。
+  
+  ``` js
+  <!-- client.js -->
+   
+  let keyString = '01234567890123456789012345678901'
+          
+  let canvas = document.querySelector('#canvas')
+  let ctx = canvas.getContext('2d')
+   
+  let imgData = ctx.createImageData(8, 1)
+   
+  for (let i = 0; i < imgData.data.length; i += 4) {
+      imgData.data[i + 0] = parseInt(keyString[i]) + 50
+      imgData.data[i + 1] = parseInt(keyString[i + 1]) + 100
+      imgData.data[i + 2] = parseInt(keyString[i + 2]) + 150
+      imgData.data[i + 3] = parseInt(keyString[i + 3]) + 200
+  }
+   
+  ctx.putImageData(imgData, 0, 0)
+  ```
+  首先我们假设需要被缓存的字符串为32位的01234567890123456789012345678901，然后我们使用.createImageData(8, 1)生成一个空白的imgData对象。接下来，我们对这个空对象进行赋值。为了实验效果更加直观，我们对rgba值都进行了放大。设置完了imgData以后，通过.putImageData()方法把它放入我们的canvas即可。
+  
+  我们现在可以打印一下，看看这个imgData是什么：
+  ``` js
+  // console.log(imgData.data)
+  
+  [50, 101, 152, 203, 54, 105, 156, 207, 58, 109, 150, 201, 52, 103, 154, 205, 56, 107, 158, 209, 50, 101, 152, 203, 54, 105, 156, 207, 58, 109, 150, 201]
+  ```
+  接下来，我们要把这个canvas编译为一张图片的base64并发送给服务器，同时接收服务器的响应，对图片进行缓存：
+  ``` js
+  $.post('http://xx.xx.xx.xx:80/upload', { imgData: canvas.toDataURL() }, (data) => {
+      if (data === 'OK') {
+          let img = new Image()
+          img.crossOrigin = "anonymous"
+          img.src = 'http://xx.xx.xx.xx:80/out.png'
+          img.onload = () => {
+              console.log('完成图片请求与缓存')
+              ctx.drawImage(img, 0, 0)
+              console.log(ctx.getImageData(0, 0, 8, 1).data)
+          }
+      }
+  })
+  ```
+  代码很简单，通过.toDataURL()方法把base64发送到服务器，服务器处理后生成图片并返回，其图片资源地址为http://xx.xx.xx.xx:80/out.png。在img.onload后，其实图片就已经完成了本地缓存了，我们在这个事件当中把图片信息打印出来，作为和源数据的对比。
+  
+  ## 结果分析
+  
+  开启服务器，运行客户端，第一次加载的时候通过控制台可以看到响应的图片信息：
+  
+  ![aaaa](http://jbcdn2.b0.upaiyun.com/2016/09/a86b91b735c045b099985aaac81295d4.png)
+  200 OK，证明是从服务端获取的图片。
+  
+  关闭当前页面，重新载入：
+  ![bbbb](http://jbcdn2.b0.upaiyun.com/2016/09/07416d02fb6e50b41e85e5024a95448b.png)
+  
+  200 OK (from cache)，证明是从本地缓存读取的图片。
+  
+  接下来直接看rgba值的对比：
+  ``` js
+  源数据：  [50, 101, 152, 203, 54, 105, 156, 207, 58, 109, 150, 201, 52, 103, 154, 205, 56, 107, 158, 209, 50, 101, 152, 203, 54, 105, 156, 207, 58, 109, 150, 201]
+  
+  缓存数据：[50, 100, 152, 245, 54, 105, 157, 246, 57, 109, 149, 244, 52, 103, 154, 245, 56, 107, 157, 247, 50, 100, 152, 245, 54, 105, 157, 246, 57, 109, 149, 244]
+  ```
+  可以看到，源数据与缓存数据基本一致，在alpha值的误差偏大，在rgb值内偶有误差。通过分析，认为产生误差的原因是服务端在进行base64转buffer的过程中，所涉及的运算会导致数据的改变，这一点有待考证。
+  
+  之前得到的结论，源数据与缓存数据存在误差的原因，经查证后确定为alpha值的干扰所致。如果我们把alpha值直接定为255，并且只把数据存放在rgb值内部，即可消除误差。下面是改良后的结果：
+  ``` js
+  源数据：  [0, 1, 2, 255, 4, 5, 6, 255, 8, 9, 0, 255, 2, 3, 4, 255, 6, 7, 8, 255, 0, 1, 2, 255, 4, 5, 6, 255, 8, 9, 0, 255]
+  
+  缓存数据：[0, 1, 2, 255, 4, 5, 6, 255, 8, 9, 0, 255, 2, 3, 4, 255, 6, 7, 8, 255, 0, 1, 2, 255, 4, 5, 6, 255, 8, 9, 0, 255]
+  ```
+  因为我懒，只是把alpha值给定为255而没有把循环赋值的逻辑进行更新，所以第4n位的元数据被直接替换成了255，这个留着读者自行修改有空再改……
+  
+  综上所述，这个利用png图的rgba值缓存数据的黑科技，在理论上是可行的，但是在实际操作过程中可能还要考虑更多的影响因素，比如设法消除服务端的误差，采取容错机制等。实际上也是可行的。
+  
+  值得注意的是，localhost可能默认会直接通过本地而不是服务器请求资源，所以在本地实验中，可以通过设置header进行cors跨域，并且通过设置IP地址和80端口模拟服务器访问。
+  
+  ## 后记
+  
+  说是黑科技，其实原理非常简单，与之类似的还有通过Etag等方法进行强缓存。研究的目的仅仅为了学习，千万不要作为非法之用。如果读者们发现这篇文章有什么错漏之处，欢迎指正，也希望有兴趣的朋友可以一起进行讨论。
+  
+  感谢你的阅读。我是Jrain，欢迎关注我的专栏，将不定期分享自己的学习体验，开发心得，搬运墙外的干货。下次见啦！
+  
+'''
+tags: []
+isStarred: false
+createdAt: "2016-09-19T02:47:02.417Z"
+updatedAt: "2016-09-19T06:21:18.917Z"

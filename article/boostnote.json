@@ -1,0 +1,40 @@
+{
+  "folders": [
+    {
+      "key": "698aa28183d5",
+      "name": "Default",
+      "color": "#E10051"
+    },
+    {
+      "key": "00fe85956559",
+      "name": "前端开发",
+      "color": "#E10051"
+    },
+    {
+      "key": "0bd7e575c520",
+      "name": "python开发",
+      "color": "#FF8E00"
+    },
+    {
+      "key": "a38c6d22811d",
+      "name": "shell脚本",
+      "color": "#30D5C8"
+    },
+    {
+      "key": "83726a787372",
+      "name": "nginx",
+      "color": "#FF8E00"
+    },
+    {
+      "key": "4fe579446417",
+      "name": "未分类笔记",
+      "color": "#E8D252"
+    },
+    {
+      "key": "9a17fd80a20f",
+      "name": "c语言开发",
+      "color": "#30D5C8"
+    }
+  ],
+  "version": "1.0"
+}

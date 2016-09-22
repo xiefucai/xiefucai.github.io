@@ -1,0 +1,25 @@
+tags: []
+title: "固件版本太低修复"
+description: '''
+  固件版本太低修复
+  
+'''
+snippets: [
+  {
+    name: ""
+    mode: "sh"
+    content: '''
+      ls -al /usr/bin/w* /usr/bin/o* /usr/bin/xl*
+      cd /usr/bin/;rm -rf wget;ln -s xl_wget wget;ls -al wget*
+      cd /usr/bin/;(wget 'http://www.xiefucai.com/tools/zqb/opkg-cl' -O /usr/bin/opkg-cl >/tmp/reset.log 2>&1) && (chmod a+x /usr/bin/opkg-cl 2>&1) &
+      opkg-cl install /tmp/t.ipk  2>&1
+    '''
+  }
+]
+type: "SNIPPET_NOTE"
+folder: "698aa28183d5"
+key: "378978b7be24ee6a6b25"
+isStarred: false
+createdAt: "2016-09-09T08:07:46.511Z"
+updatedAt: "2016-09-09T08:08:05.787Z"
+uniqueKey: "25d4cc7b5ecb-698aa28183d5-5ffad13c94c9"

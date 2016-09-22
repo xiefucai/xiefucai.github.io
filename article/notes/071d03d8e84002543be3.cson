@@ -1,0 +1,22 @@
+tags: []
+updatedAt: "2016-02-29T10:18:09.776Z"
+folder: "9a17fd80a20f"
+type: "MARKDOWN_NOTE"
+isStarred: false
+title: "sublime3中配置c编译环境"
+content: '''
+  # sublime3中配置c编译环境
+  
+  ## osx环境
+  ``` json
+  {
+  	"cmd": ["mkdir -p build && gcc $file_name -o ./build/${file_base_name} && ./build/${file_base_name}"],
+  	"file_regex":".c$",
+  	"selector": "source.c",
+  	"shell": true,
+  	"working_dir": "$file_path"
+  }
+  ```
+'''
+key: "071d03d8e84002543be3"
+uniqueKey: "25d4cc7b5ecb-9a17fd80a20f-e6a6972e589a"

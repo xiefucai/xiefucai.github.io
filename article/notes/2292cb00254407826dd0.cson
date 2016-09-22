@@ -1,0 +1,265 @@
+tags: []
+updatedAt: "2016-05-18T09:48:38.455Z"
+folder: "00fe85956559"
+type: "MARKDOWN_NOTE"
+isStarred: false
+title: "nginx+lua 按地区灰度发布实现"
+content: '''
+  # nginx+lua 按地区灰度发布实现
+  
+  ## 方案
+  ``` txt
+   ---> A ---> pre 灰度环境
+        |
+        |
+        v
+       main 正式环境
+  ````
+  
+  在nginx的http里的server模块中，当接受到http请求的时候，由lua实现以下逻辑
+  * cookie中若有branch字段，将使用branch值对应的环境
+  (pre=>灰度环境,main=>正式环境)
+  * cookie中若无branch字段，从数据库中查找来访ip对应的国、省、市、运营商信息
+      * 如果其省、市在灰度区域中，则使用灰度环境
+      * 否则使用正式环境
+  
+      并设置cookie字段branch的值为pre或main，有效期1天。
+      
+  ## 环境
+  1. [安装luajit](https://moonbingbing.gitbooks.io/openresty-best-practices/content/lua/build_env.html)
+  2. [安装nginx的lua模块OpenResty](https://moonbingbing.gitbooks.io/openresty-best-practices/content/openresty/install_on_centos.html)
+  
+  ## 配置
+  ### 1. nginx.conf 的http模块中包含添加以下内容
+  ``` Conf
+  #set search paths for pure Lua external libraries
+  lua_package_path './?.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua;/usr/local/lib/lua/5.1/?.lua;/usr/local/lib/lua/5.1/?/init.lua;/usr/share/lua/5.1/?.lua;/usr/share/lua/5.1/?/init.lua;;';
+  lua_package_cpath './?.so;/usr/local/lib/lua/5.1/?.so;/usr/lib/x86_64-linux-gnu/lua/5.1/?.so;/usr/lib/lua/5.1/?.so;/usr/local/lib/lua/5.1/loadall.so;;';
+  include /usr/local/nginx/conf/sites-enabled/*.conf;
+  ```
+  
+  lua_package_path 和 lua_package_cpath 的值可以通过在shell终端输入以下命令获取
+  ``` bash
+  lua
+  > print(package.path)
+  > print(package.cpath)
+  ```
+  
+  ### 2. 站点配置
+  /usr/local/nginx/conf/sites-enabled/下新建站点配置文件kj.xunlei.com.conf
+  ``` conf
+  server {
+      listen 8081;
+      root /media/xiefucai/WD/project/kj.peiluyou.com;
+      index index.html index.htm;
+      location / {
+          autoindex on;
+          #try_files $uri $uri/ =404;
+      }
+  }
+  server {
+      listen 8082;
+      root /media/xiefucai/WD/project/xiefucai.github.io;
+      index index.html index.htm;
+      location / {
+          autoindex on;
+          #try_files $uri $uri/ =404;
+      }
+  }
+  server {
+      listen 80;
+      server_name kj.xunlei.com;
+      root /usr/local/sandai/kj.xunlei.com;
+      index index.html index.htm;
+      access_log  /var/log/nginx/kj.xunlei.com.access.log;
+      error_log   /var/log/nginx/kj.xunlei.com.error.log;
+      location / {
+          autoindex on;
+          #try_files $uri $uri/ =404;
+      }
+      location /index.html {
+          default_type 'text/html';
+          set $upstream "";
+          access_by_lua_file /usr/local/nginx/conf/sites-enabled/kj.xunlei.com.lua;
+          proxy_pass http://$upstream;
+      }
+      location ~ \\.php.*?$ {
+          fastcgi_pass   127.0.0.1:80;
+          fastcgi_index  index.php;
+          fastcgi_param  SCRIPT_FILENAME /usr/local/sandai/kj.xunlei.com$fastcgi_script_name;#设置网站脚本目录路径
+          autoindex on;
+          include fastcgi_params;
+          fastcgi_param DOCUMENT_ROOT "/usr/local/sandai/kj.xunlei.com";#设置网站文档目录路径
+      }
+  }
+  ```
+  
+  /usr/local/nginx/conf/sites-enabled/下新建站点配置文件kj.xunlei.com.lua
+  ``` Lua
+  local dbPath = '/usr/local/sandai/maxminddb/'; -- ip地址数据库存放路径
+  local preProvinceList = {'福建省','广东省','山东省','北京市'}; -- 灰度发布地区，支持省、市
+  local proxy = {pre='twin13033.sandai.net:80',main='twin14502.sandai.net:80'} -- 环境配置,pre为灰度环境，main为正式环境
+  local cookieExpires = 3600 * 24; -- cookie有效时间为1天
+  
+  local function Array (list)
+    local set = {}
+    for _, l in ipairs(list) do set[l] = true end
+    return set
+  end
+  
+  local function file_exists(file)
+      local f = io.open(file, "rb")
+      if f then f:close() end
+      return f ~= nil
+  end
+  
+  local function getCountryName(code)
+      local file = dbPath .. "ipdb/encode/country"
+      if not file_exists(file) then
+          ngx.say(file .. ' not exists')
+          return 'unknown'
+      else
+          for line in io.lines(file) do
+              if not (string.find(line,code .. ' ') == nil) then
+                  return string.match(line,'%d+%s+([^%s]+)')
+              end
+          end
+          return 'unknown'
+      end
+  end
+  
+  local function getProvinceName(code)
+      local file = dbPath .. "ipdb/encode/province"
+      if not file_exists(file) then
+          ngx.say(file .. ' not exists')
+          return 'unknown'
+      else
+          for line in io.lines(file) do
+              if string.find(line,code .. ' ') then
+                  return string.match(line,'%d+%s+([^%s]+)')
+              end
+          end
+          return 'unknown'
+      end
+  end
+  
+  local function getCityName(province,code)
+      local file = dbPath .. "ipdb/encode/city"
+      if not file_exists(file) then
+          ngx.say(file .. ' not exists')
+          return 'unknown'
+      else
+          for line in io.lines(file) do
+              if string.find(line,province .. ' ') and string.find(line,' ' .. code) then
+                  return string.match(line,"[^%s]+%s+([^%s]+)%s+%d+")
+              end
+          end
+          return 'unknown'
+      end
+  end
+  
+  local function getIspName(code)
+      local file = dbPath .. "ipdb/encode/isp"
+      if not file_exists(file) then
+          ngx.say(file .. ' not exists')
+          return 'unknown'
+      else
+          for line in io.lines(file) do
+              if string.match(line,'%s+' .. code .. '[^%d]*') then
+                  return string.match(line,'([^%s]+)%s+%d+') or line
+              end
+          end
+          return 'unknown'
+      end
+  end
+  
+  local function getClientIp() 
+      local ip = ngx.req.get_headers()["X-Real-IP"]
+      if ip == nil then
+          ip = ngx.req.get_headers()["x_forworded_for"]
+      end
+      if ip == nil then
+          ip = ngx.var.remote_addr
+      end
+      return ip
+  end
+  
+  local  function getIpInfo(ip)
+      local mm = require 'maxminddb'
+      local db = mm.open(dbPath .. 'ipdb/encode/ipdb.mmdb')
+      local record
+      local success,result = pcall(function() record = db:lookup(ip) end)
+      if not success then
+          return false
+      else
+          return record
+      end
+  end
+  
+  local function getClientInfo(ip)
+      local client = {}
+      client['ip'] = ip
+      local res = getIpInfo(client.ip);
+      if res then
+          client.country = res:get("country");
+          client.isp = res:get("isp");
+          client.province = res:get("prov");
+          client.city = res:get("city");
+          client.countryName = getCountryName(client.country);
+          client.provinceName = getProvinceName(client.province);
+          client.cityName = getCityName(client.provinceName,client.city);
+          client.ispName = getIspName(client.isp);
+          return client
+      else
+          return false
+      end
+  end
+  
+  local function printClientInfo(client)
+      ngx.say(string.format('{"ip":"%s","isp_code":%d,"isp_name":"%s","country_code":%d,"country_name":"%s","province_code":%d,"province_name":"%s","city_code":%d,"city_name":"%s"}',client.ip,client.isp,client.ispName,client.country,client.countryName,client.province,client.provinceName,client.city,client.cityName))
+  end
+  
+  local function routerServer(name)
+      ngx.var.upstream = proxy[name]
+  end
+  
+  local function getCookie(name)
+      return ngx.var['cookie_' .. name]
+  end
+  
+  local function setCookie(name,value,expires)
+      local str = name .. '=' .. value .. '; Path=/';
+      if expires then
+          str = str ..'; Expires='..ngx.cookie_time(ngx.time()+expires)
+      end
+      ngx.header['Set-Cookie'] = str;
+  end
+  
+  local function main()
+      local ip = getClientIp()
+      local  client = getClientInfo(ip)
+      local branch = getCookie('branch');
+      if branch then
+          routerServer('pre')
+      else
+          if client then
+              local list = Array(preProvinceList)
+              if list[client.provinceName] or list[client.cityName] then
+                  setCookie('branch','pre',cookieExpires)
+                  routerServer('pre')
+              else
+                  setCookie('branch','main',cookieExpires)
+                  routerServer('main')
+              end
+          else
+              setCookie('branch','main',cookieExpires)
+              routerServer('main')
+          end
+      end
+  end
+  
+  main()
+  ```
+'''
+key: "2292cb00254407826dd0"
+uniqueKey: "25d4cc7b5ecb-00fe85956559-04397762049b"
