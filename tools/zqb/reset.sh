@@ -22,8 +22,7 @@ rm -rf /root/* /tmp/*.core 2>>$LOG_PATH;#消除定时清缓存脚本
 ls -d /tmp/opkg\-* | xargs -n 1 rm -rf 2>>$LOG_PATH;
 
 if [ -d /opt/etc ];then
-    if [ -h /opt ]; then
-    else
+    if [ ! -h /opt ]; then
         rm -rf /opt/*;
         output "cleared /opt/*"
     fi
