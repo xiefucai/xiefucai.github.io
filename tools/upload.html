@@ -24,7 +24,18 @@ document.onpaste = function(e) {
     if (e && e.clipboardData && e.clipboardData.getData) {
         type = e.clipboardData.types[0];
         data = e.clipboardData.getData(type);
-        if (/image/.test(type)) {
+        if (/^files$/i.test(type)) {
+          var items = (e.clipboardData || e.originalEvent.clipboardData).items;
+          var blob = items.length && items[0].getAsFile();
+          var reader = new FileReader();
+          reader.onload = function(event) {
+              document.getElementById('preview_img').src = event.target.result;
+              document.getElementById('img-data').value = event.target.result;
+          }
+          blob && reader.readAsDataURL(blob);
+          return;
+        }else if(/^image$/.test(type)){
+          console.log(type,data);
         }else{
             [,data] = /src="([^"]*)"/.exec(data);
         }
