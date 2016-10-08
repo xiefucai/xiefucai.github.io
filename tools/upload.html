@@ -19,7 +19,21 @@ function onSelect(event, selector) {
 }
 
 // window.addEventListener('paste', ... or
-document.onpaste = function(event) {
+document.onpaste = function(e) {
+    var type,data;
+    if (e && e.clipboardData && e.clipboardData.getData) {
+        type = e.clipboardData.types[0];
+        data = e.clipboardData.getData(type);
+        if (/image/.test(type)) {
+        }else{
+            [,data] = /src="([^"]*)"/.exec(data);
+        }
+        document.getElementById('preview_img').src = data;
+        document.getElementById('img-data').value = data;
+    }else{
+        console.log(1);
+    }
+    /*
     var items = (event.clipboardData || event.originalEvent.clipboardData).items;
     var blob = items.length && items[0].getAsFile();
     var reader = new FileReader();
@@ -28,6 +42,7 @@ document.onpaste = function(event) {
         document.getElementById('img-data').value = event.target.result;
     }
     blob && reader.readAsDataURL(blob);
+    */
 }
 </script>
 <input type="file" onchange="onSelect(event,this)" />
