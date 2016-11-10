@@ -60,7 +60,7 @@ var url='//toolbox.youdao.com/api/dict?keyfrom=dictproxy&q={q}&id=0&rnd={rnd}&ur
 				starty = 0;
 			css.rel = 'stylesheet';
 			css.type = 'text/css';
-			css.href = '//www.xiefucai.com/css/dict.youdao.css';
+			css.href = Dict.site+'css/dict.youdao.css';
 			box.style.left = ((document.documentElement.clientWidth || document.body.clientWidth) - 300)+'px';
 			box.style.top = (getScrollTop() + 100)+'px';
 			header.innerHTML = '有道词典';
