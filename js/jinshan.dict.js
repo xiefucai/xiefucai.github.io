@@ -1,6 +1,6 @@
 ﻿
 (function() {
-    var url = 'http://open.iciba.com/huaci/dict.php?word={q}',
+    var url = '//open.iciba.com/huaci/dict.php?word={q}',
         timer = 0,
         getScrollTop = function() {
             return document.documentElement.scrollTop || document.body.scrollTop;
@@ -66,7 +66,7 @@
 
             css.rel = 'stylesheet';
             css.type = 'text/css';
-            css.href = 'http://www.xiefucai.com/css/dict.youdao.css';
+            css.href = '//www.xiefucai.com/css/dict.youdao.css';
             box.style.left = ((document.documentElement.clientWidth ||
                 document.body.clientWidth) - 300) + 'px';
             box.style.top = (getScrollTop() + 100) + 'px';

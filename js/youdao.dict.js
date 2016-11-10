@@ -1,5 +1,5 @@
 ﻿(function(){
-var url='http://toolbox.youdao.com/api/dict?keyfrom=dictproxy&q={q}&id=0&rnd={rnd}&url={url}&callback={callback}',
+var url='//toolbox.youdao.com/api/dict?keyfrom=dictproxy&q={q}&id=0&rnd={rnd}&url={url}&callback={callback}',
 	getScrollTop = function(){
 		return document.documentElement.scrollTop || document.body.scrollTop;
 	},
@@ -60,7 +60,7 @@ var url='http://toolbox.youdao.com/api/dict?keyfrom=dictproxy&q={q}&id=0&rnd={rn
 				starty = 0;
 			css.rel = 'stylesheet';
 			css.type = 'text/css';
-			css.href = 'http://www.xiefucai.com/css/dict.youdao.css';
+			css.href = '//www.xiefucai.com/css/dict.youdao.css';
 			box.style.left = ((document.documentElement.clientWidth || document.body.clientWidth) - 300)+'px';
 			box.style.top = (getScrollTop() + 100)+'px';
 			header.innerHTML = '有道词典';
