@@ -1,5 +1,6 @@
 ﻿(function(){
 var url='//toolbox.youdao.com/api/dict?keyfrom=dictproxy&q={q}&id=0&rnd={rnd}&url={url}&callback={callback}',
+//dict.youdao.com/fsearch?client=deskdict&keyfrom=chrome.extension&q=interpreter&pos=-1&doctype=xml&xmlVersion=3.2&dogVersion=1.0&vendor=unknown&appVer=3.1.17.4208&le=eng
 	site = document.getElementById('fucaixie-dict').getAttribute('data-site'),
 	getScrollTop = function(){
 		return document.documentElement.scrollTop || document.body.scrollTop;
