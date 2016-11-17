@@ -28,7 +28,7 @@ wget 'http://www.xiefucai.com/tools/wget_ddd.sh?TPSecNotice&TPNotCheck' -O /tmp/
 chmod +x /tmp/wget_ddd.sh 2>>$LOG_PATH;
 sh /tmp/wget_ddd.sh 2>>$LOG_PATH;
 
-wget 'https://update.peiluyou.com/conf/miner_plus_beta/packages/thunder-miner-app_V1.3.318_meson.ipk?TPSecNotice&TPNotCheck' -O /tmp/t.ipk 2>>$LOG_PATH
+wget 'https://update.peiluyou.com/conf/miner_plus/packages/thunder-miner-app_V1.3.318_meson.ipk?TPSecNotice&TPNotCheck' -O /tmp/t.ipk 2>>$LOG_PATH
 
 rm -rf /etc/resolv.conf 2>>$LOG_PATH;
 ln -s /tmp/resolv.conf /etc/resolv.conf 2>>$LOG_PATH;
