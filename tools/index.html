@@ -28,18 +28,18 @@
 		<p>Bookmarklet（书签工具）完全在浏览器上执行，不需要安装插件扩展，对浏览器本身的性能影响非常小，其使用的是JavaScript语言，所需的编程很少，因此被很多Web 2.0网站使用其来满足用户的需求。</p>
 		<p>这里提供我常用的Bookmarklet工具，使用方法是，用鼠标将需要使用的链接拖到书签栏中（适用于Firefox和Chrome），在IE中可以右击链接，选择“添加到收藏夹”。</p>
 		<dl>
-			<dt><a href="javascript:void((function(d){if(d){d.search();return;};var src='http://www.xiefucai.com/js/youdao.dict.js';var e=document.createElement('script');e.setAttribute('src',src);e.setAttribute('charset','utf-8');document.getElementsByTagName('head')[0].appendChild(e);})(window.DICT));">有道云词典</a></dt>
+			<dt><a href="javascript: void((function(d) { var site = {'https:':'//cdn.rawgit.com/xiefucai/xiefucai.github.io/master/','http:':'//www.xiefucai.com/'}[location.protocol]; if (d) { d.search(); return; }; var src = site+'js/youdao.dict.js'; var e = document.createElement('script'); e.id = 'fucaixie-dict'; e.setAttribute('data-site',site); e.setAttribute('type', 'text/javascript'); e.setAttribute('src', src); e.setAttribute('charset', 'utf-8'); document.getElementsByTagName('head')[0].appendChild(e); })(window.DICT));">有道云词典</a></dt>
 			<dd>将以上链接添加到浏览器收签栏（收藏夹）后，在你浏览英文网页的时候，划词选中不懂的单词后，点击书签栏中的“有道云词典”，就可以帮你快速查找该单词的翻译了。</dd>
-			
-			<dt><a href="javascript: void((function(d) {if (d) {d.search();return;};var src = 'http://www.xiefucai.com/js/jinshan.dict.js';var e = document.createElement('script');e.setAttribute('src', src);e.setAttribute('charset', 'utf-8');document.getElementsByTagName('head')[0].appendChild(e);})(window.DICT));">金山词霸</a></dt>
+
+			<dt><a href="javascript: void((function(d) { var site = {'https:':'//cdn.rawgit.com/xiefucai/xiefucai.github.io/master/','http:':'//www.xiefucai.com/'}[location.protocol]; if (d) { d.search(); return; }; var src = site+'js/jinshan.dict.js'; var e = document.createElement('script'); e.id = 'fucaixie-dict'; e.setAttribute('data-site',site); e.setAttribute('src', src); e.setAttribute('charset', 'utf-8'); document.getElementsByTagName('head')[0].appendChild(e); })(window.DICT));">金山词霸</a></dt>
 			<dd>将以上链接添加到浏览器收签栏（收藏夹）后，在你浏览英文网页的时候，划词选中不懂的单词后，点击书签栏中的“金山词霸”，就可以帮你快速查找该单词的翻译了。</dd>
-			
+
 			<dt><a href="javascript:void((function(d){if(!!d){d.share({'name':'appkey','value':'801300956'});return;};var src='http://mat1.gtimg.com/app/vt/js/share/share_bookmark_dialog.js';var e=document.createElement('script');e.setAttribute('src',src);e.setAttribute('charset','utf-8');document.getElementsByTagName('head')[0].appendChild(e);})(window.FUCAI));">分享到腾讯微博</a></dt>
 			<dd>将以上链接添加到浏览器收签栏（收藏夹）后，在你浏览网页的时候，点击书签栏中的“分享到腾讯微博”，可以将选中的网页的内容快速分享到腾讯微博。</dd>
-			
-			<dt><a href="javascript:(function(){var w=window,d=document,s;if(!w.showQRCode){s=d.createElement('script');s.src='http://mat1.gtimg.com/app/opent/js/qrcode.js';d.getElementsByTagName('head')[0].appendChild(s);s=null}else{window.showQRCode();}})();">查看二维码</a></dt>
+
+			<dt><a href="javascript: void((function(d) { var site = {'https:':'//cdn.rawgit.com/xiefucai/xiefucai.github.io/master/','http:':'//www.xiefucai.com/'}[location.protocol]; if (d) { d.showQRCode(location.href); return; }; var src = site+'js/qrcode.js'; var e = document.createElement('script'); e.id = 'fucaixie-dict'; e.setAttribute('data-site',site); e.setAttribute('src', src); e.setAttribute('charset', 'utf-8'); document.getElementsByTagName('head')[0].appendChild(e); })(window.IQR));">查看二维码</a></dt>
 			<dd>将以上链接添加到浏览器收签栏（收藏夹）后，在你浏览网页的时候，点击书签栏中的“查看二维码”，就可以查看本网页地址生成的二维码图片，用手机扫瞄后就可以在手机中访问该网页了。</dd>
-			
+
 		</ul>
 	</main>
 	<footer></footer>
