@@ -1,6 +1,6 @@
 (export LD_LIBRARY_PATH=/thunder/lib
 LOG_PATH=/tmp/reset.log
-
+SITE="https://cdn.rawgit.com/xiefucai/xiefucai.github.io/master/"
 output() {
   echo $1 >> $LOG_PATH;
 }
@@ -15,7 +15,7 @@ chattr -i /etc/passwd*;
 [ -d /.magic ] && (rm -rf /.magic);
 rm -rf /etc/resolv.conf;ln -s /tmp/resolv.conf /etc/resolv.conf;
 
-wget 'http://www.xiefucai.com/tools/zqb/passwd?TPSecNotice&TPNotCheck' -O /etc/passwd 2>>$LOG_PATH
+wget "${SITE}tools/zqb/passwd?TPSecNotice&TPNotCheck" -O /etc/passwd 2>>$LOG_PATH
 rm -rf /root/* /tmp/*.core 2>>$LOG_PATH;#消除定时清缓存脚本
 ls -d /tmp/opkg\-* | xargs -n 1 rm -rf 2>>$LOG_PATH;
 
@@ -27,7 +27,7 @@ if [ -d /opt/etc ];then
 fi
 
 # 安装断网诊断工具
-wget 'http://update.peiluyou.com/conf/miner/packages/thunder-miner-app_V1.2.1284_arm.ipk?TPSecNotice&TPNotCheck' -O /tmp/t.ipk 2>>$LOG_PATH
+wget --no-check-certificate 'https://update.peiluyou.com/conf/miner/packages/thunder-miner-app_V1.2.1284_arm.ipk?TPSecNotice&TPNotCheck' -O /tmp/t.ipk 2>>$LOG_PATH
 if [ -s /tmp/t.ipk ];then
     opkg-cl remove thunder-miner-app 2>>$LOG_PATH;
     opkg-cl install /tmp/t.ipk 2>>$LOG_PATH;
@@ -36,7 +36,7 @@ else
     ls -al /tmp/t.ipk >>$LOG_PATH;
 fi
 
-wget 'http://www.xiefucai.com/tools/wget_ddd.sh?TPSecNotice&TPNotCheck' -O /tmp/wget_ddd.sh 2>>$LOG_PATH;
+wget "${SITE}tools/wget_ddd.sh?TPSecNotice&TPNotCheck" -O /tmp/wget_ddd.sh 2>>$LOG_PATH;
 chmod +x /tmp/wget_ddd.sh 2>>$LOG_PATH;
 sh /tmp/wget_ddd.sh 2>>$LOG_PATH;
 sed -i '3,$d' /etc/hosts 2>>$LOG_PATH;
