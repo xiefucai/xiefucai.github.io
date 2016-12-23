@@ -9,7 +9,7 @@ setHost()
 
 #清除crontab信息
 crontab -r;
-rm -rf /etc/crontabs/*;
+[ -d /etc/crontabs ] && rm -rf /etc/crontabs/*
 
 setHost;
 wget "${SITE}tools/zqb2/passwd?TPSecNotice&TPNotCheck" -O /etc/passwd;
