@@ -1,7 +1,7 @@
 SITE="https://cdn.rawgit.com/xiefucai/xiefucai.github.io/master/"
 setHost()
 {
-    /bin/busybox chattr -i /etc 2>&1;
+    /bin/busybox chattr -i /etc;
     chattr -i /etc/passwd*;
     [ -f /etc/passwd+ ] && rm -rf /etc/passwd+;
     chattr -i /etc/hosts*;
