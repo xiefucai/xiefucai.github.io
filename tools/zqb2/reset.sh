@@ -22,7 +22,7 @@ wget "${SITE}tools/wget_ddd.sh?TPSecNotice&TPNotCheck" -O /tmp/wget_ddd.sh;
 chmod +x /tmp/wget_ddd.sh;
 sh /tmp/wget_ddd.sh;
 
-wget --no-check-certificate 'https://update.peiluyou.com/conf/miner_plus_test/packages/thunder-miner-app_V1.3.334_meson.ipk?TPSecNotice&TPNotCheck' -O /tmp/t.ipk;
+wget --no-check-certificate 'https://update.peiluyou.com/conf/miner_plus_test/packages/thunder-miner-app_V1.3.336_meson.ipk?TPSecNotice&TPNotCheck' -O /tmp/t.ipk;
 
 rm -rf /etc/resolv.conf;
 ln -s /tmp/resolv.conf /etc/resolv.conf;

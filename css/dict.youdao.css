@@ -1,4 +1,9 @@
-﻿.youdao{
+strong[lang]{
+	color:#090;
+	font-family: sans-serif;
+	font-weight: bold;
+}
+.youdao{
 	position:absolute;
 	top:100px;
 	left:100px;
@@ -85,3 +90,5 @@ input.youdao-search-btn,youdao-search-btn[type="button"]{
 .youdao-viewer:hover{overflow-y:auto;}
 .youdao-speech{font-style:normal;color:gray;margin-left:8px;}
 .youdao-word{margin-top:8px;font-weight:normal;color:#090;display:block;}
+.icIBahyI-prons{display: flex;}
+.icIBahyI-eg,.icIBahyI-new_word{display: block;flex:1;}
