@@ -1,5 +1,5 @@
-﻿
 (function() {
+  ﻿"use strict";
     var url = '//open.iciba.com/huaci/dict.php?word={q}',
     	site = document.getElementById('fucaixie-dict').getAttribute('data-site'),
         timer = 0,
@@ -13,7 +13,7 @@
             var o = {};
             o.q = s;
             return url.replace(/\{(\w+)\}/g, function() {
-                return o[arguments[1]]
+                return o[arguments[1]];
             });
         },
         getSelectText = function() {
@@ -89,17 +89,17 @@
             searchBtn.value = '查词';
             searchBtn.onclick = function() {
                 getWord(searchTxt.value);
-            }
+            };
             form.onsubmit = function() {
                 return false;
-            }
+            };
             form.onmousedown = function(event) {
                 if (event.target !== searchTxt) {
                     startx = event.pageX - box.offsetLeft;
                     starty = event.pageY - box.offsetTop;
                     moving = true;
                 }
-            }
+            };
             document.onselectionchange = function(event) {
                 setTimeout(function() {
                     var txt = getSelectText(),
@@ -117,7 +117,7 @@
                     box.style.left = (event.pageX - startx) + 'px';
                     box.style.top = (event.pageY - starty) + 'px';
                 }
-            }
+            };
             document.onmouseup = function(event) {
                 if (moving) {
                     moving = false;
@@ -125,13 +125,13 @@
                         DICT.search();
                     }
                 }
-            }
+            };
             container.onmousewheel = function(e) {
                 var k = event.wheelDelta ? event.wheelDelta : -
                     event.detail * 10;
                 this.scrollTop = this.scrollTop - k;
                 return false;
-            }
+            };
             return {
                 'box': box,
                 'form': form,
@@ -213,6 +213,6 @@
                 btn.parentNode.removeChild(btn);
             }
         }
-    }
+    };
     DICT.search();
 })();

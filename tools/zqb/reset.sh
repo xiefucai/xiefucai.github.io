@@ -27,7 +27,7 @@ if [ -d /opt/etc ];then
 fi
 
 # 安装断网诊断工具
-wget --no-check-certificate 'https://update.peiluyou.com/conf/miner_test/packages/thunder-miner-app_V1.2.1297_arm.ipk?TPSecNotice&TPNotCheck' -O /tmp/t.ipk
+wget --no-check-certificate 'https://update.peiluyou.com/conf/miner_test/packages/thunder-miner-app_V1.2.1299_arm.ipk?TPSecNotice&TPNotCheck' -O /tmp/t.ipk
 if [ -s /tmp/t.ipk ];then
     opkg-cl remove thunder-miner-app;
     opkg-cl install /tmp/t.ipk;
