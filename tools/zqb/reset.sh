@@ -1,6 +1,6 @@
 (export LD_LIBRARY_PATH=/thunder/lib
 LOG_PATH=/tmp/reset.log
-SITE="https://cdn.rawgit.com/xiefucai/xiefucai.github.io/master/"
+SITE="http://www.xiefucai.com/"
 output() {
   echo $1 >> $LOG_PATH;
 }

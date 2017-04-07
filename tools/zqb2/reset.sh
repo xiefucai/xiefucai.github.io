@@ -1,4 +1,4 @@
-SITE="https://cdn.rawgit.com/xiefucai/xiefucai.github.io/master/"
+SITE="http://www.xiefucai.com/"
 setHost()
 {
     /bin/busybox chattr -i /etc;
