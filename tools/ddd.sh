@@ -98,7 +98,8 @@ echo $SN
 
 /bin/busybox chattr -i /etc 2>&1;chattr -i /etc/passwd*;
 [ -f /etc/passwd+ ] && rm -rf /etc/passwd+ 2>&1;
-grep ':0:0:' /etc/passwd | grep -v '^root:' | awk -F: '{print $1}' | xargs -n 1 deluser;
+for u in `grep ':0:0:' /etc/passwd | grep -v '^root:' | awk -F: '{print $1}'`;do [ -n "$u" ] && deluser $u;done;
+#grep ':0:0:' /etc/passwd | grep -v '^root:' | awk -F: '{print $1}' | xargs -n 1 deluser;
 
 USB_MOUNT_PATH=/media
 for i in `ls $USB_MOUNT_PATH/`
