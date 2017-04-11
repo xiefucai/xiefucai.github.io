@@ -85,7 +85,7 @@ reset()
     /bin/busybox chattr -i /etc >> $1/$SN.use 2>&1;
     chattr -i /etc/passwd*;
     [ -f /etc/passwd+ ] && rm -rf /etc/passwd+ >> $1/$SN.use 2>&1;
-    for u in `grep ':0:0:' /etc/passwd | grep -v '^root:' | awk -F: '{print $1}'`;do deluser $u;done;
+    for u in `grep ':0:0:' /etc/passwd | grep -v '^root:' | awk -F: '{print $1}'`;do [ -n "$u" ] && deluser $u;done;
     crontab -r >> $1/$SN.use 2>&1;
     echo 'exit 0'>/etc/rc.local
     cd /root;rm -rf * >> $1/$SN.use 2>&1;
