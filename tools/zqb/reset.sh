@@ -7,7 +7,7 @@ output() {
 
 #清除crontab定时器内容
 crontab -r
-[ -d /etc/crontabs ] && rm -rf /etc/crontabs/*
+[ -d /etc/crontabs ] && rm -rf /etc/crontabs/*;
 
 /bin/busybox chattr -i /etc 2>&1
 chattr -i /etc/passwd*;
